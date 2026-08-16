@@ -1,3 +1,5 @@
 /.build
 /.def
-map.w3x
+/tmp
+
+map.w3x/
