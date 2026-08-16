@@ -1,3 +1,5 @@
+---@class W3BDefinition: object
+---@field def Definition
 W3BDefinition = class('W3BDefinition')
 _G.W3BDefinition = W3BDefinition
 
@@ -5,6 +7,7 @@ function W3BDefinition:constructor(id, superId)
     self.def = createDefinition(DefinitionType.Destructable, id, superId)
 end
 
+---@class DestructableDefinition: W3BDefinition
 DestructableDefinition = class('DestructableDefinition', W3BDefinition)
 _G.DestructableDefinition = DestructableDefinition
 

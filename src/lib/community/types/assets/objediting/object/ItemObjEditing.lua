@@ -1,3 +1,5 @@
+---@class W3TDefinition: object
+---@field def Definition
 W3TDefinition = class('W3TDefinition')
 _G.W3TDefinition = W3TDefinition
 
@@ -50,6 +52,7 @@ function W3TDefinition:setButtonPositionX(data)
     self.def:setInt('ubpx', data)
 end
 
+---@class ItemDefinition: W3TDefinition
 ItemDefinition = class('ItemDefinition', W3TDefinition)
 _G.ItemDefinition = ItemDefinition
 

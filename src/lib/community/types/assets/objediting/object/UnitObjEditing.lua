@@ -1,3 +1,5 @@
+---@class W3UDefinition: object
+---@field def Definition
 W3UDefinition = class('W3UDefinition')
 _G.W3UDefinition = W3UDefinition
 
@@ -50,6 +52,7 @@ function W3UDefinition:setButtonPositionX(data)
     self.def:setInt('ubpx', data)
 end
 
+---@class UnitOrBuildingOrHeroDefinition: W3UDefinition
 UnitOrBuildingOrHeroDefinition = class('UnitOrBuildingOrHeroDefinition', W3UDefinition)
 _G.UnitOrBuildingOrHeroDefinition = UnitOrBuildingOrHeroDefinition
 
@@ -948,6 +951,7 @@ function UnitOrBuildingOrHeroDefinition:setStructuresBuilt(data)
     self.def:setString('ubui', data)
 end
 
+---@class UnitOrHeroDefinition: UnitOrBuildingOrHeroDefinition
 UnitOrHeroDefinition = class('UnitOrHeroDefinition', UnitOrBuildingOrHeroDefinition)
 _G.UnitOrHeroDefinition = UnitOrHeroDefinition
 
@@ -986,6 +990,7 @@ function UnitOrHeroDefinition:setFormationRank(data)
     self.def:setInt('ufor', data)
 end
 
+---@class HeroDefinition: UnitOrHeroDefinition
 HeroDefinition = class('HeroDefinition', UnitOrHeroDefinition)
 _G.HeroDefinition = HeroDefinition
 
@@ -1094,6 +1099,7 @@ function HeroDefinition:setRequierementsForTier(tier, data)
     end
 end
 
+---@class UnitDefinition: UnitOrHeroDefinition
 UnitDefinition = class('UnitDefinition', UnitOrHeroDefinition)
 _G.UnitDefinition = UnitDefinition
 
@@ -1112,6 +1118,7 @@ function UnitDefinition:setCasterUpgradeArt(data)
     self.def:setString('ucua', data)
 end
 
+---@class BuildingDefinition: UnitOrBuildingOrHeroDefinition
 BuildingDefinition = class('BuildingDefinition', UnitOrBuildingOrHeroDefinition)
 _G.BuildingDefinition = BuildingDefinition
 
@@ -1190,6 +1197,7 @@ function BuildingDefinition:setIsBuildOn(data)
 	self.def:setBoolean('uibo', data)
 end
 
+---@class BuildingAndHeroDefinition: UnitOrBuildingOrHeroDefinition
 BuildingAndHeroDefinition = class('BuildingAndHeroDefinition', UnitOrBuildingOrHeroDefinition)
 _G.BuildingAndHeroDefinition = BuildingAndHeroDefinition
 

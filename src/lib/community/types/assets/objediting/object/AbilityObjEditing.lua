@@ -1,3 +1,5 @@
+---@class AbilityDefinition: object
+---@field def Definition
 AbilityDefinition = class('AbilityDefinition')
 _G.AbilityDefinition = AbilityDefinition
 
@@ -362,6 +364,7 @@ function AbilityDefinition:setEffects(level, value)
     self.def:setLvlDataString('aeff', level, 0, value)
 end
 
+---@class AbilityDefinitionTaunt: AbilityDefinition
 AbilityDefinitionTaunt = class('AbilityDefinitionTaunt', AbilityDefinition)
 _G.AbilityDefinitionTaunt = AbilityDefinitionTaunt
 
@@ -387,6 +390,7 @@ function AbilityDefinitionTaunt:setMaxUnits(level, value)
     self.def:setLvlDataInt('Tau3', level, 3, value)
 end
 
+---@class AbilityDefinitionPoisonArrows: AbilityDefinition
 AbilityDefinitionPoisonArrows = class('AbilityDefinitionPoisonArrows', AbilityDefinition)
 _G.AbilityDefinitionPoisonArrows = AbilityDefinitionPoisonArrows
 
@@ -424,6 +428,7 @@ function AbilityDefinitionPoisonArrows:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Poa2', level, 2, value)
 end
 
+---@class AbilityDefinitionRangerColdArrows: AbilityDefinition
 AbilityDefinitionRangerColdArrows = class('AbilityDefinitionRangerColdArrows', AbilityDefinition)
 _G.AbilityDefinitionRangerColdArrows = AbilityDefinitionRangerColdArrows
 
@@ -455,6 +460,7 @@ function AbilityDefinitionRangerColdArrows:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Hca2', level, 2, value)
 end
 
+---@class AbilityDefinitionSeaWitchTornado: AbilityDefinition
 AbilityDefinitionSeaWitchTornado = class('AbilityDefinitionSeaWitchTornado', AbilityDefinition)
 _G.AbilityDefinitionSeaWitchTornado = AbilityDefinitionSeaWitchTornado
 
@@ -468,6 +474,7 @@ function AbilityDefinitionSeaWitchTornado:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Ntou', level, 0, value)
 end
 
+---@class AbilityDefinitionAgilityBonusPlus4: AbilityDefinition
 AbilityDefinitionAgilityBonusPlus4 = class('AbilityDefinitionAgilityBonusPlus4', AbilityDefinition)
 _G.AbilityDefinitionAgilityBonusPlus4 = AbilityDefinitionAgilityBonusPlus4
 
@@ -499,6 +506,7 @@ function AbilityDefinitionAgilityBonusPlus4:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAlchemistTransmute: AbilityDefinition
 AbilityDefinitionAlchemistTransmute = class('AbilityDefinitionAlchemistTransmute', AbilityDefinition)
 _G.AbilityDefinitionAlchemistTransmute = AbilityDefinitionAlchemistTransmute
 
@@ -530,6 +538,7 @@ function AbilityDefinitionAlchemistTransmute:setGoldCostFactor(level, value)
     self.def:setLvlDataUnreal('Ntm1', level, 1, value)
 end
 
+---@class AbilityDefinitionAgilityBonusPlus3: AbilityDefinition
 AbilityDefinitionAgilityBonusPlus3 = class('AbilityDefinitionAgilityBonusPlus3', AbilityDefinition)
 _G.AbilityDefinitionAgilityBonusPlus3 = AbilityDefinitionAgilityBonusPlus3
 
@@ -561,6 +570,7 @@ function AbilityDefinitionAgilityBonusPlus3:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAgilityBonusPlus1: AbilityDefinition
 AbilityDefinitionAgilityBonusPlus1 = class('AbilityDefinitionAgilityBonusPlus1', AbilityDefinition)
 _G.AbilityDefinitionAgilityBonusPlus1 = AbilityDefinitionAgilityBonusPlus1
 
@@ -592,6 +602,7 @@ function AbilityDefinitionAgilityBonusPlus1:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionThornyShieldCreep: AbilityDefinition
 AbilityDefinitionThornyShieldCreep = class('AbilityDefinitionThornyShieldCreep', AbilityDefinition)
 _G.AbilityDefinitionThornyShieldCreep = AbilityDefinitionThornyShieldCreep
 
@@ -617,6 +628,7 @@ function AbilityDefinitionThornyShieldCreep:setReturnedDamageFactor(level, value
     self.def:setLvlDataUnreal('Uts1', level, 1, value)
 end
 
+---@class AbilityDefinitionAgilityBonusPlus6: AbilityDefinition
 AbilityDefinitionAgilityBonusPlus6 = class('AbilityDefinitionAgilityBonusPlus6', AbilityDefinition)
 _G.AbilityDefinitionAgilityBonusPlus6 = AbilityDefinitionAgilityBonusPlus6
 
@@ -648,6 +660,7 @@ function AbilityDefinitionAgilityBonusPlus6:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionBloodMageSiphonMana: AbilityDefinition
 AbilityDefinitionBloodMageSiphonMana = class('AbilityDefinitionBloodMageSiphonMana', AbilityDefinition)
 _G.AbilityDefinitionBloodMageSiphonMana = AbilityDefinitionBloodMageSiphonMana
 
@@ -709,6 +722,7 @@ function AbilityDefinitionBloodMageSiphonMana:setLifeTransferredPerSecond(level,
     self.def:setLvlDataUnreal('Ndr4', level, 4, value)
 end
 
+---@class AbilityDefinitionPossessioncreep: AbilityDefinition
 AbilityDefinitionPossessioncreep = class('AbilityDefinitionPossessioncreep', AbilityDefinition)
 _G.AbilityDefinitionPossessioncreep = AbilityDefinitionPossessioncreep
 
@@ -722,6 +736,7 @@ function AbilityDefinitionPossessioncreep:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Pos1', level, 1, value)
 end
 
+---@class AbilityDefinitionPaladinDivineShield: AbilityDefinition
 AbilityDefinitionPaladinDivineShield = class('AbilityDefinitionPaladinDivineShield', AbilityDefinition)
 _G.AbilityDefinitionPaladinDivineShield = AbilityDefinitionPaladinDivineShield
 
@@ -735,6 +750,7 @@ function AbilityDefinitionPaladinDivineShield:setCanDeactivate(level, value)
     self.def:setLvlDataBoolean('Hds1', level, 1, value)
 end
 
+---@class AbilityDefinitionPurgeCreep: AbilityDefinition
 AbilityDefinitionPurgeCreep = class('AbilityDefinitionPurgeCreep', AbilityDefinition)
 _G.AbilityDefinitionPurgeCreep = AbilityDefinitionPurgeCreep
 
@@ -778,6 +794,7 @@ function AbilityDefinitionPurgeCreep:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Prg3', level, 3, value)
 end
 
+---@class AbilityDefinitionRoarcreepSkeletalOrc: AbilityDefinition
 AbilityDefinitionRoarcreepSkeletalOrc = class('AbilityDefinitionRoarcreepSkeletalOrc', AbilityDefinition)
 _G.AbilityDefinitionRoarcreepSkeletalOrc = AbilityDefinitionRoarcreepSkeletalOrc
 
@@ -827,6 +844,7 @@ function AbilityDefinitionRoarcreepSkeletalOrc:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionTauntCreep: AbilityDefinition
 AbilityDefinitionTauntCreep = class('AbilityDefinitionTauntCreep', AbilityDefinition)
 _G.AbilityDefinitionTauntCreep = AbilityDefinitionTauntCreep
 
@@ -852,6 +870,7 @@ function AbilityDefinitionTauntCreep:setMaxUnits(level, value)
     self.def:setLvlDataInt('Tau3', level, 3, value)
 end
 
+---@class AbilityDefinitionRejuvinationFurbolg: AbilityDefinition
 AbilityDefinitionRejuvinationFurbolg = class('AbilityDefinitionRejuvinationFurbolg', AbilityDefinition)
 _G.AbilityDefinitionRejuvinationFurbolg = AbilityDefinitionRejuvinationFurbolg
 
@@ -883,6 +902,7 @@ function AbilityDefinitionRejuvinationFurbolg:setAllowWhenFull(level, value)
     self.def:setLvlDataInt('Rej3', level, 3, value)
 end
 
+---@class AbilityDefinitionPulverizecreep: AbilityDefinition
 AbilityDefinitionPulverizecreep = class('AbilityDefinitionPulverizecreep', AbilityDefinition)
 _G.AbilityDefinitionPulverizecreep = AbilityDefinitionPulverizecreep
 
@@ -914,6 +934,7 @@ function AbilityDefinitionPulverizecreep:setChancetoStomp(level, value)
     self.def:setLvlDataUnreal('War1', level, 1, value)
 end
 
+---@class AbilityDefinitionBeastMasterSummonHawk: AbilityDefinition
 AbilityDefinitionBeastMasterSummonHawk = class('AbilityDefinitionBeastMasterSummonHawk', AbilityDefinition)
 _G.AbilityDefinitionBeastMasterSummonHawk = AbilityDefinitionBeastMasterSummonHawk
 
@@ -933,6 +954,7 @@ function AbilityDefinitionBeastMasterSummonHawk:setSummonedUnitType(level, value
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionTinkererSummonFactoryLevel0: AbilityDefinition
 AbilityDefinitionTinkererSummonFactoryLevel0 = class('AbilityDefinitionTinkererSummonFactoryLevel0', AbilityDefinition)
 _G.AbilityDefinitionTinkererSummonFactoryLevel0 = AbilityDefinitionTinkererSummonFactoryLevel0
 
@@ -976,6 +998,7 @@ function AbilityDefinitionTinkererSummonFactoryLevel0:setSpawnUnitDuration(level
     self.def:setLvlDataUnreal('Nsy3', level, 3, value)
 end
 
+---@class AbilityDefinitionPolymorphcreep: AbilityDefinition
 AbilityDefinitionPolymorphcreep = class('AbilityDefinitionPolymorphcreep', AbilityDefinition)
 _G.AbilityDefinitionPolymorphcreep = AbilityDefinitionPolymorphcreep
 
@@ -1013,6 +1036,7 @@ function AbilityDefinitionPolymorphcreep:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Ply1', level, 1, value)
 end
 
+---@class AbilityDefinitionBeastMasterStampede: AbilityDefinition
 AbilityDefinitionBeastMasterStampede = class('AbilityDefinitionBeastMasterStampede', AbilityDefinition)
 _G.AbilityDefinitionBeastMasterStampede = AbilityDefinitionBeastMasterStampede
 
@@ -1050,6 +1074,7 @@ function AbilityDefinitionBeastMasterStampede:setDamageAmount(level, value)
     self.def:setLvlDataUnreal('Nst3', level, 3, value)
 end
 
+---@class AbilityDefinitionFirelordSoulBurn: AbilityDefinition
 AbilityDefinitionFirelordSoulBurn = class('AbilityDefinitionFirelordSoulBurn', AbilityDefinition)
 _G.AbilityDefinitionFirelordSoulBurn = AbilityDefinitionFirelordSoulBurn
 
@@ -1087,6 +1112,7 @@ function AbilityDefinitionFirelordSoulBurn:setDamagePenalty(level, value)
     self.def:setLvlDataUnreal('Nso3', level, 3, value)
 end
 
+---@class AbilityDefinitionBeastMasterSummonQuilbeast: AbilityDefinition
 AbilityDefinitionBeastMasterSummonQuilbeast = class('AbilityDefinitionBeastMasterSummonQuilbeast', AbilityDefinition)
 _G.AbilityDefinitionBeastMasterSummonQuilbeast = AbilityDefinitionBeastMasterSummonQuilbeast
 
@@ -1106,6 +1132,7 @@ function AbilityDefinitionBeastMasterSummonQuilbeast:setSummonedUnitType(level, 
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionFrenzy: AbilityDefinition
 AbilityDefinitionFrenzy = class('AbilityDefinitionFrenzy', AbilityDefinition)
 _G.AbilityDefinitionFrenzy = AbilityDefinitionFrenzy
 
@@ -1131,6 +1158,7 @@ function AbilityDefinitionFrenzy:setScalingFactor(level, value)
     self.def:setLvlDataUnreal('Blo3', level, 3, value)
 end
 
+---@class AbilityDefinitionMalganisSoulPreservation: AbilityDefinition
 AbilityDefinitionMalganisSoulPreservation = class('AbilityDefinitionMalganisSoulPreservation', AbilityDefinition)
 _G.AbilityDefinitionMalganisSoulPreservation = AbilityDefinitionMalganisSoulPreservation
 
@@ -1144,6 +1172,7 @@ function AbilityDefinitionMalganisSoulPreservation:setUnittoPreserve(level, valu
     self.def:setLvlDataString('Nsl1', level, 0, value)
 end
 
+---@class AbilityDefinitionBeastMasterSummonBear: AbilityDefinition
 AbilityDefinitionBeastMasterSummonBear = class('AbilityDefinitionBeastMasterSummonBear', AbilityDefinition)
 _G.AbilityDefinitionBeastMasterSummonBear = AbilityDefinitionBeastMasterSummonBear
 
@@ -1163,6 +1192,7 @@ function AbilityDefinitionBeastMasterSummonBear:setSummonedUnitType(level, value
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionDarkRangerSilence: AbilityDefinition
 AbilityDefinitionDarkRangerSilence = class('AbilityDefinitionDarkRangerSilence', AbilityDefinition)
 _G.AbilityDefinitionDarkRangerSilence = AbilityDefinitionDarkRangerSilence
 
@@ -1194,6 +1224,7 @@ function AbilityDefinitionDarkRangerSilence:setAttacksPrevented(level, value)
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionSanctuary: AbilityDefinition
 AbilityDefinitionSanctuary = class('AbilityDefinitionSanctuary', AbilityDefinition)
 _G.AbilityDefinitionSanctuary = AbilityDefinitionSanctuary
 
@@ -1231,6 +1262,7 @@ function AbilityDefinitionSanctuary:setUnitRegenerationDelay(level, value)
     self.def:setLvlDataUnreal('Nsa3', level, 3, value)
 end
 
+---@class AbilityDefinitionShadowMeldInstant: AbilityDefinition
 AbilityDefinitionShadowMeldInstant = class('AbilityDefinitionShadowMeldInstant', AbilityDefinition)
 _G.AbilityDefinitionShadowMeldInstant = AbilityDefinitionShadowMeldInstant
 
@@ -1256,6 +1288,7 @@ function AbilityDefinitionShadowMeldInstant:setFadeDuration(level, value)
     self.def:setLvlDataUnreal('Shm1', level, 1, value)
 end
 
+---@class AbilityDefinitionSpellShieldAOE: AbilityDefinition
 AbilityDefinitionSpellShieldAOE = class('AbilityDefinitionSpellShieldAOE', AbilityDefinition)
 _G.AbilityDefinitionSpellShieldAOE = AbilityDefinitionSpellShieldAOE
 
@@ -1269,6 +1302,7 @@ function AbilityDefinitionSpellShieldAOE:setShieldCooldownTime(level, value)
     self.def:setLvlDataUnreal('Nse1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemAuraEndurance: AbilityDefinition
 AbilityDefinitionItemAuraEndurance = class('AbilityDefinitionItemAuraEndurance', AbilityDefinition)
 _G.AbilityDefinitionItemAuraEndurance = AbilityDefinitionItemAuraEndurance
 
@@ -1288,6 +1322,7 @@ function AbilityDefinitionItemAuraEndurance:setAttackSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Oae2', level, 2, value)
 end
 
+---@class AbilityDefinitionSpiritPigcreep: AbilityDefinition
 AbilityDefinitionSpiritPigcreep = class('AbilityDefinitionSpiritPigcreep', AbilityDefinition)
 _G.AbilityDefinitionSpiritPigcreep = AbilityDefinitionSpiritPigcreep
 
@@ -1307,6 +1342,7 @@ function AbilityDefinitionSpiritPigcreep:setNumberofSummonedUnits(level, value)
     self.def:setLvlDataInt('Osf2', level, 2, value)
 end
 
+---@class AbilityDefinitionUnstableConcoction: AbilityDefinition
 AbilityDefinitionUnstableConcoction = class('AbilityDefinitionUnstableConcoction', AbilityDefinition)
 _G.AbilityDefinitionUnstableConcoction = AbilityDefinitionUnstableConcoction
 
@@ -1350,6 +1386,7 @@ function AbilityDefinitionUnstableConcoction:setPartialDamageRadius(level, value
     self.def:setLvlDataUnreal('Dda3', level, 3, value)
 end
 
+---@class AbilityDefinitionItemAuraDevotion: AbilityDefinition
 AbilityDefinitionItemAuraDevotion = class('AbilityDefinitionItemAuraDevotion', AbilityDefinition)
 _G.AbilityDefinitionItemAuraDevotion = AbilityDefinitionItemAuraDevotion
 
@@ -1369,6 +1406,7 @@ function AbilityDefinitionItemAuraDevotion:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Had1', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackMod: AbilityDefinition
 AbilityDefinitionAttackMod = class('AbilityDefinitionAttackMod', AbilityDefinition)
 _G.AbilityDefinitionAttackMod = AbilityDefinitionAttackMod
 
@@ -1382,6 +1420,7 @@ function AbilityDefinitionAttackMod:setAttackModification(level, value)
     self.def:setLvlDataInt('Iaa1', level, 1, value)
 end
 
+---@class AbilityDefinitionMountainKingAvatar: AbilityDefinition
 AbilityDefinitionMountainKingAvatar = class('AbilityDefinitionMountainKingAvatar', AbilityDefinition)
 _G.AbilityDefinitionMountainKingAvatar = AbilityDefinitionMountainKingAvatar
 
@@ -1413,6 +1452,7 @@ function AbilityDefinitionMountainKingAvatar:setHitPointBonus(level, value)
     self.def:setLvlDataUnreal('Hav2', level, 2, value)
 end
 
+---@class AbilityDefinitionAIab: AbilityDefinition
 AbilityDefinitionAIab = class('AbilityDefinitionAIab', AbilityDefinition)
 _G.AbilityDefinitionAIab = AbilityDefinitionAIab
 
@@ -1444,6 +1484,7 @@ function AbilityDefinitionAIab:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionMannorothReincarnation: AbilityDefinition
 AbilityDefinitionMannorothReincarnation = class('AbilityDefinitionMannorothReincarnation', AbilityDefinition)
 _G.AbilityDefinitionMannorothReincarnation = AbilityDefinitionMannorothReincarnation
 
@@ -1457,6 +1498,7 @@ function AbilityDefinitionMannorothReincarnation:setReincarnationDelay(level, va
     self.def:setLvlDataUnreal('Ore1', level, 1, value)
 end
 
+---@class AbilityDefinitionAnimateDead: AbilityDefinition
 AbilityDefinitionAnimateDead = class('AbilityDefinitionAnimateDead', AbilityDefinition)
 _G.AbilityDefinitionAnimateDead = AbilityDefinitionAnimateDead
 
@@ -1482,6 +1524,7 @@ function AbilityDefinitionAnimateDead:setInheritUpgrades(level, value)
     self.def:setLvlDataBoolean('Uan3', level, 3, value)
 end
 
+---@class AbilityDefinitionAgilityMod: AbilityDefinition
 AbilityDefinitionAgilityMod = class('AbilityDefinitionAgilityMod', AbilityDefinition)
 _G.AbilityDefinitionAgilityMod = AbilityDefinitionAgilityMod
 
@@ -1513,6 +1556,7 @@ function AbilityDefinitionAgilityMod:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionRainofFirecreep: AbilityDefinition
 AbilityDefinitionRainofFirecreep = class('AbilityDefinitionRainofFirecreep', AbilityDefinition)
 _G.AbilityDefinitionRainofFirecreep = AbilityDefinitionRainofFirecreep
 
@@ -1556,6 +1600,7 @@ function AbilityDefinitionRainofFirecreep:setDamage(level, value)
     self.def:setLvlDataUnreal('Hbz2', level, 2, value)
 end
 
+---@class AbilityDefinitionDreadlordSleep: AbilityDefinition
 AbilityDefinitionDreadlordSleep = class('AbilityDefinitionDreadlordSleep', AbilityDefinition)
 _G.AbilityDefinitionDreadlordSleep = AbilityDefinitionDreadlordSleep
 
@@ -1569,6 +1614,7 @@ function AbilityDefinitionDreadlordSleep:setStunDuration(level, value)
     self.def:setLvlDataUnreal('Usl1', level, 1, value)
 end
 
+---@class AbilityDefinitionRaiseDeadCreep: AbilityDefinition
 AbilityDefinitionRaiseDeadCreep = class('AbilityDefinitionRaiseDeadCreep', AbilityDefinition)
 _G.AbilityDefinitionRaiseDeadCreep = AbilityDefinitionRaiseDeadCreep
 
@@ -1606,6 +1652,7 @@ function AbilityDefinitionRaiseDeadCreep:setUnitTypeOne(level, value)
     self.def:setLvlDataString('Rai3', level, 3, value)
 end
 
+---@class AbilityDefinitionFaerieFireAfa2: AbilityDefinition
 AbilityDefinitionFaerieFireAfa2 = class('AbilityDefinitionFaerieFireAfa2', AbilityDefinition)
 _G.AbilityDefinitionFaerieFireAfa2 = AbilityDefinitionFaerieFireAfa2
 
@@ -1625,6 +1672,7 @@ function AbilityDefinitionFaerieFireAfa2:setDefenseReduction(level, value)
     self.def:setLvlDataInt('Fae1', level, 1, value)
 end
 
+---@class AbilityDefinitionUnholyFrenzyWarlock: AbilityDefinition
 AbilityDefinitionUnholyFrenzyWarlock = class('AbilityDefinitionUnholyFrenzyWarlock', AbilityDefinition)
 _G.AbilityDefinitionUnholyFrenzyWarlock = AbilityDefinitionUnholyFrenzyWarlock
 
@@ -1644,6 +1692,7 @@ function AbilityDefinitionUnholyFrenzyWarlock:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Uhf2', level, 2, value)
 end
 
+---@class AbilityDefinitionPaladinDevotionAura: AbilityDefinition
 AbilityDefinitionPaladinDevotionAura = class('AbilityDefinitionPaladinDevotionAura', AbilityDefinition)
 _G.AbilityDefinitionPaladinDevotionAura = AbilityDefinitionPaladinDevotionAura
 
@@ -1663,6 +1712,7 @@ function AbilityDefinitionPaladinDevotionAura:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Had1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererRoboGoblinLevel0: AbilityDefinition
 AbilityDefinitionTinkererRoboGoblinLevel0 = class('AbilityDefinitionTinkererRoboGoblinLevel0', AbilityDefinition)
 _G.AbilityDefinitionTinkererRoboGoblinLevel0 = AbilityDefinitionTinkererRoboGoblinLevel0
 
@@ -1712,6 +1762,7 @@ function AbilityDefinitionTinkererRoboGoblinLevel0:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionRejuvinationcreep: AbilityDefinition
 AbilityDefinitionRejuvinationcreep = class('AbilityDefinitionRejuvinationcreep', AbilityDefinition)
 _G.AbilityDefinitionRejuvinationcreep = AbilityDefinitionRejuvinationcreep
 
@@ -1743,6 +1794,7 @@ function AbilityDefinitionRejuvinationcreep:setAllowWhenFull(level, value)
     self.def:setLvlDataInt('Rej3', level, 3, value)
 end
 
+---@class AbilityDefinitionRainofFire: AbilityDefinition
 AbilityDefinitionRainofFire = class('AbilityDefinitionRainofFire', AbilityDefinition)
 _G.AbilityDefinitionRainofFire = AbilityDefinitionRainofFire
 
@@ -1786,6 +1838,7 @@ function AbilityDefinitionRainofFire:setDamage(level, value)
     self.def:setLvlDataUnreal('Hbz2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemAuraVampiric: AbilityDefinition
 AbilityDefinitionItemAuraVampiric = class('AbilityDefinitionItemAuraVampiric', AbilityDefinition)
 _G.AbilityDefinitionItemAuraVampiric = AbilityDefinitionItemAuraVampiric
 
@@ -1799,6 +1852,7 @@ function AbilityDefinitionItemAuraVampiric:setAttackDamageStolen(level, value)
     self.def:setLvlDataUnreal('Uav1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemAuraUnholy: AbilityDefinition
 AbilityDefinitionItemAuraUnholy = class('AbilityDefinitionItemAuraUnholy', AbilityDefinition)
 _G.AbilityDefinitionItemAuraUnholy = AbilityDefinitionItemAuraUnholy
 
@@ -1824,6 +1878,7 @@ function AbilityDefinitionItemAuraUnholy:setMovementSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Uau1', level, 1, value)
 end
 
+---@class AbilityDefinitionArchMageBrillianceAura: AbilityDefinition
 AbilityDefinitionArchMageBrillianceAura = class('AbilityDefinitionArchMageBrillianceAura', AbilityDefinition)
 _G.AbilityDefinitionArchMageBrillianceAura = AbilityDefinitionArchMageBrillianceAura
 
@@ -1843,6 +1898,7 @@ function AbilityDefinitionArchMageBrillianceAura:setPercentBonus(level, value)
     self.def:setLvlDataBoolean('Hab2', level, 2, value)
 end
 
+---@class AbilityDefinitionNeutralRegenmanaonly: AbilityDefinition
 AbilityDefinitionNeutralRegenmanaonly = class('AbilityDefinitionNeutralRegenmanaonly', AbilityDefinition)
 _G.AbilityDefinitionNeutralRegenmanaonly = AbilityDefinitionNeutralRegenmanaonly
 
@@ -1862,6 +1918,7 @@ function AbilityDefinitionNeutralRegenmanaonly:setAmountRegenerated(level, value
     self.def:setLvlDataUnreal('Arm1', level, 1, value)
 end
 
+---@class AbilityDefinitionRoarcreep: AbilityDefinition
 AbilityDefinitionRoarcreep = class('AbilityDefinitionRoarcreep', AbilityDefinition)
 _G.AbilityDefinitionRoarcreep = AbilityDefinitionRoarcreep
 
@@ -1911,6 +1968,7 @@ function AbilityDefinitionRoarcreep:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionAttackBonus: AbilityDefinition
 AbilityDefinitionAttackBonus = class('AbilityDefinitionAttackBonus', AbilityDefinition)
 _G.AbilityDefinitionAttackBonus = AbilityDefinitionAttackBonus
 
@@ -1924,6 +1982,7 @@ function AbilityDefinitionAttackBonus:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionAIas: AbilityDefinition
 AbilityDefinitionAIas = class('AbilityDefinitionAIas', AbilityDefinition)
 _G.AbilityDefinitionAIas = AbilityDefinitionAIas
 
@@ -1937,6 +1996,7 @@ function AbilityDefinitionAIas:setAttackSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Isx1', level, 1, value)
 end
 
+---@class AbilityDefinitionReincarnationcreep: AbilityDefinition
 AbilityDefinitionReincarnationcreep = class('AbilityDefinitionReincarnationcreep', AbilityDefinition)
 _G.AbilityDefinitionReincarnationcreep = AbilityDefinitionReincarnationcreep
 
@@ -1950,6 +2010,7 @@ function AbilityDefinitionReincarnationcreep:setReincarnationDelay(level, value)
     self.def:setLvlDataUnreal('Ore1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemAuraTrueshot: AbilityDefinition
 AbilityDefinitionItemAuraTrueshot = class('AbilityDefinitionItemAuraTrueshot', AbilityDefinition)
 _G.AbilityDefinitionItemAuraTrueshot = AbilityDefinitionItemAuraTrueshot
 
@@ -1981,6 +2042,7 @@ function AbilityDefinitionItemAuraTrueshot:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionThunderClapThunderLizard: AbilityDefinition
 AbilityDefinitionThunderClapThunderLizard = class('AbilityDefinitionThunderClapThunderLizard', AbilityDefinition)
 _G.AbilityDefinitionThunderClapThunderLizard = AbilityDefinitionThunderClapThunderLizard
 
@@ -2012,6 +2074,7 @@ function AbilityDefinitionThunderClapThunderLizard:setMovementSpeedReduction(lev
     self.def:setLvlDataUnreal('Ctc3', level, 3, value)
 end
 
+---@class AbilityDefinitionWardenShadowStrike: AbilityDefinition
 AbilityDefinitionWardenShadowStrike = class('AbilityDefinitionWardenShadowStrike', AbilityDefinition)
 _G.AbilityDefinitionWardenShadowStrike = AbilityDefinitionWardenShadowStrike
 
@@ -2049,6 +2112,7 @@ function AbilityDefinitionWardenShadowStrike:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Esh3', level, 3, value)
 end
 
+---@class AbilityDefinitionBloodMageBanish: AbilityDefinition
 AbilityDefinitionBloodMageBanish = class('AbilityDefinitionBloodMageBanish', AbilityDefinition)
 _G.AbilityDefinitionBloodMageBanish = AbilityDefinitionBloodMageBanish
 
@@ -2068,6 +2132,7 @@ function AbilityDefinitionBloodMageBanish:setMovementSpeedReduction(level, value
     self.def:setLvlDataUnreal('Hbn1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemAuraBrilliance: AbilityDefinition
 AbilityDefinitionItemAuraBrilliance = class('AbilityDefinitionItemAuraBrilliance', AbilityDefinition)
 _G.AbilityDefinitionItemAuraBrilliance = AbilityDefinitionItemAuraBrilliance
 
@@ -2087,6 +2152,7 @@ function AbilityDefinitionItemAuraBrilliance:setPercentBonus(level, value)
     self.def:setLvlDataBoolean('Hab2', level, 2, value)
 end
 
+---@class AbilityDefinitionRainofChaos: AbilityDefinition
 AbilityDefinitionRainofChaos = class('AbilityDefinitionRainofChaos', AbilityDefinition)
 _G.AbilityDefinitionRainofChaos = AbilityDefinitionRainofChaos
 
@@ -2106,6 +2172,7 @@ function AbilityDefinitionRainofChaos:setNumberofUnitsCreated(level, value)
     self.def:setLvlDataInt('Nrc2', level, 2, value)
 end
 
+---@class AbilityDefinitionBuildTinyGreatHall: AbilityDefinition
 AbilityDefinitionBuildTinyGreatHall = class('AbilityDefinitionBuildTinyGreatHall', AbilityDefinition)
 _G.AbilityDefinitionBuildTinyGreatHall = AbilityDefinitionBuildTinyGreatHall
 
@@ -2119,6 +2186,7 @@ function AbilityDefinitionBuildTinyGreatHall:setUnitCreatedperplayerrace(level, 
     self.def:setLvlDataString('Ibl1', level, 0, value)
 end
 
+---@class AbilityDefinitionCryptLordSpikedCarapace: AbilityDefinition
 AbilityDefinitionCryptLordSpikedCarapace = class('AbilityDefinitionCryptLordSpikedCarapace', AbilityDefinition)
 _G.AbilityDefinitionCryptLordSpikedCarapace = AbilityDefinitionCryptLordSpikedCarapace
 
@@ -2144,6 +2212,7 @@ function AbilityDefinitionCryptLordSpikedCarapace:setReturnedDamageFactor(level,
     self.def:setLvlDataUnreal('Uts1', level, 1, value)
 end
 
+---@class AbilityDefinitionCenariusBeefyStarfall: AbilityDefinition
 AbilityDefinitionCenariusBeefyStarfall = class('AbilityDefinitionCenariusBeefyStarfall', AbilityDefinition)
 _G.AbilityDefinitionCenariusBeefyStarfall = AbilityDefinitionCenariusBeefyStarfall
 
@@ -2169,6 +2238,7 @@ function AbilityDefinitionCenariusBeefyStarfall:setBuildingReduction(level, valu
     self.def:setLvlDataUnreal('Esf3', level, 3, value)
 end
 
+---@class AbilityDefinitionMoonPriestessStarfall: AbilityDefinition
 AbilityDefinitionMoonPriestessStarfall = class('AbilityDefinitionMoonPriestessStarfall', AbilityDefinition)
 _G.AbilityDefinitionMoonPriestessStarfall = AbilityDefinitionMoonPriestessStarfall
 
@@ -2194,6 +2264,7 @@ function AbilityDefinitionMoonPriestessStarfall:setBuildingReduction(level, valu
     self.def:setLvlDataUnreal('Esf3', level, 3, value)
 end
 
+---@class AbilityDefinitionArchMageBlizzard: AbilityDefinition
 AbilityDefinitionArchMageBlizzard = class('AbilityDefinitionArchMageBlizzard', AbilityDefinition)
 _G.AbilityDefinitionArchMageBlizzard = AbilityDefinitionArchMageBlizzard
 
@@ -2237,6 +2308,7 @@ function AbilityDefinitionArchMageBlizzard:setDamage(level, value)
     self.def:setLvlDataUnreal('Hbz2', level, 2, value)
 end
 
+---@class AbilityDefinitionDefenseBonusPlus1: AbilityDefinition
 AbilityDefinitionDefenseBonusPlus1 = class('AbilityDefinitionDefenseBonusPlus1', AbilityDefinition)
 _G.AbilityDefinitionDefenseBonusPlus1 = AbilityDefinitionDefenseBonusPlus1
 
@@ -2250,6 +2322,7 @@ function AbilityDefinitionDefenseBonusPlus1:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionSearingArrowscreep: AbilityDefinition
 AbilityDefinitionSearingArrowscreep = class('AbilityDefinitionSearingArrowscreep', AbilityDefinition)
 _G.AbilityDefinitionSearingArrowscreep = AbilityDefinitionSearingArrowscreep
 
@@ -2263,6 +2336,7 @@ function AbilityDefinitionSearingArrowscreep:setDamageBonus(level, value)
     self.def:setLvlDataUnreal('Hfa1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererSummonFactoryLevel1: AbilityDefinition
 AbilityDefinitionTinkererSummonFactoryLevel1 = class('AbilityDefinitionTinkererSummonFactoryLevel1', AbilityDefinition)
 _G.AbilityDefinitionTinkererSummonFactoryLevel1 = AbilityDefinitionTinkererSummonFactoryLevel1
 
@@ -2306,6 +2380,7 @@ function AbilityDefinitionTinkererSummonFactoryLevel1:setSpawnUnitDuration(level
     self.def:setLvlDataUnreal('Nsy3', level, 3, value)
 end
 
+---@class AbilityDefinitionDefenseBonusPlus3: AbilityDefinition
 AbilityDefinitionDefenseBonusPlus3 = class('AbilityDefinitionDefenseBonusPlus3', AbilityDefinition)
 _G.AbilityDefinitionDefenseBonusPlus3 = AbilityDefinitionDefenseBonusPlus3
 
@@ -2319,6 +2394,7 @@ function AbilityDefinitionDefenseBonusPlus3:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionDefenseBonusPlus2: AbilityDefinition
 AbilityDefinitionDefenseBonusPlus2 = class('AbilityDefinitionDefenseBonusPlus2', AbilityDefinition)
 _G.AbilityDefinitionDefenseBonusPlus2 = AbilityDefinitionDefenseBonusPlus2
 
@@ -2332,6 +2408,7 @@ function AbilityDefinitionDefenseBonusPlus2:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererSummonFactoryLevel3: AbilityDefinition
 AbilityDefinitionTinkererSummonFactoryLevel3 = class('AbilityDefinitionTinkererSummonFactoryLevel3', AbilityDefinition)
 _G.AbilityDefinitionTinkererSummonFactoryLevel3 = AbilityDefinitionTinkererSummonFactoryLevel3
 
@@ -2375,6 +2452,7 @@ function AbilityDefinitionTinkererSummonFactoryLevel3:setSpawnUnitDuration(level
     self.def:setLvlDataUnreal('Nsy3', level, 3, value)
 end
 
+---@class AbilityDefinitionSpiritWolfcreep: AbilityDefinition
 AbilityDefinitionSpiritWolfcreep = class('AbilityDefinitionSpiritWolfcreep', AbilityDefinition)
 _G.AbilityDefinitionSpiritWolfcreep = AbilityDefinitionSpiritWolfcreep
 
@@ -2394,6 +2472,7 @@ function AbilityDefinitionSpiritWolfcreep:setNumberofSummonedUnits(level, value)
     self.def:setLvlDataInt('Osf2', level, 2, value)
 end
 
+---@class AbilityDefinitionTinkererSummonFactoryLevel2: AbilityDefinition
 AbilityDefinitionTinkererSummonFactoryLevel2 = class('AbilityDefinitionTinkererSummonFactoryLevel2', AbilityDefinition)
 _G.AbilityDefinitionTinkererSummonFactoryLevel2 = AbilityDefinitionTinkererSummonFactoryLevel2
 
@@ -2437,6 +2516,7 @@ function AbilityDefinitionTinkererSummonFactoryLevel2:setSpawnUnitDuration(level
     self.def:setLvlDataUnreal('Nsy3', level, 3, value)
 end
 
+---@class AbilityDefinitionMaxManaBonusMost: AbilityDefinition
 AbilityDefinitionMaxManaBonusMost = class('AbilityDefinitionMaxManaBonusMost', AbilityDefinition)
 _G.AbilityDefinitionMaxManaBonusMost = AbilityDefinitionMaxManaBonusMost
 
@@ -2450,6 +2530,7 @@ function AbilityDefinitionMaxManaBonusMost:setMaxManaGained(level, value)
     self.def:setLvlDataInt('Iman', level, 1, value)
 end
 
+---@class AbilityDefinitionShockwaveCreep: AbilityDefinition
 AbilityDefinitionShockwaveCreep = class('AbilityDefinitionShockwaveCreep', AbilityDefinition)
 _G.AbilityDefinitionShockwaveCreep = AbilityDefinitionShockwaveCreep
 
@@ -2481,6 +2562,7 @@ function AbilityDefinitionShockwaveCreep:setMaximumDamage(level, value)
     self.def:setLvlDataUnreal('Osh2', level, 2, value)
 end
 
+---@class AbilityDefinitionBuildTinyCastle: AbilityDefinition
 AbilityDefinitionBuildTinyCastle = class('AbilityDefinitionBuildTinyCastle', AbilityDefinition)
 _G.AbilityDefinitionBuildTinyCastle = AbilityDefinitionBuildTinyCastle
 
@@ -2494,6 +2576,7 @@ function AbilityDefinitionBuildTinyCastle:setUnitCreatedperplayerrace(level, val
     self.def:setLvlDataString('Ibl1', level, 0, value)
 end
 
+---@class AbilityDefinitionSilenceCreep: AbilityDefinition
 AbilityDefinitionSilenceCreep = class('AbilityDefinitionSilenceCreep', AbilityDefinition)
 _G.AbilityDefinitionSilenceCreep = AbilityDefinitionSilenceCreep
 
@@ -2525,6 +2608,7 @@ function AbilityDefinitionSilenceCreep:setAttacksPrevented(level, value)
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionSleepcreep: AbilityDefinition
 AbilityDefinitionSleepcreep = class('AbilityDefinitionSleepcreep', AbilityDefinition)
 _G.AbilityDefinitionSleepcreep = AbilityDefinitionSleepcreep
 
@@ -2538,6 +2622,7 @@ function AbilityDefinitionSleepcreep:setStunDuration(level, value)
     self.def:setLvlDataUnreal('Usl1', level, 1, value)
 end
 
+---@class AbilityDefinitionBashitem: AbilityDefinition
 AbilityDefinitionBashitem = class('AbilityDefinitionBashitem', AbilityDefinition)
 _G.AbilityDefinitionBashitem = AbilityDefinitionBashitem
 
@@ -2551,6 +2636,7 @@ function AbilityDefinitionBashitem:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Hbh5', level, 5, value)
 end
 
+---@class AbilityDefinitionDefenseBonusPlus5: AbilityDefinition
 AbilityDefinitionDefenseBonusPlus5 = class('AbilityDefinitionDefenseBonusPlus5', AbilityDefinition)
 _G.AbilityDefinitionDefenseBonusPlus5 = AbilityDefinitionDefenseBonusPlus5
 
@@ -2564,6 +2650,7 @@ function AbilityDefinitionDefenseBonusPlus5:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionMountainKingBash: AbilityDefinition
 AbilityDefinitionMountainKingBash = class('AbilityDefinitionMountainKingBash', AbilityDefinition)
 _G.AbilityDefinitionMountainKingBash = AbilityDefinitionMountainKingBash
 
@@ -2601,6 +2688,7 @@ function AbilityDefinitionMountainKingBash:setDamageMultiplier(level, value)
     self.def:setLvlDataUnreal('Hbh2', level, 2, value)
 end
 
+---@class AbilityDefinitionSiphonManaCreep: AbilityDefinition
 AbilityDefinitionSiphonManaCreep = class('AbilityDefinitionSiphonManaCreep', AbilityDefinition)
 _G.AbilityDefinitionSiphonManaCreep = AbilityDefinitionSiphonManaCreep
 
@@ -2644,6 +2732,7 @@ function AbilityDefinitionSiphonManaCreep:setLifeTransferredPerSecond(level, val
     self.def:setLvlDataUnreal('Ndr4', level, 4, value)
 end
 
+---@class AbilityDefinitionDefenseBonusPlus4: AbilityDefinition
 AbilityDefinitionDefenseBonusPlus4 = class('AbilityDefinitionDefenseBonusPlus4', AbilityDefinition)
 _G.AbilityDefinitionDefenseBonusPlus4 = AbilityDefinitionDefenseBonusPlus4
 
@@ -2657,6 +2746,7 @@ function AbilityDefinitionDefenseBonusPlus4:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionBuildTinyScoutTower: AbilityDefinition
 AbilityDefinitionBuildTinyScoutTower = class('AbilityDefinitionBuildTinyScoutTower', AbilityDefinition)
 _G.AbilityDefinitionBuildTinyScoutTower = AbilityDefinitionBuildTinyScoutTower
 
@@ -2670,6 +2760,7 @@ function AbilityDefinitionBuildTinyScoutTower:setUnitCreatedperplayerrace(level,
     self.def:setLvlDataString('Ibl1', level, 0, value)
 end
 
+---@class AbilityDefinitionItemCloakOfFlames: AbilityDefinition
 AbilityDefinitionItemCloakOfFlames = class('AbilityDefinitionItemCloakOfFlames', AbilityDefinition)
 _G.AbilityDefinitionItemCloakOfFlames = AbilityDefinitionItemCloakOfFlames
 
@@ -2695,6 +2786,7 @@ function AbilityDefinitionItemCloakOfFlames:setManaUsedPerSecond(level, value)
     self.def:setLvlDataInt('Icfm', level, 2, value)
 end
 
+---@class AbilityDefinitionItemAuraCommand: AbilityDefinition
 AbilityDefinitionItemAuraCommand = class('AbilityDefinitionItemAuraCommand', AbilityDefinition)
 _G.AbilityDefinitionItemAuraCommand = AbilityDefinitionItemAuraCommand
 
@@ -2726,6 +2818,7 @@ function AbilityDefinitionItemAuraCommand:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionHarvest: AbilityDefinition
 AbilityDefinitionHarvest = class('AbilityDefinitionHarvest', AbilityDefinition)
 _G.AbilityDefinitionHarvest = AbilityDefinitionHarvest
 
@@ -2751,6 +2844,7 @@ function AbilityDefinitionHarvest:setDamagetoTree(level, value)
     self.def:setLvlDataInt('Har1', level, 1, value)
 end
 
+---@class AbilityDefinitionMagicImmunityDragons: AbilityDefinition
 AbilityDefinitionMagicImmunityDragons = class('AbilityDefinitionMagicImmunityDragons', AbilityDefinition)
 _G.AbilityDefinitionMagicImmunityDragons = AbilityDefinitionMagicImmunityDragons
 
@@ -2764,6 +2858,7 @@ function AbilityDefinitionMagicImmunityDragons:setMagicDamageFactor(level, value
     self.def:setLvlDataUnreal('mim1', level, 1, value)
 end
 
+---@class AbilityDefinitionMagicImmunityArchimonde: AbilityDefinition
 AbilityDefinitionMagicImmunityArchimonde = class('AbilityDefinitionMagicImmunityArchimonde', AbilityDefinition)
 _G.AbilityDefinitionMagicImmunityArchimonde = AbilityDefinitionMagicImmunityArchimonde
 
@@ -2777,6 +2872,7 @@ function AbilityDefinitionMagicImmunityArchimonde:setMagicDamageFactor(level, va
     self.def:setLvlDataUnreal('mim1', level, 1, value)
 end
 
+---@class AbilityDefinitionOrbofCorruption: AbilityDefinition
 AbilityDefinitionOrbofCorruption = class('AbilityDefinitionOrbofCorruption', AbilityDefinition)
 _G.AbilityDefinitionOrbofCorruption = AbilityDefinitionOrbofCorruption
 
@@ -2802,6 +2898,7 @@ function AbilityDefinitionOrbofCorruption:setDamageBonusDice(level, value)
     self.def:setLvlDataInt('Idic', level, 1, value)
 end
 
+---@class AbilityDefinitionWardenSpiritofVengeance: AbilityDefinition
 AbilityDefinitionWardenSpiritofVengeance = class('AbilityDefinitionWardenSpiritofVengeance', AbilityDefinition)
 _G.AbilityDefinitionWardenSpiritofVengeance = AbilityDefinitionWardenSpiritofVengeance
 
@@ -2821,6 +2918,7 @@ function AbilityDefinitionWardenSpiritofVengeance:setNumberofSummonedUnits(level
     self.def:setLvlDataInt('Esv1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemChangeTOD: AbilityDefinition
 AbilityDefinitionItemChangeTOD = class('AbilityDefinitionItemChangeTOD', AbilityDefinition)
 _G.AbilityDefinitionItemChangeTOD = AbilityDefinitionItemChangeTOD
 
@@ -2840,6 +2938,7 @@ function AbilityDefinitionItemChangeTOD:setNewTimeofDayHour(level, value)
     self.def:setLvlDataInt('ict1', level, 1, value)
 end
 
+---@class AbilityDefinitionMoonPriestessScout: AbilityDefinition
 AbilityDefinitionMoonPriestessScout = class('AbilityDefinitionMoonPriestessScout', AbilityDefinition)
 _G.AbilityDefinitionMoonPriestessScout = AbilityDefinitionMoonPriestessScout
 
@@ -2859,6 +2958,7 @@ function AbilityDefinitionMoonPriestessScout:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionCycloneAIcy: AbilityDefinition
 AbilityDefinitionCycloneAIcy = class('AbilityDefinitionCycloneAIcy', AbilityDefinition)
 _G.AbilityDefinitionCycloneAIcy = AbilityDefinitionCycloneAIcy
 
@@ -2872,6 +2972,7 @@ function AbilityDefinitionCycloneAIcy:setCanBeDispelled(level, value)
     self.def:setLvlDataBoolean('cyc1', level, 1, value)
 end
 
+---@class AbilityDefinitionExhume: AbilityDefinition
 AbilityDefinitionExhume = class('AbilityDefinitionExhume', AbilityDefinition)
 _G.AbilityDefinitionExhume = AbilityDefinitionExhume
 
@@ -2891,6 +2992,7 @@ function AbilityDefinitionExhume:setMaximumNumberofCorpses(level, value)
     self.def:setLvlDataInt('exh1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemCommand: AbilityDefinition
 AbilityDefinitionItemCommand = class('AbilityDefinitionItemCommand', AbilityDefinition)
 _G.AbilityDefinitionItemCommand = AbilityDefinitionItemCommand
 
@@ -2904,6 +3006,7 @@ function AbilityDefinitionItemCommand:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Icre', level, 1, value)
 end
 
+---@class AbilityDefinitionExperienceModgreater: AbilityDefinition
 AbilityDefinitionExperienceModgreater = class('AbilityDefinitionExperienceModgreater', AbilityDefinition)
 _G.AbilityDefinitionExperienceModgreater = AbilityDefinitionExperienceModgreater
 
@@ -2917,6 +3020,7 @@ function AbilityDefinitionExperienceModgreater:setExperienceGained(level, value)
     self.def:setLvlDataInt('Ixpg', level, 1, value)
 end
 
+---@class AbilityDefinitionAIde: AbilityDefinition
 AbilityDefinitionAIde = class('AbilityDefinitionAIde', AbilityDefinition)
 _G.AbilityDefinitionAIde = AbilityDefinitionAIde
 
@@ -2930,6 +3034,7 @@ function AbilityDefinitionAIde:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionDefendItem: AbilityDefinition
 AbilityDefinitionDefendItem = class('AbilityDefinitionDefendItem', AbilityDefinition)
 _G.AbilityDefinitionDefendItem = AbilityDefinitionDefendItem
 
@@ -2985,6 +3090,7 @@ function AbilityDefinitionDefendItem:setMagicDamageReduction(level, value)
     self.def:setLvlDataUnreal('Def5', level, 5, value)
 end
 
+---@class AbilityDefinitionOrbofDarkness: AbilityDefinition
 AbilityDefinitionOrbofDarkness = class('AbilityDefinitionOrbofDarkness', AbilityDefinition)
 _G.AbilityDefinitionOrbofDarkness = AbilityDefinitionOrbofDarkness
 
@@ -3028,6 +3134,7 @@ function AbilityDefinitionOrbofDarkness:setEffectAbility(level, value)
     self.def:setLvlDataString('Iobu', level, 0, value)
 end
 
+---@class AbilityDefinitionItemDispelAoe: AbilityDefinition
 AbilityDefinitionItemDispelAoe = class('AbilityDefinitionItemDispelAoe', AbilityDefinition)
 _G.AbilityDefinitionItemDispelAoe = AbilityDefinitionItemDispelAoe
 
@@ -3047,6 +3154,7 @@ function AbilityDefinitionItemDispelAoe:setManaLossPerUnit(level, value)
     self.def:setLvlDataInt('Idim', level, 1, value)
 end
 
+---@class AbilityDefinitionLightningShieldcreep: AbilityDefinition
 AbilityDefinitionLightningShieldcreep = class('AbilityDefinitionLightningShieldcreep', AbilityDefinition)
 _G.AbilityDefinitionLightningShieldcreep = AbilityDefinitionLightningShieldcreep
 
@@ -3060,6 +3168,7 @@ function AbilityDefinitionLightningShieldcreep:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Lsh1', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldShip: AbilityDefinition
 AbilityDefinitionCargoHoldShip = class('AbilityDefinitionCargoHoldShip', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldShip = AbilityDefinitionCargoHoldShip
 
@@ -3073,6 +3182,7 @@ function AbilityDefinitionCargoHoldShip:setCargoCapacity(level, value)
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionCannibalize: AbilityDefinition
 AbilityDefinitionCannibalize = class('AbilityDefinitionCannibalize', AbilityDefinition)
 _G.AbilityDefinitionCannibalize = AbilityDefinitionCannibalize
 
@@ -3092,6 +3202,7 @@ function AbilityDefinitionCannibalize:setHitPointsperSecond(level, value)
     self.def:setLvlDataUnreal('Can1', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldTank: AbilityDefinition
 AbilityDefinitionCargoHoldTank = class('AbilityDefinitionCargoHoldTank', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldTank = AbilityDefinitionCargoHoldTank
 
@@ -3105,6 +3216,7 @@ function AbilityDefinitionCargoHoldTank:setCargoCapacity(level, value)
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemDefenseAoe: AbilityDefinition
 AbilityDefinitionItemDefenseAoe = class('AbilityDefinitionItemDefenseAoe', AbilityDefinition)
 _G.AbilityDefinitionItemDefenseAoe = AbilityDefinitionItemDefenseAoe
 
@@ -3130,6 +3242,7 @@ function AbilityDefinitionItemDefenseAoe:setDefenseBonus(level, value)
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldTransport: AbilityDefinition
 AbilityDefinitionCargoHoldTransport = class('AbilityDefinitionCargoHoldTransport', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldTransport = AbilityDefinitionCargoHoldTransport
 
@@ -3143,6 +3256,7 @@ function AbilityDefinitionCargoHoldTransport:setCargoCapacity(level, value)
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldMeatWagon: AbilityDefinition
 AbilityDefinitionCargoHoldMeatWagon = class('AbilityDefinitionCargoHoldMeatWagon', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldMeatWagon = AbilityDefinitionCargoHoldMeatWagon
 
@@ -3156,6 +3270,7 @@ function AbilityDefinitionCargoHoldMeatWagon:setCargoCapacity(level, value)
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemDispelChain: AbilityDefinition
 AbilityDefinitionItemDispelChain = class('AbilityDefinitionItemDispelChain', AbilityDefinition)
 _G.AbilityDefinitionItemDispelChain = AbilityDefinitionItemDispelChain
 
@@ -3181,6 +3296,7 @@ function AbilityDefinitionItemDispelChain:setManaLossPerUnit(level, value)
     self.def:setLvlDataUnreal('idc1', level, 1, value)
 end
 
+---@class AbilityDefinitionTaurenChieftainEnduranceAura: AbilityDefinition
 AbilityDefinitionTaurenChieftainEnduranceAura = class('AbilityDefinitionTaurenChieftainEnduranceAura', AbilityDefinition)
 _G.AbilityDefinitionTaurenChieftainEnduranceAura = AbilityDefinitionTaurenChieftainEnduranceAura
 
@@ -3200,6 +3316,7 @@ function AbilityDefinitionTaurenChieftainEnduranceAura:setAttackSpeedIncrease(le
     self.def:setLvlDataUnreal('Oae2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemDefenseAoePlusHealing: AbilityDefinition
 AbilityDefinitionItemDefenseAoePlusHealing = class('AbilityDefinitionItemDefenseAoePlusHealing', AbilityDefinition)
 _G.AbilityDefinitionItemDefenseAoePlusHealing = AbilityDefinitionItemDefenseAoePlusHealing
 
@@ -3225,6 +3342,7 @@ function AbilityDefinitionItemDefenseAoePlusHealing:setDefenseBonus(level, value
     self.def:setLvlDataInt('Idef', level, 1, value)
 end
 
+---@class AbilityDefinitionMagicImmunityCreep: AbilityDefinition
 AbilityDefinitionMagicImmunityCreep = class('AbilityDefinitionMagicImmunityCreep', AbilityDefinition)
 _G.AbilityDefinitionMagicImmunityCreep = AbilityDefinitionMagicImmunityCreep
 
@@ -3238,6 +3356,7 @@ function AbilityDefinitionMagicImmunityCreep:setMagicDamageFactor(level, value)
     self.def:setLvlDataUnreal('mim1', level, 1, value)
 end
 
+---@class AbilityDefinitionKeeperoftheGroveTranquility: AbilityDefinition
 AbilityDefinitionKeeperoftheGroveTranquility = class('AbilityDefinitionKeeperoftheGroveTranquility', AbilityDefinition)
 _G.AbilityDefinitionKeeperoftheGroveTranquility = AbilityDefinitionKeeperoftheGroveTranquility
 
@@ -3263,6 +3382,7 @@ function AbilityDefinitionKeeperoftheGroveTranquility:setLifeHealed(level, value
     self.def:setLvlDataUnreal('Etq1', level, 1, value)
 end
 
+---@class AbilityDefinitionWindWalk: AbilityDefinition
 AbilityDefinitionWindWalk = class('AbilityDefinitionWindWalk', AbilityDefinition)
 _G.AbilityDefinitionWindWalk = AbilityDefinitionWindWalk
 
@@ -3294,6 +3414,7 @@ function AbilityDefinitionWindWalk:setTransitionTime(level, value)
     self.def:setLvlDataUnreal('Owk1', level, 1, value)
 end
 
+---@class AbilityDefinitionManaShieldCreep: AbilityDefinition
 AbilityDefinitionManaShieldCreep = class('AbilityDefinitionManaShieldCreep', AbilityDefinition)
 _G.AbilityDefinitionManaShieldCreep = AbilityDefinitionManaShieldCreep
 
@@ -3313,6 +3434,7 @@ function AbilityDefinitionManaShieldCreep:setManaperHitPoint(level, value)
     self.def:setLvlDataUnreal('Nms1', level, 1, value)
 end
 
+---@class AbilityDefinitionWateryMinion: AbilityDefinition
 AbilityDefinitionWateryMinion = class('AbilityDefinitionWateryMinion', AbilityDefinition)
 _G.AbilityDefinitionWateryMinion = AbilityDefinitionWateryMinion
 
@@ -3332,6 +3454,7 @@ function AbilityDefinitionWateryMinion:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionItemDispelAoeWithCooldown: AbilityDefinition
 AbilityDefinitionItemDispelAoeWithCooldown = class('AbilityDefinitionItemDispelAoeWithCooldown', AbilityDefinition)
 _G.AbilityDefinitionItemDispelAoeWithCooldown = AbilityDefinitionItemDispelAoeWithCooldown
 
@@ -3351,6 +3474,7 @@ function AbilityDefinitionItemDispelAoeWithCooldown:setManaLossPerUnit(level, va
     self.def:setLvlDataInt('Idim', level, 1, value)
 end
 
+---@class AbilityDefinitionEvilIllidanMetamorphosis: AbilityDefinition
 AbilityDefinitionEvilIllidanMetamorphosis = class('AbilityDefinitionEvilIllidanMetamorphosis', AbilityDefinition)
 _G.AbilityDefinitionEvilIllidanMetamorphosis = AbilityDefinitionEvilIllidanMetamorphosis
 
@@ -3394,6 +3518,7 @@ function AbilityDefinitionEvilIllidanMetamorphosis:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionImpaleCreep: AbilityDefinition
 AbilityDefinitionImpaleCreep = class('AbilityDefinitionImpaleCreep', AbilityDefinition)
 _G.AbilityDefinitionImpaleCreep = AbilityDefinitionImpaleCreep
 
@@ -3425,6 +3550,7 @@ function AbilityDefinitionImpaleCreep:setWaveDistance(level, value)
     self.def:setLvlDataUnreal('Uim1', level, 1, value)
 end
 
+---@class AbilityDefinitionMonsooncreep: AbilityDefinition
 AbilityDefinitionMonsooncreep = class('AbilityDefinitionMonsooncreep', AbilityDefinition)
 _G.AbilityDefinitionMonsooncreep = AbilityDefinitionMonsooncreep
 
@@ -3450,6 +3576,7 @@ function AbilityDefinitionMonsooncreep:setBuildingReduction(level, value)
     self.def:setLvlDataUnreal('Esf3', level, 3, value)
 end
 
+---@class AbilityDefinitionDevourMagic: AbilityDefinition
 AbilityDefinitionDevourMagic = class('AbilityDefinitionDevourMagic', AbilityDefinition)
 _G.AbilityDefinitionDevourMagic = AbilityDefinitionDevourMagic
 
@@ -3493,6 +3620,7 @@ function AbilityDefinitionDevourMagic:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('dvm5', level, 5, value)
 end
 
+---@class AbilityDefinitionEvasion: AbilityDefinition
 AbilityDefinitionEvasion = class('AbilityDefinitionEvasion', AbilityDefinition)
 _G.AbilityDefinitionEvasion = AbilityDefinitionEvasion
 
@@ -3506,6 +3634,7 @@ function AbilityDefinitionEvasion:setChancetoEvade(level, value)
     self.def:setLvlDataUnreal('Eev1', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldDevour: AbilityDefinition
 AbilityDefinitionCargoHoldDevour = class('AbilityDefinitionCargoHoldDevour', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldDevour = AbilityDefinitionCargoHoldDevour
 
@@ -3531,6 +3660,7 @@ function AbilityDefinitionCargoHoldDevour:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Dev3', level, 3, value)
 end
 
+---@class AbilityDefinitionExperienceMod: AbilityDefinition
 AbilityDefinitionExperienceMod = class('AbilityDefinitionExperienceMod', AbilityDefinition)
 _G.AbilityDefinitionExperienceMod = AbilityDefinitionExperienceMod
 
@@ -3544,6 +3674,7 @@ function AbilityDefinitionExperienceMod:setExperienceGained(level, value)
     self.def:setLvlDataInt('Ixpg', level, 1, value)
 end
 
+---@class AbilityDefinitionCloudofFogItem: AbilityDefinition
 AbilityDefinitionCloudofFogItem = class('AbilityDefinitionCloudofFogItem', AbilityDefinition)
 _G.AbilityDefinitionCloudofFogItem = AbilityDefinitionCloudofFogItem
 
@@ -3575,6 +3706,7 @@ function AbilityDefinitionCloudofFogItem:setAttacksPrevented(level, value)
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionDisenchantold: AbilityDefinition
 AbilityDefinitionDisenchantold = class('AbilityDefinitionDisenchantold', AbilityDefinition)
 _G.AbilityDefinitionDisenchantold = AbilityDefinitionDisenchantold
 
@@ -3594,6 +3726,7 @@ function AbilityDefinitionDisenchantold:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Adm2', level, 2, value)
 end
 
+---@class AbilityDefinitionPillage: AbilityDefinition
 AbilityDefinitionPillage = class('AbilityDefinitionPillage', AbilityDefinition)
 _G.AbilityDefinitionPillage = AbilityDefinitionPillage
 
@@ -3613,6 +3746,7 @@ function AbilityDefinitionPillage:setSalvageCostRatio(level, value)
     self.def:setLvlDataUnreal('Sal1', level, 1, value)
 end
 
+---@class AbilityDefinitionInventoryPackMule: AbilityDefinition
 AbilityDefinitionInventoryPackMule = class('AbilityDefinitionInventoryPackMule', AbilityDefinition)
 _G.AbilityDefinitionInventoryPackMule = AbilityDefinitionInventoryPackMule
 
@@ -3650,6 +3784,7 @@ function AbilityDefinitionInventoryPackMule:setItemCapacity(level, value)
     self.def:setLvlDataInt('inv1', level, 1, value)
 end
 
+---@class AbilityDefinitionFigurineFurbolg: AbilityDefinition
 AbilityDefinitionFigurineFurbolg = class('AbilityDefinitionFigurineFurbolg', AbilityDefinition)
 _G.AbilityDefinitionFigurineFurbolg = AbilityDefinitionFigurineFurbolg
 
@@ -3681,6 +3816,7 @@ function AbilityDefinitionFigurineFurbolg:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionFigurineFelHound: AbilityDefinition
 AbilityDefinitionFigurineFelHound = class('AbilityDefinitionFigurineFelHound', AbilityDefinition)
 _G.AbilityDefinitionFigurineFelHound = AbilityDefinitionFigurineFelHound
 
@@ -3712,6 +3848,7 @@ function AbilityDefinitionFigurineFelHound:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionFireDamageBonus: AbilityDefinition
 AbilityDefinitionFireDamageBonus = class('AbilityDefinitionFireDamageBonus', AbilityDefinition)
 _G.AbilityDefinitionFireDamageBonus = AbilityDefinitionFireDamageBonus
 
@@ -3731,6 +3868,7 @@ function AbilityDefinitionFireDamageBonus:setDamageBonus(level, value)
     self.def:setLvlDataUnreal('Idam', level, 1, value)
 end
 
+---@class AbilityDefinitionDetectMagicSentinel: AbilityDefinition
 AbilityDefinitionDetectMagicSentinel = class('AbilityDefinitionDetectMagicSentinel', AbilityDefinition)
 _G.AbilityDefinitionDetectMagicSentinel = AbilityDefinitionDetectMagicSentinel
 
@@ -3744,6 +3882,7 @@ function AbilityDefinitionDetectMagicSentinel:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionFirelordVolcano: AbilityDefinition
 AbilityDefinitionFirelordVolcano = class('AbilityDefinitionFirelordVolcano', AbilityDefinition)
 _G.AbilityDefinitionFirelordVolcano = AbilityDefinitionFirelordVolcano
 
@@ -3793,6 +3932,7 @@ function AbilityDefinitionFirelordVolcano:setWaveCount(level, value)
     self.def:setLvlDataInt('Nvc2', level, 2, value)
 end
 
+---@class AbilityDefinitionFigurineRedDrake: AbilityDefinition
 AbilityDefinitionFigurineRedDrake = class('AbilityDefinitionFigurineRedDrake', AbilityDefinition)
 _G.AbilityDefinitionFigurineRedDrake = AbilityDefinitionFigurineRedDrake
 
@@ -3824,6 +3964,7 @@ function AbilityDefinitionFigurineRedDrake:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionHealingWard: AbilityDefinition
 AbilityDefinitionHealingWard = class('AbilityDefinitionHealingWard', AbilityDefinition)
 _G.AbilityDefinitionHealingWard = AbilityDefinitionHealingWard
 
@@ -3837,6 +3978,7 @@ function AbilityDefinitionHealingWard:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionFlareGun: AbilityDefinition
 AbilityDefinitionFlareGun = class('AbilityDefinitionFlareGun', AbilityDefinition)
 _G.AbilityDefinitionFlareGun = AbilityDefinitionFlareGun
 
@@ -3856,6 +3998,7 @@ function AbilityDefinitionFlareGun:setDelayForTargetEffect(level, value)
     self.def:setLvlDataUnreal('Idel', level, 2, value)
 end
 
+---@class AbilityDefinitionLoadEntangledGoldMine: AbilityDefinition
 AbilityDefinitionLoadEntangledGoldMine = class('AbilityDefinitionLoadEntangledGoldMine', AbilityDefinition)
 _G.AbilityDefinitionLoadEntangledGoldMine = AbilityDefinitionLoadEntangledGoldMine
 
@@ -3869,6 +4012,7 @@ function AbilityDefinitionLoadEntangledGoldMine:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Loa1', level, 0, value)
 end
 
+---@class AbilityDefinitionNeutralRegenhealthonly: AbilityDefinition
 AbilityDefinitionNeutralRegenhealthonly = class('AbilityDefinitionNeutralRegenhealthonly', AbilityDefinition)
 _G.AbilityDefinitionNeutralRegenhealthonly = AbilityDefinitionNeutralRegenhealthonly
 
@@ -3888,6 +4032,7 @@ function AbilityDefinitionNeutralRegenhealthonly:setAmountofHitPointsRegenerated
     self.def:setLvlDataUnreal('Oar1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraRegenerationHealingWard: AbilityDefinition
 AbilityDefinitionAuraRegenerationHealingWard = class('AbilityDefinitionAuraRegenerationHealingWard', AbilityDefinition)
 _G.AbilityDefinitionAuraRegenerationHealingWard = AbilityDefinitionAuraRegenerationHealingWard
 
@@ -3907,6 +4052,7 @@ function AbilityDefinitionAuraRegenerationHealingWard:setAmountofHitPointsRegene
     self.def:setLvlDataUnreal('Oar1', level, 1, value)
 end
 
+---@class AbilityDefinitionLoadNavies: AbilityDefinition
 AbilityDefinitionLoadNavies = class('AbilityDefinitionLoadNavies', AbilityDefinition)
 _G.AbilityDefinitionLoadNavies = AbilityDefinitionLoadNavies
 
@@ -3920,6 +4066,7 @@ function AbilityDefinitionLoadNavies:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Loa1', level, 0, value)
 end
 
+---@class AbilityDefinitionInvisibility: AbilityDefinition
 AbilityDefinitionInvisibility = class('AbilityDefinitionInvisibility', AbilityDefinition)
 _G.AbilityDefinitionInvisibility = AbilityDefinitionInvisibility
 
@@ -3933,6 +4080,7 @@ function AbilityDefinitionInvisibility:setTransitionTimeseconds(level, value)
     self.def:setLvlDataUnreal('Ivs1', level, 1, value)
 end
 
+---@class AbilityDefinitionSentryWard: AbilityDefinition
 AbilityDefinitionSentryWard = class('AbilityDefinitionSentryWard', AbilityDefinition)
 _G.AbilityDefinitionSentryWard = AbilityDefinitionSentryWard
 
@@ -3946,6 +4094,7 @@ function AbilityDefinitionSentryWard:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionFigurineRockGolem: AbilityDefinition
 AbilityDefinitionFigurineRockGolem = class('AbilityDefinitionFigurineRockGolem', AbilityDefinition)
 _G.AbilityDefinitionFigurineRockGolem = AbilityDefinitionFigurineRockGolem
 
@@ -3977,6 +4126,7 @@ function AbilityDefinitionFigurineRockGolem:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionFigurineSkeleton: AbilityDefinition
 AbilityDefinitionFigurineSkeleton = class('AbilityDefinitionFigurineSkeleton', AbilityDefinition)
 _G.AbilityDefinitionFigurineSkeleton = AbilityDefinitionFigurineSkeleton
 
@@ -4008,6 +4158,7 @@ function AbilityDefinitionFigurineSkeleton:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionSubmergeMyrmidon: AbilityDefinition
 AbilityDefinitionSubmergeMyrmidon = class('AbilityDefinitionSubmergeMyrmidon', AbilityDefinition)
 _G.AbilityDefinitionSubmergeMyrmidon = AbilityDefinitionSubmergeMyrmidon
 
@@ -4039,6 +4190,7 @@ function AbilityDefinitionSubmergeMyrmidon:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionSubmergeRoyalGuard: AbilityDefinition
 AbilityDefinitionSubmergeRoyalGuard = class('AbilityDefinitionSubmergeRoyalGuard', AbilityDefinition)
 _G.AbilityDefinitionSubmergeRoyalGuard = AbilityDefinitionSubmergeRoyalGuard
 
@@ -4070,6 +4222,7 @@ function AbilityDefinitionSubmergeRoyalGuard:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionFigurineDoomGuard: AbilityDefinition
 AbilityDefinitionFigurineDoomGuard = class('AbilityDefinitionFigurineDoomGuard', AbilityDefinition)
 _G.AbilityDefinitionFigurineDoomGuard = AbilityDefinitionFigurineDoomGuard
 
@@ -4101,6 +4254,7 @@ function AbilityDefinitionFigurineDoomGuard:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionSubmergeSnapDragon: AbilityDefinition
 AbilityDefinitionSubmergeSnapDragon = class('AbilityDefinitionSubmergeSnapDragon', AbilityDefinition)
 _G.AbilityDefinitionSubmergeSnapDragon = AbilityDefinitionSubmergeSnapDragon
 
@@ -4132,6 +4286,7 @@ function AbilityDefinitionSubmergeSnapDragon:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionItemHealLesser: AbilityDefinition
 AbilityDefinitionItemHealLesser = class('AbilityDefinitionItemHealLesser', AbilityDefinition)
 _G.AbilityDefinitionItemHealLesser = AbilityDefinitionItemHealLesser
 
@@ -4145,6 +4300,7 @@ function AbilityDefinitionItemHealLesser:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionItemHealGreater: AbilityDefinition
 AbilityDefinitionItemHealGreater = class('AbilityDefinitionItemHealGreater', AbilityDefinition)
 _G.AbilityDefinitionItemHealGreater = AbilityDefinitionItemHealGreater
 
@@ -4158,6 +4314,7 @@ function AbilityDefinitionItemHealGreater:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionItemHealLeast: AbilityDefinition
 AbilityDefinitionItemHealLeast = class('AbilityDefinitionItemHealLeast', AbilityDefinition)
 _G.AbilityDefinitionItemHealLeast = AbilityDefinitionItemHealLeast
 
@@ -4171,6 +4328,7 @@ function AbilityDefinitionItemHealLeast:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionGiveGold: AbilityDefinition
 AbilityDefinitionGiveGold = class('AbilityDefinitionGiveGold', AbilityDefinition)
 _G.AbilityDefinitionGiveGold = AbilityDefinitionGiveGold
 
@@ -4184,6 +4342,7 @@ function AbilityDefinitionGiveGold:setGoldGiven(level, value)
     self.def:setLvlDataInt('Igol', level, 1, value)
 end
 
+---@class AbilityDefinitionIntelligenceBonusPlus1: AbilityDefinition
 AbilityDefinitionIntelligenceBonusPlus1 = class('AbilityDefinitionIntelligenceBonusPlus1', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceBonusPlus1 = AbilityDefinitionIntelligenceBonusPlus1
 
@@ -4215,6 +4374,7 @@ function AbilityDefinitionIntelligenceBonusPlus1:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionBurrowscarablvl2: AbilityDefinition
 AbilityDefinitionBurrowscarablvl2 = class('AbilityDefinitionBurrowscarablvl2', AbilityDefinition)
 _G.AbilityDefinitionBurrowscarablvl2 = AbilityDefinitionBurrowscarablvl2
 
@@ -4252,6 +4412,7 @@ function AbilityDefinitionBurrowscarablvl2:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionIntelligenceBonusPlus4: AbilityDefinition
 AbilityDefinitionIntelligenceBonusPlus4 = class('AbilityDefinitionIntelligenceBonusPlus4', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceBonusPlus4 = AbilityDefinitionIntelligenceBonusPlus4
 
@@ -4283,6 +4444,7 @@ function AbilityDefinitionIntelligenceBonusPlus4:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionFirelordSummonLavaSpawn: AbilityDefinition
 AbilityDefinitionFirelordSummonLavaSpawn = class('AbilityDefinitionFirelordSummonLavaSpawn', AbilityDefinition)
 _G.AbilityDefinitionFirelordSummonLavaSpawn = AbilityDefinitionFirelordSummonLavaSpawn
 
@@ -4332,6 +4494,7 @@ function AbilityDefinitionFirelordSummonLavaSpawn:setSplitAttackCount(level, val
     self.def:setLvlDataInt('Nlm3', level, 3, value)
 end
 
+---@class AbilityDefinitionBurrowscarablvl3: AbilityDefinition
 AbilityDefinitionBurrowscarablvl3 = class('AbilityDefinitionBurrowscarablvl3', AbilityDefinition)
 _G.AbilityDefinitionBurrowscarablvl3 = AbilityDefinitionBurrowscarablvl3
 
@@ -4369,6 +4532,7 @@ function AbilityDefinitionBurrowscarablvl3:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionHeal: AbilityDefinition
 AbilityDefinitionHeal = class('AbilityDefinitionHeal', AbilityDefinition)
 _G.AbilityDefinitionHeal = AbilityDefinitionHeal
 
@@ -4382,6 +4546,7 @@ function AbilityDefinitionHeal:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Hea1', level, 1, value)
 end
 
+---@class AbilityDefinitionIntelligenceBonusPlus3: AbilityDefinition
 AbilityDefinitionIntelligenceBonusPlus3 = class('AbilityDefinitionIntelligenceBonusPlus3', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceBonusPlus3 = AbilityDefinitionIntelligenceBonusPlus3
 
@@ -4413,6 +4578,7 @@ function AbilityDefinitionIntelligenceBonusPlus3:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionIntelligenceBonusPlus6: AbilityDefinition
 AbilityDefinitionIntelligenceBonusPlus6 = class('AbilityDefinitionIntelligenceBonusPlus6', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceBonusPlus6 = AbilityDefinitionIntelligenceBonusPlus6
 
@@ -4444,6 +4610,7 @@ function AbilityDefinitionIntelligenceBonusPlus6:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionBeserk: AbilityDefinition
 AbilityDefinitionBeserk = class('AbilityDefinitionBeserk', AbilityDefinition)
 _G.AbilityDefinitionBeserk = AbilityDefinitionBeserk
 
@@ -4469,6 +4636,7 @@ function AbilityDefinitionBeserk:setAttackSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('bsk2', level, 2, value)
 end
 
+---@class AbilityDefinitionReplenishLifeMana: AbilityDefinition
 AbilityDefinitionReplenishLifeMana = class('AbilityDefinitionReplenishLifeMana', AbilityDefinition)
 _G.AbilityDefinitionReplenishLifeMana = AbilityDefinitionReplenishLifeMana
 
@@ -4512,6 +4680,7 @@ function AbilityDefinitionReplenishLifeMana:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Rej1', level, 1, value)
 end
 
+---@class AbilityDefinitionUltraVisionGlyph: AbilityDefinition
 AbilityDefinitionUltraVisionGlyph = class('AbilityDefinitionUltraVisionGlyph', AbilityDefinition)
 _G.AbilityDefinitionUltraVisionGlyph = AbilityDefinitionUltraVisionGlyph
 
@@ -4531,6 +4700,7 @@ function AbilityDefinitionUltraVisionGlyph:setUpgradeType(level, value)
     self.def:setLvlDataString('Iglu', level, 0, value)
 end
 
+---@class AbilityDefinitionReplenishLife: AbilityDefinition
 AbilityDefinitionReplenishLife = class('AbilityDefinitionReplenishLife', AbilityDefinition)
 _G.AbilityDefinitionReplenishLife = AbilityDefinitionReplenishLife
 
@@ -4562,6 +4732,7 @@ function AbilityDefinitionReplenishLife:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Rej1', level, 1, value)
 end
 
+---@class AbilityDefinitionInventory2slotunitUndead: AbilityDefinition
 AbilityDefinitionInventory2slotunitUndead = class('AbilityDefinitionInventory2slotunitUndead', AbilityDefinition)
 _G.AbilityDefinitionInventory2slotunitUndead = AbilityDefinitionInventory2slotunitUndead
 
@@ -4599,6 +4770,7 @@ function AbilityDefinitionInventory2slotunitUndead:setItemCapacity(level, value)
     self.def:setLvlDataInt('inv1', level, 1, value)
 end
 
+---@class AbilityDefinitionManaBattery: AbilityDefinition
 AbilityDefinitionManaBattery = class('AbilityDefinitionManaBattery', AbilityDefinition)
 _G.AbilityDefinitionManaBattery = AbilityDefinitionManaBattery
 
@@ -4636,6 +4808,7 @@ function AbilityDefinitionManaBattery:setRegenerateOnlyAtNight(level, value)
     self.def:setLvlDataBoolean('Mbt5', level, 5, value)
 end
 
+---@class AbilityDefinitionReplenishMana: AbilityDefinition
 AbilityDefinitionReplenishMana = class('AbilityDefinitionReplenishMana', AbilityDefinition)
 _G.AbilityDefinitionReplenishMana = AbilityDefinitionReplenishMana
 
@@ -4667,6 +4840,7 @@ function AbilityDefinitionReplenishMana:setMaximumUnitsAffected(level, value)
     self.def:setLvlDataInt('Rpb6', level, 0, value)
 end
 
+---@class AbilityDefinitionHealCreepNormal: AbilityDefinition
 AbilityDefinitionHealCreepNormal = class('AbilityDefinitionHealCreepNormal', AbilityDefinition)
 _G.AbilityDefinitionHealCreepNormal = AbilityDefinitionHealCreepNormal
 
@@ -4680,6 +4854,7 @@ function AbilityDefinitionHealCreepNormal:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Hea1', level, 1, value)
 end
 
+---@class AbilityDefinitionHealCreepHigh: AbilityDefinition
 AbilityDefinitionHealCreepHigh = class('AbilityDefinitionHealCreepHigh', AbilityDefinition)
 _G.AbilityDefinitionHealCreepHigh = AbilityDefinitionHealCreepHigh
 
@@ -4693,6 +4868,7 @@ function AbilityDefinitionHealCreepHigh:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Hea1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraSlow: AbilityDefinition
 AbilityDefinitionAuraSlow = class('AbilityDefinitionAuraSlow', AbilityDefinition)
 _G.AbilityDefinitionAuraSlow = AbilityDefinitionAuraSlow
 
@@ -4718,6 +4894,7 @@ function AbilityDefinitionAuraSlow:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Slo2', level, 2, value)
 end
 
+---@class AbilityDefinitionCurse: AbilityDefinition
 AbilityDefinitionCurse = class('AbilityDefinitionCurse', AbilityDefinition)
 _G.AbilityDefinitionCurse = AbilityDefinitionCurse
 
@@ -4731,6 +4908,7 @@ function AbilityDefinitionCurse:setChancetoMiss(level, value)
     self.def:setLvlDataUnreal('Crs', level, 1, value)
 end
 
+---@class AbilityDefinitionSuperEarthquake: AbilityDefinition
 AbilityDefinitionSuperEarthquake = class('AbilityDefinitionSuperEarthquake', AbilityDefinition)
 _G.AbilityDefinitionSuperEarthquake = AbilityDefinitionSuperEarthquake
 
@@ -4762,6 +4940,7 @@ function AbilityDefinitionSuperEarthquake:setDamageperSecondtoBuildings(level, v
     self.def:setLvlDataUnreal('Oeq2', level, 2, value)
 end
 
+---@class AbilityDefinitionFortificationGlyph: AbilityDefinition
 AbilityDefinitionFortificationGlyph = class('AbilityDefinitionFortificationGlyph', AbilityDefinition)
 _G.AbilityDefinitionFortificationGlyph = AbilityDefinitionFortificationGlyph
 
@@ -4781,6 +4960,7 @@ function AbilityDefinitionFortificationGlyph:setUpgradeType(level, value)
     self.def:setLvlDataString('Iglu', level, 0, value)
 end
 
+---@class AbilityDefinitionManaBurndemonAmbd: AbilityDefinition
 AbilityDefinitionManaBurndemonAmbd = class('AbilityDefinitionManaBurndemonAmbd', AbilityDefinition)
 _G.AbilityDefinitionManaBurndemonAmbd = AbilityDefinitionManaBurndemonAmbd
 
@@ -4806,6 +4986,7 @@ function AbilityDefinitionManaBurndemonAmbd:setBoltDelay(level, value)
     self.def:setLvlDataUnreal('Emb2', level, 2, value)
 end
 
+---@class AbilityDefinitionFarseerFarSight: AbilityDefinition
 AbilityDefinitionFarseerFarSight = class('AbilityDefinitionFarseerFarSight', AbilityDefinition)
 _G.AbilityDefinitionFarseerFarSight = AbilityDefinitionFarseerFarSight
 
@@ -4819,6 +5000,7 @@ function AbilityDefinitionFarseerFarSight:setDetectionType(level, value)
     self.def:setLvlDataString('Ofs1', level, 1, value)
 end
 
+---@class AbilityDefinitionAgilityModPlus2: AbilityDefinition
 AbilityDefinitionAgilityModPlus2 = class('AbilityDefinitionAgilityModPlus2', AbilityDefinition)
 _G.AbilityDefinitionAgilityModPlus2 = AbilityDefinitionAgilityModPlus2
 
@@ -4850,6 +5032,7 @@ function AbilityDefinitionAgilityModPlus2:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionHarvestLumberArchimondeghouls: AbilityDefinition
 AbilityDefinitionHarvestLumberArchimondeghouls = class('AbilityDefinitionHarvestLumberArchimondeghouls', AbilityDefinition)
 _G.AbilityDefinitionHarvestLumberArchimondeghouls = AbilityDefinitionHarvestLumberArchimondeghouls
 
@@ -4869,6 +5052,7 @@ function AbilityDefinitionHarvestLumberArchimondeghouls:setDamagetoTree(level, v
     self.def:setLvlDataInt('Har1', level, 1, value)
 end
 
+---@class AbilityDefinitionHealingWardAIhw: AbilityDefinition
 AbilityDefinitionHealingWardAIhw = class('AbilityDefinitionHealingWardAIhw', AbilityDefinition)
 _G.AbilityDefinitionHealingWardAIhw = AbilityDefinitionHealingWardAIhw
 
@@ -4882,6 +5066,7 @@ function AbilityDefinitionHealingWardAIhw:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionIllidanMetamorphosis: AbilityDefinition
 AbilityDefinitionIllidanMetamorphosis = class('AbilityDefinitionIllidanMetamorphosis', AbilityDefinition)
 _G.AbilityDefinitionIllidanMetamorphosis = AbilityDefinitionIllidanMetamorphosis
 
@@ -4925,6 +5110,7 @@ function AbilityDefinitionIllidanMetamorphosis:setAlternateFormUnit(level, value
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionHexCreep: AbilityDefinition
 AbilityDefinitionHexCreep = class('AbilityDefinitionHexCreep', AbilityDefinition)
 _G.AbilityDefinitionHexCreep = AbilityDefinitionHexCreep
 
@@ -4962,6 +5148,7 @@ function AbilityDefinitionHexCreep:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Ply1', level, 1, value)
 end
 
+---@class AbilityDefinitionHealingWardcreep: AbilityDefinition
 AbilityDefinitionHealingWardcreep = class('AbilityDefinitionHealingWardcreep', AbilityDefinition)
 _G.AbilityDefinitionHealingWardcreep = AbilityDefinitionHealingWardcreep
 
@@ -4975,6 +5162,7 @@ function AbilityDefinitionHealingWardcreep:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionBattlestations: AbilityDefinition
 AbilityDefinitionBattlestations = class('AbilityDefinitionBattlestations', AbilityDefinition)
 _G.AbilityDefinitionBattlestations = AbilityDefinitionBattlestations
 
@@ -4994,6 +5182,7 @@ function AbilityDefinitionBattlestations:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Btl1', level, 0, value)
 end
 
+---@class AbilityDefinitionHealingWaveCreep: AbilityDefinition
 AbilityDefinitionHealingWaveCreep = class('AbilityDefinitionHealingWaveCreep', AbilityDefinition)
 _G.AbilityDefinitionHealingWaveCreep = AbilityDefinitionHealingWaveCreep
 
@@ -5019,6 +5208,7 @@ function AbilityDefinitionHealingWaveCreep:setDamageReductionperTarget(level, va
     self.def:setLvlDataUnreal('Ocl3', level, 3, value)
 end
 
+---@class AbilityDefinitionInnerFireCreep: AbilityDefinition
 AbilityDefinitionInnerFireCreep = class('AbilityDefinitionInnerFireCreep', AbilityDefinition)
 _G.AbilityDefinitionInnerFireCreep = AbilityDefinitionInnerFireCreep
 
@@ -5050,6 +5240,7 @@ function AbilityDefinitionInnerFireCreep:setDamageIncrease(level, value)
     self.def:setLvlDataUnreal('Inf1', level, 1, value)
 end
 
+---@class AbilityDefinitionAncestralSpirit: AbilityDefinition
 AbilityDefinitionAncestralSpirit = class('AbilityDefinitionAncestralSpirit', AbilityDefinition)
 _G.AbilityDefinitionAncestralSpirit = AbilityDefinitionAncestralSpirit
 
@@ -5069,6 +5260,7 @@ function AbilityDefinitionAncestralSpirit:setManaRestoredFactor(level, value)
     self.def:setLvlDataUnreal('ast2', level, 2, value)
 end
 
+---@class AbilityDefinitionHarvestLumbershredder: AbilityDefinition
 AbilityDefinitionHarvestLumbershredder = class('AbilityDefinitionHarvestLumbershredder', AbilityDefinition)
 _G.AbilityDefinitionHarvestLumbershredder = AbilityDefinitionHarvestLumbershredder
 
@@ -5088,6 +5280,7 @@ function AbilityDefinitionHarvestLumbershredder:setDamagetoTree(level, value)
     self.def:setLvlDataInt('Har1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemHealAoeGreater: AbilityDefinition
 AbilityDefinitionItemHealAoeGreater = class('AbilityDefinitionItemHealAoeGreater', AbilityDefinition)
 _G.AbilityDefinitionItemHealAoeGreater = AbilityDefinitionItemHealAoeGreater
 
@@ -5101,6 +5294,7 @@ function AbilityDefinitionItemHealAoeGreater:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionPulverize: AbilityDefinition
 AbilityDefinitionPulverize = class('AbilityDefinitionPulverize', AbilityDefinition)
 _G.AbilityDefinitionPulverize = AbilityDefinitionPulverize
 
@@ -5132,6 +5326,7 @@ function AbilityDefinitionPulverize:setChancetoStomp(level, value)
     self.def:setLvlDataUnreal('War1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemHealAoe: AbilityDefinition
 AbilityDefinitionItemHealAoe = class('AbilityDefinitionItemHealAoe', AbilityDefinition)
 _G.AbilityDefinitionItemHealAoe = AbilityDefinitionItemHealAoe
 
@@ -5145,6 +5340,7 @@ function AbilityDefinitionItemHealAoe:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionAIhe: AbilityDefinition
 AbilityDefinitionAIhe = class('AbilityDefinitionAIhe', AbilityDefinition)
 _G.AbilityDefinitionAIhe = AbilityDefinitionAIhe
 
@@ -5158,6 +5354,7 @@ function AbilityDefinitionAIhe:setHitPointsGained(level, value)
     self.def:setLvlDataInt('Ihpg', level, 1, value)
 end
 
+---@class AbilityDefinitionFarseerEarthquake: AbilityDefinition
 AbilityDefinitionFarseerEarthquake = class('AbilityDefinitionFarseerEarthquake', AbilityDefinition)
 _G.AbilityDefinitionFarseerEarthquake = AbilityDefinitionFarseerEarthquake
 
@@ -5189,6 +5386,7 @@ function AbilityDefinitionFarseerEarthquake:setDamageperSecondtoBuildings(level,
     self.def:setLvlDataUnreal('Oeq2', level, 2, value)
 end
 
+---@class AbilityDefinitionDemonHunterImmolation: AbilityDefinition
 AbilityDefinitionDemonHunterImmolation = class('AbilityDefinitionDemonHunterImmolation', AbilityDefinition)
 _G.AbilityDefinitionDemonHunterImmolation = AbilityDefinitionDemonHunterImmolation
 
@@ -5214,6 +5412,7 @@ function AbilityDefinitionDemonHunterImmolation:setDamageperInterval(level, valu
     self.def:setLvlDataUnreal('Eim1', level, 1, value)
 end
 
+---@class AbilityDefinitionNeutralDetectionRevealability: AbilityDefinition
 AbilityDefinitionNeutralDetectionRevealability = class('AbilityDefinitionNeutralDetectionRevealability', AbilityDefinition)
 _G.AbilityDefinitionNeutralDetectionRevealability = AbilityDefinitionNeutralDetectionRevealability
 
@@ -5239,6 +5438,7 @@ function AbilityDefinitionNeutralDetectionRevealability:setGoldCost(level, value
     self.def:setLvlDataInt('Ndt1', level, 1, value)
 end
 
+---@class AbilityDefinitionWeb: AbilityDefinition
 AbilityDefinitionWeb = class('AbilityDefinitionWeb', AbilityDefinition)
 _G.AbilityDefinitionWeb = AbilityDefinitionWeb
 
@@ -5264,6 +5464,7 @@ function AbilityDefinitionWeb:setMeleeAttackRange(level, value)
     self.def:setLvlDataUnreal('Ens3', level, 3, value)
 end
 
+---@class AbilityDefinitionFigurineIceRevenant: AbilityDefinition
 AbilityDefinitionFigurineIceRevenant = class('AbilityDefinitionFigurineIceRevenant', AbilityDefinition)
 _G.AbilityDefinitionFigurineIceRevenant = AbilityDefinitionFigurineIceRevenant
 
@@ -5295,6 +5496,7 @@ function AbilityDefinitionFigurineIceRevenant:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionSuperDeathandDecay: AbilityDefinition
 AbilityDefinitionSuperDeathandDecay = class('AbilityDefinitionSuperDeathandDecay', AbilityDefinition)
 _G.AbilityDefinitionSuperDeathandDecay = AbilityDefinitionSuperDeathandDecay
 
@@ -5314,6 +5516,7 @@ function AbilityDefinitionSuperDeathandDecay:setMaxLifeDrainedperSecond(level, v
     self.def:setLvlDataUnreal('Udd1', level, 1, value)
 end
 
+---@class AbilityDefinitionDarkConversionFast: AbilityDefinition
 AbilityDefinitionDarkConversionFast = class('AbilityDefinitionDarkConversionFast', AbilityDefinition)
 _G.AbilityDefinitionDarkConversionFast = AbilityDefinitionDarkConversionFast
 
@@ -5333,6 +5536,7 @@ function AbilityDefinitionDarkConversionFast:setRacetoConvert(level, value)
     self.def:setLvlDataString('Ndc1', level, 1, value)
 end
 
+---@class AbilityDefinitionImmolationcreep: AbilityDefinition
 AbilityDefinitionImmolationcreep = class('AbilityDefinitionImmolationcreep', AbilityDefinition)
 _G.AbilityDefinitionImmolationcreep = AbilityDefinitionImmolationcreep
 
@@ -5358,6 +5562,7 @@ function AbilityDefinitionImmolationcreep:setDamageperInterval(level, value)
     self.def:setLvlDataUnreal('Eim1', level, 1, value)
 end
 
+---@class AbilityDefinitionIntelligenceMod: AbilityDefinition
 AbilityDefinitionIntelligenceMod = class('AbilityDefinitionIntelligenceMod', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceMod = AbilityDefinitionIntelligenceMod
 
@@ -5389,6 +5594,7 @@ function AbilityDefinitionIntelligenceMod:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionItemInferno: AbilityDefinition
 AbilityDefinitionItemInferno = class('AbilityDefinitionItemInferno', AbilityDefinition)
 _G.AbilityDefinitionItemInferno = AbilityDefinitionItemInferno
 
@@ -5420,6 +5626,7 @@ function AbilityDefinitionItemInferno:setImpactDelay(level, value)
     self.def:setLvlDataUnreal('Uin3', level, 3, value)
 end
 
+---@class AbilityDefinitionItemIllusion: AbilityDefinition
 AbilityDefinitionItemIllusion = class('AbilityDefinitionItemIllusion', AbilityDefinition)
 _G.AbilityDefinitionItemIllusion = AbilityDefinitionItemIllusion
 
@@ -5439,6 +5646,7 @@ function AbilityDefinitionItemIllusion:setDamageDealtofnormal(level, value)
     self.def:setLvlDataUnreal('Iild', level, 1, value)
 end
 
+---@class AbilityDefinitionMagicDefense: AbilityDefinition
 AbilityDefinitionMagicDefense = class('AbilityDefinitionMagicDefense', AbilityDefinition)
 _G.AbilityDefinitionMagicDefense = AbilityDefinitionMagicDefense
 
@@ -5494,6 +5702,7 @@ function AbilityDefinitionMagicDefense:setMagicDamageReduction(level, value)
     self.def:setLvlDataUnreal('Def5', level, 5, value)
 end
 
+---@class AbilityDefinitionAvengerForm: AbilityDefinition
 AbilityDefinitionAvengerForm = class('AbilityDefinitionAvengerForm', AbilityDefinition)
 _G.AbilityDefinitionAvengerForm = AbilityDefinitionAvengerForm
 
@@ -5537,6 +5746,7 @@ function AbilityDefinitionAvengerForm:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionHarvestLumber: AbilityDefinition
 AbilityDefinitionHarvestLumber = class('AbilityDefinitionHarvestLumber', AbilityDefinition)
 _G.AbilityDefinitionHarvestLumber = AbilityDefinitionHarvestLumber
 
@@ -5556,6 +5766,7 @@ function AbilityDefinitionHarvestLumber:setDamagetoTree(level, value)
     self.def:setLvlDataInt('Har1', level, 1, value)
 end
 
+---@class AbilityDefinitionNeutralBuilding: AbilityDefinition
 AbilityDefinitionNeutralBuilding = class('AbilityDefinitionNeutralBuilding', AbilityDefinition)
 _G.AbilityDefinitionNeutralBuilding = AbilityDefinitionNeutralBuilding
 
@@ -5587,6 +5798,7 @@ function AbilityDefinitionNeutralBuilding:setInteractionType(level, value)
     self.def:setLvlDataInt('Neu2', level, 2, value)
 end
 
+---@class AbilityDefinitionShopSharing: AbilityDefinition
 AbilityDefinitionShopSharing = class('AbilityDefinitionShopSharing', AbilityDefinition)
 _G.AbilityDefinitionShopSharing = AbilityDefinitionShopSharing
 
@@ -5618,6 +5830,7 @@ function AbilityDefinitionShopSharing:setInteractionType(level, value)
     self.def:setLvlDataInt('Neu2', level, 2, value)
 end
 
+---@class AbilityDefinitionRepairHuman: AbilityDefinition
 AbilityDefinitionRepairHuman = class('AbilityDefinitionRepairHuman', AbilityDefinition)
 _G.AbilityDefinitionRepairHuman = AbilityDefinitionRepairHuman
 
@@ -5655,6 +5868,7 @@ function AbilityDefinitionRepairHuman:setPowerbuildCost(level, value)
     self.def:setLvlDataUnreal('Rep3', level, 3, value)
 end
 
+---@class AbilityDefinitionAhrs: AbilityDefinition
 AbilityDefinitionAhrs = class('AbilityDefinitionAhrs', AbilityDefinition)
 _G.AbilityDefinitionAhrs = AbilityDefinitionAhrs
 
@@ -5680,6 +5894,7 @@ function AbilityDefinitionAhrs:setDamage(level, value)
     self.def:setLvlDataUnreal('Wrs1', level, 1, value)
 end
 
+---@class AbilityDefinitionFirelordIncinerate: AbilityDefinition
 AbilityDefinitionFirelordIncinerate = class('AbilityDefinitionFirelordIncinerate', AbilityDefinition)
 _G.AbilityDefinitionFirelordIncinerate = AbilityDefinitionFirelordIncinerate
 
@@ -5723,6 +5938,7 @@ function AbilityDefinitionFirelordIncinerate:setDeathDamageHalfArea(level, value
     self.def:setLvlDataUnreal('Nic5', level, 5, value)
 end
 
+---@class AbilityDefinitionFirelordIncinerateArrow: AbilityDefinition
 AbilityDefinitionFirelordIncinerateArrow = class('AbilityDefinitionFirelordIncinerateArrow', AbilityDefinition)
 _G.AbilityDefinitionFirelordIncinerateArrow = AbilityDefinitionFirelordIncinerateArrow
 
@@ -5766,6 +5982,7 @@ function AbilityDefinitionFirelordIncinerateArrow:setDeathDamageHalfArea(level, 
     self.def:setLvlDataUnreal('Nic5', level, 5, value)
 end
 
+---@class AbilityDefinitionBearform: AbilityDefinition
 AbilityDefinitionBearform = class('AbilityDefinitionBearform', AbilityDefinition)
 _G.AbilityDefinitionBearform = AbilityDefinitionBearform
 
@@ -5803,6 +6020,7 @@ function AbilityDefinitionBearform:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionCryptLordLocustSwarm: AbilityDefinition
 AbilityDefinitionCryptLordLocustSwarm = class('AbilityDefinitionCryptLordLocustSwarm', AbilityDefinition)
 _G.AbilityDefinitionCryptLordLocustSwarm = AbilityDefinitionCryptLordLocustSwarm
 
@@ -5846,6 +6064,7 @@ function AbilityDefinitionCryptLordLocustSwarm:setDamageReturnFactor(level, valu
     self.def:setLvlDataUnreal('Uls4', level, 4, value)
 end
 
+---@class AbilityDefinitionRestoration: AbilityDefinition
 AbilityDefinitionRestoration = class('AbilityDefinitionRestoration', AbilityDefinition)
 _G.AbilityDefinitionRestoration = AbilityDefinitionRestoration
 
@@ -5883,6 +6102,7 @@ function AbilityDefinitionRestoration:setPowerbuildCost(level, value)
     self.def:setLvlDataUnreal('Rep3', level, 3, value)
 end
 
+---@class AbilityDefinitionFarseerChainLightning: AbilityDefinition
 AbilityDefinitionFarseerChainLightning = class('AbilityDefinitionFarseerChainLightning', AbilityDefinition)
 _G.AbilityDefinitionFarseerChainLightning = AbilityDefinitionFarseerChainLightning
 
@@ -5908,6 +6128,7 @@ function AbilityDefinitionFarseerChainLightning:setDamageReductionperTarget(leve
     self.def:setLvlDataUnreal('Ocl3', level, 3, value)
 end
 
+---@class AbilityDefinitionMaxLifeBonusGreater: AbilityDefinition
 AbilityDefinitionMaxLifeBonusGreater = class('AbilityDefinitionMaxLifeBonusGreater', AbilityDefinition)
 _G.AbilityDefinitionMaxLifeBonusGreater = AbilityDefinitionMaxLifeBonusGreater
 
@@ -5921,6 +6142,7 @@ function AbilityDefinitionMaxLifeBonusGreater:setMaxLifeGained(level, value)
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionInferno: AbilityDefinition
 AbilityDefinitionInferno = class('AbilityDefinitionInferno', AbilityDefinition)
 _G.AbilityDefinitionInferno = AbilityDefinitionInferno
 
@@ -5952,6 +6174,7 @@ function AbilityDefinitionInferno:setImpactDelay(level, value)
     self.def:setLvlDataUnreal('Uin3', level, 3, value)
 end
 
+---@class AbilityDefinitionMechanicalCritter: AbilityDefinition
 AbilityDefinitionMechanicalCritter = class('AbilityDefinitionMechanicalCritter', AbilityDefinition)
 _G.AbilityDefinitionMechanicalCritter = AbilityDefinitionMechanicalCritter
 
@@ -5965,6 +6188,7 @@ function AbilityDefinitionMechanicalCritter:setNumberofUnitsCreated(level, value
     self.def:setLvlDataInt('mec1', level, 1, value)
 end
 
+---@class AbilityDefinitionMaxLifeBonusLesser: AbilityDefinition
 AbilityDefinitionMaxLifeBonusLesser = class('AbilityDefinitionMaxLifeBonusLesser', AbilityDefinition)
 _G.AbilityDefinitionMaxLifeBonusLesser = AbilityDefinitionMaxLifeBonusLesser
 
@@ -5978,6 +6202,7 @@ function AbilityDefinitionMaxLifeBonusLesser:setMaxLifeGained(level, value)
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionPurgeApg2: AbilityDefinition
 AbilityDefinitionPurgeApg2 = class('AbilityDefinitionPurgeApg2', AbilityDefinition)
 _G.AbilityDefinitionPurgeApg2 = AbilityDefinitionPurgeApg2
 
@@ -5991,6 +6216,7 @@ function AbilityDefinitionPurgeApg2:setManaLoss(level, value)
     self.def:setLvlDataInt('Prg6', level, 6, value)
 end
 
+---@class AbilityDefinitionBladeMasterCriticalStrike: AbilityDefinition
 AbilityDefinitionBladeMasterCriticalStrike = class('AbilityDefinitionBladeMasterCriticalStrike', AbilityDefinition)
 _G.AbilityDefinitionBladeMasterCriticalStrike = AbilityDefinitionBladeMasterCriticalStrike
 
@@ -6028,6 +6254,7 @@ function AbilityDefinitionBladeMasterCriticalStrike:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Ocr5', level, 5, value)
 end
 
+---@class AbilityDefinitionAuraPlagueAbomination: AbilityDefinition
 AbilityDefinitionAuraPlagueAbomination = class('AbilityDefinitionAuraPlagueAbomination', AbilityDefinition)
 _G.AbilityDefinitionAuraPlagueAbomination = AbilityDefinitionAuraPlagueAbomination
 
@@ -6059,6 +6286,7 @@ function AbilityDefinitionAuraPlagueAbomination:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Apl2', level, 2, value)
 end
 
+---@class AbilityDefinitionAuraPlagueCreep: AbilityDefinition
 AbilityDefinitionAuraPlagueCreep = class('AbilityDefinitionAuraPlagueCreep', AbilityDefinition)
 _G.AbilityDefinitionAuraPlagueCreep = AbilityDefinitionAuraPlagueCreep
 
@@ -6090,6 +6318,7 @@ function AbilityDefinitionAuraPlagueCreep:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Apl2', level, 2, value)
 end
 
+---@class AbilityDefinitionPermanentImmolation: AbilityDefinition
 AbilityDefinitionPermanentImmolation = class('AbilityDefinitionPermanentImmolation', AbilityDefinition)
 _G.AbilityDefinitionPermanentImmolation = AbilityDefinitionPermanentImmolation
 
@@ -6115,6 +6344,7 @@ function AbilityDefinitionPermanentImmolation:setDamageperInterval(level, value)
     self.def:setLvlDataUnreal('Eim1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraPlaguePlagueWard: AbilityDefinition
 AbilityDefinitionAuraPlaguePlagueWard = class('AbilityDefinitionAuraPlaguePlagueWard', AbilityDefinition)
 _G.AbilityDefinitionAuraPlaguePlagueWard = AbilityDefinitionAuraPlaguePlagueWard
 
@@ -6146,6 +6376,7 @@ function AbilityDefinitionAuraPlaguePlagueWard:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Apl2', level, 2, value)
 end
 
+---@class AbilityDefinitionCyclonecreep: AbilityDefinition
 AbilityDefinitionCyclonecreep = class('AbilityDefinitionCyclonecreep', AbilityDefinition)
 _G.AbilityDefinitionCyclonecreep = AbilityDefinitionCyclonecreep
 
@@ -6159,6 +6390,7 @@ function AbilityDefinitionCyclonecreep:setCanBeDispelled(level, value)
     self.def:setLvlDataBoolean('cyc1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraPlagueCreepnodamage: AbilityDefinition
 AbilityDefinitionAuraPlagueCreepnodamage = class('AbilityDefinitionAuraPlagueCreepnodamage', AbilityDefinition)
 _G.AbilityDefinitionAuraPlagueCreepnodamage = AbilityDefinitionAuraPlagueCreepnodamage
 
@@ -6190,6 +6422,7 @@ function AbilityDefinitionAuraPlagueCreepnodamage:setDamageperSecond(level, valu
     self.def:setLvlDataUnreal('Apl2', level, 2, value)
 end
 
+---@class AbilityDefinitionLightningDamageBonus: AbilityDefinition
 AbilityDefinitionLightningDamageBonus = class('AbilityDefinitionLightningDamageBonus', AbilityDefinition)
 _G.AbilityDefinitionLightningDamageBonus = AbilityDefinitionLightningDamageBonus
 
@@ -6215,6 +6448,7 @@ function AbilityDefinitionLightningDamageBonus:setDamageBonusDice(level, value)
     self.def:setLvlDataInt('Idic', level, 1, value)
 end
 
+---@class AbilityDefinitionArtn: AbilityDefinition
 AbilityDefinitionArtn = class('AbilityDefinitionArtn', AbilityDefinition)
 _G.AbilityDefinitionArtn = AbilityDefinitionArtn
 
@@ -6234,6 +6468,7 @@ function AbilityDefinitionArtn:setAcceptsLumber(level, value)
     self.def:setLvlDataBoolean('Rtn2', level, 2, value)
 end
 
+---@class AbilityDefinitionCrushingWave: AbilityDefinition
 AbilityDefinitionCrushingWave = class('AbilityDefinitionCrushingWave', AbilityDefinition)
 _G.AbilityDefinitionCrushingWave = AbilityDefinitionCrushingWave
 
@@ -6265,6 +6500,7 @@ function AbilityDefinitionCrushingWave:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionColdArrowscreep: AbilityDefinition
 AbilityDefinitionColdArrowscreep = class('AbilityDefinitionColdArrowscreep', AbilityDefinition)
 _G.AbilityDefinitionColdArrowscreep = AbilityDefinitionColdArrowscreep
 
@@ -6296,6 +6532,7 @@ function AbilityDefinitionColdArrowscreep:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Hca2', level, 2, value)
 end
 
+---@class AbilityDefinitionEatTree: AbilityDefinition
 AbilityDefinitionEatTree = class('AbilityDefinitionEatTree', AbilityDefinition)
 _G.AbilityDefinitionEatTree = AbilityDefinitionEatTree
 
@@ -6321,6 +6558,7 @@ function AbilityDefinitionEatTree:setRipDelay(level, value)
     self.def:setLvlDataUnreal('Eat1', level, 1, value)
 end
 
+---@class AbilityDefinitionPreservation: AbilityDefinition
 AbilityDefinitionPreservation = class('AbilityDefinitionPreservation', AbilityDefinition)
 _G.AbilityDefinitionPreservation = AbilityDefinitionPreservation
 
@@ -6334,6 +6572,7 @@ function AbilityDefinitionPreservation:setBuildingTypesAllowed(level, value)
     self.def:setLvlDataString('Npr1', level, 1, value)
 end
 
+---@class AbilityDefinitionShadowMeldAkama: AbilityDefinition
 AbilityDefinitionShadowMeldAkama = class('AbilityDefinitionShadowMeldAkama', AbilityDefinition)
 _G.AbilityDefinitionShadowMeldAkama = AbilityDefinitionShadowMeldAkama
 
@@ -6359,6 +6598,7 @@ function AbilityDefinitionShadowMeldAkama:setFadeDuration(level, value)
     self.def:setLvlDataUnreal('Shm1', level, 1, value)
 end
 
+---@class AbilityDefinitionCripplecreep: AbilityDefinition
 AbilityDefinitionCripplecreep = class('AbilityDefinitionCripplecreep', AbilityDefinition)
 _G.AbilityDefinitionCripplecreep = AbilityDefinitionCripplecreep
 
@@ -6384,6 +6624,7 @@ function AbilityDefinitionCripplecreep:setMovementSpeedReduction(level, value)
     self.def:setLvlDataUnreal('Cri1', level, 1, value)
 end
 
+---@class AbilityDefinitionCursecreep: AbilityDefinition
 AbilityDefinitionCursecreep = class('AbilityDefinitionCursecreep', AbilityDefinition)
 _G.AbilityDefinitionCursecreep = AbilityDefinitionCursecreep
 
@@ -6397,6 +6638,7 @@ function AbilityDefinitionCursecreep:setChancetoMiss(level, value)
     self.def:setLvlDataUnreal('Crs', level, 1, value)
 end
 
+---@class AbilityDefinitionCriticalStrikecreep: AbilityDefinition
 AbilityDefinitionCriticalStrikecreep = class('AbilityDefinitionCriticalStrikecreep', AbilityDefinition)
 _G.AbilityDefinitionCriticalStrikecreep = AbilityDefinitionCriticalStrikecreep
 
@@ -6434,6 +6676,7 @@ function AbilityDefinitionCriticalStrikecreep:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Ocr5', level, 5, value)
 end
 
+---@class AbilityDefinitionCannibalizecreep: AbilityDefinition
 AbilityDefinitionCannibalizecreep = class('AbilityDefinitionCannibalizecreep', AbilityDefinition)
 _G.AbilityDefinitionCannibalizecreep = AbilityDefinitionCannibalizecreep
 
@@ -6453,6 +6696,7 @@ function AbilityDefinitionCannibalizecreep:setHitPointsperSecond(level, value)
     self.def:setLvlDataUnreal('Can1', level, 1, value)
 end
 
+---@class AbilityDefinitionCycloneCenarius: AbilityDefinition
 AbilityDefinitionCycloneCenarius = class('AbilityDefinitionCycloneCenarius', AbilityDefinition)
 _G.AbilityDefinitionCycloneCenarius = AbilityDefinitionCycloneCenarius
 
@@ -6466,6 +6710,7 @@ function AbilityDefinitionCycloneCenarius:setCanBeDispelled(level, value)
     self.def:setLvlDataBoolean('cyc1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemManaRestoreGreater: AbilityDefinition
 AbilityDefinitionItemManaRestoreGreater = class('AbilityDefinitionItemManaRestoreGreater', AbilityDefinition)
 _G.AbilityDefinitionItemManaRestoreGreater = AbilityDefinitionItemManaRestoreGreater
 
@@ -6479,6 +6724,7 @@ function AbilityDefinitionItemManaRestoreGreater:setManaPointsGained(level, valu
     self.def:setLvlDataInt('Impg', level, 1, value)
 end
 
+---@class AbilityDefinitionItemManaRestoreLesser: AbilityDefinition
 AbilityDefinitionItemManaRestoreLesser = class('AbilityDefinitionItemManaRestoreLesser', AbilityDefinition)
 _G.AbilityDefinitionItemManaRestoreLesser = AbilityDefinitionItemManaRestoreLesser
 
@@ -6492,6 +6738,7 @@ function AbilityDefinitionItemManaRestoreLesser:setManaPointsGained(level, value
     self.def:setLvlDataInt('Impg', level, 1, value)
 end
 
+---@class AbilityDefinitionStoneForm: AbilityDefinition
 AbilityDefinitionStoneForm = class('AbilityDefinitionStoneForm', AbilityDefinition)
 _G.AbilityDefinitionStoneForm = AbilityDefinitionStoneForm
 
@@ -6535,6 +6782,7 @@ function AbilityDefinitionStoneForm:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionChainLightningcreep: AbilityDefinition
 AbilityDefinitionChainLightningcreep = class('AbilityDefinitionChainLightningcreep', AbilityDefinition)
 _G.AbilityDefinitionChainLightningcreep = AbilityDefinitionChainLightningcreep
 
@@ -6560,6 +6808,7 @@ function AbilityDefinitionChainLightningcreep:setDamageReductionperTarget(level,
     self.def:setLvlDataUnreal('Ocl3', level, 3, value)
 end
 
+---@class AbilityDefinitionFaerieFire: AbilityDefinition
 AbilityDefinitionFaerieFire = class('AbilityDefinitionFaerieFire', AbilityDefinition)
 _G.AbilityDefinitionFaerieFire = AbilityDefinitionFaerieFire
 
@@ -6579,6 +6828,7 @@ function AbilityDefinitionFaerieFire:setDefenseReduction(level, value)
     self.def:setLvlDataInt('Fae1', level, 1, value)
 end
 
+---@class AbilityDefinitionCharm: AbilityDefinition
 AbilityDefinitionCharm = class('AbilityDefinitionCharm', AbilityDefinition)
 _G.AbilityDefinitionCharm = AbilityDefinitionCharm
 
@@ -6592,6 +6842,7 @@ function AbilityDefinitionCharm:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Nch1', level, 1, value)
 end
 
+---@class AbilityDefinitionManaSteal: AbilityDefinition
 AbilityDefinitionManaSteal = class('AbilityDefinitionManaSteal', AbilityDefinition)
 _G.AbilityDefinitionManaSteal = AbilityDefinitionManaSteal
 
@@ -6629,6 +6880,7 @@ function AbilityDefinitionManaSteal:setManaConversionAsPercent(level, value)
     self.def:setLvlDataBoolean('Udp3', level, 3, value)
 end
 
+---@class AbilityDefinitionAuraEnduranceCreep: AbilityDefinition
 AbilityDefinitionAuraEnduranceCreep = class('AbilityDefinitionAuraEnduranceCreep', AbilityDefinition)
 _G.AbilityDefinitionAuraEnduranceCreep = AbilityDefinitionAuraEnduranceCreep
 
@@ -6648,6 +6900,7 @@ function AbilityDefinitionAuraEnduranceCreep:setAttackSpeedIncrease(level, value
     self.def:setLvlDataUnreal('Oae2', level, 2, value)
 end
 
+---@class AbilityDefinitionTichondriusInferno: AbilityDefinition
 AbilityDefinitionTichondriusInferno = class('AbilityDefinitionTichondriusInferno', AbilityDefinition)
 _G.AbilityDefinitionTichondriusInferno = AbilityDefinitionTichondriusInferno
 
@@ -6679,6 +6932,7 @@ function AbilityDefinitionTichondriusInferno:setImpactDelay(level, value)
     self.def:setLvlDataUnreal('Uin3', level, 3, value)
 end
 
+---@class AbilityDefinitionCryptLordImpale: AbilityDefinition
 AbilityDefinitionCryptLordImpale = class('AbilityDefinitionCryptLordImpale', AbilityDefinition)
 _G.AbilityDefinitionCryptLordImpale = AbilityDefinitionCryptLordImpale
 
@@ -6710,6 +6964,7 @@ function AbilityDefinitionCryptLordImpale:setWaveDistance(level, value)
     self.def:setLvlDataUnreal('Uim1', level, 1, value)
 end
 
+---@class AbilityDefinitionFrostBolt: AbilityDefinition
 AbilityDefinitionFrostBolt = class('AbilityDefinitionFrostBolt', AbilityDefinition)
 _G.AbilityDefinitionFrostBolt = AbilityDefinitionFrostBolt
 
@@ -6723,6 +6978,7 @@ function AbilityDefinitionFrostBolt:setDamage(level, value)
     self.def:setLvlDataUnreal('Htb1', level, 1, value)
 end
 
+---@class AbilityDefinitionCarrionSwarmcreep: AbilityDefinition
 AbilityDefinitionCarrionSwarmcreep = class('AbilityDefinitionCarrionSwarmcreep', AbilityDefinition)
 _G.AbilityDefinitionCarrionSwarmcreep = AbilityDefinitionCarrionSwarmcreep
 
@@ -6754,6 +7010,7 @@ function AbilityDefinitionCarrionSwarmcreep:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionDreadlordInferno: AbilityDefinition
 AbilityDefinitionDreadlordInferno = class('AbilityDefinitionDreadlordInferno', AbilityDefinition)
 _G.AbilityDefinitionDreadlordInferno = AbilityDefinitionDreadlordInferno
 
@@ -6785,6 +7042,7 @@ function AbilityDefinitionDreadlordInferno:setImpactDelay(level, value)
     self.def:setLvlDataUnreal('Uin3', level, 3, value)
 end
 
+---@class AbilityDefinitionWispHarvestInvulnerable: AbilityDefinition
 AbilityDefinitionWispHarvestInvulnerable = class('AbilityDefinitionWispHarvestInvulnerable', AbilityDefinition)
 _G.AbilityDefinitionWispHarvestInvulnerable = AbilityDefinitionWispHarvestInvulnerable
 
@@ -6810,6 +7068,7 @@ function AbilityDefinitionWispHarvestInvulnerable:setLumberperInterval(level, va
     self.def:setLvlDataUnreal('Wha1', level, 1, value)
 end
 
+---@class AbilityDefinitionOrbofAnnihilation: AbilityDefinition
 AbilityDefinitionOrbofAnnihilation = class('AbilityDefinitionOrbofAnnihilation', AbilityDefinition)
 _G.AbilityDefinitionOrbofAnnihilation = AbilityDefinitionOrbofAnnihilation
 
@@ -6847,6 +7106,7 @@ function AbilityDefinitionOrbofAnnihilation:setFullDamageRadius(level, value)
     self.def:setLvlDataUnreal('fak4', level, 4, value)
 end
 
+---@class AbilityDefinitionMaxManaBonusLeast: AbilityDefinition
 AbilityDefinitionMaxManaBonusLeast = class('AbilityDefinitionMaxManaBonusLeast', AbilityDefinition)
 _G.AbilityDefinitionMaxManaBonusLeast = AbilityDefinitionMaxManaBonusLeast
 
@@ -6860,6 +7120,7 @@ function AbilityDefinitionMaxManaBonusLeast:setMaxManaGained(level, value)
     self.def:setLvlDataInt('Iman', level, 1, value)
 end
 
+---@class AbilityDefinitionNeutralBuildinganyunit: AbilityDefinition
 AbilityDefinitionNeutralBuildinganyunit = class('AbilityDefinitionNeutralBuildinganyunit', AbilityDefinition)
 _G.AbilityDefinitionNeutralBuildinganyunit = AbilityDefinitionNeutralBuildinganyunit
 
@@ -6891,6 +7152,7 @@ function AbilityDefinitionNeutralBuildinganyunit:setInteractionType(level, value
     self.def:setLvlDataInt('Neu2', level, 2, value)
 end
 
+---@class AbilityDefinitionGhost: AbilityDefinition
 AbilityDefinitionGhost = class('AbilityDefinitionGhost', AbilityDefinition)
 _G.AbilityDefinitionGhost = AbilityDefinitionGhost
 
@@ -6916,6 +7178,7 @@ function AbilityDefinitionGhost:setAutoAcquireAttackTargets(level, value)
     self.def:setLvlDataBoolean('Gho1', level, 1, value)
 end
 
+---@class AbilityDefinitionDevourCreep: AbilityDefinition
 AbilityDefinitionDevourCreep = class('AbilityDefinitionDevourCreep', AbilityDefinition)
 _G.AbilityDefinitionDevourCreep = AbilityDefinitionDevourCreep
 
@@ -6929,6 +7192,7 @@ function AbilityDefinitionDevourCreep:setMaxCreepLevel(level, value)
     self.def:setLvlDataInt('Dev1', level, 1, value)
 end
 
+---@class AbilityDefinitionGiveLumber: AbilityDefinition
 AbilityDefinitionGiveLumber = class('AbilityDefinitionGiveLumber', AbilityDefinition)
 _G.AbilityDefinitionGiveLumber = AbilityDefinitionGiveLumber
 
@@ -6942,6 +7206,7 @@ function AbilityDefinitionGiveLumber:setLumberGiven(level, value)
     self.def:setLvlDataInt('Ilum', level, 1, value)
 end
 
+---@class AbilityDefinitionFireBoltwarlock: AbilityDefinition
 AbilityDefinitionFireBoltwarlock = class('AbilityDefinitionFireBoltwarlock', AbilityDefinition)
 _G.AbilityDefinitionFireBoltwarlock = AbilityDefinitionFireBoltwarlock
 
@@ -6955,6 +7220,7 @@ function AbilityDefinitionFireBoltwarlock:setDamage(level, value)
     self.def:setLvlDataUnreal('Htb1', level, 1, value)
 end
 
+---@class AbilityDefinitionDrainLifeCreep: AbilityDefinition
 AbilityDefinitionDrainLifeCreep = class('AbilityDefinitionDrainLifeCreep', AbilityDefinition)
 _G.AbilityDefinitionDrainLifeCreep = AbilityDefinitionDrainLifeCreep
 
@@ -6998,6 +7264,7 @@ function AbilityDefinitionDrainLifeCreep:setLifeTransferredPerSecond(level, valu
     self.def:setLvlDataUnreal('Ndr4', level, 4, value)
 end
 
+---@class AbilityDefinitionPaladinHolyLight: AbilityDefinition
 AbilityDefinitionPaladinHolyLight = class('AbilityDefinitionPaladinHolyLight', AbilityDefinition)
 _G.AbilityDefinitionPaladinHolyLight = AbilityDefinitionPaladinHolyLight
 
@@ -7011,6 +7278,7 @@ function AbilityDefinitionPaladinHolyLight:setAmountHealedDamaged(level, value)
     self.def:setLvlDataUnreal('Hhb1', level, 1, value)
 end
 
+---@class AbilityDefinitionLevelMod: AbilityDefinition
 AbilityDefinitionLevelMod = class('AbilityDefinitionLevelMod', AbilityDefinition)
 _G.AbilityDefinitionLevelMod = AbilityDefinitionLevelMod
 
@@ -7024,6 +7292,7 @@ function AbilityDefinitionLevelMod:setLevelsGained(level, value)
     self.def:setLvlDataInt('Ilev', level, 1, value)
 end
 
+---@class AbilityDefinitionOrbofLightning: AbilityDefinition
 AbilityDefinitionOrbofLightning = class('AbilityDefinitionOrbofLightning', AbilityDefinition)
 _G.AbilityDefinitionOrbofLightning = AbilityDefinitionOrbofLightning
 
@@ -7067,6 +7336,7 @@ function AbilityDefinitionOrbofLightning:setEffectAbility(level, value)
     self.def:setLvlDataString('Iobu', level, 0, value)
 end
 
+---@class AbilityDefinitionLightningShieldAIls: AbilityDefinition
 AbilityDefinitionLightningShieldAIls = class('AbilityDefinitionLightningShieldAIls', AbilityDefinition)
 _G.AbilityDefinitionLightningShieldAIls = AbilityDefinitionLightningShieldAIls
 
@@ -7080,6 +7350,7 @@ function AbilityDefinitionLightningShieldAIls:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('Idps', level, 1, value)
 end
 
+---@class AbilityDefinitionAbolishMagicCreep: AbilityDefinition
 AbilityDefinitionAbolishMagicCreep = class('AbilityDefinitionAbolishMagicCreep', AbilityDefinition)
 _G.AbilityDefinitionAbolishMagicCreep = AbilityDefinitionAbolishMagicCreep
 
@@ -7099,6 +7370,7 @@ function AbilityDefinitionAbolishMagicCreep:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Adm2', level, 2, value)
 end
 
+---@class AbilityDefinitionLightningPurge: AbilityDefinition
 AbilityDefinitionLightningPurge = class('AbilityDefinitionLightningPurge', AbilityDefinition)
 _G.AbilityDefinitionLightningPurge = AbilityDefinitionLightningPurge
 
@@ -7142,6 +7414,7 @@ function AbilityDefinitionLightningPurge:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Prg3', level, 3, value)
 end
 
+---@class AbilityDefinitionMaxLifeBonusLeast: AbilityDefinition
 AbilityDefinitionMaxLifeBonusLeast = class('AbilityDefinitionMaxLifeBonusLeast', AbilityDefinition)
 _G.AbilityDefinitionMaxLifeBonusLeast = AbilityDefinitionMaxLifeBonusLeast
 
@@ -7155,6 +7428,7 @@ function AbilityDefinitionMaxLifeBonusLeast:setMaxLifeGained(level, value)
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionParasite: AbilityDefinition
 AbilityDefinitionParasite = class('AbilityDefinitionParasite', AbilityDefinition)
 _G.AbilityDefinitionParasite = AbilityDefinitionParasite
 
@@ -7204,6 +7478,7 @@ function AbilityDefinitionParasite:setUnitType(level, value)
     self.def:setLvlDataString('ipmu', level, 0, value)
 end
 
+---@class AbilityDefinitionDemonHunterMetamorphosis: AbilityDefinition
 AbilityDefinitionDemonHunterMetamorphosis = class('AbilityDefinitionDemonHunterMetamorphosis', AbilityDefinition)
 _G.AbilityDefinitionDemonHunterMetamorphosis = AbilityDefinitionDemonHunterMetamorphosis
 
@@ -7247,6 +7522,7 @@ function AbilityDefinitionDemonHunterMetamorphosis:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionDevourMagiccreep: AbilityDefinition
 AbilityDefinitionDevourMagiccreep = class('AbilityDefinitionDevourMagiccreep', AbilityDefinition)
 _G.AbilityDefinitionDevourMagiccreep = AbilityDefinitionDevourMagiccreep
 
@@ -7260,6 +7536,7 @@ function AbilityDefinitionDevourMagiccreep:setIgnoreFriendlyBuffs(level, value)
     self.def:setLvlDataBoolean('dvm6', level, 6, value)
 end
 
+---@class AbilityDefinitionAapl: AbilityDefinition
 AbilityDefinitionAapl = class('AbilityDefinitionAapl', AbilityDefinition)
 _G.AbilityDefinitionAapl = AbilityDefinitionAapl
 
@@ -7291,6 +7568,7 @@ function AbilityDefinitionAapl:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Apl2', level, 2, value)
 end
 
+---@class AbilityDefinitionDeathCoilcreep: AbilityDefinition
 AbilityDefinitionDeathCoilcreep = class('AbilityDefinitionDeathCoilcreep', AbilityDefinition)
 _G.AbilityDefinitionDeathCoilcreep = AbilityDefinitionDeathCoilcreep
 
@@ -7304,6 +7582,7 @@ function AbilityDefinitionDeathCoilcreep:setAmountHealedDamaged(level, value)
     self.def:setLvlDataUnreal('Udc1', level, 1, value)
 end
 
+---@class AbilityDefinitionDemonHunterManaBurn: AbilityDefinition
 AbilityDefinitionDemonHunterManaBurn = class('AbilityDefinitionDemonHunterManaBurn', AbilityDefinition)
 _G.AbilityDefinitionDemonHunterManaBurn = AbilityDefinitionDemonHunterManaBurn
 
@@ -7329,6 +7608,7 @@ function AbilityDefinitionDemonHunterManaBurn:setBoltDelay(level, value)
     self.def:setLvlDataUnreal('Emb2', level, 2, value)
 end
 
+---@class AbilityDefinitionLichFrostArmorAutocast: AbilityDefinition
 AbilityDefinitionLichFrostArmorAutocast = class('AbilityDefinitionLichFrostArmorAutocast', AbilityDefinition)
 _G.AbilityDefinitionLichFrostArmorAutocast = AbilityDefinitionLichFrostArmorAutocast
 
@@ -7348,6 +7628,7 @@ function AbilityDefinitionLichFrostArmorAutocast:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Ufa2', level, 2, value)
 end
 
+---@class AbilityDefinitionAnimateDeaditemspecial: AbilityDefinition
 AbilityDefinitionAnimateDeaditemspecial = class('AbilityDefinitionAnimateDeaditemspecial', AbilityDefinition)
 _G.AbilityDefinitionAnimateDeaditemspecial = AbilityDefinitionAnimateDeaditemspecial
 
@@ -7361,6 +7642,7 @@ function AbilityDefinitionAnimateDeaditemspecial:setInheritUpgrades(level, value
     self.def:setLvlDataBoolean('Uan3', level, 3, value)
 end
 
+---@class AbilityDefinitionFrostArmorcreep: AbilityDefinition
 AbilityDefinitionFrostArmorcreep = class('AbilityDefinitionFrostArmorcreep', AbilityDefinition)
 _G.AbilityDefinitionFrostArmorcreep = AbilityDefinitionFrostArmorcreep
 
@@ -7380,6 +7662,7 @@ function AbilityDefinitionFrostArmorcreep:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Ufa2', level, 2, value)
 end
 
+---@class AbilityDefinitionManaBatteryObsidianStatue: AbilityDefinition
 AbilityDefinitionManaBatteryObsidianStatue = class('AbilityDefinitionManaBatteryObsidianStatue', AbilityDefinition)
 _G.AbilityDefinitionManaBatteryObsidianStatue = AbilityDefinitionManaBatteryObsidianStatue
 
@@ -7417,6 +7700,7 @@ function AbilityDefinitionManaBatteryObsidianStatue:setRegenerateOnlyAtNight(lev
     self.def:setLvlDataBoolean('Mbt5', level, 5, value)
 end
 
+---@class AbilityDefinitionFireBoltcreep: AbilityDefinition
 AbilityDefinitionFireBoltcreep = class('AbilityDefinitionFireBoltcreep', AbilityDefinition)
 _G.AbilityDefinitionFireBoltcreep = AbilityDefinitionFireBoltcreep
 
@@ -7430,6 +7714,7 @@ function AbilityDefinitionFireBoltcreep:setDamage(level, value)
     self.def:setLvlDataUnreal('Htb1', level, 1, value)
 end
 
+---@class AbilityDefinitionEvasioncreep100: AbilityDefinition
 AbilityDefinitionEvasioncreep100 = class('AbilityDefinitionEvasioncreep100', AbilityDefinition)
 _G.AbilityDefinitionEvasioncreep100 = AbilityDefinitionEvasioncreep100
 
@@ -7443,6 +7728,7 @@ function AbilityDefinitionEvasioncreep100:setChancetoEvade(level, value)
     self.def:setLvlDataUnreal('Eev1', level, 1, value)
 end
 
+---@class AbilityDefinitionVenomSpears: AbilityDefinition
 AbilityDefinitionVenomSpears = class('AbilityDefinitionVenomSpears', AbilityDefinition)
 _G.AbilityDefinitionVenomSpears = AbilityDefinitionVenomSpears
 
@@ -7474,6 +7760,7 @@ function AbilityDefinitionVenomSpears:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Poi3', level, 3, value)
 end
 
+---@class AbilityDefinitionEvasioncreep: AbilityDefinition
 AbilityDefinitionEvasioncreep = class('AbilityDefinitionEvasioncreep', AbilityDefinition)
 _G.AbilityDefinitionEvasioncreep = AbilityDefinitionEvasioncreep
 
@@ -7487,6 +7774,7 @@ function AbilityDefinitionEvasioncreep:setChancetoEvade(level, value)
     self.def:setLvlDataUnreal('Eev1', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldBurrow: AbilityDefinition
 AbilityDefinitionCargoHoldBurrow = class('AbilityDefinitionCargoHoldBurrow', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldBurrow = AbilityDefinitionCargoHoldBurrow
 
@@ -7500,6 +7788,7 @@ function AbilityDefinitionCargoHoldBurrow:setCargoCapacity(level, value)
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionMagicImmunityAImx: AbilityDefinition
 AbilityDefinitionMagicImmunityAImx = class('AbilityDefinitionMagicImmunityAImx', AbilityDefinition)
 _G.AbilityDefinitionMagicImmunityAImx = AbilityDefinitionMagicImmunityAImx
 
@@ -7513,6 +7802,7 @@ function AbilityDefinitionMagicImmunityAImx:setMagicDamageFactor(level, value)
     self.def:setLvlDataUnreal('mim1', level, 1, value)
 end
 
+---@class AbilityDefinitionBurrow: AbilityDefinition
 AbilityDefinitionBurrow = class('AbilityDefinitionBurrow', AbilityDefinition)
 _G.AbilityDefinitionBurrow = AbilityDefinitionBurrow
 
@@ -7550,6 +7840,7 @@ function AbilityDefinitionBurrow:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionCyclone: AbilityDefinition
 AbilityDefinitionCyclone = class('AbilityDefinitionCyclone', AbilityDefinition)
 _G.AbilityDefinitionCyclone = AbilityDefinitionCyclone
 
@@ -7563,6 +7854,7 @@ function AbilityDefinitionCyclone:setCanBeDispelled(level, value)
     self.def:setLvlDataBoolean('cyc1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemManaRestoreAoe: AbilityDefinition
 AbilityDefinitionItemManaRestoreAoe = class('AbilityDefinitionItemManaRestoreAoe', AbilityDefinition)
 _G.AbilityDefinitionItemManaRestoreAoe = AbilityDefinitionItemManaRestoreAoe
 
@@ -7576,6 +7868,7 @@ function AbilityDefinitionItemManaRestoreAoe:setManaPointsGained(level, value)
     self.def:setLvlDataInt('Impg', level, 1, value)
 end
 
+---@class AbilityDefinitionStaffoTeleportation: AbilityDefinition
 AbilityDefinitionStaffoTeleportation = class('AbilityDefinitionStaffoTeleportation', AbilityDefinition)
 _G.AbilityDefinitionStaffoTeleportation = AbilityDefinitionStaffoTeleportation
 
@@ -7601,6 +7894,7 @@ function AbilityDefinitionStaffoTeleportation:setNumberofUnitsTeleported(level, 
     self.def:setLvlDataInt('Hmt1', level, 1, value)
 end
 
+---@class AbilityDefinitionEnsnareCreep: AbilityDefinition
 AbilityDefinitionEnsnareCreep = class('AbilityDefinitionEnsnareCreep', AbilityDefinition)
 _G.AbilityDefinitionEnsnareCreep = AbilityDefinitionEnsnareCreep
 
@@ -7626,6 +7920,7 @@ function AbilityDefinitionEnsnareCreep:setMeleeAttackRange(level, value)
     self.def:setLvlDataUnreal('Ens3', level, 3, value)
 end
 
+---@class AbilityDefinitionMoveSpeedBonus: AbilityDefinition
 AbilityDefinitionMoveSpeedBonus = class('AbilityDefinitionMoveSpeedBonus', AbilityDefinition)
 _G.AbilityDefinitionMoveSpeedBonus = AbilityDefinitionMoveSpeedBonus
 
@@ -7639,6 +7934,7 @@ function AbilityDefinitionMoveSpeedBonus:setMovementSpeedBonus(level, value)
     self.def:setLvlDataInt('Imvb', level, 1, value)
 end
 
+---@class AbilityDefinitionPhoenix: AbilityDefinition
 AbilityDefinitionPhoenix = class('AbilityDefinitionPhoenix', AbilityDefinition)
 _G.AbilityDefinitionPhoenix = AbilityDefinitionPhoenix
 
@@ -7676,6 +7972,7 @@ function AbilityDefinitionPhoenix:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionNeutralSpell: AbilityDefinition
 AbilityDefinitionNeutralSpell = class('AbilityDefinitionNeutralSpell', AbilityDefinition)
 _G.AbilityDefinitionNeutralSpell = AbilityDefinitionNeutralSpell
 
@@ -7707,6 +8004,7 @@ function AbilityDefinitionNeutralSpell:setLumberCost(level, value)
     self.def:setLvlDataInt('Ndt2', level, 2, value)
 end
 
+---@class AbilityDefinitionAImm: AbilityDefinition
 AbilityDefinitionAImm = class('AbilityDefinitionAImm', AbilityDefinition)
 _G.AbilityDefinitionAImm = AbilityDefinitionAImm
 
@@ -7720,6 +8018,7 @@ function AbilityDefinitionAImm:setMaxManaGained(level, value)
     self.def:setLvlDataInt('Iman', level, 1, value)
 end
 
+---@class AbilityDefinitionShadowHunterHealingWave: AbilityDefinition
 AbilityDefinitionShadowHunterHealingWave = class('AbilityDefinitionShadowHunterHealingWave', AbilityDefinition)
 _G.AbilityDefinitionShadowHunterHealingWave = AbilityDefinitionShadowHunterHealingWave
 
@@ -7745,6 +8044,7 @@ function AbilityDefinitionShadowHunterHealingWave:setDamageReductionperTarget(le
     self.def:setLvlDataUnreal('Ocl3', level, 3, value)
 end
 
+---@class AbilityDefinitionShadowHunterHex: AbilityDefinition
 AbilityDefinitionShadowHunterHex = class('AbilityDefinitionShadowHunterHex', AbilityDefinition)
 _G.AbilityDefinitionShadowHunterHex = AbilityDefinitionShadowHunterHex
 
@@ -7782,6 +8082,7 @@ function AbilityDefinitionShadowHunterHex:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Ply1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemMonsterLure: AbilityDefinition
 AbilityDefinitionItemMonsterLure = class('AbilityDefinitionItemMonsterLure', AbilityDefinition)
 _G.AbilityDefinitionItemMonsterLure = AbilityDefinitionItemMonsterLure
 
@@ -7813,6 +8114,7 @@ function AbilityDefinitionItemMonsterLure:setLureIntervalseconds(level, value)
     self.def:setLvlDataUnreal('imo3', level, 3, value)
 end
 
+---@class AbilityDefinitionAImi: AbilityDefinition
 AbilityDefinitionAImi = class('AbilityDefinitionAImi', AbilityDefinition)
 _G.AbilityDefinitionAImi = AbilityDefinitionAImi
 
@@ -7826,6 +8128,7 @@ function AbilityDefinitionAImi:setMaxLifeGained(level, value)
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionAIml: AbilityDefinition
 AbilityDefinitionAIml = class('AbilityDefinitionAIml', AbilityDefinition)
 _G.AbilityDefinitionAIml = AbilityDefinitionAIml
 
@@ -7839,6 +8142,7 @@ function AbilityDefinitionAIml:setMaxLifeGained(level, value)
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionPermanentHitpointBonusfromchargeditem: AbilityDefinition
 AbilityDefinitionPermanentHitpointBonusfromchargeditem = class('AbilityDefinitionPermanentHitpointBonusfromchargeditem', AbilityDefinition)
 _G.AbilityDefinitionPermanentHitpointBonusfromchargeditem = AbilityDefinitionPermanentHitpointBonusfromchargeditem
 
@@ -7852,6 +8156,7 @@ function AbilityDefinitionPermanentHitpointBonusfromchargeditem:setMaxLifeGained
     self.def:setLvlDataInt('Ilif', level, 1, value)
 end
 
+---@class AbilityDefinitionFeedbackArcaneTower: AbilityDefinition
 AbilityDefinitionFeedbackArcaneTower = class('AbilityDefinitionFeedbackArcaneTower', AbilityDefinition)
 _G.AbilityDefinitionFeedbackArcaneTower = AbilityDefinitionFeedbackArcaneTower
 
@@ -7865,6 +8170,7 @@ function AbilityDefinitionFeedbackArcaneTower:setSummonedDamage(level, value)
     self.def:setLvlDataUnreal('fbk5', level, 5, value)
 end
 
+---@class AbilityDefinitionChaosGrunt: AbilityDefinition
 AbilityDefinitionChaosGrunt = class('AbilityDefinitionChaosGrunt', AbilityDefinition)
 _G.AbilityDefinitionChaosGrunt = AbilityDefinitionChaosGrunt
 
@@ -7878,6 +8184,7 @@ function AbilityDefinitionChaosGrunt:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionChaosRaider: AbilityDefinition
 AbilityDefinitionChaosRaider = class('AbilityDefinitionChaosRaider', AbilityDefinition)
 _G.AbilityDefinitionChaosRaider = AbilityDefinitionChaosRaider
 
@@ -7891,6 +8198,7 @@ function AbilityDefinitionChaosRaider:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionStasisTrap: AbilityDefinition
 AbilityDefinitionStasisTrap = class('AbilityDefinitionStasisTrap', AbilityDefinition)
 _G.AbilityDefinitionStasisTrap = AbilityDefinitionStasisTrap
 
@@ -7928,6 +8236,7 @@ function AbilityDefinitionStasisTrap:setStunDuration(level, value)
     self.def:setLvlDataUnreal('Sta4', level, 4, value)
 end
 
+---@class AbilityDefinitionPermanentImmolationgraphic: AbilityDefinition
 AbilityDefinitionPermanentImmolationgraphic = class('AbilityDefinitionPermanentImmolationgraphic', AbilityDefinition)
 _G.AbilityDefinitionPermanentImmolationgraphic = AbilityDefinitionPermanentImmolationgraphic
 
@@ -7953,6 +8262,7 @@ function AbilityDefinitionPermanentImmolationgraphic:setDamageperInterval(level,
     self.def:setLvlDataUnreal('Eim1', level, 1, value)
 end
 
+---@class AbilityDefinitionChaosShaman: AbilityDefinition
 AbilityDefinitionChaosShaman = class('AbilityDefinitionChaosShaman', AbilityDefinition)
 _G.AbilityDefinitionChaosShaman = AbilityDefinitionChaosShaman
 
@@ -7966,6 +8276,7 @@ function AbilityDefinitionChaosShaman:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionChaosKodo: AbilityDefinition
 AbilityDefinitionChaosKodo = class('AbilityDefinitionChaosKodo', AbilityDefinition)
 _G.AbilityDefinitionChaosKodo = AbilityDefinitionChaosKodo
 
@@ -7979,6 +8290,7 @@ function AbilityDefinitionChaosKodo:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionChaosPeon: AbilityDefinition
 AbilityDefinitionChaosPeon = class('AbilityDefinitionChaosPeon', AbilityDefinition)
 _G.AbilityDefinitionChaosPeon = AbilityDefinitionChaosPeon
 
@@ -7992,6 +8304,7 @@ function AbilityDefinitionChaosPeon:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionFrostDamageBonus: AbilityDefinition
 AbilityDefinitionFrostDamageBonus = class('AbilityDefinitionFrostDamageBonus', AbilityDefinition)
 _G.AbilityDefinitionFrostDamageBonus = AbilityDefinitionFrostDamageBonus
 
@@ -8011,6 +8324,7 @@ function AbilityDefinitionFrostDamageBonus:setDamageBonus(level, value)
     self.def:setLvlDataUnreal('Idam', level, 1, value)
 end
 
+---@class AbilityDefinitionChaosGrom: AbilityDefinition
 AbilityDefinitionChaosGrom = class('AbilityDefinitionChaosGrom', AbilityDefinition)
 _G.AbilityDefinitionChaosGrom = AbilityDefinitionChaosGrom
 
@@ -8024,6 +8338,7 @@ function AbilityDefinitionChaosGrom:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionInnerFire: AbilityDefinition
 AbilityDefinitionInnerFire = class('AbilityDefinitionInnerFire', AbilityDefinition)
 _G.AbilityDefinitionInnerFire = AbilityDefinitionInnerFire
 
@@ -8055,6 +8370,7 @@ function AbilityDefinitionInnerFire:setDamageIncrease(level, value)
     self.def:setLvlDataUnreal('Inf1', level, 1, value)
 end
 
+---@class AbilityDefinitionMoonPriestessSearingArrows: AbilityDefinition
 AbilityDefinitionMoonPriestessSearingArrows = class('AbilityDefinitionMoonPriestessSearingArrows', AbilityDefinition)
 _G.AbilityDefinitionMoonPriestessSearingArrows = AbilityDefinitionMoonPriestessSearingArrows
 
@@ -8068,6 +8384,7 @@ function AbilityDefinitionMoonPriestessSearingArrows:setDamageBonus(level, value
     self.def:setLvlDataUnreal('Hfa1', level, 1, value)
 end
 
+---@class AbilityDefinitionMonsoon: AbilityDefinition
 AbilityDefinitionMonsoon = class('AbilityDefinitionMonsoon', AbilityDefinition)
 _G.AbilityDefinitionMonsoon = AbilityDefinitionMonsoon
 
@@ -8093,6 +8410,7 @@ function AbilityDefinitionMonsoon:setBuildingReduction(level, value)
     self.def:setLvlDataUnreal('Esf3', level, 3, value)
 end
 
+---@class AbilityDefinitionInventory: AbilityDefinition
 AbilityDefinitionInventory = class('AbilityDefinitionInventory', AbilityDefinition)
 _G.AbilityDefinitionInventory = AbilityDefinitionInventory
 
@@ -8130,6 +8448,7 @@ function AbilityDefinitionInventory:setItemCapacity(level, value)
     self.def:setLvlDataInt('inv1', level, 1, value)
 end
 
+---@class AbilityDefinitionnullroarsummoner: AbilityDefinition
 AbilityDefinitionnullroarsummoner = class('AbilityDefinitionnullroarsummoner', AbilityDefinition)
 _G.AbilityDefinitionnullroarsummoner = AbilityDefinitionnullroarsummoner
 
@@ -8161,6 +8480,7 @@ function AbilityDefinitionnullroarsummoner:setManaRegen(level, value)
     self.def:setLvlDataUnreal('Roa4', level, 4, value)
 end
 
+---@class AbilityDefinitionSeaWitchManaShield: AbilityDefinition
 AbilityDefinitionSeaWitchManaShield = class('AbilityDefinitionSeaWitchManaShield', AbilityDefinition)
 _G.AbilityDefinitionSeaWitchManaShield = AbilityDefinitionSeaWitchManaShield
 
@@ -8180,6 +8500,7 @@ function AbilityDefinitionSeaWitchManaShield:setManaperHitPoint(level, value)
     self.def:setLvlDataUnreal('Nms1', level, 1, value)
 end
 
+---@class AbilityDefinitionSpawnSpiderlingOnDeath: AbilityDefinition
 AbilityDefinitionSpawnSpiderlingOnDeath = class('AbilityDefinitionSpawnSpiderlingOnDeath', AbilityDefinition)
 _G.AbilityDefinitionSpawnSpiderlingOnDeath = AbilityDefinitionSpawnSpiderlingOnDeath
 
@@ -8199,6 +8520,7 @@ function AbilityDefinitionSpawnSpiderlingOnDeath:setUnitType(level, value)
     self.def:setLvlDataString('Sod2', level, 2, value)
 end
 
+---@class AbilityDefinitionScrollofRejuvII: AbilityDefinition
 AbilityDefinitionScrollofRejuvII = class('AbilityDefinitionScrollofRejuvII', AbilityDefinition)
 _G.AbilityDefinitionScrollofRejuvII = AbilityDefinitionScrollofRejuvII
 
@@ -8236,6 +8558,7 @@ function AbilityDefinitionScrollofRejuvII:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionMindRot: AbilityDefinition
 AbilityDefinitionMindRot = class('AbilityDefinitionMindRot', AbilityDefinition)
 _G.AbilityDefinitionMindRot = AbilityDefinitionMindRot
 
@@ -8249,6 +8572,7 @@ function AbilityDefinitionMindRot:setManaDrainedperSecond(level, value)
     self.def:setLvlDataUnreal('Nmr1', level, 1, value)
 end
 
+---@class AbilityDefinitionFrostNovacreep: AbilityDefinition
 AbilityDefinitionFrostNovacreep = class('AbilityDefinitionFrostNovacreep', AbilityDefinition)
 _G.AbilityDefinitionFrostNovacreep = AbilityDefinitionFrostNovacreep
 
@@ -8268,6 +8592,7 @@ function AbilityDefinitionFrostNovacreep:setSpecificTargetDamage(level, value)
     self.def:setLvlDataUnreal('Ufn2', level, 2, value)
 end
 
+---@class AbilityDefinitionScrollofRejuvI: AbilityDefinition
 AbilityDefinitionScrollofRejuvI = class('AbilityDefinitionScrollofRejuvI', AbilityDefinition)
 _G.AbilityDefinitionScrollofRejuvI = AbilityDefinitionScrollofRejuvI
 
@@ -8305,6 +8630,7 @@ function AbilityDefinitionScrollofRejuvI:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionPermanentInvisibility: AbilityDefinition
 AbilityDefinitionPermanentInvisibility = class('AbilityDefinitionPermanentInvisibility', AbilityDefinition)
 _G.AbilityDefinitionPermanentInvisibility = AbilityDefinitionPermanentInvisibility
 
@@ -8318,6 +8644,7 @@ function AbilityDefinitionPermanentInvisibility:setAutoAcquireAttackTargets(leve
     self.def:setLvlDataBoolean('Gho1', level, 1, value)
 end
 
+---@class AbilityDefinitionFeedbackSpiritBeast: AbilityDefinition
 AbilityDefinitionFeedbackSpiritBeast = class('AbilityDefinitionFeedbackSpiritBeast', AbilityDefinition)
 _G.AbilityDefinitionFeedbackSpiritBeast = AbilityDefinitionFeedbackSpiritBeast
 
@@ -8331,6 +8658,7 @@ function AbilityDefinitionFeedbackSpiritBeast:setSummonedDamage(level, value)
     self.def:setLvlDataUnreal('fbk5', level, 5, value)
 end
 
+---@class AbilityDefinitionPotionofRejuvIV: AbilityDefinition
 AbilityDefinitionPotionofRejuvIV = class('AbilityDefinitionPotionofRejuvIV', AbilityDefinition)
 _G.AbilityDefinitionPotionofRejuvIV = AbilityDefinitionPotionofRejuvIV
 
@@ -8368,6 +8696,7 @@ function AbilityDefinitionPotionofRejuvIV:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionPotionofRejuvIII: AbilityDefinition
 AbilityDefinitionPotionofRejuvIII = class('AbilityDefinitionPotionofRejuvIII', AbilityDefinition)
 _G.AbilityDefinitionPotionofRejuvIII = AbilityDefinitionPotionofRejuvIII
 
@@ -8405,6 +8734,7 @@ function AbilityDefinitionPotionofRejuvIII:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionFlameStrikeCreep: AbilityDefinition
 AbilityDefinitionFlameStrikeCreep = class('AbilityDefinitionFlameStrikeCreep', AbilityDefinition)
 _G.AbilityDefinitionFlameStrikeCreep = AbilityDefinitionFlameStrikeCreep
 
@@ -8448,6 +8778,7 @@ function AbilityDefinitionFlameStrikeCreep:setFullDamageInterval(level, value)
     self.def:setLvlDataUnreal('Hfs2', level, 2, value)
 end
 
+---@class AbilityDefinitionWispHarvest: AbilityDefinition
 AbilityDefinitionWispHarvest = class('AbilityDefinitionWispHarvest', AbilityDefinition)
 _G.AbilityDefinitionWispHarvest = AbilityDefinitionWispHarvest
 
@@ -8473,6 +8804,7 @@ function AbilityDefinitionWispHarvest:setLumberperInterval(level, value)
     self.def:setLvlDataUnreal('Wha1', level, 1, value)
 end
 
+---@class AbilityDefinitionPotionofRejuvII: AbilityDefinition
 AbilityDefinitionPotionofRejuvII = class('AbilityDefinitionPotionofRejuvII', AbilityDefinition)
 _G.AbilityDefinitionPotionofRejuvII = AbilityDefinitionPotionofRejuvII
 
@@ -8510,6 +8842,7 @@ function AbilityDefinitionPotionofRejuvII:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionHardenedSkin: AbilityDefinition
 AbilityDefinitionHardenedSkin = class('AbilityDefinitionHardenedSkin', AbilityDefinition)
 _G.AbilityDefinitionHardenedSkin = AbilityDefinitionHardenedSkin
 
@@ -8547,6 +8880,7 @@ function AbilityDefinitionHardenedSkin:setIncludeMeleeDamage(level, value)
     self.def:setLvlDataBoolean('Ssk5', level, 5, value)
 end
 
+---@class AbilityDefinitionForceofNaturecreep: AbilityDefinition
 AbilityDefinitionForceofNaturecreep = class('AbilityDefinitionForceofNaturecreep', AbilityDefinition)
 _G.AbilityDefinitionForceofNaturecreep = AbilityDefinitionForceofNaturecreep
 
@@ -8566,6 +8900,7 @@ function AbilityDefinitionForceofNaturecreep:setNumberofSummonedUnits(level, val
     self.def:setLvlDataInt('Efn1', level, 1, value)
 end
 
+---@class AbilityDefinitionPotionofRejuvI: AbilityDefinition
 AbilityDefinitionPotionofRejuvI = class('AbilityDefinitionPotionofRejuvI', AbilityDefinition)
 _G.AbilityDefinitionPotionofRejuvI = AbilityDefinitionPotionofRejuvI
 
@@ -8603,6 +8938,7 @@ function AbilityDefinitionPotionofRejuvI:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionFeedback: AbilityDefinition
 AbilityDefinitionFeedback = class('AbilityDefinitionFeedback', AbilityDefinition)
 _G.AbilityDefinitionFeedback = AbilityDefinitionFeedback
 
@@ -8640,6 +8976,7 @@ function AbilityDefinitionFeedback:setDamageRatioHeros(level, value)
     self.def:setLvlDataUnreal('fbk4', level, 4, value)
 end
 
+---@class AbilityDefinitionStrengthModPlus2: AbilityDefinition
 AbilityDefinitionStrengthModPlus2 = class('AbilityDefinitionStrengthModPlus2', AbilityDefinition)
 _G.AbilityDefinitionStrengthModPlus2 = AbilityDefinitionStrengthModPlus2
 
@@ -8671,6 +9008,7 @@ function AbilityDefinitionStrengthModPlus2:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionFaerieFirecreep: AbilityDefinition
 AbilityDefinitionFaerieFirecreep = class('AbilityDefinitionFaerieFirecreep', AbilityDefinition)
 _G.AbilityDefinitionFaerieFirecreep = AbilityDefinitionFaerieFirecreep
 
@@ -8690,6 +9028,7 @@ function AbilityDefinitionFaerieFirecreep:setDefenseReduction(level, value)
     self.def:setLvlDataInt('Fae1', level, 1, value)
 end
 
+---@class AbilityDefinitionAarm: AbilityDefinition
 AbilityDefinitionAarm = class('AbilityDefinitionAarm', AbilityDefinition)
 _G.AbilityDefinitionAarm = AbilityDefinitionAarm
 
@@ -8709,6 +9048,7 @@ function AbilityDefinitionAarm:setAmountRegenerated(level, value)
     self.def:setLvlDataUnreal('Arm1', level, 1, value)
 end
 
+---@class AbilityDefinitionBloodMageFlameStrike: AbilityDefinition
 AbilityDefinitionBloodMageFlameStrike = class('AbilityDefinitionBloodMageFlameStrike', AbilityDefinition)
 _G.AbilityDefinitionBloodMageFlameStrike = AbilityDefinitionBloodMageFlameStrike
 
@@ -8752,6 +9092,7 @@ function AbilityDefinitionBloodMageFlameStrike:setFullDamageInterval(level, valu
     self.def:setLvlDataUnreal('Hfs2', level, 2, value)
 end
 
+---@class AbilityDefinitionBloodlustCreep: AbilityDefinition
 AbilityDefinitionBloodlustCreep = class('AbilityDefinitionBloodlustCreep', AbilityDefinition)
 _G.AbilityDefinitionBloodlustCreep = AbilityDefinitionBloodlustCreep
 
@@ -8777,6 +9118,7 @@ function AbilityDefinitionBloodlustCreep:setScalingFactor(level, value)
     self.def:setLvlDataUnreal('Blo3', level, 3, value)
 end
 
+---@class AbilityDefinitionRoarAIrr: AbilityDefinition
 AbilityDefinitionRoarAIrr = class('AbilityDefinitionRoarAIrr', AbilityDefinition)
 _G.AbilityDefinitionRoarAIrr = AbilityDefinitionRoarAIrr
 
@@ -8826,6 +9168,7 @@ function AbilityDefinitionRoarAIrr:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionResurrection: AbilityDefinition
 AbilityDefinitionResurrection = class('AbilityDefinitionResurrection', AbilityDefinition)
 _G.AbilityDefinitionResurrection = AbilityDefinitionResurrection
 
@@ -8845,6 +9188,7 @@ function AbilityDefinitionResurrection:setNumberofCorpsesRaised(level, value)
     self.def:setLvlDataInt('Hre1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemRecall: AbilityDefinition
 AbilityDefinitionItemRecall = class('AbilityDefinitionItemRecall', AbilityDefinition)
 _G.AbilityDefinitionItemRecall = AbilityDefinitionItemRecall
 
@@ -8864,6 +9208,7 @@ function AbilityDefinitionItemRecall:setUseTeleportClustering(level, value)
     self.def:setLvlDataBoolean('Itp2', level, 2, value)
 end
 
+---@class AbilityDefinitionAttackBonusAIt6: AbilityDefinition
 AbilityDefinitionAttackBonusAIt6 = class('AbilityDefinitionAttackBonusAIt6', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusAIt6 = AbilityDefinitionAttackBonusAIt6
 
@@ -8877,6 +9222,7 @@ function AbilityDefinitionAttackBonusAIt6:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionItemRevealMap: AbilityDefinition
 AbilityDefinitionItemRevealMap = class('AbilityDefinitionItemRevealMap', AbilityDefinition)
 _G.AbilityDefinitionItemRevealMap = AbilityDefinitionItemRevealMap
 
@@ -8890,6 +9236,7 @@ function AbilityDefinitionItemRevealMap:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionBashcreep: AbilityDefinition
 AbilityDefinitionBashcreep = class('AbilityDefinitionBashcreep', AbilityDefinition)
 _G.AbilityDefinitionBashcreep = AbilityDefinitionBashcreep
 
@@ -8927,6 +9274,7 @@ function AbilityDefinitionBashcreep:setDamageMultiplier(level, value)
     self.def:setLvlDataUnreal('Hbh2', level, 2, value)
 end
 
+---@class AbilityDefinitionAlchemistChemicalRage: AbilityDefinition
 AbilityDefinitionAlchemistChemicalRage = class('AbilityDefinitionAlchemistChemicalRage', AbilityDefinition)
 _G.AbilityDefinitionAlchemistChemicalRage = AbilityDefinitionAlchemistChemicalRage
 
@@ -8976,6 +9324,7 @@ function AbilityDefinitionAlchemistChemicalRage:setAlternateFormUnit(level, valu
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionTinkererClusterRocketsLevel0: AbilityDefinition
 AbilityDefinitionTinkererClusterRocketsLevel0 = class('AbilityDefinitionTinkererClusterRocketsLevel0', AbilityDefinition)
 _G.AbilityDefinitionTinkererClusterRocketsLevel0 = AbilityDefinitionTinkererClusterRocketsLevel0
 
@@ -9019,6 +9368,7 @@ function AbilityDefinitionTinkererClusterRocketsLevel0:setBuildingDamageFactor(l
     self.def:setLvlDataUnreal('Ncs5', level, 5, value)
 end
 
+---@class AbilityDefinitionAttackBonusAIt9: AbilityDefinition
 AbilityDefinitionAttackBonusAIt9 = class('AbilityDefinitionAttackBonusAIt9', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusAIt9 = AbilityDefinitionAttackBonusAIt9
 
@@ -9032,6 +9382,7 @@ function AbilityDefinitionAttackBonusAIt9:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionPossession: AbilityDefinition
 AbilityDefinitionPossession = class('AbilityDefinitionPossession', AbilityDefinition)
 _G.AbilityDefinitionPossession = AbilityDefinitionPossession
 
@@ -9045,6 +9396,7 @@ function AbilityDefinitionPossession:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Pos1', level, 1, value)
 end
 
+---@class AbilityDefinitionPotionofLifeRegen: AbilityDefinition
 AbilityDefinitionPotionofLifeRegen = class('AbilityDefinitionPotionofLifeRegen', AbilityDefinition)
 _G.AbilityDefinitionPotionofLifeRegen = AbilityDefinitionPotionofLifeRegen
 
@@ -9082,6 +9434,7 @@ function AbilityDefinitionPotionofLifeRegen:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionDarkRangerCharm: AbilityDefinition
 AbilityDefinitionDarkRangerCharm = class('AbilityDefinitionDarkRangerCharm', AbilityDefinition)
 _G.AbilityDefinitionDarkRangerCharm = AbilityDefinitionDarkRangerCharm
 
@@ -9095,6 +9448,7 @@ function AbilityDefinitionDarkRangerCharm:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Nch1', level, 1, value)
 end
 
+---@class AbilityDefinitionBreathofFrostCreep: AbilityDefinition
 AbilityDefinitionBreathofFrostCreep = class('AbilityDefinitionBreathofFrostCreep', AbilityDefinition)
 _G.AbilityDefinitionBreathofFrostCreep = AbilityDefinitionBreathofFrostCreep
 
@@ -9132,6 +9486,7 @@ function AbilityDefinitionBreathofFrostCreep:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionItemRegenMana: AbilityDefinition
 AbilityDefinitionItemRegenMana = class('AbilityDefinitionItemRegenMana', AbilityDefinition)
 _G.AbilityDefinitionItemRegenMana = AbilityDefinitionItemRegenMana
 
@@ -9145,6 +9500,7 @@ function AbilityDefinitionItemRegenMana:setManaRegenerationBonusasfractionofnorm
     self.def:setLvlDataUnreal('Imrp', level, 1, value)
 end
 
+---@class AbilityDefinitionItemRegenManalesser: AbilityDefinition
 AbilityDefinitionItemRegenManalesser = class('AbilityDefinitionItemRegenManalesser', AbilityDefinition)
 _G.AbilityDefinitionItemRegenManalesser = AbilityDefinitionItemRegenManalesser
 
@@ -9158,6 +9514,7 @@ function AbilityDefinitionItemRegenManalesser:setManaRegenerationBonusasfraction
     self.def:setLvlDataUnreal('Imrp', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraBrilliancecreep: AbilityDefinition
 AbilityDefinitionAuraBrilliancecreep = class('AbilityDefinitionAuraBrilliancecreep', AbilityDefinition)
 _G.AbilityDefinitionAuraBrilliancecreep = AbilityDefinitionAuraBrilliancecreep
 
@@ -9177,6 +9534,7 @@ function AbilityDefinitionAuraBrilliancecreep:setPercentBonus(level, value)
     self.def:setLvlDataBoolean('Hab2', level, 2, value)
 end
 
+---@class AbilityDefinitionIllidanChannel: AbilityDefinition
 AbilityDefinitionIllidanChannel = class('AbilityDefinitionIllidanChannel', AbilityDefinition)
 _G.AbilityDefinitionIllidanChannel = AbilityDefinitionIllidanChannel
 
@@ -9220,6 +9578,7 @@ function AbilityDefinitionIllidanChannel:setOptions(level, value)
     self.def:setLvlDataInt('Ncl3', level, 3, value)
 end
 
+---@class AbilityDefinitionBreathofFireCreep: AbilityDefinition
 AbilityDefinitionBreathofFireCreep = class('AbilityDefinitionBreathofFireCreep', AbilityDefinition)
 _G.AbilityDefinitionBreathofFireCreep = AbilityDefinitionBreathofFireCreep
 
@@ -9257,6 +9616,7 @@ function AbilityDefinitionBreathofFireCreep:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionPitLordCleavingAttack: AbilityDefinition
 AbilityDefinitionPitLordCleavingAttack = class('AbilityDefinitionPitLordCleavingAttack', AbilityDefinition)
 _G.AbilityDefinitionPitLordCleavingAttack = AbilityDefinitionPitLordCleavingAttack
 
@@ -9270,6 +9630,7 @@ function AbilityDefinitionPitLordCleavingAttack:setDistributedDamageFactor(level
     self.def:setLvlDataUnreal('nca1', level, 1, value)
 end
 
+---@class AbilityDefinitionSilenceItem: AbilityDefinition
 AbilityDefinitionSilenceItem = class('AbilityDefinitionSilenceItem', AbilityDefinition)
 _G.AbilityDefinitionSilenceItem = AbilityDefinitionSilenceItem
 
@@ -9301,6 +9662,7 @@ function AbilityDefinitionSilenceItem:setAttacksPrevented(level, value)
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionSummonHeadhunteritem: AbilityDefinition
 AbilityDefinitionSummonHeadhunteritem = class('AbilityDefinitionSummonHeadhunteritem', AbilityDefinition)
 _G.AbilityDefinitionSummonHeadhunteritem = AbilityDefinitionSummonHeadhunteritem
 
@@ -9320,6 +9682,7 @@ function AbilityDefinitionSummonHeadhunteritem:setNumberofSummonedUnits(level, v
     self.def:setLvlDataInt('Osf2', level, 2, value)
 end
 
+---@class AbilityDefinitionSightBonus: AbilityDefinition
 AbilityDefinitionSightBonus = class('AbilityDefinitionSightBonus', AbilityDefinition)
 _G.AbilityDefinitionSightBonus = AbilityDefinitionSightBonus
 
@@ -9333,6 +9696,7 @@ function AbilityDefinitionSightBonus:setSightRangeBonus(level, value)
     self.def:setLvlDataInt('Isib', level, 1, value)
 end
 
+---@class AbilityDefinitionBlizzardcreep: AbilityDefinition
 AbilityDefinitionBlizzardcreep = class('AbilityDefinitionBlizzardcreep', AbilityDefinition)
 _G.AbilityDefinitionBlizzardcreep = AbilityDefinitionBlizzardcreep
 
@@ -9376,6 +9740,7 @@ function AbilityDefinitionBlizzardcreep:setDamage(level, value)
     self.def:setLvlDataUnreal('Hbz2', level, 2, value)
 end
 
+---@class AbilityDefinitionCloudofFog: AbilityDefinition
 AbilityDefinitionCloudofFog = class('AbilityDefinitionCloudofFog', AbilityDefinition)
 _G.AbilityDefinitionCloudofFog = AbilityDefinitionCloudofFog
 
@@ -9407,6 +9772,7 @@ function AbilityDefinitionCloudofFog:setAttacksPrevented(level, value)
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionAntimagicShieldMatrix: AbilityDefinition
 AbilityDefinitionAntimagicShieldMatrix = class('AbilityDefinitionAntimagicShieldMatrix', AbilityDefinition)
 _G.AbilityDefinitionAntimagicShieldMatrix = AbilityDefinitionAntimagicShieldMatrix
 
@@ -9420,6 +9786,7 @@ function AbilityDefinitionAntimagicShieldMatrix:setManaLoss(level, value)
     self.def:setLvlDataInt('Ams4', level, 4, value)
 end
 
+---@class AbilityDefinitionLoad: AbilityDefinition
 AbilityDefinitionLoad = class('AbilityDefinitionLoad', AbilityDefinition)
 _G.AbilityDefinitionLoad = AbilityDefinitionLoad
 
@@ -9433,6 +9800,7 @@ function AbilityDefinitionLoad:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Loa1', level, 0, value)
 end
 
+---@class AbilityDefinitionBladeMasterMirrorImage: AbilityDefinition
 AbilityDefinitionBladeMasterMirrorImage = class('AbilityDefinitionBladeMasterMirrorImage', AbilityDefinition)
 _G.AbilityDefinitionBladeMasterMirrorImage = AbilityDefinitionBladeMasterMirrorImage
 
@@ -9464,6 +9832,7 @@ function AbilityDefinitionBladeMasterMirrorImage:setAnimationDelay(level, value)
     self.def:setLvlDataUnreal('Omi4', level, 4, value)
 end
 
+---@class AbilityDefinitionWardenBlink: AbilityDefinition
 AbilityDefinitionWardenBlink = class('AbilityDefinitionWardenBlink', AbilityDefinition)
 _G.AbilityDefinitionWardenBlink = AbilityDefinitionWardenBlink
 
@@ -9483,6 +9852,7 @@ function AbilityDefinitionWardenBlink:setMinimumRange(level, value)
     self.def:setLvlDataUnreal('Ebl2', level, 2, value)
 end
 
+---@class AbilityDefinitionPoisonAttack: AbilityDefinition
 AbilityDefinitionPoisonAttack = class('AbilityDefinitionPoisonAttack', AbilityDefinition)
 _G.AbilityDefinitionPoisonAttack = AbilityDefinitionPoisonAttack
 
@@ -9514,6 +9884,7 @@ function AbilityDefinitionPoisonAttack:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Poi3', level, 3, value)
 end
 
+---@class AbilityDefinitionOrbofSpells: AbilityDefinition
 AbilityDefinitionOrbofSpells = class('AbilityDefinitionOrbofSpells', AbilityDefinition)
 _G.AbilityDefinitionOrbofSpells = AbilityDefinitionOrbofSpells
 
@@ -9557,6 +9928,7 @@ function AbilityDefinitionOrbofSpells:setEffectAbility(level, value)
     self.def:setLvlDataString('Iobu', level, 0, value)
 end
 
+---@class AbilityDefinitionItemSpeedAoe: AbilityDefinition
 AbilityDefinitionItemSpeedAoe = class('AbilityDefinitionItemSpeedAoe', AbilityDefinition)
 _G.AbilityDefinitionItemSpeedAoe = AbilityDefinitionItemSpeedAoe
 
@@ -9570,6 +9942,7 @@ function AbilityDefinitionItemSpeedAoe:setMovementSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Ispi', level, 1, value)
 end
 
+---@class AbilityDefinitionUnholyFrenzy: AbilityDefinition
 AbilityDefinitionUnholyFrenzy = class('AbilityDefinitionUnholyFrenzy', AbilityDefinition)
 _G.AbilityDefinitionUnholyFrenzy = AbilityDefinitionUnholyFrenzy
 
@@ -9589,6 +9962,7 @@ function AbilityDefinitionUnholyFrenzy:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Uhf2', level, 2, value)
 end
 
+---@class AbilityDefinitionAntimagicShieldcreep: AbilityDefinition
 AbilityDefinitionAntimagicShieldcreep = class('AbilityDefinitionAntimagicShieldcreep', AbilityDefinition)
 _G.AbilityDefinitionAntimagicShieldcreep = AbilityDefinitionAntimagicShieldcreep
 
@@ -9620,6 +9994,7 @@ function AbilityDefinitionAntimagicShieldcreep:setShieldLife(level, value)
     self.def:setLvlDataInt('Ams3', level, 3, value)
 end
 
+---@class AbilityDefinitionSpawnSpiderOnDeath: AbilityDefinition
 AbilityDefinitionSpawnSpiderOnDeath = class('AbilityDefinitionSpawnSpiderOnDeath', AbilityDefinition)
 _G.AbilityDefinitionSpawnSpiderOnDeath = AbilityDefinitionSpawnSpiderOnDeath
 
@@ -9639,6 +10014,7 @@ function AbilityDefinitionSpawnSpiderOnDeath:setUnitType(level, value)
     self.def:setLvlDataString('Sod2', level, 2, value)
 end
 
+---@class AbilityDefinitionDarkRangerDrain: AbilityDefinition
 AbilityDefinitionDarkRangerDrain = class('AbilityDefinitionDarkRangerDrain', AbilityDefinition)
 _G.AbilityDefinitionDarkRangerDrain = AbilityDefinitionDarkRangerDrain
 
@@ -9700,6 +10076,7 @@ function AbilityDefinitionDarkRangerDrain:setLifeTransferredPerSecond(level, val
     self.def:setLvlDataUnreal('Ndr4', level, 4, value)
 end
 
+---@class AbilityDefinitionFlare: AbilityDefinition
 AbilityDefinitionFlare = class('AbilityDefinitionFlare', AbilityDefinition)
 _G.AbilityDefinitionFlare = AbilityDefinitionFlare
 
@@ -9725,6 +10102,7 @@ function AbilityDefinitionFlare:setEffectDelay(level, value)
     self.def:setLvlDataUnreal('Fla2', level, 2, value)
 end
 
+---@class AbilityDefinitionStrengthBonusPlus6: AbilityDefinition
 AbilityDefinitionStrengthBonusPlus6 = class('AbilityDefinitionStrengthBonusPlus6', AbilityDefinition)
 _G.AbilityDefinitionStrengthBonusPlus6 = AbilityDefinitionStrengthBonusPlus6
 
@@ -9756,6 +10134,7 @@ function AbilityDefinitionStrengthBonusPlus6:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionPitLordDoom: AbilityDefinition
 AbilityDefinitionPitLordDoom = class('AbilityDefinitionPitLordDoom', AbilityDefinition)
 _G.AbilityDefinitionPitLordDoom = AbilityDefinitionPitLordDoom
 
@@ -9787,6 +10166,7 @@ function AbilityDefinitionPitLordDoom:setSummonedUnitDurationseconds(level, valu
     self.def:setLvlDataUnreal('Ndo3', level, 3, value)
 end
 
+---@class AbilityDefinitionSpellBook: AbilityDefinition
 AbilityDefinitionSpellBook = class('AbilityDefinitionSpellBook', AbilityDefinition)
 _G.AbilityDefinitionSpellBook = AbilityDefinitionSpellBook
 
@@ -9824,6 +10204,7 @@ function AbilityDefinitionSpellBook:setBaseOrderID(level, value)
     self.def:setLvlDataString('spb5', level, 5, value)
 end
 
+---@class AbilityDefinitionStrengthBonusPlus3: AbilityDefinition
 AbilityDefinitionStrengthBonusPlus3 = class('AbilityDefinitionStrengthBonusPlus3', AbilityDefinition)
 _G.AbilityDefinitionStrengthBonusPlus3 = AbilityDefinitionStrengthBonusPlus3
 
@@ -9855,6 +10236,7 @@ function AbilityDefinitionStrengthBonusPlus3:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionDarkPortal: AbilityDefinition
 AbilityDefinitionDarkPortal = class('AbilityDefinitionDarkPortal', AbilityDefinition)
 _G.AbilityDefinitionDarkPortal = AbilityDefinitionDarkPortal
 
@@ -9880,6 +10262,7 @@ function AbilityDefinitionDarkPortal:setMinimumNumberofUnits(level, value)
     self.def:setLvlDataInt('Ndp2', level, 2, value)
 end
 
+---@class AbilityDefinitionMoonPriestessTrueshotAura: AbilityDefinition
 AbilityDefinitionMoonPriestessTrueshotAura = class('AbilityDefinitionMoonPriestessTrueshotAura', AbilityDefinition)
 _G.AbilityDefinitionMoonPriestessTrueshotAura = AbilityDefinitionMoonPriestessTrueshotAura
 
@@ -9911,6 +10294,7 @@ function AbilityDefinitionMoonPriestessTrueshotAura:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionStrengthBonusPlus4: AbilityDefinition
 AbilityDefinitionStrengthBonusPlus4 = class('AbilityDefinitionStrengthBonusPlus4', AbilityDefinition)
 _G.AbilityDefinitionStrengthBonusPlus4 = AbilityDefinitionStrengthBonusPlus4
 
@@ -9942,6 +10326,7 @@ function AbilityDefinitionStrengthBonusPlus4:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionSpiderAttack: AbilityDefinition
 AbilityDefinitionSpiderAttack = class('AbilityDefinitionSpiderAttack', AbilityDefinition)
 _G.AbilityDefinitionSpiderAttack = AbilityDefinitionSpiderAttack
 
@@ -9955,6 +10340,7 @@ function AbilityDefinitionSpiderAttack:setSpiderCapacity(level, value)
     self.def:setLvlDataInt('Spa1', level, 1, value)
 end
 
+---@class AbilityDefinitionSpiritLink: AbilityDefinition
 AbilityDefinitionSpiritLink = class('AbilityDefinitionSpiritLink', AbilityDefinition)
 _G.AbilityDefinitionSpiritLink = AbilityDefinitionSpiritLink
 
@@ -9974,6 +10360,7 @@ function AbilityDefinitionSpiritLink:setDistributedDamageFactor(level, value)
     self.def:setLvlDataUnreal('spl1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraWarDrumsKodobeast: AbilityDefinition
 AbilityDefinitionAuraWarDrumsKodobeast = class('AbilityDefinitionAuraWarDrumsKodobeast', AbilityDefinition)
 _G.AbilityDefinitionAuraWarDrumsKodobeast = AbilityDefinitionAuraWarDrumsKodobeast
 
@@ -10005,6 +10392,7 @@ function AbilityDefinitionAuraWarDrumsKodobeast:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionArchMageMassTeleport: AbilityDefinition
 AbilityDefinitionArchMageMassTeleport = class('AbilityDefinitionArchMageMassTeleport', AbilityDefinition)
 _G.AbilityDefinitionArchMageMassTeleport = AbilityDefinitionArchMageMassTeleport
 
@@ -10030,6 +10418,7 @@ function AbilityDefinitionArchMageMassTeleport:setNumberofUnitsTeleported(level,
     self.def:setLvlDataInt('Hmt1', level, 1, value)
 end
 
+---@class AbilityDefinitionGoldMine: AbilityDefinition
 AbilityDefinitionGoldMine = class('AbilityDefinitionGoldMine', AbilityDefinition)
 _G.AbilityDefinitionGoldMine = AbilityDefinitionGoldMine
 
@@ -10055,6 +10444,7 @@ function AbilityDefinitionGoldMine:setMiningDuration(level, value)
     self.def:setLvlDataUnreal('Gld2', level, 2, value)
 end
 
+---@class AbilityDefinitionAuraCommandCreep: AbilityDefinition
 AbilityDefinitionAuraCommandCreep = class('AbilityDefinitionAuraCommandCreep', AbilityDefinition)
 _G.AbilityDefinitionAuraCommandCreep = AbilityDefinitionAuraCommandCreep
 
@@ -10086,6 +10476,7 @@ function AbilityDefinitionAuraCommandCreep:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionBrewmasterDrunkenHaze: AbilityDefinition
 AbilityDefinitionBrewmasterDrunkenHaze = class('AbilityDefinitionBrewmasterDrunkenHaze', AbilityDefinition)
 _G.AbilityDefinitionBrewmasterDrunkenHaze = AbilityDefinitionBrewmasterDrunkenHaze
 
@@ -10117,6 +10508,7 @@ function AbilityDefinitionBrewmasterDrunkenHaze:setAttacksPrevented(level, value
     self.def:setLvlDataInt('Nsi1', level, 1, value)
 end
 
+---@class AbilityDefinitionAnimateDeadcreep: AbilityDefinition
 AbilityDefinitionAnimateDeadcreep = class('AbilityDefinitionAnimateDeadcreep', AbilityDefinition)
 _G.AbilityDefinitionAnimateDeadcreep = AbilityDefinitionAnimateDeadcreep
 
@@ -10142,6 +10534,7 @@ function AbilityDefinitionAnimateDeadcreep:setInheritUpgrades(level, value)
     self.def:setLvlDataBoolean('Uan3', level, 3, value)
 end
 
+---@class AbilityDefinitionStrengthBonusPlus1: AbilityDefinition
 AbilityDefinitionStrengthBonusPlus1 = class('AbilityDefinitionStrengthBonusPlus1', AbilityDefinition)
 _G.AbilityDefinitionStrengthBonusPlus1 = AbilityDefinitionStrengthBonusPlus1
 
@@ -10173,6 +10566,7 @@ function AbilityDefinitionStrengthBonusPlus1:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAttackSpeedIncreaseGreater: AbilityDefinition
 AbilityDefinitionAttackSpeedIncreaseGreater = class('AbilityDefinitionAttackSpeedIncreaseGreater', AbilityDefinition)
 _G.AbilityDefinitionAttackSpeedIncreaseGreater = AbilityDefinitionAttackSpeedIncreaseGreater
 
@@ -10186,6 +10580,7 @@ function AbilityDefinitionAttackSpeedIncreaseGreater:setAttackSpeedIncrease(leve
     self.def:setLvlDataUnreal('Isx1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemRestore: AbilityDefinition
 AbilityDefinitionItemRestore = class('AbilityDefinitionItemRestore', AbilityDefinition)
 _G.AbilityDefinitionItemRestore = AbilityDefinitionItemRestore
 
@@ -10205,6 +10600,7 @@ function AbilityDefinitionItemRestore:setHitPointsRestored(level, value)
     self.def:setLvlDataInt('Ihps', level, 1, value)
 end
 
+---@class AbilityDefinitionBrewmasterDrunkenBrawler: AbilityDefinition
 AbilityDefinitionBrewmasterDrunkenBrawler = class('AbilityDefinitionBrewmasterDrunkenBrawler', AbilityDefinition)
 _G.AbilityDefinitionBrewmasterDrunkenBrawler = AbilityDefinitionBrewmasterDrunkenBrawler
 
@@ -10242,6 +10638,7 @@ function AbilityDefinitionBrewmasterDrunkenBrawler:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Ocr5', level, 5, value)
 end
 
+---@class AbilityDefinitionRaiseDeadItem: AbilityDefinition
 AbilityDefinitionRaiseDeadItem = class('AbilityDefinitionRaiseDeadItem', AbilityDefinition)
 _G.AbilityDefinitionRaiseDeadItem = AbilityDefinitionRaiseDeadItem
 
@@ -10279,6 +10676,7 @@ function AbilityDefinitionRaiseDeadItem:setUnitTypeOne(level, value)
     self.def:setLvlDataString('Rai3', level, 3, value)
 end
 
+---@class AbilityDefinitionSpawnHydraHatchling: AbilityDefinition
 AbilityDefinitionSpawnHydraHatchling = class('AbilityDefinitionSpawnHydraHatchling', AbilityDefinition)
 _G.AbilityDefinitionSpawnHydraHatchling = AbilityDefinitionSpawnHydraHatchling
 
@@ -10298,6 +10696,7 @@ function AbilityDefinitionSpawnHydraHatchling:setUnitType(level, value)
     self.def:setLvlDataString('Sod2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemReincarnation: AbilityDefinition
 AbilityDefinitionItemReincarnation = class('AbilityDefinitionItemReincarnation', AbilityDefinition)
 _G.AbilityDefinitionItemReincarnation = AbilityDefinitionItemReincarnation
 
@@ -10323,6 +10722,7 @@ function AbilityDefinitionItemReincarnation:setRestoredManaforcurrent(level, val
     self.def:setLvlDataInt('irc3', level, 3, value)
 end
 
+---@class AbilityDefinitionTinkererDemolishLevel0: AbilityDefinition
 AbilityDefinitionTinkererDemolishLevel0 = class('AbilityDefinitionTinkererDemolishLevel0', AbilityDefinition)
 _G.AbilityDefinitionTinkererDemolishLevel0 = AbilityDefinitionTinkererDemolishLevel0
 
@@ -10354,6 +10754,7 @@ function AbilityDefinitionTinkererDemolishLevel0:setChancetoDemolish(level, valu
     self.def:setLvlDataUnreal('Nde1', level, 1, value)
 end
 
+---@class AbilityDefinitionRuneofSpiritLink: AbilityDefinition
 AbilityDefinitionRuneofSpiritLink = class('AbilityDefinitionRuneofSpiritLink', AbilityDefinition)
 _G.AbilityDefinitionRuneofSpiritLink = AbilityDefinitionRuneofSpiritLink
 
@@ -10367,6 +10768,7 @@ function AbilityDefinitionRuneofSpiritLink:setDistributedDamageFactor(level, val
     self.def:setLvlDataUnreal('spl1', level, 1, value)
 end
 
+---@class AbilityDefinitionSlowPoison: AbilityDefinition
 AbilityDefinitionSlowPoison = class('AbilityDefinitionSlowPoison', AbilityDefinition)
 _G.AbilityDefinitionSlowPoison = AbilityDefinitionSlowPoison
 
@@ -10398,6 +10800,7 @@ function AbilityDefinitionSlowPoison:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Spo2', level, 2, value)
 end
 
+---@class AbilityDefinitionMalganisDarkConversion: AbilityDefinition
 AbilityDefinitionMalganisDarkConversion = class('AbilityDefinitionMalganisDarkConversion', AbilityDefinition)
 _G.AbilityDefinitionMalganisDarkConversion = AbilityDefinitionMalganisDarkConversion
 
@@ -10417,6 +10820,7 @@ function AbilityDefinitionMalganisDarkConversion:setRacetoConvert(level, value)
     self.def:setLvlDataString('Ndc1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraDevotionCreep: AbilityDefinition
 AbilityDefinitionAuraDevotionCreep = class('AbilityDefinitionAuraDevotionCreep', AbilityDefinition)
 _G.AbilityDefinitionAuraDevotionCreep = AbilityDefinitionAuraDevotionCreep
 
@@ -10436,6 +10840,7 @@ function AbilityDefinitionAuraDevotionCreep:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Had1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraTrueshotCreep: AbilityDefinition
 AbilityDefinitionAuraTrueshotCreep = class('AbilityDefinitionAuraTrueshotCreep', AbilityDefinition)
 _G.AbilityDefinitionAuraTrueshotCreep = AbilityDefinitionAuraTrueshotCreep
 
@@ -10467,6 +10872,7 @@ function AbilityDefinitionAuraTrueshotCreep:setMeleeBonus(level, value)
     self.def:setLvlDataBoolean('Ear2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemRestoreAoe: AbilityDefinition
 AbilityDefinitionItemRestoreAoe = class('AbilityDefinitionItemRestoreAoe', AbilityDefinition)
 _G.AbilityDefinitionItemRestoreAoe = AbilityDefinitionItemRestoreAoe
 
@@ -10486,6 +10892,7 @@ function AbilityDefinitionItemRestoreAoe:setHitPointsRestored(level, value)
     self.def:setLvlDataInt('Ihps', level, 1, value)
 end
 
+---@class AbilityDefinitionKeeperoftheGroveThornsAura: AbilityDefinition
 AbilityDefinitionKeeperoftheGroveThornsAura = class('AbilityDefinitionKeeperoftheGroveThornsAura', AbilityDefinition)
 _G.AbilityDefinitionKeeperoftheGroveThornsAura = AbilityDefinitionKeeperoftheGroveThornsAura
 
@@ -10505,6 +10912,7 @@ function AbilityDefinitionKeeperoftheGroveThornsAura:setDamageDealttoAttackers(l
     self.def:setLvlDataUnreal('Eah1', level, 1, value)
 end
 
+---@class AbilityDefinitionSpawnHydra: AbilityDefinition
 AbilityDefinitionSpawnHydra = class('AbilityDefinitionSpawnHydra', AbilityDefinition)
 _G.AbilityDefinitionSpawnHydra = AbilityDefinitionSpawnHydra
 
@@ -10524,6 +10932,7 @@ function AbilityDefinitionSpawnHydra:setUnitType(level, value)
     self.def:setLvlDataString('Sod2', level, 2, value)
 end
 
+---@class AbilityDefinitionAspx: AbilityDefinition
 AbilityDefinitionAspx = class('AbilityDefinitionAspx', AbilityDefinition)
 _G.AbilityDefinitionAspx = AbilityDefinitionAspx
 
@@ -10561,6 +10970,7 @@ function AbilityDefinitionAspx:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionTinkererClusterRocketsLevel2: AbilityDefinition
 AbilityDefinitionTinkererClusterRocketsLevel2 = class('AbilityDefinitionTinkererClusterRocketsLevel2', AbilityDefinition)
 _G.AbilityDefinitionTinkererClusterRocketsLevel2 = AbilityDefinitionTinkererClusterRocketsLevel2
 
@@ -10604,6 +11014,7 @@ function AbilityDefinitionTinkererClusterRocketsLevel2:setBuildingDamageFactor(l
     self.def:setLvlDataUnreal('Ncs5', level, 5, value)
 end
 
+---@class AbilityDefinitionDreadlordVampiricAura: AbilityDefinition
 AbilityDefinitionDreadlordVampiricAura = class('AbilityDefinitionDreadlordVampiricAura', AbilityDefinition)
 _G.AbilityDefinitionDreadlordVampiricAura = AbilityDefinitionDreadlordVampiricAura
 
@@ -10617,6 +11028,7 @@ function AbilityDefinitionDreadlordVampiricAura:setAttackDamageStolen(level, val
     self.def:setLvlDataUnreal('Uav1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererClusterRocketsLevel3: AbilityDefinition
 AbilityDefinitionTinkererClusterRocketsLevel3 = class('AbilityDefinitionTinkererClusterRocketsLevel3', AbilityDefinition)
 _G.AbilityDefinitionTinkererClusterRocketsLevel3 = AbilityDefinitionTinkererClusterRocketsLevel3
 
@@ -10660,6 +11072,7 @@ function AbilityDefinitionTinkererClusterRocketsLevel3:setBuildingDamageFactor(l
     self.def:setLvlDataUnreal('Ncs5', level, 5, value)
 end
 
+---@class AbilityDefinitionDeathKnightUnholyAura: AbilityDefinition
 AbilityDefinitionDeathKnightUnholyAura = class('AbilityDefinitionDeathKnightUnholyAura', AbilityDefinition)
 _G.AbilityDefinitionDeathKnightUnholyAura = AbilityDefinitionDeathKnightUnholyAura
 
@@ -10685,6 +11098,7 @@ function AbilityDefinitionDeathKnightUnholyAura:setMovementSpeedIncrease(level, 
     self.def:setLvlDataUnreal('Uau1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemPotionVampirism: AbilityDefinition
 AbilityDefinitionItemPotionVampirism = class('AbilityDefinitionItemPotionVampirism', AbilityDefinition)
 _G.AbilityDefinitionItemPotionVampirism = AbilityDefinitionItemPotionVampirism
 
@@ -10710,6 +11124,7 @@ function AbilityDefinitionItemPotionVampirism:setLifeStealAmount(level, value)
     self.def:setLvlDataUnreal('ipv2', level, 2, value)
 end
 
+---@class AbilityDefinitionOrbofVenomPoisonAttack: AbilityDefinition
 AbilityDefinitionOrbofVenomPoisonAttack = class('AbilityDefinitionOrbofVenomPoisonAttack', AbilityDefinition)
 _G.AbilityDefinitionOrbofVenomPoisonAttack = AbilityDefinitionOrbofVenomPoisonAttack
 
@@ -10741,6 +11156,7 @@ function AbilityDefinitionOrbofVenomPoisonAttack:setMovementSpeedFactor(level, v
     self.def:setLvlDataUnreal('Poi3', level, 3, value)
 end
 
+---@class AbilityDefinitionCoupleInstantArcher: AbilityDefinition
 AbilityDefinitionCoupleInstantArcher = class('AbilityDefinitionCoupleInstantArcher', AbilityDefinition)
 _G.AbilityDefinitionCoupleInstantArcher = AbilityDefinitionCoupleInstantArcher
 
@@ -10766,6 +11182,7 @@ function AbilityDefinitionCoupleInstantArcher:setPartnerUnitType(level, value)
     self.def:setLvlDataString('coa1', level, 1, value)
 end
 
+---@class AbilityDefinitionPotionofManaRegengreater: AbilityDefinition
 AbilityDefinitionPotionofManaRegengreater = class('AbilityDefinitionPotionofManaRegengreater', AbilityDefinition)
 _G.AbilityDefinitionPotionofManaRegengreater = AbilityDefinitionPotionofManaRegengreater
 
@@ -10803,6 +11220,7 @@ function AbilityDefinitionPotionofManaRegengreater:setLifeRegenerated(level, val
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererClusterRocketsLevel1: AbilityDefinition
 AbilityDefinitionTinkererClusterRocketsLevel1 = class('AbilityDefinitionTinkererClusterRocketsLevel1', AbilityDefinition)
 _G.AbilityDefinitionTinkererClusterRocketsLevel1 = AbilityDefinitionTinkererClusterRocketsLevel1
 
@@ -10846,6 +11264,7 @@ function AbilityDefinitionTinkererClusterRocketsLevel1:setBuildingDamageFactor(l
     self.def:setLvlDataUnreal('Ncs5', level, 5, value)
 end
 
+---@class AbilityDefinitionCoupleInstantHippogryph: AbilityDefinition
 AbilityDefinitionCoupleInstantHippogryph = class('AbilityDefinitionCoupleInstantHippogryph', AbilityDefinition)
 _G.AbilityDefinitionCoupleInstantHippogryph = AbilityDefinitionCoupleInstantHippogryph
 
@@ -10871,6 +11290,7 @@ function AbilityDefinitionCoupleInstantHippogryph:setPartnerUnitType(level, valu
     self.def:setLvlDataString('coa1', level, 1, value)
 end
 
+---@class AbilityDefinitionSpawnOnDeathskeleton: AbilityDefinition
 AbilityDefinitionSpawnOnDeathskeleton = class('AbilityDefinitionSpawnOnDeathskeleton', AbilityDefinition)
 _G.AbilityDefinitionSpawnOnDeathskeleton = AbilityDefinitionSpawnOnDeathskeleton
 
@@ -10890,6 +11310,7 @@ function AbilityDefinitionSpawnOnDeathskeleton:setUnitType(level, value)
     self.def:setLvlDataString('Sod2', level, 2, value)
 end
 
+---@class AbilityDefinitionPotionofManaRegenlesser: AbilityDefinition
 AbilityDefinitionPotionofManaRegenlesser = class('AbilityDefinitionPotionofManaRegenlesser', AbilityDefinition)
 _G.AbilityDefinitionPotionofManaRegenlesser = AbilityDefinitionPotionofManaRegenlesser
 
@@ -10927,6 +11348,7 @@ function AbilityDefinitionPotionofManaRegenlesser:setLifeRegenerated(level, valu
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionDeathKnightAnimateDead: AbilityDefinition
 AbilityDefinitionDeathKnightAnimateDead = class('AbilityDefinitionDeathKnightAnimateDead', AbilityDefinition)
 _G.AbilityDefinitionDeathKnightAnimateDead = AbilityDefinitionDeathKnightAnimateDead
 
@@ -10952,6 +11374,7 @@ function AbilityDefinitionDeathKnightAnimateDead:setNumberofCorpsesRaised(level,
     self.def:setLvlDataInt('Uan1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemPlaceMine: AbilityDefinition
 AbilityDefinitionItemPlaceMine = class('AbilityDefinitionItemPlaceMine', AbilityDefinition)
 _G.AbilityDefinitionItemPlaceMine = AbilityDefinitionItemPlaceMine
 
@@ -10965,6 +11388,7 @@ function AbilityDefinitionItemPlaceMine:setUnitType(level, value)
     self.def:setLvlDataString('ipmu', level, 0, value)
 end
 
+---@class AbilityDefinitionBloodMagePhoenix: AbilityDefinition
 AbilityDefinitionBloodMagePhoenix = class('AbilityDefinitionBloodMagePhoenix', AbilityDefinition)
 _G.AbilityDefinitionBloodMagePhoenix = AbilityDefinitionBloodMagePhoenix
 
@@ -10984,6 +11408,7 @@ function AbilityDefinitionBloodMagePhoenix:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionAlchemistAcidBomb: AbilityDefinition
 AbilityDefinitionAlchemistAcidBomb = class('AbilityDefinitionAlchemistAcidBomb', AbilityDefinition)
 _G.AbilityDefinitionAlchemistAcidBomb = AbilityDefinitionAlchemistAcidBomb
 
@@ -11027,6 +11452,7 @@ function AbilityDefinitionAlchemistAcidBomb:setAttackSpeedReduction(level, value
     self.def:setLvlDataUnreal('Nab2', level, 2, value)
 end
 
+---@class AbilityDefinitionPermanentImmolationflying: AbilityDefinition
 AbilityDefinitionPermanentImmolationflying = class('AbilityDefinitionPermanentImmolationflying', AbilityDefinition)
 _G.AbilityDefinitionPermanentImmolationflying = AbilityDefinitionPermanentImmolationflying
 
@@ -11052,6 +11478,7 @@ function AbilityDefinitionPermanentImmolationflying:setDamageperInterval(level, 
     self.def:setLvlDataUnreal('Eim1', level, 1, value)
 end
 
+---@class AbilityDefinitionTornadoSpin: AbilityDefinition
 AbilityDefinitionTornadoSpin = class('AbilityDefinitionTornadoSpin', AbilityDefinition)
 _G.AbilityDefinitionTornadoSpin = AbilityDefinitionTornadoSpin
 
@@ -11071,6 +11498,7 @@ function AbilityDefinitionTornadoSpin:setAirTimeseconds(level, value)
     self.def:setLvlDataUnreal('Tsp1', level, 1, value)
 end
 
+---@class AbilityDefinitionAntimagicShield: AbilityDefinition
 AbilityDefinitionAntimagicShield = class('AbilityDefinitionAntimagicShield', AbilityDefinition)
 _G.AbilityDefinitionAntimagicShield = AbilityDefinitionAntimagicShield
 
@@ -11102,6 +11530,7 @@ function AbilityDefinitionAntimagicShield:setShieldLife(level, value)
     self.def:setLvlDataInt('Ams3', level, 3, value)
 end
 
+---@class AbilityDefinitionOrbofDarknessBlackArrow: AbilityDefinition
 AbilityDefinitionOrbofDarknessBlackArrow = class('AbilityDefinitionOrbofDarknessBlackArrow', AbilityDefinition)
 _G.AbilityDefinitionOrbofDarknessBlackArrow = AbilityDefinitionOrbofDarknessBlackArrow
 
@@ -11133,6 +11562,7 @@ function AbilityDefinitionOrbofDarknessBlackArrow:setSummonedUnitDurationseconds
     self.def:setLvlDataUnreal('Nba3', level, 3, value)
 end
 
+---@class AbilityDefinitionTinkererDemolishLevel3: AbilityDefinition
 AbilityDefinitionTinkererDemolishLevel3 = class('AbilityDefinitionTinkererDemolishLevel3', AbilityDefinition)
 _G.AbilityDefinitionTinkererDemolishLevel3 = AbilityDefinitionTinkererDemolishLevel3
 
@@ -11164,6 +11594,7 @@ function AbilityDefinitionTinkererDemolishLevel3:setChancetoDemolish(level, valu
     self.def:setLvlDataUnreal('Nde1', level, 1, value)
 end
 
+---@class AbilityDefinitionSlowAIos: AbilityDefinition
 AbilityDefinitionSlowAIos = class('AbilityDefinitionSlowAIos', AbilityDefinition)
 _G.AbilityDefinitionSlowAIos = AbilityDefinitionSlowAIos
 
@@ -11189,6 +11620,7 @@ function AbilityDefinitionSlowAIos:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Slo2', level, 2, value)
 end
 
+---@class AbilityDefinitionBattleRoar: AbilityDefinition
 AbilityDefinitionBattleRoar = class('AbilityDefinitionBattleRoar', AbilityDefinition)
 _G.AbilityDefinitionBattleRoar = AbilityDefinitionBattleRoar
 
@@ -11238,6 +11670,7 @@ function AbilityDefinitionBattleRoar:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionTinkererDemolishLevel1: AbilityDefinition
 AbilityDefinitionTinkererDemolishLevel1 = class('AbilityDefinitionTinkererDemolishLevel1', AbilityDefinition)
 _G.AbilityDefinitionTinkererDemolishLevel1 = AbilityDefinitionTinkererDemolishLevel1
 
@@ -11269,6 +11702,7 @@ function AbilityDefinitionTinkererDemolishLevel1:setChancetoDemolish(level, valu
     self.def:setLvlDataUnreal('Nde1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererDemolishLevel2: AbilityDefinition
 AbilityDefinitionTinkererDemolishLevel2 = class('AbilityDefinitionTinkererDemolishLevel2', AbilityDefinition)
 _G.AbilityDefinitionTinkererDemolishLevel2 = AbilityDefinitionTinkererDemolishLevel2
 
@@ -11300,6 +11734,7 @@ function AbilityDefinitionTinkererDemolishLevel2:setChancetoDemolish(level, valu
     self.def:setLvlDataUnreal('Nde1', level, 1, value)
 end
 
+---@class AbilityDefinitionAttributeModifierSkill: AbilityDefinition
 AbilityDefinitionAttributeModifierSkill = class('AbilityDefinitionAttributeModifierSkill', AbilityDefinition)
 _G.AbilityDefinitionAttributeModifierSkill = AbilityDefinitionAttributeModifierSkill
 
@@ -11331,6 +11766,7 @@ function AbilityDefinitionAttributeModifierSkill:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionDispelMagic: AbilityDefinition
 AbilityDefinitionDispelMagic = class('AbilityDefinitionDispelMagic', AbilityDefinition)
 _G.AbilityDefinitionDispelMagic = AbilityDefinitionDispelMagic
 
@@ -11350,6 +11786,7 @@ function AbilityDefinitionDispelMagic:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Adm2', level, 2, value)
 end
 
+---@class AbilityDefinitionBashBeastmasterBear: AbilityDefinition
 AbilityDefinitionBashBeastmasterBear = class('AbilityDefinitionBashBeastmasterBear', AbilityDefinition)
 _G.AbilityDefinitionBashBeastmasterBear = AbilityDefinitionBashBeastmasterBear
 
@@ -11363,6 +11800,7 @@ function AbilityDefinitionBashBeastmasterBear:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Hbh5', level, 5, value)
 end
 
+---@class AbilityDefinitionBrewmasterBreathofFire: AbilityDefinition
 AbilityDefinitionBrewmasterBreathofFire = class('AbilityDefinitionBrewmasterBreathofFire', AbilityDefinition)
 _G.AbilityDefinitionBrewmasterBreathofFire = AbilityDefinitionBrewmasterBreathofFire
 
@@ -11400,6 +11838,7 @@ function AbilityDefinitionBrewmasterBreathofFire:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionPolymorph: AbilityDefinition
 AbilityDefinitionPolymorph = class('AbilityDefinitionPolymorph', AbilityDefinition)
 _G.AbilityDefinitionPolymorph = AbilityDefinitionPolymorph
 
@@ -11437,6 +11876,7 @@ function AbilityDefinitionPolymorph:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Ply1', level, 1, value)
 end
 
+---@class AbilityDefinitionPurgeorb: AbilityDefinition
 AbilityDefinitionPurgeorb = class('AbilityDefinitionPurgeorb', AbilityDefinition)
 _G.AbilityDefinitionPurgeorb = AbilityDefinitionPurgeorb
 
@@ -11480,6 +11920,7 @@ function AbilityDefinitionPurgeorb:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Prg3', level, 3, value)
 end
 
+---@class AbilityDefinitionDarkRangerBlackArrow: AbilityDefinition
 AbilityDefinitionDarkRangerBlackArrow = class('AbilityDefinitionDarkRangerBlackArrow', AbilityDefinition)
 _G.AbilityDefinitionDarkRangerBlackArrow = AbilityDefinitionDarkRangerBlackArrow
 
@@ -11511,6 +11952,7 @@ function AbilityDefinitionDarkRangerBlackArrow:setSummonedUnitDurationseconds(le
     self.def:setLvlDataUnreal('Nba3', level, 3, value)
 end
 
+---@class AbilityDefinitionCargoHoldEntangledGoldMine: AbilityDefinition
 AbilityDefinitionCargoHoldEntangledGoldMine = class('AbilityDefinitionCargoHoldEntangledGoldMine', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldEntangledGoldMine = AbilityDefinitionCargoHoldEntangledGoldMine
 
@@ -11524,6 +11966,7 @@ function AbilityDefinitionCargoHoldEntangledGoldMine:setCargoCapacity(level, val
     self.def:setLvlDataInt('Car1', level, 1, value)
 end
 
+---@class AbilityDefinitionAerialShackles: AbilityDefinition
 AbilityDefinitionAerialShackles = class('AbilityDefinitionAerialShackles', AbilityDefinition)
 _G.AbilityDefinitionAerialShackles = AbilityDefinitionAerialShackles
 
@@ -11537,6 +11980,7 @@ function AbilityDefinitionAerialShackles:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('mls1', level, 1, value)
 end
 
+---@class AbilityDefinitionOrbofVenom: AbilityDefinition
 AbilityDefinitionOrbofVenom = class('AbilityDefinitionOrbofVenom', AbilityDefinition)
 _G.AbilityDefinitionOrbofVenom = AbilityDefinitionOrbofVenom
 
@@ -11562,6 +12006,7 @@ function AbilityDefinitionOrbofVenom:setDamageBonusDice(level, value)
     self.def:setLvlDataInt('Idic', level, 1, value)
 end
 
+---@class AbilityDefinitionDetectShade: AbilityDefinition
 AbilityDefinitionDetectShade = class('AbilityDefinitionDetectShade', AbilityDefinition)
 _G.AbilityDefinitionDetectShade = AbilityDefinitionDetectShade
 
@@ -11575,6 +12020,7 @@ function AbilityDefinitionDetectShade:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionAlliedBuilding: AbilityDefinition
 AbilityDefinitionAlliedBuilding = class('AbilityDefinitionAlliedBuilding', AbilityDefinition)
 _G.AbilityDefinitionAlliedBuilding = AbilityDefinitionAlliedBuilding
 
@@ -11606,6 +12052,7 @@ function AbilityDefinitionAlliedBuilding:setInteractionType(level, value)
     self.def:setLvlDataInt('Neu2', level, 2, value)
 end
 
+---@class AbilityDefinitionControlMagic: AbilityDefinition
 AbilityDefinitionControlMagic = class('AbilityDefinitionControlMagic', AbilityDefinition)
 _G.AbilityDefinitionControlMagic = AbilityDefinitionControlMagic
 
@@ -11631,6 +12078,7 @@ function AbilityDefinitionControlMagic:setMaximumCreepLevel(level, value)
     self.def:setLvlDataInt('Nch1', level, 1, value)
 end
 
+---@class AbilityDefinitionDreadlordCarrionSwarm: AbilityDefinition
 AbilityDefinitionDreadlordCarrionSwarm = class('AbilityDefinitionDreadlordCarrionSwarm', AbilityDefinition)
 _G.AbilityDefinitionDreadlordCarrionSwarm = AbilityDefinitionDreadlordCarrionSwarm
 
@@ -11662,6 +12110,7 @@ function AbilityDefinitionDreadlordCarrionSwarm:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionAllPlus1: AbilityDefinition
 AbilityDefinitionAllPlus1 = class('AbilityDefinitionAllPlus1', AbilityDefinition)
 _G.AbilityDefinitionAllPlus1 = AbilityDefinitionAllPlus1
 
@@ -11693,6 +12142,7 @@ function AbilityDefinitionAllPlus1:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAllPlus2: AbilityDefinition
 AbilityDefinitionAllPlus2 = class('AbilityDefinitionAllPlus2', AbilityDefinition)
 _G.AbilityDefinitionAllPlus2 = AbilityDefinitionAllPlus2
 
@@ -11724,6 +12174,7 @@ function AbilityDefinitionAllPlus2:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAllPlus3: AbilityDefinition
 AbilityDefinitionAllPlus3 = class('AbilityDefinitionAllPlus3', AbilityDefinition)
 _G.AbilityDefinitionAllPlus3 = AbilityDefinitionAllPlus3
 
@@ -11755,6 +12206,7 @@ function AbilityDefinitionAllPlus3:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionCrownofKingsAllPlus5: AbilityDefinition
 AbilityDefinitionCrownofKingsAllPlus5 = class('AbilityDefinitionCrownofKingsAllPlus5', AbilityDefinition)
 _G.AbilityDefinitionCrownofKingsAllPlus5 = AbilityDefinitionCrownofKingsAllPlus5
 
@@ -11786,6 +12238,7 @@ function AbilityDefinitionCrownofKingsAllPlus5:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionCorrosiveBreath: AbilityDefinition
 AbilityDefinitionCorrosiveBreath = class('AbilityDefinitionCorrosiveBreath', AbilityDefinition)
 _G.AbilityDefinitionCorrosiveBreath = AbilityDefinitionCorrosiveBreath
 
@@ -11799,6 +12252,7 @@ function AbilityDefinitionCorrosiveBreath:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('Cor1', level, 1, value)
 end
 
+---@class AbilityDefinitionRootAncients: AbilityDefinition
 AbilityDefinitionRootAncients = class('AbilityDefinitionRootAncients', AbilityDefinition)
 _G.AbilityDefinitionRootAncients = AbilityDefinitionRootAncients
 
@@ -11830,6 +12284,7 @@ function AbilityDefinitionRootAncients:setRootedWeapons(level, value)
     self.def:setLvlDataString('Roo1', level, 1, value)
 end
 
+---@class AbilityDefinitionRootAncientProtector: AbilityDefinition
 AbilityDefinitionRootAncientProtector = class('AbilityDefinitionRootAncientProtector', AbilityDefinition)
 _G.AbilityDefinitionRootAncientProtector = AbilityDefinitionRootAncientProtector
 
@@ -11861,6 +12316,7 @@ function AbilityDefinitionRootAncientProtector:setRootedWeapons(level, value)
     self.def:setLvlDataString('Roo1', level, 1, value)
 end
 
+---@class AbilityDefinitionFactory: AbilityDefinition
 AbilityDefinitionFactory = class('AbilityDefinitionFactory', AbilityDefinition)
 _G.AbilityDefinitionFactory = AbilityDefinitionFactory
 
@@ -11886,6 +12342,7 @@ function AbilityDefinitionFactory:setSpawnInterval(level, value)
     self.def:setLvlDataUnreal('Nfy1', level, 1, value)
 end
 
+---@class AbilityDefinitionKeeperoftheGroveForceofNature: AbilityDefinition
 AbilityDefinitionKeeperoftheGroveForceofNature = class('AbilityDefinitionKeeperoftheGroveForceofNature', AbilityDefinition)
 _G.AbilityDefinitionKeeperoftheGroveForceofNature = AbilityDefinitionKeeperoftheGroveForceofNature
 
@@ -11905,6 +12362,7 @@ function AbilityDefinitionKeeperoftheGroveForceofNature:setNumberofSummonedUnits
     self.def:setLvlDataInt('Efn1', level, 1, value)
 end
 
+---@class AbilityDefinitionLichDeathandDecay: AbilityDefinition
 AbilityDefinitionLichDeathandDecay = class('AbilityDefinitionLichDeathandDecay', AbilityDefinition)
 _G.AbilityDefinitionLichDeathandDecay = AbilityDefinitionLichDeathandDecay
 
@@ -11924,6 +12382,7 @@ function AbilityDefinitionLichDeathandDecay:setMaxLifeDrainedperSecond(level, va
     self.def:setLvlDataUnreal('Udd1', level, 1, value)
 end
 
+---@class AbilityDefinitionItemWeb: AbilityDefinition
 AbilityDefinitionItemWeb = class('AbilityDefinitionItemWeb', AbilityDefinition)
 _G.AbilityDefinitionItemWeb = AbilityDefinitionItemWeb
 
@@ -11949,6 +12408,7 @@ function AbilityDefinitionItemWeb:setMeleeAttackRange(level, value)
     self.def:setLvlDataUnreal('Ens3', level, 3, value)
 end
 
+---@class AbilityDefinitionWardenFanofKnives: AbilityDefinition
 AbilityDefinitionWardenFanofKnives = class('AbilityDefinitionWardenFanofKnives', AbilityDefinition)
 _G.AbilityDefinitionWardenFanofKnives = AbilityDefinitionWardenFanofKnives
 
@@ -11980,6 +12440,7 @@ function AbilityDefinitionWardenFanofKnives:setMaximumTotalDamage(level, value)
     self.def:setLvlDataUnreal('Efk2', level, 2, value)
 end
 
+---@class AbilityDefinitionBattlestationsChaos: AbilityDefinition
 AbilityDefinitionBattlestationsChaos = class('AbilityDefinitionBattlestationsChaos', AbilityDefinition)
 _G.AbilityDefinitionBattlestationsChaos = AbilityDefinitionBattlestationsChaos
 
@@ -11999,6 +12460,7 @@ function AbilityDefinitionBattlestationsChaos:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Btl1', level, 0, value)
 end
 
+---@class AbilityDefinitionCorporealForm: AbilityDefinition
 AbilityDefinitionCorporealForm = class('AbilityDefinitionCorporealForm', AbilityDefinition)
 _G.AbilityDefinitionCorporealForm = AbilityDefinitionCorporealForm
 
@@ -12036,6 +12498,7 @@ function AbilityDefinitionCorporealForm:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionDeathKnightDeathCoil: AbilityDefinition
 AbilityDefinitionDeathKnightDeathCoil = class('AbilityDefinitionDeathKnightDeathCoil', AbilityDefinition)
 _G.AbilityDefinitionDeathKnightDeathCoil = AbilityDefinitionDeathKnightDeathCoil
 
@@ -12049,6 +12512,7 @@ function AbilityDefinitionDeathKnightDeathCoil:setAmountHealedDamaged(level, val
     self.def:setLvlDataUnreal('Udc1', level, 1, value)
 end
 
+---@class AbilityDefinitionPhaseShift: AbilityDefinition
 AbilityDefinitionPhaseShift = class('AbilityDefinitionPhaseShift', AbilityDefinition)
 _G.AbilityDefinitionPhaseShift = AbilityDefinitionPhaseShift
 
@@ -12068,6 +12532,7 @@ function AbilityDefinitionPhaseShift:setMovementSpeedReduction(level, value)
     self.def:setLvlDataUnreal('Hbn1', level, 1, value)
 end
 
+---@class AbilityDefinitionSleepAlways: AbilityDefinition
 AbilityDefinitionSleepAlways = class('AbilityDefinitionSleepAlways', AbilityDefinition)
 _G.AbilityDefinitionSleepAlways = AbilityDefinitionSleepAlways
 
@@ -12087,6 +12552,7 @@ function AbilityDefinitionSleepAlways:setAllowOnAnyPlayerSlot(level, value)
     self.def:setLvlDataBoolean('sla2', level, 2, value)
 end
 
+---@class AbilityDefinitionFigurineUrsaWarrior: AbilityDefinition
 AbilityDefinitionFigurineUrsaWarrior = class('AbilityDefinitionFigurineUrsaWarrior', AbilityDefinition)
 _G.AbilityDefinitionFigurineUrsaWarrior = AbilityDefinitionFigurineUrsaWarrior
 
@@ -12118,6 +12584,7 @@ function AbilityDefinitionFigurineUrsaWarrior:setSummonAmount1(level, value)
     self.def:setLvlDataInt('Isn1', level, 1, value)
 end
 
+---@class AbilityDefinitionElunesGrace: AbilityDefinition
 AbilityDefinitionElunesGrace = class('AbilityDefinitionElunesGrace', AbilityDefinition)
 _G.AbilityDefinitionElunesGrace = AbilityDefinitionElunesGrace
 
@@ -12161,6 +12628,7 @@ function AbilityDefinitionElunesGrace:setDamageDealt(level, value)
     self.def:setLvlDataUnreal('Def2', level, 2, value)
 end
 
+---@class AbilityDefinitionReturnLumber: AbilityDefinition
 AbilityDefinitionReturnLumber = class('AbilityDefinitionReturnLumber', AbilityDefinition)
 _G.AbilityDefinitionReturnLumber = AbilityDefinitionReturnLumber
 
@@ -12180,6 +12648,7 @@ function AbilityDefinitionReturnLumber:setAcceptsLumber(level, value)
     self.def:setLvlDataBoolean('Rtn2', level, 2, value)
 end
 
+---@class AbilityDefinitionRegenLifeArll: AbilityDefinition
 AbilityDefinitionRegenLifeArll = class('AbilityDefinitionRegenLifeArll', AbilityDefinition)
 _G.AbilityDefinitionRegenLifeArll = AbilityDefinitionRegenLifeArll
 
@@ -12193,6 +12662,7 @@ function AbilityDefinitionRegenLifeArll:setHitPointsRegeneratedPerSecond(level, 
     self.def:setLvlDataInt('Ihpr', level, 1, value)
 end
 
+---@class AbilityDefinitionDemonHunterEvasion: AbilityDefinition
 AbilityDefinitionDemonHunterEvasion = class('AbilityDefinitionDemonHunterEvasion', AbilityDefinition)
 _G.AbilityDefinitionDemonHunterEvasion = AbilityDefinitionDemonHunterEvasion
 
@@ -12206,6 +12676,7 @@ function AbilityDefinitionDemonHunterEvasion:setChancetoEvade(level, value)
     self.def:setLvlDataUnreal('Eev1', level, 1, value)
 end
 
+---@class AbilityDefinitionPitLordHowlofTerror: AbilityDefinition
 AbilityDefinitionPitLordHowlofTerror = class('AbilityDefinitionPitLordHowlofTerror', AbilityDefinition)
 _G.AbilityDefinitionPitLordHowlofTerror = AbilityDefinitionPitLordHowlofTerror
 
@@ -12255,6 +12726,7 @@ function AbilityDefinitionPitLordHowlofTerror:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionAlchemistHealingSpray: AbilityDefinition
 AbilityDefinitionAlchemistHealingSpray = class('AbilityDefinitionAlchemistHealingSpray', AbilityDefinition)
 _G.AbilityDefinitionAlchemistHealingSpray = AbilityDefinitionAlchemistHealingSpray
 
@@ -12298,6 +12770,7 @@ function AbilityDefinitionAlchemistHealingSpray:setBuildingDamageFactor(level, v
     self.def:setLvlDataUnreal('Ncs5', level, 5, value)
 end
 
+---@class AbilityDefinitionEntangledGoldMine: AbilityDefinition
 AbilityDefinitionEntangledGoldMine = class('AbilityDefinitionEntangledGoldMine', AbilityDefinition)
 _G.AbilityDefinitionEntangledGoldMine = AbilityDefinitionEntangledGoldMine
 
@@ -12317,6 +12790,7 @@ function AbilityDefinitionEntangledGoldMine:setGoldperInterval(level, value)
     self.def:setLvlDataInt('Egm1', level, 1, value)
 end
 
+---@class AbilityDefinitionKeeperoftheGroveEntanglingRoots: AbilityDefinition
 AbilityDefinitionKeeperoftheGroveEntanglingRoots = class('AbilityDefinitionKeeperoftheGroveEntanglingRoots', AbilityDefinition)
 _G.AbilityDefinitionKeeperoftheGroveEntanglingRoots = AbilityDefinitionKeeperoftheGroveEntanglingRoots
 
@@ -12330,6 +12804,7 @@ function AbilityDefinitionKeeperoftheGroveEntanglingRoots:setDamageperSecond(lev
     self.def:setLvlDataUnreal('Eer1', level, 1, value)
 end
 
+---@class AbilityDefinitionLightningShield: AbilityDefinition
 AbilityDefinitionLightningShield = class('AbilityDefinitionLightningShield', AbilityDefinition)
 _G.AbilityDefinitionLightningShield = AbilityDefinitionLightningShield
 
@@ -12343,6 +12818,7 @@ function AbilityDefinitionLightningShield:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Lsh1', level, 1, value)
 end
 
+---@class AbilityDefinitionVampiricattackAIva: AbilityDefinition
 AbilityDefinitionVampiricattackAIva = class('AbilityDefinitionVampiricattackAIva', AbilityDefinition)
 _G.AbilityDefinitionVampiricattackAIva = AbilityDefinitionVampiricattackAIva
 
@@ -12356,6 +12832,7 @@ function AbilityDefinitionVampiricattackAIva:setLifeStolenPerAttack(level, value
     self.def:setLvlDataUnreal('Ivam', level, 1, value)
 end
 
+---@class AbilityDefinitionCoupleHippogryph: AbilityDefinition
 AbilityDefinitionCoupleHippogryph = class('AbilityDefinitionCoupleHippogryph', AbilityDefinition)
 _G.AbilityDefinitionCoupleHippogryph = AbilityDefinitionCoupleHippogryph
 
@@ -12375,6 +12852,7 @@ function AbilityDefinitionCoupleHippogryph:setPartnerUnitType(level, value)
     self.def:setLvlDataString('coa1', level, 1, value)
 end
 
+---@class AbilityDefinitionPaladinResurrection: AbilityDefinition
 AbilityDefinitionPaladinResurrection = class('AbilityDefinitionPaladinResurrection', AbilityDefinition)
 _G.AbilityDefinitionPaladinResurrection = AbilityDefinitionPaladinResurrection
 
@@ -12394,6 +12872,7 @@ function AbilityDefinitionPaladinResurrection:setNumberofCorpsesRaised(level, va
     self.def:setLvlDataInt('Hre1', level, 1, value)
 end
 
+---@class AbilityDefinitionCryptLordCarrionScarabs: AbilityDefinition
 AbilityDefinitionCryptLordCarrionScarabs = class('AbilityDefinitionCryptLordCarrionScarabs', AbilityDefinition)
 _G.AbilityDefinitionCryptLordCarrionScarabs = AbilityDefinitionCryptLordCarrionScarabs
 
@@ -12437,6 +12916,7 @@ function AbilityDefinitionCryptLordCarrionScarabs:setUnitTypeOne(level, value)
     self.def:setLvlDataString('Rai3', level, 3, value)
 end
 
+---@class AbilityDefinitionBerserkerUpgrade: AbilityDefinition
 AbilityDefinitionBerserkerUpgrade = class('AbilityDefinitionBerserkerUpgrade', AbilityDefinition)
 _G.AbilityDefinitionBerserkerUpgrade = AbilityDefinitionBerserkerUpgrade
 
@@ -12450,6 +12930,7 @@ function AbilityDefinitionBerserkerUpgrade:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionRuneofGreaterResurrection: AbilityDefinition
 AbilityDefinitionRuneofGreaterResurrection = class('AbilityDefinitionRuneofGreaterResurrection', AbilityDefinition)
 _G.AbilityDefinitionRuneofGreaterResurrection = AbilityDefinitionRuneofGreaterResurrection
 
@@ -12463,6 +12944,7 @@ function AbilityDefinitionRuneofGreaterResurrection:setRaisedUnitsAreInvulnerabl
     self.def:setLvlDataBoolean('Hre2', level, 2, value)
 end
 
+---@class AbilityDefinitionManaFlare: AbilityDefinition
 AbilityDefinitionManaFlare = class('AbilityDefinitionManaFlare', AbilityDefinition)
 _G.AbilityDefinitionManaFlare = AbilityDefinitionManaFlare
 
@@ -12506,6 +12988,7 @@ function AbilityDefinitionManaFlare:setUnitMaximumDamage(level, value)
     self.def:setLvlDataUnreal('mfl3', level, 3, value)
 end
 
+---@class AbilityDefinitionTaurenChieftainReincarnation: AbilityDefinition
 AbilityDefinitionTaurenChieftainReincarnation = class('AbilityDefinitionTaurenChieftainReincarnation', AbilityDefinition)
 _G.AbilityDefinitionTaurenChieftainReincarnation = AbilityDefinitionTaurenChieftainReincarnation
 
@@ -12519,6 +13002,7 @@ function AbilityDefinitionTaurenChieftainReincarnation:setReincarnationDelay(lev
     self.def:setLvlDataUnreal('Ore1', level, 1, value)
 end
 
+---@class AbilityDefinitionCoupleArcher: AbilityDefinition
 AbilityDefinitionCoupleArcher = class('AbilityDefinitionCoupleArcher', AbilityDefinition)
 _G.AbilityDefinitionCoupleArcher = AbilityDefinitionCoupleArcher
 
@@ -12538,6 +13022,7 @@ function AbilityDefinitionCoupleArcher:setPartnerUnitType(level, value)
     self.def:setLvlDataString('coa1', level, 1, value)
 end
 
+---@class AbilityDefinitionBallsofFire: AbilityDefinition
 AbilityDefinitionBallsofFire = class('AbilityDefinitionBallsofFire', AbilityDefinition)
 _G.AbilityDefinitionBallsofFire = AbilityDefinitionBallsofFire
 
@@ -12581,6 +13066,7 @@ function AbilityDefinitionBallsofFire:setFullDamageInterval(level, value)
     self.def:setLvlDataUnreal('Hfs2', level, 2, value)
 end
 
+---@class AbilityDefinitionPurge: AbilityDefinition
 AbilityDefinitionPurge = class('AbilityDefinitionPurge', AbilityDefinition)
 _G.AbilityDefinitionPurge = AbilityDefinitionPurge
 
@@ -12624,6 +13110,7 @@ function AbilityDefinitionPurge:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Prg3', level, 3, value)
 end
 
+---@class AbilityDefinitionSlow: AbilityDefinition
 AbilityDefinitionSlow = class('AbilityDefinitionSlow', AbilityDefinition)
 _G.AbilityDefinitionSlow = AbilityDefinitionSlow
 
@@ -12649,6 +13136,7 @@ function AbilityDefinitionSlow:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Slo2', level, 2, value)
 end
 
+---@class AbilityDefinitionRuneofLesserResurrection: AbilityDefinition
 AbilityDefinitionRuneofLesserResurrection = class('AbilityDefinitionRuneofLesserResurrection', AbilityDefinition)
 _G.AbilityDefinitionRuneofLesserResurrection = AbilityDefinitionRuneofLesserResurrection
 
@@ -12662,6 +13150,7 @@ function AbilityDefinitionRuneofLesserResurrection:setRaisedUnitsAreInvulnerable
     self.def:setLvlDataBoolean('Hre2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemTownPortal: AbilityDefinition
 AbilityDefinitionItemTownPortal = class('AbilityDefinitionItemTownPortal', AbilityDefinition)
 _G.AbilityDefinitionItemTownPortal = AbilityDefinitionItemTownPortal
 
@@ -12681,6 +13170,7 @@ function AbilityDefinitionItemTownPortal:setUseTeleportClustering(level, value)
     self.def:setLvlDataBoolean('Itp2', level, 2, value)
 end
 
+---@class AbilityDefinitionTinkererRoboGoblinLevel1: AbilityDefinition
 AbilityDefinitionTinkererRoboGoblinLevel1 = class('AbilityDefinitionTinkererRoboGoblinLevel1', AbilityDefinition)
 _G.AbilityDefinitionTinkererRoboGoblinLevel1 = AbilityDefinitionTinkererRoboGoblinLevel1
 
@@ -12730,6 +13220,7 @@ function AbilityDefinitionTinkererRoboGoblinLevel1:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionMilitia: AbilityDefinition
 AbilityDefinitionMilitia = class('AbilityDefinitionMilitia', AbilityDefinition)
 _G.AbilityDefinitionMilitia = AbilityDefinitionMilitia
 
@@ -12749,6 +13240,7 @@ function AbilityDefinitionMilitia:setNormalFormUnit(level, value)
     self.def:setLvlDataString('Mil1', level, 1, value)
 end
 
+---@class AbilityDefinitionVengeance: AbilityDefinition
 AbilityDefinitionVengeance = class('AbilityDefinitionVengeance', AbilityDefinition)
 _G.AbilityDefinitionVengeance = AbilityDefinitionVengeance
 
@@ -12798,6 +13290,7 @@ function AbilityDefinitionVengeance:setUnitTypeTwo(level, value)
     self.def:setLvlDataString('Rai4', level, 4, value)
 end
 
+---@class AbilityDefinitionIntelligenceModPlus2: AbilityDefinition
 AbilityDefinitionIntelligenceModPlus2 = class('AbilityDefinitionIntelligenceModPlus2', AbilityDefinition)
 _G.AbilityDefinitionIntelligenceModPlus2 = AbilityDefinitionIntelligenceModPlus2
 
@@ -12829,6 +13322,7 @@ function AbilityDefinitionIntelligenceModPlus2:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus8: AbilityDefinition
 AbilityDefinitionAttackBonusPlus8 = class('AbilityDefinitionAttackBonusPlus8', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus8 = AbilityDefinitionAttackBonusPlus8
 
@@ -12842,6 +13336,7 @@ function AbilityDefinitionAttackBonusPlus8:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus10: AbilityDefinition
 AbilityDefinitionAttackBonusPlus10 = class('AbilityDefinitionAttackBonusPlus10', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus10 = AbilityDefinitionAttackBonusPlus10
 
@@ -12855,6 +13350,7 @@ function AbilityDefinitionAttackBonusPlus10:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererRoboGoblinLevel3: AbilityDefinition
 AbilityDefinitionTinkererRoboGoblinLevel3 = class('AbilityDefinitionTinkererRoboGoblinLevel3', AbilityDefinition)
 _G.AbilityDefinitionTinkererRoboGoblinLevel3 = AbilityDefinitionTinkererRoboGoblinLevel3
 
@@ -12904,6 +13400,7 @@ function AbilityDefinitionTinkererRoboGoblinLevel3:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionDeathDamageAOEsapper: AbilityDefinition
 AbilityDefinitionDeathDamageAOEsapper = class('AbilityDefinitionDeathDamageAOEsapper', AbilityDefinition)
 _G.AbilityDefinitionDeathDamageAOEsapper = AbilityDefinitionDeathDamageAOEsapper
 
@@ -12935,6 +13432,7 @@ function AbilityDefinitionDeathDamageAOEsapper:setPartialDamageRadius(level, val
     self.def:setLvlDataUnreal('Dda3', level, 3, value)
 end
 
+---@class AbilityDefinitionAroo: AbilityDefinition
 AbilityDefinitionAroo = class('AbilityDefinitionAroo', AbilityDefinition)
 _G.AbilityDefinitionAroo = AbilityDefinitionAroo
 
@@ -12966,6 +13464,7 @@ function AbilityDefinitionAroo:setRootedWeapons(level, value)
     self.def:setLvlDataString('Roo1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererRoboGoblinLevel2: AbilityDefinition
 AbilityDefinitionTinkererRoboGoblinLevel2 = class('AbilityDefinitionTinkererRoboGoblinLevel2', AbilityDefinition)
 _G.AbilityDefinitionTinkererRoboGoblinLevel2 = AbilityDefinitionTinkererRoboGoblinLevel2
 
@@ -13015,6 +13514,7 @@ function AbilityDefinitionTinkererRoboGoblinLevel2:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionLichFrostArmor: AbilityDefinition
 AbilityDefinitionLichFrostArmor = class('AbilityDefinitionLichFrostArmor', AbilityDefinition)
 _G.AbilityDefinitionLichFrostArmor = AbilityDefinitionLichFrostArmor
 
@@ -13034,6 +13534,7 @@ function AbilityDefinitionLichFrostArmor:setArmorBonus(level, value)
     self.def:setLvlDataUnreal('Ufa2', level, 2, value)
 end
 
+---@class AbilityDefinitionTankUpgrade: AbilityDefinition
 AbilityDefinitionTankUpgrade = class('AbilityDefinitionTankUpgrade', AbilityDefinition)
 _G.AbilityDefinitionTankUpgrade = AbilityDefinitionTankUpgrade
 
@@ -13047,6 +13548,7 @@ function AbilityDefinitionTankUpgrade:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionCripple: AbilityDefinition
 AbilityDefinitionCripple = class('AbilityDefinitionCripple', AbilityDefinition)
 _G.AbilityDefinitionCripple = AbilityDefinitionCripple
 
@@ -13072,6 +13574,7 @@ function AbilityDefinitionCripple:setMovementSpeedReduction(level, value)
     self.def:setLvlDataUnreal('Cri1', level, 1, value)
 end
 
+---@class AbilityDefinitionFlakCannon: AbilityDefinition
 AbilityDefinitionFlakCannon = class('AbilityDefinitionFlakCannon', AbilityDefinition)
 _G.AbilityDefinitionFlakCannon = AbilityDefinitionFlakCannon
 
@@ -13109,6 +13612,7 @@ function AbilityDefinitionFlakCannon:setFullDamageAmount(level, value)
     self.def:setLvlDataUnreal('flk3', level, 3, value)
 end
 
+---@class AbilityDefinitionPossessionChanneling: AbilityDefinition
 AbilityDefinitionPossessionChanneling = class('AbilityDefinitionPossessionChanneling', AbilityDefinition)
 _G.AbilityDefinitionPossessionChanneling = AbilityDefinitionPossessionChanneling
 
@@ -13140,6 +13644,7 @@ function AbilityDefinitionPossessionChanneling:setTargetIsInvulnerable(level, va
     self.def:setLvlDataBoolean('Pos3', level, 3, value)
 end
 
+---@class AbilityDefinitionRocketAttack: AbilityDefinition
 AbilityDefinitionRocketAttack = class('AbilityDefinitionRocketAttack', AbilityDefinition)
 _G.AbilityDefinitionRocketAttack = AbilityDefinitionRocketAttack
 
@@ -13165,6 +13670,7 @@ function AbilityDefinitionRocketAttack:setMaximumTotalDamage(level, value)
     self.def:setLvlDataUnreal('Efk2', level, 2, value)
 end
 
+---@class AbilityDefinitionBrewmasterStormEarthandFire: AbilityDefinition
 AbilityDefinitionBrewmasterStormEarthandFire = class('AbilityDefinitionBrewmasterStormEarthandFire', AbilityDefinition)
 _G.AbilityDefinitionBrewmasterStormEarthandFire = AbilityDefinitionBrewmasterStormEarthandFire
 
@@ -13178,6 +13684,7 @@ function AbilityDefinitionBrewmasterStormEarthandFire:setSummonedUnitTypes(level
     self.def:setLvlDataString('Nef1', level, 1, value)
 end
 
+---@class AbilityDefinitionTinkererEngineeringUpgrade: AbilityDefinition
 AbilityDefinitionTinkererEngineeringUpgrade = class('AbilityDefinitionTinkererEngineeringUpgrade', AbilityDefinition)
 _G.AbilityDefinitionTinkererEngineeringUpgrade = AbilityDefinitionTinkererEngineeringUpgrade
 
@@ -13221,6 +13728,7 @@ function AbilityDefinitionTinkererEngineeringUpgrade:setAbilityUpgrade3(level, v
     self.def:setLvlDataString('Neg3', level, 3, value)
 end
 
+---@class AbilityDefinitionMine: AbilityDefinition
 AbilityDefinitionMine = class('AbilityDefinitionMine', AbilityDefinition)
 _G.AbilityDefinitionMine = AbilityDefinitionMine
 
@@ -13240,6 +13748,7 @@ function AbilityDefinitionMine:setInvisibilityTransitionTime(level, value)
     self.def:setLvlDataUnreal('Min2', level, 2, value)
 end
 
+---@class AbilityDefinitionMagicImmunity: AbilityDefinition
 AbilityDefinitionMagicImmunity = class('AbilityDefinitionMagicImmunity', AbilityDefinition)
 _G.AbilityDefinitionMagicImmunity = AbilityDefinitionMagicImmunity
 
@@ -13253,6 +13762,7 @@ function AbilityDefinitionMagicImmunity:setMagicDamageFactor(level, value)
     self.def:setLvlDataUnreal('mim1', level, 1, value)
 end
 
+---@class AbilityDefinitionLichFrostNova: AbilityDefinition
 AbilityDefinitionLichFrostNova = class('AbilityDefinitionLichFrostNova', AbilityDefinition)
 _G.AbilityDefinitionLichFrostNova = AbilityDefinitionLichFrostNova
 
@@ -13272,6 +13782,7 @@ function AbilityDefinitionLichFrostNova:setSpecificTargetDamage(level, value)
     self.def:setLvlDataUnreal('Ufn2', level, 2, value)
 end
 
+---@class AbilityDefinitionRoar: AbilityDefinition
 AbilityDefinitionRoar = class('AbilityDefinitionRoar', AbilityDefinition)
 _G.AbilityDefinitionRoar = AbilityDefinitionRoar
 
@@ -13321,6 +13832,7 @@ function AbilityDefinitionRoar:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionRunedBracers: AbilityDefinition
 AbilityDefinitionRunedBracers = class('AbilityDefinitionRunedBracers', AbilityDefinition)
 _G.AbilityDefinitionRunedBracers = AbilityDefinitionRunedBracers
 
@@ -13340,6 +13852,7 @@ function AbilityDefinitionRunedBracers:setDamageReduction(level, value)
     self.def:setLvlDataUnreal('isr2', level, 2, value)
 end
 
+---@class AbilityDefinitionLichDarkRitual: AbilityDefinition
 AbilityDefinitionLichDarkRitual = class('AbilityDefinitionLichDarkRitual', AbilityDefinition)
 _G.AbilityDefinitionLichDarkRitual = AbilityDefinitionLichDarkRitual
 
@@ -13377,6 +13890,7 @@ function AbilityDefinitionLichDarkRitual:setManaConversionAsPercent(level, value
     self.def:setLvlDataBoolean('Udp3', level, 3, value)
 end
 
+---@class AbilityDefinitionTichondriusDarkSummoning: AbilityDefinition
 AbilityDefinitionTichondriusDarkSummoning = class('AbilityDefinitionTichondriusDarkSummoning', AbilityDefinition)
 _G.AbilityDefinitionTichondriusDarkSummoning = AbilityDefinitionTichondriusDarkSummoning
 
@@ -13402,6 +13916,7 @@ function AbilityDefinitionTichondriusDarkSummoning:setCastingDelayseconds(level,
     self.def:setLvlDataUnreal('Uds2', level, 2, value)
 end
 
+---@class AbilityDefinitionItemSpeed: AbilityDefinition
 AbilityDefinitionItemSpeed = class('AbilityDefinitionItemSpeed', AbilityDefinition)
 _G.AbilityDefinitionItemSpeed = AbilityDefinitionItemSpeed
 
@@ -13415,6 +13930,7 @@ function AbilityDefinitionItemSpeed:setMovementSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Ispi', level, 1, value)
 end
 
+---@class AbilityDefinitionBloodlust: AbilityDefinition
 AbilityDefinitionBloodlust = class('AbilityDefinitionBloodlust', AbilityDefinition)
 _G.AbilityDefinitionBloodlust = AbilityDefinitionBloodlust
 
@@ -13440,6 +13956,7 @@ function AbilityDefinitionBloodlust:setScalingFactor(level, value)
     self.def:setLvlDataUnreal('Blo3', level, 3, value)
 end
 
+---@class AbilityDefinitionDeathKnightDeathPact: AbilityDefinition
 AbilityDefinitionDeathKnightDeathPact = class('AbilityDefinitionDeathKnightDeathPact', AbilityDefinition)
 _G.AbilityDefinitionDeathKnightDeathPact = AbilityDefinitionDeathKnightDeathPact
 
@@ -13477,6 +13994,7 @@ function AbilityDefinitionDeathKnightDeathPact:setManaConversionAsPercent(level,
     self.def:setLvlDataBoolean('Udp3', level, 3, value)
 end
 
+---@class AbilityDefinitionBlightPlacement: AbilityDefinition
 AbilityDefinitionBlightPlacement = class('AbilityDefinitionBlightPlacement', AbilityDefinition)
 _G.AbilityDefinitionBlightPlacement = AbilityDefinitionBlightPlacement
 
@@ -13496,6 +14014,7 @@ function AbilityDefinitionBlightPlacement:setExpansionAmount(level, value)
     self.def:setLvlDataUnreal('Bli1', level, 1, value)
 end
 
+---@class AbilityDefinitionSeaWitchForkedLightning: AbilityDefinition
 AbilityDefinitionSeaWitchForkedLightning = class('AbilityDefinitionSeaWitchForkedLightning', AbilityDefinition)
 _G.AbilityDefinitionSeaWitchForkedLightning = AbilityDefinitionSeaWitchForkedLightning
 
@@ -13527,6 +14046,7 @@ function AbilityDefinitionSeaWitchForkedLightning:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionLightning: AbilityDefinition
 AbilityDefinitionLightning = class('AbilityDefinitionLightning', AbilityDefinition)
 _G.AbilityDefinitionLightning = AbilityDefinitionLightning
 
@@ -13558,6 +14078,7 @@ function AbilityDefinitionLightning:setDistance(level, value)
     self.def:setLvlDataUnreal('Ucs3', level, 3, value)
 end
 
+---@class AbilityDefinitionStrengthMod: AbilityDefinition
 AbilityDefinitionStrengthMod = class('AbilityDefinitionStrengthMod', AbilityDefinition)
 _G.AbilityDefinitionStrengthMod = AbilityDefinitionStrengthMod
 
@@ -13589,6 +14110,7 @@ function AbilityDefinitionStrengthMod:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionScrollofLifeRegen: AbilityDefinition
 AbilityDefinitionScrollofLifeRegen = class('AbilityDefinitionScrollofLifeRegen', AbilityDefinition)
 _G.AbilityDefinitionScrollofLifeRegen = AbilityDefinitionScrollofLifeRegen
 
@@ -13626,6 +14148,7 @@ function AbilityDefinitionScrollofLifeRegen:setLifeRegenerated(level, value)
     self.def:setLvlDataUnreal('irl1', level, 1, value)
 end
 
+---@class AbilityDefinitionHealCreepNormalAnhe: AbilityDefinition
 AbilityDefinitionHealCreepNormalAnhe = class('AbilityDefinitionHealCreepNormalAnhe', AbilityDefinition)
 _G.AbilityDefinitionHealCreepNormalAnhe = AbilityDefinitionHealCreepNormalAnhe
 
@@ -13639,6 +14162,7 @@ function AbilityDefinitionHealCreepNormalAnhe:setHitPointsGained(level, value)
     self.def:setLvlDataUnreal('Hea1', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackSpeedIncrease: AbilityDefinition
 AbilityDefinitionAttackSpeedIncrease = class('AbilityDefinitionAttackSpeedIncrease', AbilityDefinition)
 _G.AbilityDefinitionAttackSpeedIncrease = AbilityDefinitionAttackSpeedIncrease
 
@@ -13652,6 +14176,7 @@ function AbilityDefinitionAttackSpeedIncrease:setAttackSpeedIncrease(level, valu
     self.def:setLvlDataUnreal('Isx1', level, 1, value)
 end
 
+---@class AbilityDefinitionDefend: AbilityDefinition
 AbilityDefinitionDefend = class('AbilityDefinitionDefend', AbilityDefinition)
 _G.AbilityDefinitionDefend = AbilityDefinitionDefend
 
@@ -13707,6 +14232,7 @@ function AbilityDefinitionDefend:setMagicDamageReduction(level, value)
     self.def:setLvlDataUnreal('Def5', level, 5, value)
 end
 
+---@class AbilityDefinitionSentryWardAIsw: AbilityDefinition
 AbilityDefinitionSentryWardAIsw = class('AbilityDefinitionSentryWardAIsw', AbilityDefinition)
 _G.AbilityDefinitionSentryWardAIsw = AbilityDefinitionSentryWardAIsw
 
@@ -13720,6 +14246,7 @@ function AbilityDefinitionSentryWardAIsw:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionGrabTree: AbilityDefinition
 AbilityDefinitionGrabTree = class('AbilityDefinitionGrabTree', AbilityDefinition)
 _G.AbilityDefinitionGrabTree = AbilityDefinitionGrabTree
 
@@ -13757,6 +14284,7 @@ function AbilityDefinitionGrabTree:setRemoveDelay(level, value)
     self.def:setLvlDataUnreal('gra2', level, 2, value)
 end
 
+---@class AbilityDefinitionDecouple: AbilityDefinition
 AbilityDefinitionDecouple = class('AbilityDefinitionDecouple', AbilityDefinition)
 _G.AbilityDefinitionDecouple = AbilityDefinitionDecouple
 
@@ -13776,6 +14304,7 @@ function AbilityDefinitionDecouple:setPartnerUnitTypeTwo(level, value)
     self.def:setLvlDataString('dcp2', level, 2, value)
 end
 
+---@class AbilityDefinitionDustofAppearance: AbilityDefinition
 AbilityDefinitionDustofAppearance = class('AbilityDefinitionDustofAppearance', AbilityDefinition)
 _G.AbilityDefinitionDustofAppearance = AbilityDefinitionDustofAppearance
 
@@ -13789,6 +14318,7 @@ function AbilityDefinitionDustofAppearance:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusAItc: AbilityDefinition
 AbilityDefinitionAttackBonusAItc = class('AbilityDefinitionAttackBonusAItc', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusAItc = AbilityDefinitionAttackBonusAItc
 
@@ -13802,6 +14332,7 @@ function AbilityDefinitionAttackBonusAItc:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionItemDetectAoe: AbilityDefinition
 AbilityDefinitionItemDetectAoe = class('AbilityDefinitionItemDetectAoe', AbilityDefinition)
 _G.AbilityDefinitionItemDetectAoe = AbilityDefinitionItemDetectAoe
 
@@ -13815,6 +14346,7 @@ function AbilityDefinitionItemDetectAoe:setDetectionRadius(level, value)
     self.def:setLvlDataString('Idet', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus5: AbilityDefinition
 AbilityDefinitionAttackBonusPlus5 = class('AbilityDefinitionAttackBonusPlus5', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus5 = AbilityDefinitionAttackBonusPlus5
 
@@ -13828,6 +14360,7 @@ function AbilityDefinitionAttackBonusPlus5:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus7: AbilityDefinition
 AbilityDefinitionAttackBonusPlus7 = class('AbilityDefinitionAttackBonusPlus7', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus7 = AbilityDefinitionAttackBonusPlus7
 
@@ -13841,6 +14374,7 @@ function AbilityDefinitionAttackBonusPlus7:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus2: AbilityDefinition
 AbilityDefinitionAttackBonusPlus2 = class('AbilityDefinitionAttackBonusPlus2', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus2 = AbilityDefinitionAttackBonusPlus2
 
@@ -13854,6 +14388,7 @@ function AbilityDefinitionAttackBonusPlus2:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionDevour: AbilityDefinition
 AbilityDefinitionDevour = class('AbilityDefinitionDevour', AbilityDefinition)
 _G.AbilityDefinitionDevour = AbilityDefinitionDevour
 
@@ -13867,6 +14402,7 @@ function AbilityDefinitionDevour:setMaxCreepLevel(level, value)
     self.def:setLvlDataInt('Dev1', level, 1, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus4: AbilityDefinition
 AbilityDefinitionAttackBonusPlus4 = class('AbilityDefinitionAttackBonusPlus4', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus4 = AbilityDefinitionAttackBonusPlus4
 
@@ -13880,6 +14416,7 @@ function AbilityDefinitionAttackBonusPlus4:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionMountainKingThunderClap: AbilityDefinition
 AbilityDefinitionMountainKingThunderClap = class('AbilityDefinitionMountainKingThunderClap', AbilityDefinition)
 _G.AbilityDefinitionMountainKingThunderClap = AbilityDefinitionMountainKingThunderClap
 
@@ -13911,6 +14448,7 @@ function AbilityDefinitionMountainKingThunderClap:setMovementSpeedReduction(leve
     self.def:setLvlDataUnreal('Htc3', level, 3, value)
 end
 
+---@class AbilityDefinitionAttackBonusAItf: AbilityDefinition
 AbilityDefinitionAttackBonusAItf = class('AbilityDefinitionAttackBonusAItf', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusAItf = AbilityDefinitionAttackBonusAItf
 
@@ -13924,6 +14462,7 @@ function AbilityDefinitionAttackBonusAItf:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionAdet: AbilityDefinition
 AbilityDefinitionAdet = class('AbilityDefinitionAdet', AbilityDefinition)
 _G.AbilityDefinitionAdet = AbilityDefinitionAdet
 
@@ -13937,6 +14476,7 @@ function AbilityDefinitionAdet:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionFingerofDeath: AbilityDefinition
 AbilityDefinitionFingerofDeath = class('AbilityDefinitionFingerofDeath', AbilityDefinition)
 _G.AbilityDefinitionFingerofDeath = AbilityDefinitionFingerofDeath
 
@@ -13962,6 +14502,7 @@ function AbilityDefinitionFingerofDeath:setGraphicDuration(level, value)
     self.def:setLvlDataUnreal('Nfd2', level, 2, value)
 end
 
+---@class AbilityDefinitionAttackBonusPlus1: AbilityDefinition
 AbilityDefinitionAttackBonusPlus1 = class('AbilityDefinitionAttackBonusPlus1', AbilityDefinition)
 _G.AbilityDefinitionAttackBonusPlus1 = AbilityDefinitionAttackBonusPlus1
 
@@ -13975,6 +14516,7 @@ function AbilityDefinitionAttackBonusPlus1:setAttackBonus(level, value)
     self.def:setLvlDataInt('Iatt', level, 1, value)
 end
 
+---@class AbilityDefinitionSeaWitchFrostArrows: AbilityDefinition
 AbilityDefinitionSeaWitchFrostArrows = class('AbilityDefinitionSeaWitchFrostArrows', AbilityDefinition)
 _G.AbilityDefinitionSeaWitchFrostArrows = AbilityDefinitionSeaWitchFrostArrows
 
@@ -14006,6 +14548,7 @@ function AbilityDefinitionSeaWitchFrostArrows:setMovementSpeedFactor(level, valu
     self.def:setLvlDataUnreal('Hca2', level, 2, value)
 end
 
+---@class AbilityDefinitionFireBolt: AbilityDefinition
 AbilityDefinitionFireBolt = class('AbilityDefinitionFireBolt', AbilityDefinition)
 _G.AbilityDefinitionFireBolt = AbilityDefinitionFireBolt
 
@@ -14019,6 +14562,7 @@ function AbilityDefinitionFireBolt:setDamage(level, value)
     self.def:setLvlDataUnreal('Htb1', level, 1, value)
 end
 
+---@class AbilityDefinitionMountainKingThunderBolt: AbilityDefinition
 AbilityDefinitionMountainKingThunderBolt = class('AbilityDefinitionMountainKingThunderBolt', AbilityDefinition)
 _G.AbilityDefinitionMountainKingThunderBolt = AbilityDefinitionMountainKingThunderBolt
 
@@ -14032,6 +14576,7 @@ function AbilityDefinitionMountainKingThunderBolt:setDamage(level, value)
     self.def:setLvlDataUnreal('Htb1', level, 1, value)
 end
 
+---@class AbilityDefinitionSentinel: AbilityDefinition
 AbilityDefinitionSentinel = class('AbilityDefinitionSentinel', AbilityDefinition)
 _G.AbilityDefinitionSentinel = AbilityDefinitionSentinel
 
@@ -14063,6 +14608,7 @@ function AbilityDefinitionSentinel:setHoveringHeight(level, value)
     self.def:setLvlDataUnreal('Esn3', level, 3, value)
 end
 
+---@class AbilityDefinitionArchMageSummonWaterElemental: AbilityDefinition
 AbilityDefinitionArchMageSummonWaterElemental = class('AbilityDefinitionArchMageSummonWaterElemental', AbilityDefinition)
 _G.AbilityDefinitionArchMageSummonWaterElemental = AbilityDefinitionArchMageSummonWaterElemental
 
@@ -14082,6 +14628,7 @@ function AbilityDefinitionArchMageSummonWaterElemental:setSummonedUnitType(level
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionLoadBurrow: AbilityDefinition
 AbilityDefinitionLoadBurrow = class('AbilityDefinitionLoadBurrow', AbilityDefinition)
 _G.AbilityDefinitionLoadBurrow = AbilityDefinitionLoadBurrow
 
@@ -14095,6 +14642,7 @@ function AbilityDefinitionLoadBurrow:setAllowedUnitType(level, value)
     self.def:setLvlDataString('Loa1', level, 0, value)
 end
 
+---@class AbilityDefinitionDispelMagiccreep: AbilityDefinition
 AbilityDefinitionDispelMagiccreep = class('AbilityDefinitionDispelMagiccreep', AbilityDefinition)
 _G.AbilityDefinitionDispelMagiccreep = AbilityDefinitionDispelMagiccreep
 
@@ -14114,6 +14662,7 @@ function AbilityDefinitionDispelMagiccreep:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Adm2', level, 2, value)
 end
 
+---@class AbilityDefinitionFragShards: AbilityDefinition
 AbilityDefinitionFragShards = class('AbilityDefinitionFragShards', AbilityDefinition)
 _G.AbilityDefinitionFragShards = AbilityDefinitionFragShards
 
@@ -14151,6 +14700,7 @@ function AbilityDefinitionFragShards:setFullDamageAmount(level, value)
     self.def:setLvlDataUnreal('flk3', level, 3, value)
 end
 
+---@class AbilityDefinitionDetectSentryWard: AbilityDefinition
 AbilityDefinitionDetectSentryWard = class('AbilityDefinitionDetectSentryWard', AbilityDefinition)
 _G.AbilityDefinitionDetectSentryWard = AbilityDefinitionDetectSentryWard
 
@@ -14164,6 +14714,7 @@ function AbilityDefinitionDetectSentryWard:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionPhoenixFire: AbilityDefinition
 AbilityDefinitionPhoenixFire = class('AbilityDefinitionPhoenixFire', AbilityDefinition)
 _G.AbilityDefinitionPhoenixFire = AbilityDefinitionPhoenixFire
 
@@ -14183,6 +14734,7 @@ function AbilityDefinitionPhoenixFire:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('pxf2', level, 2, value)
 end
 
+---@class AbilityDefinitionRaiseDead: AbilityDefinition
 AbilityDefinitionRaiseDead = class('AbilityDefinitionRaiseDead', AbilityDefinition)
 _G.AbilityDefinitionRaiseDead = AbilityDefinitionRaiseDead
 
@@ -14220,6 +14772,7 @@ function AbilityDefinitionRaiseDead:setUnitTypeOne(level, value)
     self.def:setLvlDataString('Rai3', level, 3, value)
 end
 
+---@class AbilityDefinitionAnwm: AbilityDefinition
 AbilityDefinitionAnwm = class('AbilityDefinitionAnwm', AbilityDefinition)
 _G.AbilityDefinitionAnwm = AbilityDefinitionAnwm
 
@@ -14239,6 +14792,7 @@ function AbilityDefinitionAnwm:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionShadowMeld: AbilityDefinition
 AbilityDefinitionShadowMeld = class('AbilityDefinitionShadowMeld', AbilityDefinition)
 _G.AbilityDefinitionShadowMeld = AbilityDefinitionShadowMeld
 
@@ -14264,6 +14818,7 @@ function AbilityDefinitionShadowMeld:setFadeDuration(level, value)
     self.def:setLvlDataUnreal('Shm1', level, 1, value)
 end
 
+---@class AbilityDefinitionRoarAra2: AbilityDefinition
 AbilityDefinitionRoarAra2 = class('AbilityDefinitionRoarAra2', AbilityDefinition)
 _G.AbilityDefinitionRoarAra2 = AbilityDefinitionRoarAra2
 
@@ -14313,6 +14868,7 @@ function AbilityDefinitionRoarAra2:setMaxUnits(level, value)
     self.def:setLvlDataInt('Roa7', level, 7, value)
 end
 
+---@class AbilityDefinitionGhostVisible: AbilityDefinition
 AbilityDefinitionGhostVisible = class('AbilityDefinitionGhostVisible', AbilityDefinition)
 _G.AbilityDefinitionGhostVisible = AbilityDefinitionGhostVisible
 
@@ -14332,6 +14888,7 @@ function AbilityDefinitionGhostVisible:setImmunetoMorphEffects(level, value)
     self.def:setLvlDataBoolean('Eth1', level, 1, value)
 end
 
+---@class AbilityDefinitionDetectgeneral: AbilityDefinition
 AbilityDefinitionDetectgeneral = class('AbilityDefinitionDetectgeneral', AbilityDefinition)
 _G.AbilityDefinitionDetectgeneral = AbilityDefinitionDetectgeneral
 
@@ -14345,6 +14902,7 @@ function AbilityDefinitionDetectgeneral:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionPIlotTankRifleman: AbilityDefinition
 AbilityDefinitionPIlotTankRifleman = class('AbilityDefinitionPIlotTankRifleman', AbilityDefinition)
 _G.AbilityDefinitionPIlotTankRifleman = AbilityDefinitionPIlotTankRifleman
 
@@ -14364,6 +14922,7 @@ function AbilityDefinitionPIlotTankRifleman:setRequiredUnitType(level, value)
     self.def:setLvlDataString('tpi1', level, 1, value)
 end
 
+---@class AbilityDefinitionFreezeDamageBonus: AbilityDefinition
 AbilityDefinitionFreezeDamageBonus = class('AbilityDefinitionFreezeDamageBonus', AbilityDefinition)
 _G.AbilityDefinitionFreezeDamageBonus = AbilityDefinitionFreezeDamageBonus
 
@@ -14383,6 +14942,7 @@ function AbilityDefinitionFreezeDamageBonus:setDamageBonus(level, value)
     self.def:setLvlDataUnreal('Idam', level, 1, value)
 end
 
+---@class AbilityDefinitionEtherealForm: AbilityDefinition
 AbilityDefinitionEtherealForm = class('AbilityDefinitionEtherealForm', AbilityDefinition)
 _G.AbilityDefinitionEtherealForm = AbilityDefinitionEtherealForm
 
@@ -14420,6 +14980,7 @@ function AbilityDefinitionEtherealForm:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionDetonate: AbilityDefinition
 AbilityDefinitionDetonate = class('AbilityDefinitionDetonate', AbilityDefinition)
 _G.AbilityDefinitionDetonate = AbilityDefinitionDetonate
 
@@ -14439,6 +15000,7 @@ function AbilityDefinitionDetonate:setManaLossperunit(level, value)
     self.def:setLvlDataUnreal('Dtn1', level, 1, value)
 end
 
+---@class AbilityDefinitionRavenFormMedivh: AbilityDefinition
 AbilityDefinitionRavenFormMedivh = class('AbilityDefinitionRavenFormMedivh', AbilityDefinition)
 _G.AbilityDefinitionRavenFormMedivh = AbilityDefinitionRavenFormMedivh
 
@@ -14476,6 +15038,7 @@ function AbilityDefinitionRavenFormMedivh:setAlternateFormUnit(level, value)
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionShadowHunterSerpentWard: AbilityDefinition
 AbilityDefinitionShadowHunterSerpentWard = class('AbilityDefinitionShadowHunterSerpentWard', AbilityDefinition)
 _G.AbilityDefinitionShadowHunterSerpentWard = AbilityDefinitionShadowHunterSerpentWard
 
@@ -14495,6 +15058,7 @@ function AbilityDefinitionShadowHunterSerpentWard:setSummonedUnitType(level, val
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionAbsorbMana: AbilityDefinition
 AbilityDefinitionAbsorbMana = class('AbilityDefinitionAbsorbMana', AbilityDefinition)
 _G.AbilityDefinitionAbsorbMana = AbilityDefinitionAbsorbMana
 
@@ -14514,6 +15078,7 @@ function AbilityDefinitionAbsorbMana:setMaximumLifeAbsorbed(level, value)
     self.def:setLvlDataUnreal('abs1', level, 1, value)
 end
 
+---@class AbilityDefinitionAuraRegenerationStatue: AbilityDefinition
 AbilityDefinitionAuraRegenerationStatue = class('AbilityDefinitionAuraRegenerationStatue', AbilityDefinition)
 _G.AbilityDefinitionAuraRegenerationStatue = AbilityDefinitionAuraRegenerationStatue
 
@@ -14533,6 +15098,7 @@ function AbilityDefinitionAuraRegenerationStatue:setAmountofHitPointsRegenerated
     self.def:setLvlDataUnreal('Oar1', level, 1, value)
 end
 
+---@class AbilityDefinitionUnsummon: AbilityDefinition
 AbilityDefinitionUnsummon = class('AbilityDefinitionUnsummon', AbilityDefinition)
 _G.AbilityDefinitionUnsummon = AbilityDefinitionUnsummon
 
@@ -14552,6 +15118,7 @@ function AbilityDefinitionUnsummon:setSalvageCostRatio(level, value)
     self.def:setLvlDataUnreal('Sal1', level, 1, value)
 end
 
+---@class AbilityDefinitionTaurenChieftainShockWave: AbilityDefinition
 AbilityDefinitionTaurenChieftainShockWave = class('AbilityDefinitionTaurenChieftainShockWave', AbilityDefinition)
 _G.AbilityDefinitionTaurenChieftainShockWave = AbilityDefinitionTaurenChieftainShockWave
 
@@ -14583,6 +15150,7 @@ function AbilityDefinitionTaurenChieftainShockWave:setMaximumDamage(level, value
     self.def:setLvlDataUnreal('Osh2', level, 2, value)
 end
 
+---@class AbilityDefinitionCrippleWarlock: AbilityDefinition
 AbilityDefinitionCrippleWarlock = class('AbilityDefinitionCrippleWarlock', AbilityDefinition)
 _G.AbilityDefinitionCrippleWarlock = AbilityDefinitionCrippleWarlock
 
@@ -14608,6 +15176,7 @@ function AbilityDefinitionCrippleWarlock:setMovementSpeedReduction(level, value)
     self.def:setLvlDataUnreal('Cri1', level, 1, value)
 end
 
+---@class AbilityDefinitionFarseerSpiritWolf: AbilityDefinition
 AbilityDefinitionFarseerSpiritWolf = class('AbilityDefinitionFarseerSpiritWolf', AbilityDefinition)
 _G.AbilityDefinitionFarseerSpiritWolf = AbilityDefinitionFarseerSpiritWolf
 
@@ -14627,6 +15196,7 @@ function AbilityDefinitionFarseerSpiritWolf:setNumberofSummonedUnits(level, valu
     self.def:setLvlDataInt('Osf2', level, 2, value)
 end
 
+---@class AbilityDefinitionPilotTankMortarTeam: AbilityDefinition
 AbilityDefinitionPilotTankMortarTeam = class('AbilityDefinitionPilotTankMortarTeam', AbilityDefinition)
 _G.AbilityDefinitionPilotTankMortarTeam = AbilityDefinitionPilotTankMortarTeam
 
@@ -14646,6 +15216,7 @@ function AbilityDefinitionPilotTankMortarTeam:setRequiredUnitType(level, value)
     self.def:setLvlDataString('tpi1', level, 1, value)
 end
 
+---@class AbilityDefinitionAntimagicShieldAIxs: AbilityDefinition
 AbilityDefinitionAntimagicShieldAIxs = class('AbilityDefinitionAntimagicShieldAIxs', AbilityDefinition)
 _G.AbilityDefinitionAntimagicShieldAIxs = AbilityDefinitionAntimagicShieldAIxs
 
@@ -14677,6 +15248,7 @@ function AbilityDefinitionAntimagicShieldAIxs:setShieldLife(level, value)
     self.def:setLvlDataInt('Ams3', level, 3, value)
 end
 
+---@class AbilityDefinitionPermanentAllPlus1: AbilityDefinition
 AbilityDefinitionPermanentAllPlus1 = class('AbilityDefinitionPermanentAllPlus1', AbilityDefinition)
 _G.AbilityDefinitionPermanentAllPlus1 = AbilityDefinitionPermanentAllPlus1
 
@@ -14708,6 +15280,7 @@ function AbilityDefinitionPermanentAllPlus1:setStrengthBonus(level, value)
     self.def:setLvlDataInt('Istr', level, 3, value)
 end
 
+---@class AbilityDefinitionAbolishMagic: AbilityDefinition
 AbilityDefinitionAbolishMagic = class('AbilityDefinitionAbolishMagic', AbilityDefinition)
 _G.AbilityDefinitionAbolishMagic = AbilityDefinitionAbolishMagic
 
@@ -14727,6 +15300,7 @@ function AbilityDefinitionAbolishMagic:setSummonedUnitDamage(level, value)
     self.def:setLvlDataUnreal('Adm2', level, 2, value)
 end
 
+---@class AbilityDefinitionRavenFormDruidoftheTalon: AbilityDefinition
 AbilityDefinitionRavenFormDruidoftheTalon = class('AbilityDefinitionRavenFormDruidoftheTalon', AbilityDefinition)
 _G.AbilityDefinitionRavenFormDruidoftheTalon = AbilityDefinitionRavenFormDruidoftheTalon
 
@@ -14764,6 +15338,7 @@ function AbilityDefinitionRavenFormDruidoftheTalon:setAlternateFormUnit(level, v
     self.def:setLvlDataString('Emeu', level, 0, value)
 end
 
+---@class AbilityDefinitionPlagueToss: AbilityDefinition
 AbilityDefinitionPlagueToss = class('AbilityDefinitionPlagueToss', AbilityDefinition)
 _G.AbilityDefinitionPlagueToss = AbilityDefinitionPlagueToss
 
@@ -14777,6 +15352,7 @@ function AbilityDefinitionPlagueToss:setWardUnitType(level, value)
     self.def:setLvlDataString('hwdu', level, 0, value)
 end
 
+---@class AbilityDefinitionVampiricattack: AbilityDefinition
 AbilityDefinitionVampiricattack = class('AbilityDefinitionVampiricattack', AbilityDefinition)
 _G.AbilityDefinitionVampiricattack = AbilityDefinitionVampiricattack
 
@@ -14790,6 +15366,7 @@ function AbilityDefinitionVampiricattack:setLifeStolenPerAttack(level, value)
     self.def:setLvlDataUnreal('Ivam', level, 1, value)
 end
 
+---@class AbilityDefinitionCargoHoldDeath: AbilityDefinition
 AbilityDefinitionCargoHoldDeath = class('AbilityDefinitionCargoHoldDeath', AbilityDefinition)
 _G.AbilityDefinitionCargoHoldDeath = AbilityDefinitionCargoHoldDeath
 
@@ -14815,6 +15392,7 @@ function AbilityDefinitionCargoHoldDeath:setAttackUpdateFrequency(level, value)
     self.def:setLvlDataUnreal('Chd2', level, 2, value)
 end
 
+---@class AbilityDefinitionAcha: AbilityDefinition
 AbilityDefinitionAcha = class('AbilityDefinitionAcha', AbilityDefinition)
 _G.AbilityDefinitionAcha = AbilityDefinitionAcha
 
@@ -14828,6 +15406,7 @@ function AbilityDefinitionAcha:setNewUnitType(level, value)
     self.def:setLvlDataString('Cha1', level, 0, value)
 end
 
+---@class AbilityDefinitionUnholyFrenzycreep: AbilityDefinition
 AbilityDefinitionUnholyFrenzycreep = class('AbilityDefinitionUnholyFrenzycreep', AbilityDefinition)
 _G.AbilityDefinitionUnholyFrenzycreep = AbilityDefinitionUnholyFrenzycreep
 
@@ -14847,6 +15426,7 @@ function AbilityDefinitionUnholyFrenzycreep:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Uhf2', level, 2, value)
 end
 
+---@class AbilityDefinitionRenew: AbilityDefinition
 AbilityDefinitionRenew = class('AbilityDefinitionRenew', AbilityDefinition)
 _G.AbilityDefinitionRenew = AbilityDefinitionRenew
 
@@ -14884,6 +15464,7 @@ function AbilityDefinitionRenew:setPowerbuildCost(level, value)
     self.def:setLvlDataUnreal('Rep3', level, 3, value)
 end
 
+---@class AbilityDefinitionRegenLife: AbilityDefinition
 AbilityDefinitionRegenLife = class('AbilityDefinitionRegenLife', AbilityDefinition)
 _G.AbilityDefinitionRegenLife = AbilityDefinitionRegenLife
 
@@ -14897,6 +15478,7 @@ function AbilityDefinitionRegenLife:setHitPointsRegeneratedPerSecond(level, valu
     self.def:setLvlDataInt('Ihpr', level, 1, value)
 end
 
+---@class AbilityDefinitionBlightGrowthLarge: AbilityDefinition
 AbilityDefinitionBlightGrowthLarge = class('AbilityDefinitionBlightGrowthLarge', AbilityDefinition)
 _G.AbilityDefinitionBlightGrowthLarge = AbilityDefinitionBlightGrowthLarge
 
@@ -14916,6 +15498,7 @@ function AbilityDefinitionBlightGrowthLarge:setExpansionAmount(level, value)
     self.def:setLvlDataUnreal('Bli1', level, 1, value)
 end
 
+---@class AbilityDefinitionBlightedGoldmine: AbilityDefinition
 AbilityDefinitionBlightedGoldmine = class('AbilityDefinitionBlightedGoldmine', AbilityDefinition)
 _G.AbilityDefinitionBlightedGoldmine = AbilityDefinitionBlightedGoldmine
 
@@ -14947,6 +15530,7 @@ function AbilityDefinitionBlightedGoldmine:setMaxNumberofMiners(level, value)
     self.def:setLvlDataInt('Bgm3', level, 3, value)
 end
 
+---@class AbilityDefinitionUnholyAuracreep: AbilityDefinition
 AbilityDefinitionUnholyAuracreep = class('AbilityDefinitionUnholyAuracreep', AbilityDefinition)
 _G.AbilityDefinitionUnholyAuracreep = AbilityDefinitionUnholyAuracreep
 
@@ -14972,6 +15556,7 @@ function AbilityDefinitionUnholyAuracreep:setMovementSpeedIncrease(level, value)
     self.def:setLvlDataUnreal('Uau1', level, 1, value)
 end
 
+---@class AbilityDefinitionRepairOrc: AbilityDefinition
 AbilityDefinitionRepairOrc = class('AbilityDefinitionRepairOrc', AbilityDefinition)
 _G.AbilityDefinitionRepairOrc = AbilityDefinitionRepairOrc
 
@@ -15009,6 +15594,7 @@ function AbilityDefinitionRepairOrc:setPowerbuildCost(level, value)
     self.def:setLvlDataUnreal('Rep3', level, 3, value)
 end
 
+---@class AbilityDefinitionEntanglingSeaweed: AbilityDefinition
 AbilityDefinitionEntanglingSeaweed = class('AbilityDefinitionEntanglingSeaweed', AbilityDefinition)
 _G.AbilityDefinitionEntanglingSeaweed = AbilityDefinitionEntanglingSeaweed
 
@@ -15022,6 +15608,7 @@ function AbilityDefinitionEntanglingSeaweed:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Eer1', level, 1, value)
 end
 
+---@class AbilityDefinitionNeutralSpies: AbilityDefinition
 AbilityDefinitionNeutralSpies = class('AbilityDefinitionNeutralSpies', AbilityDefinition)
 _G.AbilityDefinitionNeutralSpies = AbilityDefinitionNeutralSpies
 
@@ -15047,6 +15634,7 @@ function AbilityDefinitionNeutralSpies:setDetectionType(level, value)
     self.def:setLvlDataString('Nsp3', level, 3, value)
 end
 
+---@class AbilityDefinitionEntangle: AbilityDefinition
 AbilityDefinitionEntangle = class('AbilityDefinitionEntangle', AbilityDefinition)
 _G.AbilityDefinitionEntangle = AbilityDefinitionEntangle
 
@@ -15060,6 +15648,7 @@ function AbilityDefinitionEntangle:setResultingUnitType(level, value)
     self.def:setLvlDataString('ent1', level, 0, value)
 end
 
+---@class AbilityDefinitionRejuvination: AbilityDefinition
 AbilityDefinitionRejuvination = class('AbilityDefinitionRejuvination', AbilityDefinition)
 _G.AbilityDefinitionRejuvination = AbilityDefinitionRejuvination
 
@@ -15091,6 +15680,7 @@ function AbilityDefinitionRejuvination:setAllowWhenFull(level, value)
     self.def:setLvlDataInt('Rej3', level, 3, value)
 end
 
+---@class AbilityDefinitionEntanglingRootscreep: AbilityDefinition
 AbilityDefinitionEntanglingRootscreep = class('AbilityDefinitionEntanglingRootscreep', AbilityDefinition)
 _G.AbilityDefinitionEntanglingRootscreep = AbilityDefinitionEntanglingRootscreep
 
@@ -15104,6 +15694,7 @@ function AbilityDefinitionEntanglingRootscreep:setDamageperSecond(level, value)
     self.def:setLvlDataUnreal('Eer1', level, 1, value)
 end
 
+---@class AbilityDefinitionSelfDestruct: AbilityDefinition
 AbilityDefinitionSelfDestruct = class('AbilityDefinitionSelfDestruct', AbilityDefinition)
 _G.AbilityDefinitionSelfDestruct = AbilityDefinitionSelfDestruct
 
@@ -15147,6 +15738,7 @@ function AbilityDefinitionSelfDestruct:setPartialDamageRadius(level, value)
     self.def:setLvlDataUnreal('Dda3', level, 3, value)
 end
 
+---@class AbilityDefinitionBlightGrowthSmall: AbilityDefinition
 AbilityDefinitionBlightGrowthSmall = class('AbilityDefinitionBlightGrowthSmall', AbilityDefinition)
 _G.AbilityDefinitionBlightGrowthSmall = AbilityDefinitionBlightGrowthSmall
 
@@ -15166,6 +15758,7 @@ function AbilityDefinitionBlightGrowthSmall:setExpansionAmount(level, value)
     self.def:setLvlDataUnreal('Bli1', level, 1, value)
 end
 
+---@class AbilityDefinitionEnsnare: AbilityDefinition
 AbilityDefinitionEnsnare = class('AbilityDefinitionEnsnare', AbilityDefinition)
 _G.AbilityDefinitionEnsnare = AbilityDefinitionEnsnare
 
@@ -15191,6 +15784,7 @@ function AbilityDefinitionEnsnare:setMeleeAttackRange(level, value)
     self.def:setLvlDataUnreal('Ens3', level, 3, value)
 end
 
+---@class AbilityDefinitionDeathDamageAOEmineBIG: AbilityDefinition
 AbilityDefinitionDeathDamageAOEmineBIG = class('AbilityDefinitionDeathDamageAOEmineBIG', AbilityDefinition)
 _G.AbilityDefinitionDeathDamageAOEmineBIG = AbilityDefinitionDeathDamageAOEmineBIG
 
@@ -15222,6 +15816,7 @@ function AbilityDefinitionDeathDamageAOEmineBIG:setPartialDamageRadius(level, va
     self.def:setLvlDataUnreal('Dda3', level, 3, value)
 end
 
+---@class AbilityDefinitionSerpentWardtentacleForgottenone: AbilityDefinition
 AbilityDefinitionSerpentWardtentacleForgottenone = class('AbilityDefinitionSerpentWardtentacleForgottenone', AbilityDefinition)
 _G.AbilityDefinitionSerpentWardtentacleForgottenone = AbilityDefinitionSerpentWardtentacleForgottenone
 
@@ -15241,6 +15836,7 @@ function AbilityDefinitionSerpentWardtentacleForgottenone:setSummonedUnitType(le
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionTornadoDamage: AbilityDefinition
 AbilityDefinitionTornadoDamage = class('AbilityDefinitionTornadoDamage', AbilityDefinition)
 _G.AbilityDefinitionTornadoDamage = AbilityDefinitionTornadoDamage
 
@@ -15278,6 +15874,7 @@ function AbilityDefinitionTornadoDamage:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('Tdg1', level, 1, value)
 end
 
+---@class AbilityDefinitionThunderBoltCreep: AbilityDefinition
 AbilityDefinitionThunderBoltCreep = class('AbilityDefinitionThunderBoltCreep', AbilityDefinition)
 _G.AbilityDefinitionThunderBoltCreep = AbilityDefinitionThunderBoltCreep
 
@@ -15291,6 +15888,7 @@ function AbilityDefinitionThunderBoltCreep:setDamage(level, value)
     self.def:setLvlDataUnreal('Ctb1', level, 1, value)
 end
 
+---@class AbilityDefinitionThunderClapCreep: AbilityDefinition
 AbilityDefinitionThunderClapCreep = class('AbilityDefinitionThunderClapCreep', AbilityDefinition)
 _G.AbilityDefinitionThunderClapCreep = AbilityDefinitionThunderClapCreep
 
@@ -15322,6 +15920,7 @@ function AbilityDefinitionThunderClapCreep:setMovementSpeedReduction(level, valu
     self.def:setLvlDataUnreal('Ctc3', level, 3, value)
 end
 
+---@class AbilityDefinitionSelfDestructClockwerkGoblins: AbilityDefinition
 AbilityDefinitionSelfDestructClockwerkGoblins = class('AbilityDefinitionSelfDestructClockwerkGoblins', AbilityDefinition)
 _G.AbilityDefinitionSelfDestructClockwerkGoblins = AbilityDefinitionSelfDestructClockwerkGoblins
 
@@ -15335,6 +15934,7 @@ function AbilityDefinitionSelfDestructClockwerkGoblins:setExplodesonDeath(level,
     self.def:setLvlDataBoolean('Sds6', level, 6, value)
 end
 
+---@class AbilityDefinitionDeathDamageAOEmine: AbilityDefinition
 AbilityDefinitionDeathDamageAOEmine = class('AbilityDefinitionDeathDamageAOEmine', AbilityDefinition)
 _G.AbilityDefinitionDeathDamageAOEmine = AbilityDefinitionDeathDamageAOEmine
 
@@ -15366,6 +15966,7 @@ function AbilityDefinitionDeathDamageAOEmine:setPartialDamageRadius(level, value
     self.def:setLvlDataUnreal('Dda3', level, 3, value)
 end
 
+---@class AbilityDefinitionManaBurndemon: AbilityDefinition
 AbilityDefinitionManaBurndemon = class('AbilityDefinitionManaBurndemon', AbilityDefinition)
 _G.AbilityDefinitionManaBurndemon = AbilityDefinitionManaBurndemon
 
@@ -15391,6 +15992,7 @@ function AbilityDefinitionManaBurndemon:setBoltDelay(level, value)
     self.def:setLvlDataUnreal('Emb2', level, 2, value)
 end
 
+---@class AbilityDefinitionShockwaveTrap: AbilityDefinition
 AbilityDefinitionShockwaveTrap = class('AbilityDefinitionShockwaveTrap', AbilityDefinition)
 _G.AbilityDefinitionShockwaveTrap = AbilityDefinitionShockwaveTrap
 
@@ -15422,6 +16024,7 @@ function AbilityDefinitionShockwaveTrap:setMaximumDamage(level, value)
     self.def:setLvlDataUnreal('Osh2', level, 2, value)
 end
 
+---@class AbilityDefinitionShadowStrikeCreep: AbilityDefinition
 AbilityDefinitionShadowStrikeCreep = class('AbilityDefinitionShadowStrikeCreep', AbilityDefinition)
 _G.AbilityDefinitionShadowStrikeCreep = AbilityDefinitionShadowStrikeCreep
 
@@ -15459,6 +16062,7 @@ function AbilityDefinitionShadowStrikeCreep:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Esh3', level, 3, value)
 end
 
+---@class AbilityDefinitionBashmaulSPBearlevel3: AbilityDefinition
 AbilityDefinitionBashmaulSPBearlevel3 = class('AbilityDefinitionBashmaulSPBearlevel3', AbilityDefinition)
 _G.AbilityDefinitionBashmaulSPBearlevel3 = AbilityDefinitionBashmaulSPBearlevel3
 
@@ -15472,6 +16076,7 @@ function AbilityDefinitionBashmaulSPBearlevel3:setNeverMiss(level, value)
     self.def:setLvlDataBoolean('Hbh5', level, 5, value)
 end
 
+---@class AbilityDefinitionSlowCreep: AbilityDefinition
 AbilityDefinitionSlowCreep = class('AbilityDefinitionSlowCreep', AbilityDefinition)
 _G.AbilityDefinitionSlowCreep = AbilityDefinitionSlowCreep
 
@@ -15497,6 +16102,7 @@ function AbilityDefinitionSlowCreep:setAttackSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Slo2', level, 2, value)
 end
 
+---@class AbilityDefinitionReturnGold: AbilityDefinition
 AbilityDefinitionReturnGold = class('AbilityDefinitionReturnGold', AbilityDefinition)
 _G.AbilityDefinitionReturnGold = AbilityDefinitionReturnGold
 
@@ -15516,6 +16122,7 @@ function AbilityDefinitionReturnGold:setAcceptsLumber(level, value)
     self.def:setLvlDataBoolean('Rtn2', level, 2, value)
 end
 
+---@class AbilityDefinitionWarStompseagiant: AbilityDefinition
 AbilityDefinitionWarStompseagiant = class('AbilityDefinitionWarStompseagiant', AbilityDefinition)
 _G.AbilityDefinitionWarStompseagiant = AbilityDefinitionWarStompseagiant
 
@@ -15541,6 +16148,7 @@ function AbilityDefinitionWarStompseagiant:setDamage(level, value)
     self.def:setLvlDataUnreal('Wrs1', level, 1, value)
 end
 
+---@class AbilityDefinitionBladeMasterBladestorm: AbilityDefinition
 AbilityDefinitionBladeMasterBladestorm = class('AbilityDefinitionBladeMasterBladestorm', AbilityDefinition)
 _G.AbilityDefinitionBladeMasterBladestorm = AbilityDefinitionBladeMasterBladestorm
 
@@ -15560,6 +16168,7 @@ function AbilityDefinitionBladeMasterBladestorm:setDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('Oww1', level, 1, value)
 end
 
+---@class AbilityDefinitionTaurenChieftainWarStomp: AbilityDefinition
 AbilityDefinitionTaurenChieftainWarStomp = class('AbilityDefinitionTaurenChieftainWarStomp', AbilityDefinition)
 _G.AbilityDefinitionTaurenChieftainWarStomp = AbilityDefinitionTaurenChieftainWarStomp
 
@@ -15573,6 +16182,7 @@ function AbilityDefinitionTaurenChieftainWarStomp:setDamage(level, value)
     self.def:setLvlDataUnreal('Wrs1', level, 1, value)
 end
 
+---@class AbilityDefinitionWarStomphydra: AbilityDefinition
 AbilityDefinitionWarStomphydra = class('AbilityDefinitionWarStomphydra', AbilityDefinition)
 _G.AbilityDefinitionWarStomphydra = AbilityDefinitionWarStomphydra
 
@@ -15598,6 +16208,7 @@ function AbilityDefinitionWarStomphydra:setDamage(level, value)
     self.def:setLvlDataUnreal('Wrs1', level, 1, value)
 end
 
+---@class AbilityDefinitionBladeMasterWindWalk: AbilityDefinition
 AbilityDefinitionBladeMasterWindWalk = class('AbilityDefinitionBladeMasterWindWalk', AbilityDefinition)
 _G.AbilityDefinitionBladeMasterWindWalk = AbilityDefinitionBladeMasterWindWalk
 
@@ -15629,6 +16240,7 @@ function AbilityDefinitionBladeMasterWindWalk:setBackstabDamage1(level, value)
     self.def:setLvlDataUnreal('Owk3', level, 3, value)
 end
 
+---@class AbilityDefinitionSummonSeaElemental: AbilityDefinition
 AbilityDefinitionSummonSeaElemental = class('AbilityDefinitionSummonSeaElemental', AbilityDefinition)
 _G.AbilityDefinitionSummonSeaElemental = AbilityDefinitionSummonSeaElemental
 
@@ -15648,6 +16260,7 @@ function AbilityDefinitionSummonSeaElemental:setSummonedUnitType(level, value)
     self.def:setLvlDataString('Hwe1', level, 0, value)
 end
 
+---@class AbilityDefinitionWebcreep: AbilityDefinition
 AbilityDefinitionWebcreep = class('AbilityDefinitionWebcreep', AbilityDefinition)
 _G.AbilityDefinitionWebcreep = AbilityDefinitionWebcreep
 
@@ -15673,6 +16286,7 @@ function AbilityDefinitionWebcreep:setMeleeAttackRange(level, value)
     self.def:setLvlDataUnreal('Ens3', level, 3, value)
 end
 
+---@class AbilityDefinitionReturnGoldLumber: AbilityDefinition
 AbilityDefinitionReturnGoldLumber = class('AbilityDefinitionReturnGoldLumber', AbilityDefinition)
 _G.AbilityDefinitionReturnGoldLumber = AbilityDefinitionReturnGoldLumber
 
@@ -15692,6 +16306,7 @@ function AbilityDefinitionReturnGoldLumber:setAcceptsLumber(level, value)
     self.def:setLvlDataBoolean('Rtn2', level, 2, value)
 end
 
+---@class AbilityDefinitionSelfDestruct3ClockwerkGoblins: AbilityDefinition
 AbilityDefinitionSelfDestruct3ClockwerkGoblins = class('AbilityDefinitionSelfDestruct3ClockwerkGoblins', AbilityDefinition)
 _G.AbilityDefinitionSelfDestruct3ClockwerkGoblins = AbilityDefinitionSelfDestruct3ClockwerkGoblins
 
@@ -15705,6 +16320,7 @@ function AbilityDefinitionSelfDestruct3ClockwerkGoblins:setExplodesonDeath(level
     self.def:setLvlDataBoolean('Sds6', level, 6, value)
 end
 
+---@class AbilityDefinitionSelfDestruct2ClockwerkGoblins: AbilityDefinition
 AbilityDefinitionSelfDestruct2ClockwerkGoblins = class('AbilityDefinitionSelfDestruct2ClockwerkGoblins', AbilityDefinition)
 _G.AbilityDefinitionSelfDestruct2ClockwerkGoblins = AbilityDefinitionSelfDestruct2ClockwerkGoblins
 
@@ -15718,6 +16334,7 @@ function AbilityDefinitionSelfDestruct2ClockwerkGoblins:setExplodesonDeath(level
     self.def:setLvlDataBoolean('Sds6', level, 6, value)
 end
 
+---@class AbilityDefinitionGraveyard: AbilityDefinition
 AbilityDefinitionGraveyard = class('AbilityDefinitionGraveyard', AbilityDefinition)
 _G.AbilityDefinitionGraveyard = AbilityDefinitionGraveyard
 
@@ -15749,6 +16366,7 @@ function AbilityDefinitionGraveyard:setCorpseUnitType(level, value)
     self.def:setLvlDataString('Gydu', level, 0, value)
 end
 
+---@class AbilityDefinitionWarStompcreep: AbilityDefinition
 AbilityDefinitionWarStompcreep = class('AbilityDefinitionWarStompcreep', AbilityDefinition)
 _G.AbilityDefinitionWarStompcreep = AbilityDefinitionWarStompcreep
 
@@ -15774,6 +16392,7 @@ function AbilityDefinitionWarStompcreep:setDamage(level, value)
     self.def:setLvlDataUnreal('Wrs1', level, 1, value)
 end
 
+---@class AbilityDefinitionWarp: AbilityDefinition
 AbilityDefinitionWarp = class('AbilityDefinitionWarp', AbilityDefinition)
 _G.AbilityDefinitionWarp = AbilityDefinitionWarp
 
@@ -15793,6 +16412,7 @@ function AbilityDefinitionWarp:setTeleportAreaHeight(level, value)
     self.def:setLvlDataUnreal('Wrp2', level, 2, value)
 end
 
+---@class AbilityDefinitionVampiricAuracreep: AbilityDefinition
 AbilityDefinitionVampiricAuracreep = class('AbilityDefinitionVampiricAuracreep', AbilityDefinition)
 _G.AbilityDefinitionVampiricAuracreep = AbilityDefinitionVampiricAuracreep
 
@@ -15806,6 +16426,7 @@ function AbilityDefinitionVampiricAuracreep:setAttackDamageStolen(level, value)
     self.def:setLvlDataUnreal('Uav1', level, 1, value)
 end
 
+---@class AbilityDefinitionVenomSpearsCreep: AbilityDefinition
 AbilityDefinitionVenomSpearsCreep = class('AbilityDefinitionVenomSpearsCreep', AbilityDefinition)
 _G.AbilityDefinitionVenomSpearsCreep = AbilityDefinitionVenomSpearsCreep
 
@@ -15837,6 +16458,7 @@ function AbilityDefinitionVenomSpearsCreep:setMovementSpeedFactor(level, value)
     self.def:setLvlDataUnreal('Poi3', level, 3, value)
 end
 
+---@class AbilityDefinitionBurrowDetectionFlyers: AbilityDefinition
 AbilityDefinitionBurrowDetectionFlyers = class('AbilityDefinitionBurrowDetectionFlyers', AbilityDefinition)
 _G.AbilityDefinitionBurrowDetectionFlyers = AbilityDefinitionBurrowDetectionFlyers
 
@@ -15850,6 +16472,7 @@ function AbilityDefinitionBurrowDetectionFlyers:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionBlightDispelSmall: AbilityDefinition
 AbilityDefinitionBlightDispelSmall = class('AbilityDefinitionBlightDispelSmall', AbilityDefinition)
 _G.AbilityDefinitionBlightDispelSmall = AbilityDefinitionBlightDispelSmall
 
@@ -15869,6 +16492,7 @@ function AbilityDefinitionBlightDispelSmall:setExpansionAmount(level, value)
     self.def:setLvlDataUnreal('Bli1', level, 1, value)
 end
 
+---@class AbilityDefinitionLiquidFire: AbilityDefinition
 AbilityDefinitionLiquidFire = class('AbilityDefinitionLiquidFire', AbilityDefinition)
 _G.AbilityDefinitionLiquidFire = AbilityDefinitionLiquidFire
 
@@ -15900,6 +16524,7 @@ function AbilityDefinitionLiquidFire:setExtraDamagePerSecond(level, value)
     self.def:setLvlDataUnreal('liq1', level, 1, value)
 end
 
+---@class AbilityDefinitionDetectGyrocopter: AbilityDefinition
 AbilityDefinitionDetectGyrocopter = class('AbilityDefinitionDetectGyrocopter', AbilityDefinition)
 _G.AbilityDefinitionDetectGyrocopter = AbilityDefinitionDetectGyrocopter
 
@@ -15913,6 +16538,7 @@ function AbilityDefinitionDetectGyrocopter:setDetectionType(level, value)
     self.def:setLvlDataString('Det1', level, 1, value)
 end
 
+---@class AbilityDefinitionLightningAttack: AbilityDefinition
 AbilityDefinitionLightningAttack = class('AbilityDefinitionLightningAttack', AbilityDefinition)
 _G.AbilityDefinitionLightningAttack = AbilityDefinitionLightningAttack
 
@@ -15932,6 +16558,7 @@ function AbilityDefinitionLightningAttack:setGraphicDelay(level, value)
     self.def:setLvlDataUnreal('Lit1', level, 1, value)
 end
 
+---@class AbilityDefinitionBlightDispelLarge: AbilityDefinition
 AbilityDefinitionBlightDispelLarge = class('AbilityDefinitionBlightDispelLarge', AbilityDefinition)
 _G.AbilityDefinitionBlightDispelLarge = AbilityDefinitionBlightDispelLarge
 
@@ -15951,6 +16578,7 @@ function AbilityDefinitionBlightDispelLarge:setExpansionAmount(level, value)
     self.def:setLvlDataUnreal('Bli1', level, 1, value)
 end
 
+---@class AbilityDefinitionChaosCargoLoad: AbilityDefinition
 AbilityDefinitionChaosCargoLoad = class('AbilityDefinitionChaosCargoLoad', AbilityDefinition)
 _G.AbilityDefinitionChaosCargoLoad = AbilityDefinitionChaosCargoLoad
 
@@ -15964,6 +16592,7 @@ function AbilityDefinitionChaosCargoLoad:setUnitTypeAllowed(level, value)
     self.def:setLvlDataString('Chl1', level, 0, value)
 end
 
+---@class AbilityDefinitionSunderingBlades: AbilityDefinition
 AbilityDefinitionSunderingBlades = class('AbilityDefinitionSunderingBlades', AbilityDefinition)
 _G.AbilityDefinitionSunderingBlades = AbilityDefinitionSunderingBlades
 
@@ -15989,6 +16618,7 @@ function AbilityDefinitionSunderingBlades:setDefenseTypeAffected(level, types)
     self.def:setLvlDataInt('Hsb3', level, 3, types)
 end
 
+---@class AbilityDefinitionOrb: AbilityDefinition
 AbilityDefinitionOrb = class('AbilityDefinitionOrb', AbilityDefinition)
 _G.AbilityDefinitionOrb = AbilityDefinitionOrb
 

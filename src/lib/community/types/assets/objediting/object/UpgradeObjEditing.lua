@@ -1,3 +1,5 @@
+---@class W3QDefinition: object
+---@field def Definition
 W3QDefinition = class('W3QDefinition')
 _G.W3QDefinition = W3QDefinition
 
@@ -140,5 +142,6 @@ function W3QDefinition:setEffectCode(effectIndex, value)
     self.def:setLvlDataString('gco' .. effectIndex, 0, 0, value)
 end
 
+---@class UpgradeDefinition: W3QDefinition
 UpgradeDefinition = class('UpgradeDefinition', W3QDefinition)
 _G.UpgradeDefinition = UpgradeDefinition

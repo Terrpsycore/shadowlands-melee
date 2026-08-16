@@ -59,6 +59,7 @@ end
 
 ---new
 ---@generic T
+---@param self T
 ---@vararg any
 ---@return T
 function object:new(...)
