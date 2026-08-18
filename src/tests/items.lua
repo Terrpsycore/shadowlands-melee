@@ -3,9 +3,9 @@ local Items = require("lib.items")
 
 Timed.call(0, function()
     local x, y = -100, -100
-    local unit = CreateUnit(Player(0), FourCC(Ids.dummy), x, y, 270)
-    UnitAddAbility(unit, FourCC(Ids.inventory))
-    local unitItem = CreateItem(FourCC(Ids.dummyUnitItem), x + 32, y)
+    local unit = CreateUnit(Player(0), FourCC(Ids.units.dummy), x, y, 270)
+    UnitAddAbility(unit, FourCC(Ids.abilities.inventory))
+    local unitItem = CreateItem(FourCC(Ids.items.dummyUnitItem), x + 32, y)
 
     IssueTargetOrder(unit, "smart", unitItem)
     Timed.call(1, function()
@@ -23,9 +23,9 @@ end)
 
 Timed.call(0, function()
     local x, y = -100, -100
-    local unit = CreateUnit(Player(0), FourCC(Ids.dummy), x, y, 270)
-    UnitAddAbility(unit, FourCC(Ids.inventory))
-    local heroItem = CreateItem(FourCC(Ids.dummyHeroItem), x + 32, y)
+    local unit = CreateUnit(Player(0), FourCC(Ids.units.dummy), x, y, 270)
+    UnitAddAbility(unit, FourCC(Ids.abilities.inventory))
+    local heroItem = CreateItem(FourCC(Ids.items.dummyHeroItem), x + 32, y)
 
     IssueTargetOrder(unit, "smart", heroItem)
     Timed.call(1, function()
@@ -43,8 +43,8 @@ end)
 
 Timed.call(0, function()
     local x, y = -100, -100
-    local hero = CreateUnit(Player(0), FourCC(Ids.dummyHero), x, y, 270)
-    local unitItem = CreateItem(FourCC(Ids.dummyUnitItem), x + 32, y)
+    local hero = CreateUnit(Player(0), FourCC(Ids.units.dummyHero), x, y, 270)
+    local unitItem = CreateItem(FourCC(Ids.items.dummyUnitItem), x + 32, y)
 
     IssueTargetOrder(hero, "smart", unitItem)
     Timed.call(1, function()
@@ -62,8 +62,8 @@ end)
 
 Timed.call(0, function()
     local x, y = -100, -100
-    local hero = CreateUnit(Player(0), FourCC(Ids.dummyHero), x, y, 270)
-    local heroItem = CreateItem(FourCC(Ids.dummyHeroItem), x + 32, y)
+    local hero = CreateUnit(Player(0), FourCC(Ids.units.dummyHero), x, y, 270)
+    local heroItem = CreateItem(FourCC(Ids.items.dummyHeroItem), x + 32, y)
 
     IssueTargetOrder(hero, "smart", heroItem)
     Timed.call(1, function()

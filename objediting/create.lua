@@ -1,8 +1,6 @@
-local Ids = require("generated.ids")
-
-return function(db, kind)
+return function(db, kind, ids)
     for slug, data in pairs(db) do
-        local id = Ids[slug]
+        local id = ids[slug]
         if not id then
             error("missing generated id for " .. slug)
         end

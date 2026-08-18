@@ -1,7 +1,13 @@
 return {
-    dummy = "h100",
-    dummyHero = "H101",
-    dummyHeroItem = "I101",
-    dummyUnitItem = "I102",
-    inventory = "A100",
+    units = {
+        dummy = "h100",
+        dummyHero = "H100",
+    },
+    abilities = {
+        inventory = "A100",
+    },
+    items = {
+        dummyHeroItem = "I100",
+        dummyUnitItem = "I101",
+    },
 }

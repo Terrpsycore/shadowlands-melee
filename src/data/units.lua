@@ -13,6 +13,13 @@ local db = {
             u:setName("Name")
         end,
     },
+    aspirant = {
+        parent = UnitIds.footman,
+        abilities = { "soulbind" },
+        apply = function(u)
+            u:setName("Aspirant")
+        end,
+    },
 }
 
 return db
