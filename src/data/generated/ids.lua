@@ -14,4 +14,7 @@ return {
         dummyHeroItem = "I100",
         dummyUnitItem = "I101",
     },
+    buffs = {
+        soulbind = "B100",
+    },
 }

@@ -15,6 +15,7 @@
 local Ids = require("data.generated.ids")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
+local dump = require("utils.logger")
 
 local SoulbindStorage = require("scenario.abilities.store.soulbind")
 
@@ -26,17 +27,22 @@ local CONFIG = {
     secondsForLevel = 60,
     maxLevel = 3,
 
+    soulbindAbilityId = FourCC(Ids.abilities.soulbind),
+
     levels = {
         [1] = {
-            dummyAbilityId = Ids.abilities.soulbindBuff,
+            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
+            buffId = FourCC(Ids.buffs.soulbind),
             requiredUpgradeId = nil,
         },
         [2] = {
-            dummyAbilityId = Ids.abilities.soulbindBuff,
+            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
+            buffId = FourCC(Ids.buffs.soulbind),
             requiredUpgradeId = nil,
         },
         [3] = {
-            dummyAbilityId = Ids.abilities.soulbindBuff,
+            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
+            buffId = FourCC(Ids.buffs.soulbind),
             requiredUpgradeId = nil,
         },
     },
@@ -46,15 +52,13 @@ local CONFIG = {
     }),
 }
 
-local soulbindAbilityId = Ids.abilities.soulbind
-
 local function hasCharge(unit)
-    return GetUnitAbilityLevel(unit, FourCC(soulbindAbilityId)) > 0
+    return GetUnitAbilityLevel(unit, CONFIG.soulbindAbilityId) > 0
 end
 
 local function consumeCharge(caster, target)
-    local r1 = UnitRemoveAbility(caster, FourCC(soulbindAbilityId))
-    local r2 = UnitRemoveAbility(target, FourCC(soulbindAbilityId))
+    local r1 = UnitRemoveAbility(caster, CONFIG.soulbindAbilityId)
+    local r2 = UnitRemoveAbility(target, CONFIG.soulbindAbilityId)
     return r1 and r2
 end
 
@@ -83,11 +87,16 @@ local function isValidTarget(caster, target)
 end
 
 local function applySoulbindBuff(unit, level)
-    return "NOT IMPLEMENTED"
+    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
+    UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
+    UnitAddAbility(dummy, CONFIG.levels[level].dummyAbilityId)
+    IssueTargetOrder(dummy, "innerfire", unit)
 end
 
 local function removeSoulbindBuff(unit)
-    return "NOT IMPLEMENTED"
+    for _, soulbindLevel in ipairs(CONFIG.levels) do
+        UnitRemoveBuffBJ(soulbindLevel.buffId, unit)
+    end
 end
 
 local function onSoulbindCast()
@@ -117,6 +126,7 @@ local function tickBond(bondId)
     end
 
     local inRange = Unit.distance(u1, u2) <= CONFIG.radius
+    dump("tick", { bond, inRange })
     if not inRange then
         if bond.active then
             bond.active = false
@@ -151,7 +161,7 @@ return {
         -- EVENT_UNIT_RESEARCH_FINISH
         -- +? unit dies
         EVENT_PLAYER_UNIT_SPELL_EFFECT = {
-            spellId = soulbindAbilityId,
+            spellId = CONFIG.soulbindAbilityId,
             action = onSoulbindCast,
         },
         TIMER = {

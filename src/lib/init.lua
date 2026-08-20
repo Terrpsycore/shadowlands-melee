@@ -13,7 +13,3 @@ require("lib.community.Timed")
 require("lib.community.DamageEngine")
 
 Debug.original.print("imports ready")
-
-require("tests.items")
-
-Debug.original.print("tests ready")

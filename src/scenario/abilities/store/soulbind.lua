@@ -73,29 +73,38 @@ function SoulbindStore.get(bondId)
 end
 
 local BOND_MT = {
-    __newindex = function(t, key, value)
-        local id = t.id
+    -- ЧТЕНИЕ: bond.active → ключа нет → __index → Storage
+    __index = function(t, key)
+        local p = bondParent(t.id)
         if key == "level" then
-            Storage.setInt(bondParent(id), FIELD.LEVEL, value)
+            return Storage.getInt(p, FIELD.LEVEL)
         elseif key == "progress" then
-            Storage.setReal(bondParent(id), FIELD.PROGRESS, value)
+            return Storage.getReal(p, FIELD.PROGRESS)
         elseif key == "active" then
-            Storage.setBool(bondParent(id), FIELD.ACTIVE, value)
+            return Storage.getBool(p, FIELD.ACTIVE)
+        end
+    end,
+    -- ЗАПИСЬ: bond.active = true → ключа нет → __newindex → Storage
+    __newindex = function(t, key, value)
+        local p = bondParent(t.id)
+        if key == "level" then
+            Storage.setInt(p, FIELD.LEVEL, value)
+        elseif key == "progress" then
+            Storage.setReal(p, FIELD.PROGRESS, value)
+        elseif key == "active" then
+            Storage.setBool(p, FIELD.ACTIVE, value)
         else
             error("unknown bond field: " .. key)
         end
-        rawset(t, key, value)
     end,
 }
 
 function SoulbindStore.open(bondId)
-    local bond = SoulbindStore.get(bondId)
-    if not bond then
+    local snapshot = SoulbindStore.get(bondId)
+    if not snapshot then
         return nil
     end
-
-    bond.id = bondId
-    return setmetatable(bond, BOND_MT)
+    return setmetatable({ id = bondId, units = snapshot.units }, BOND_MT)
 end
 
 function SoulbindStore.destroy(bondId)

@@ -1,4 +1,5 @@
 require("lib.init")
+require("tests.init")
 
 seterrorhandler(function(msg)
     Debug.original.print("ERROR: " .. tostring(msg))

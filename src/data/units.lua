@@ -4,6 +4,11 @@ local db = {
     dummy = {
         parent = UnitIds.footman,
         abilities = {},
+        apply = function(u)
+            u:setManaMaximum(1000)
+            u:setManaInitialAmount(1000)
+            u:setModelFile("")
+        end,
     },
     dummyHero = {
         parent = UnitIds.paladin,

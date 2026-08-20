@@ -23,6 +23,13 @@ local sources = {
             return "I"
         end,
     },
+    {
+        domain = "buffs",
+        db = require("data.buffs"),
+        prefixOf = function()
+            return "B"
+        end,
+    },
 }
 
 local outPath = "src/data/generated/ids.lua"

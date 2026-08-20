@@ -22,6 +22,10 @@ local db = {
         parent = AbilityIds.innerFire,
         name = "",
         autocastRange = 0,
+        buffs = { "soulbind" },
+        apply = function(a)
+            a:setRequirements("")
+        end,
     },
 }
 

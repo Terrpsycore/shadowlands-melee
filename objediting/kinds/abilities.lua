@@ -1,4 +1,5 @@
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
+local Ids = require("data.generated.ids")
 
 local reserved = {
     parent = true,
@@ -20,6 +21,17 @@ local fields = {
     end,
     buttonNormalY = function(a, value)
         a:setButtonPositionNormalY(value)
+    end,
+    buffs = function(a, slugs)
+        local parts = {}
+        for _, slug in ipairs(slugs) do
+            local id = Ids.buffs[slug]
+            if not id then
+                error("unknown buff '" .. slug .. "'")
+            end
+            parts[#parts + 1] = id
+        end
+        a:setBuffs(1, table.concat(parts, ","))
     end,
 }
 

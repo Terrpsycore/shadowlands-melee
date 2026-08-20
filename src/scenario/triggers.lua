@@ -13,7 +13,7 @@ for _, ability in ipairs(abilities) do
 
     local spell = t.EVENT_PLAYER_UNIT_SPELL_EFFECT
     if spell then
-        spellHandlers[FourCC(spell.spellId)] = spell.action
+        spellHandlers[spell.spellId] = spell.action
     end
 
     if t.TIMER then
@@ -36,5 +36,9 @@ end)
 
 -- таймеры — по одному на каждый delta или один общий с диспетчером
 for _, timer in ipairs(timers) do
-    -- Timed.call / CreateTimer по вашему Timed.lua
+    TimerStart(CreateTimer(), timer.delta, true, function()
+        -- Place the code you want to run every second here
+        timer.action()
+        -- print("Timer ticked!")
+    end)
 end
