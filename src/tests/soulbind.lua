@@ -1,6 +1,8 @@
+-- Test ideas:
+-- -
 local Ids = require("data.generated.ids")
-local Store = require("scenario.abilities.store.soulbind")
-local Soulbind = require("scenario.abilities.soulbind")
+local Store = require("scenario.store.soulbind")
+local Soulbind = require("scenario.factions.kyrian.abilities.soulbind")
 
 local X, Y = -200, -200
 local cfg = Soulbind.config

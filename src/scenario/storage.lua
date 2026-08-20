@@ -1,4 +1,3 @@
--- scenario/storage.lua
 local ht = InitHashtable()
 
 -- Реестр namespace'ов — чтобы способности не пересекались

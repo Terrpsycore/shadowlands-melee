@@ -1,23 +1,21 @@
 -- TODO:
--- - [1] - check storage layer
+-- - [1] - check save-load
 -- - check upgrades (GetPlayerTechCount, GetOwningPlayer)
 -- - - probably update on trigger and store instead of polling each soulbind tick
--- - apply buffs with dummy
 -- - object editor (upgrades, soulbind buffs, duration, soulbind ability properties)
 -- - invisible soulbind charge for Larion (can be targeted, can't cast)
 -- - hashtables (save-load persistance)
 -- - refactor (group bond methods)
--- - remove buff on bond destroy, apply buff on bond create, update buff on level up
 -- QUESTIONS:
 -- - prevent bond progress when next level upgrade is not done
--- - how to refactor to not make hashtable storage transition more difficult
+-- - autocheck object ability levels VS script ability levels
 
 local Ids = require("data.generated.ids")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local SoulbindStorage = require("scenario.abilities.store.soulbind")
+local SoulbindStorage = require("scenario.store.soulbind")
 
 local CONFIG = {
     radius = 600,
@@ -130,7 +128,7 @@ local function tickBond(bondId)
     end
 
     local inRange = Unit.distance(u1, u2) <= CONFIG.radius
-    dump("tick", { bond, level = bond.level, progress = bond.progress, inRange })
+    -- dump("tick", { bond, level = bond.level, progress = bond.progress, inRange })
     if not inRange then
         if bond.active then
             bond.active = false
