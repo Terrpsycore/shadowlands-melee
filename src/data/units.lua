@@ -3,22 +3,20 @@ local UnitIds = require("lib.community.types.assets.UnitIds")
 local db = {
     dummy = {
         parent = UnitIds.footman,
-        apply = function(u)
-            u:setNormalAbilities("")
-        end,
+        abilities = {},
     },
     dummyHero = {
         parent = UnitIds.paladin,
-        apply = function(u)
-            u:setName("Name")
-        end,
+        name = "Name",
     },
     aspirant = {
         parent = UnitIds.footman,
+        name = "Aspirant",
         abilities = { "soulbind" },
-        apply = function(u)
-            u:setName("Aspirant")
-        end,
+    },
+    larion = {
+        parent = UnitIds.footman,
+        name = "Larion",
     },
 }
 

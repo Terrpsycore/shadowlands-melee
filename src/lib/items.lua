@@ -1,4 +1,4 @@
-local raw = require("generated.item_meta")
+local raw = require("data.generated.item_meta")
 
 local byCode = {}
 for code, meta in pairs(raw) do

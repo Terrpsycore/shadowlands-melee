@@ -8,7 +8,7 @@ local tags = {
     unique = true,
 }
 
-local outPath = "src/generated/item_meta.lua"
+local outPath = "src/data/generated/item_meta.lua"
 
 return function(assigned, db)
     local rows = {}
@@ -41,12 +41,14 @@ return function(assigned, db)
     local f = assert(io.open(outPath, "w"))
     f:write("return {\n")
     for _, row in ipairs(rows) do
-        f:write(("    %s = { slug = %q, hero = %s, unique = %s },\n"):format(
-            row.id,
-            row.slug,
-            tostring(row.hero),
-            tostring(row.unique)
-        ))
+        f:write(
+            ("    %s = { slug = %q, hero = %s, unique = %s },\n"):format(
+                row.id,
+                row.slug,
+                tostring(row.hero),
+                tostring(row.unique)
+            )
+        )
     end
     f:write("}\n")
     f:close()

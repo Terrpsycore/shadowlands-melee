@@ -25,7 +25,7 @@ local sources = {
     },
 }
 
-local outPath = "src/generated/ids.lua"
+local outPath = "src/data/generated/ids.lua"
 
 local previous = (loadfile(outPath) or function()
     return {}

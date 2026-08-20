@@ -1,4 +1,4 @@
-local Ids = require("generated.ids")
+local Ids = require("data.generated.ids")
 local Items = require("lib.items")
 
 Timed.call(0, function()

@@ -10,6 +10,9 @@ return function(db, kind, ids)
         if spec.apply then
             spec.apply(obj, data)
         end
+        if kind.applyFields then
+            kind.applyFields(obj, data, slug)
+        end
         if data.apply then
             data.apply(obj)
         end
