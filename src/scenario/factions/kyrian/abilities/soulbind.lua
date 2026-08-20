@@ -1,4 +1,5 @@
 -- TODO:
+-- - BUG: break range twice on 3rd level of Soulbind -> buff stops disappearing on range break
 -- - [1] - check save-load
 -- - check upgrades (GetPlayerTechCount, GetOwningPlayer)
 -- - - probably update on trigger and store instead of polling each soulbind tick
@@ -22,7 +23,7 @@ local CONFIG = {
 
     tickSeconds = 1,
 
-    secondsForLevel = 60,
+    secondsForLevel = 5,
     maxLevel = 3,
 
     soulbindAbilityId = FourCC(Ids.abilities.soulbind),
@@ -96,7 +97,7 @@ local function applySoulbindBuff(unit, level)
     UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
     UnitAddAbility(dummy, abilityId)
     SetUnitAbilityLevel(dummy, abilityId, level)
-    dump("dummy ability level", GetUnitAbilityLevel(dummy, abilityId))
+    -- dump("dummy ability level", GetUnitAbilityLevel(dummy, abilityId))
     -- removeSoulbindBuff(unit)
     IssueTargetOrder(dummy, "innerfire", unit)
 end
@@ -128,7 +129,7 @@ local function tickBond(bondId)
     end
 
     local inRange = Unit.distance(u1, u2) <= CONFIG.radius
-    -- dump("tick", { bond, level = bond.level, progress = bond.progress, inRange })
+    -- dump("tick", { active = bond.active, level = bond.level, inRange = inRange })
     if not inRange then
         if bond.active then
             bond.active = false
@@ -176,4 +177,5 @@ return {
         },
     },
     config = CONFIG,
+    tickBond = tickBond,
 }

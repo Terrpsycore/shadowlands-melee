@@ -22,7 +22,10 @@ local fields = {
     buttonNormalY = function(a, value)
         a:setButtonPositionNormalY(value)
     end,
-    buffs = function(a, slugs)
+    levels = function(a, value)
+        a:setLevels(value)
+    end,
+    buffs = function(a, slugs, data)
         local parts = {}
         for _, slug in ipairs(slugs) do
             local id = Ids.buffs[slug]
@@ -31,7 +34,10 @@ local fields = {
             end
             parts[#parts + 1] = id
         end
-        a:setBuffs(1, table.concat(parts, ","))
+        local levels = data.levels or 1
+        for level = 1, levels do
+            a:setBuffs(level, table.concat(parts, ","))
+        end
     end,
 }
 
@@ -42,7 +48,7 @@ local function applyFields(a, data, slug)
             if not handler then
                 error("unknown ability field '" .. key .. "' on " .. slug)
             end
-            handler(a, value)
+            handler(a, value, data)
         end
     end
 end

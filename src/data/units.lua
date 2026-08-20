@@ -19,9 +19,53 @@ local db = {
         name = "Aspirant",
         abilities = { "soulbind" },
     },
+    praetor = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
     larion = {
         parent = UnitIds.footman,
         name = "Larion",
+    },
+    purity = {
+        parent = UnitIds.priest,
+        name = "Praetor",
+    },
+    wisdom = {
+        parent = UnitIds.sorceress,
+        name = "Praetor",
+    },
+    loyalty = {
+        parent = UnitIds.spellbreaker,
+        name = "Praetor",
+    },
+    phalynx = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    goliath = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    colossus = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    ascendedWarrior = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    ascendedPurity = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    ascendedWisdom = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    ascendedLoyalty = {
+        parent = UnitIds.footman,
+        name = "Praetor",
     },
 }
 

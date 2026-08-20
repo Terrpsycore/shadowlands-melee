@@ -22,9 +22,9 @@ local db = {
         name = "",
         autocastRange = 0,
         buffs = { "soulbind" },
+        levels = 3,
         apply = function(a)
             a:setRequirements("")
-            a:setLevels(3)
             a:setDefenseIncrease(1, 2)
             a:setDamageIncrease(1, 0.1)
             a:setDefenseIncrease(2, 3)

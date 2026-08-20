@@ -28,7 +28,7 @@ local castTrig = CreateTrigger()
 TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
 TriggerAddAction(castTrig, function()
     local handler = spellHandlers[GetSpellAbilityId()]
-    dump("triggered ability casted", not not handler)
+    -- dump("triggered ability casted", not not handler)
     if handler then
         handler()
     end
