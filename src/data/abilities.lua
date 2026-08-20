@@ -17,7 +17,6 @@ local db = {
             a:setDisableOtherAbilities(1, false)
         end,
     },
-
     soulbindBuff = {
         parent = AbilityIds.innerFire,
         name = "",
@@ -25,6 +24,13 @@ local db = {
         buffs = { "soulbind" },
         apply = function(a)
             a:setRequirements("")
+            a:setLevels(3)
+            a:setDefenseIncrease(1, 2)
+            a:setDamageIncrease(1, 0.1)
+            a:setDefenseIncrease(2, 3)
+            a:setDamageIncrease(2, 0.2)
+            a:setDefenseIncrease(3, 5)
+            a:setDamageIncrease(3, 0.3)
         end,
     },
 }

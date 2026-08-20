@@ -1,4 +1,4 @@
 require("tests.items")
--- require("tests.soulbind")
+require("tests.soulbind")
 
 Debug.original.print("tests ready")

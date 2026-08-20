@@ -3,7 +3,7 @@
 -- - check upgrades (GetPlayerTechCount, GetOwningPlayer)
 -- - - probably update on trigger and store instead of polling each soulbind tick
 -- - apply buffs with dummy
--- - object editor (upgrades, soulbind buffs, soulbind ability properties)
+-- - object editor (upgrades, soulbind buffs, duration, soulbind ability properties)
 -- - invisible soulbind charge for Larion (can be targeted, can't cast)
 -- - hashtables (save-load persistance)
 -- - refactor (group bond methods)
@@ -86,17 +86,21 @@ local function isValidTarget(caster, target)
     return true
 end
 
-local function applySoulbindBuff(unit, level)
-    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
-    UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
-    UnitAddAbility(dummy, CONFIG.levels[level].dummyAbilityId)
-    IssueTargetOrder(dummy, "innerfire", unit)
-end
-
 local function removeSoulbindBuff(unit)
     for _, soulbindLevel in ipairs(CONFIG.levels) do
         UnitRemoveBuffBJ(soulbindLevel.buffId, unit)
     end
+end
+
+local function applySoulbindBuff(unit, level)
+    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
+    local abilityId = CONFIG.levels[level].dummyAbilityId
+    UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
+    UnitAddAbility(dummy, abilityId)
+    SetUnitAbilityLevel(dummy, abilityId, level)
+    dump("dummy ability level", GetUnitAbilityLevel(dummy, abilityId))
+    -- removeSoulbindBuff(unit)
+    IssueTargetOrder(dummy, "innerfire", unit)
 end
 
 local function onSoulbindCast()
@@ -126,7 +130,7 @@ local function tickBond(bondId)
     end
 
     local inRange = Unit.distance(u1, u2) <= CONFIG.radius
-    dump("tick", { bond, inRange })
+    dump("tick", { bond, level = bond.level, progress = bond.progress, inRange })
     if not inRange then
         if bond.active then
             bond.active = false
@@ -137,15 +141,19 @@ local function tickBond(bondId)
     end
 
     -- update progress & level
+    local leveledUp
     if bond.level < CONFIG.maxLevel then
         local progressDelta = (CONFIG.tickSeconds / CONFIG.secondsForLevel)
         bond.progress = math.min(bond.progress + progressDelta, 1)
         if bond.progress >= 1 and bond.level < CONFIG.maxLevel then
             bond.progress = 0
             bond.level = bond.level + 1
+            leveledUp = true
+        else
+            leveledUp = false
         end
     end
-    if not bond.active then
+    if not bond.active or leveledUp then
         bond.active = true
         applySoulbindBuff(u1, bond.level)
         applySoulbindBuff(u2, bond.level)
