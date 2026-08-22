@@ -1,44 +1,48 @@
 local abilities = require("scenario.abilities")
 local dump = require("utils.logger")
 
--- собрать обработчики
-local spellHandlers = {} -- spellId (FourCC) -> action
-local timers = {}
+local callbacks = {}
 
 for _, ability in ipairs(abilities) do
-    local t = ability.triggers
-    if not t then
-        goto continue
+    for trigger, options in pairs(ability.triggers) do
+        if not callbacks[trigger] then
+            callbacks[trigger] = {}
+        end
+        table.insert(callbacks[trigger], options)
     end
-
-    local spell = t.EVENT_PLAYER_UNIT_SPELL_EFFECT
-    if spell then
-        spellHandlers[spell.spellId] = spell.action
-    end
-
-    if t.TIMER then
-        timers[#timers + 1] = t.TIMER
-    end
-
-    ::continue::
 end
 
--- один общий триггер на SPELL_EFFECT
-local castTrig = CreateTrigger()
-TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-TriggerAddAction(castTrig, function()
-    local handler = spellHandlers[GetSpellAbilityId()]
-    -- dump("triggered ability casted", not not handler)
-    if handler then
-        handler()
+for event, triggers in pairs(callbacks) do
+    if event == "EVENT_PLAYER_UNIT_SPELL_EFFECT" then
+        local castTrig = CreateTrigger()
+        TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+        TriggerAddAction(castTrig, function()
+            -- local caster
+            -- local target
+            local spellId = GetSpellAbilityId()
+            for _, trigger in ipairs(triggers) do
+                if spellId == trigger.spellId then
+                    trigger.action()
+                end
+            end
+        end)
+    elseif event == "DAMAGE" then
+    elseif event == "TIMER" then
+        for _, timer in ipairs(triggers) do
+            TimerStart(CreateTimer(), timer.delta, true, function()
+                timer.action()
+            end)
+        end
     end
-end)
-
--- таймеры — по одному на каждый delta или один общий с диспетчером
-for _, timer in ipairs(timers) do
-    TimerStart(CreateTimer(), timer.delta, true, function()
-        -- Place the code you want to run every second here
-        timer.action()
-        -- print("Timer ticked!")
-    end)
 end
+
+--[[
+
+        Damage.register(Damage.damagedEvent, function()
+            local d = Damage.index
+            if d.damage <= 0 then
+                return
+            end -- skip zero-damage hits
+            OnUnitDamaged(d, d.source, d.target)
+        end, 1.0)
+--]]

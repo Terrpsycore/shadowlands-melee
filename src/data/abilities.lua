@@ -33,6 +33,15 @@ local db = {
             a:setDamageIncrease(3, 0.3)
         end,
     },
+    defenceProtocol = {
+        parent = AbilityIds.evasion,
+        apply = function(a)
+            a:setRequirements("")
+        end,
+    },
+    defenceProtocolBuff = {
+        parent = AbilityIds.bloodlust1,
+    },
 }
 
 return db

@@ -14,9 +14,12 @@ return {
         phalynx = "h109",
         praetor = "h103",
         purity = "h110",
+        steward = "h114",
         wisdom = "h111",
     },
     abilities = {
+        defenceProtocol = "A103",
+        defenceProtocolBuff = "A104",
         inventory = "A100",
         soulbind = "A101",
         soulbindBuff = "A102",

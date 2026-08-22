@@ -14,14 +14,19 @@ local db = {
         parent = UnitIds.paladin,
         name = "Name",
     },
+    steward = {
+        parent = UnitIds.peasant,
+        name = "Steward",
+    },
     aspirant = {
         parent = UnitIds.footman,
         name = "Aspirant",
         abilities = { "soulbind" },
     },
     praetor = {
-        parent = UnitIds.footman,
+        parent = UnitIds.granitegolem,
         name = "Praetor",
+        abilities = { "defenceProtocol" },
     },
     larion = {
         parent = UnitIds.footman,
