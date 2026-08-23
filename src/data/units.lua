@@ -24,13 +24,14 @@ local db = {
         abilities = { "soulbind" },
     },
     praetor = {
-        parent = UnitIds.granitegolem,
+        parent = UnitIds.grunt,
         name = "Praetor",
         abilities = { "defenceProtocol" },
     },
     larion = {
-        parent = UnitIds.footman,
+        parent = UnitIds.druidoftheclaw,
         name = "Larion",
+        abilities = { "pride" },
     },
     purity = {
         parent = UnitIds.priest,

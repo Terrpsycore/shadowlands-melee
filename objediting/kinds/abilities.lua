@@ -73,6 +73,26 @@ local byParent = {
             return AbilityDefinitionInnerFire:new(id)
         end,
     },
+    [AbilityIds.itemDamageBonus] = {
+        new = function(id)
+            return AbilityDefinitionAttackBonus:new(id)
+        end,
+    },
+    [AbilityIds.evasion] = {
+        new = function(id)
+            return AbilityDefinitionEvasion:new(id)
+        end,
+    },
+    [AbilityIds.exhume] = {
+        new = function(id)
+            return AbilityDefinitionExhume:new(id)
+        end,
+    },
+    [AbilityIds.bloodlust] = {
+        new = function(id)
+            return AbilityDefinitionBloodlust:new(id)
+        end,
+    },
     [AbilityIds.channel] = {
         new = function(id)
             return AbilityDefinitionIllidanChannel:new(id)

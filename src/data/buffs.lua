@@ -5,4 +5,8 @@ return {
         parent = BuffIds.innerFire,
         name = "Soulbind",
     },
+    defenceProtocol = {
+        parent = BuffIds.bloodlust,
+        name = "Defence Protocol",
+    },
 }

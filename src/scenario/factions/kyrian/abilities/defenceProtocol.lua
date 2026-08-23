@@ -9,16 +9,48 @@ local dump = require("utils.logger")
 
 local CONFIG = {
     radius = 600,
+    cooldown = 5,
+
+    buffId = FourCC(Ids.buffs.defenceProtocol),
+
+    abilityId = FourCC(Ids.abilities.defenceProtocol),
+    dummyAbilityId = FourCC(Ids.abilities.defenceProtocolBuff),
+    requiredUpgradeId = nil,
 }
 
+local function applyDefenceProtocolBuff(unit)
+    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
+    local abilityId = CONFIG.dummyAbilityId
+    UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
+    UnitAddAbility(dummy, abilityId)
+    IssueTargetOrder(dummy, "bloodlust", unit)
+end
+
+local function activateDefenceProtocol(event, unit)
+    if IsUnitAlly(event.target, GetOwningPlayer(event.source)) then
+        return
+    end
+    if not Unit.isOffCooldown(unit, CONFIG.abilityId) then
+        return
+    end
+    BlzStartUnitAbilityCooldown(unit, CONFIG.abilityId, CONFIG.cooldown)
+    applyDefenceProtocolBuff(unit)
+end
+
 -- @
-local function onDamageEvent(attacker, target) end
+local function onDamageEvent(info)
+    -- dump("defenceProtocol onDamageEvent fire")
+    local nearbyPraetors = Unit.getAllyUnitsOfTypeInRadius(info.target, FourCC(Ids.units.praetor), CONFIG.radius)
+    -- dump("nearbyPraetors " .. #nearbyPraetors)
+    for _, unit in ipairs(nearbyPraetors) do
+        activateDefenceProtocol(info, unit)
+    end
+end
 
 return {
     triggers = {
         -- damage event
         DAMAGE = {
-            event = Damage.damagedEvent,
             action = onDamageEvent,
             target = {
                 type = { Ids.units.steward, Ids.units.aspirant },

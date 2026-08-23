@@ -1,13 +1,13 @@
 local Case = {}
 
-function Case.new(testName, testFunc)
+function Case.new(testName, testFunc, x, y)
     local self = {}
 
     local items = {}
     local units = {}
 
-    local x = -100
-    local y = -100
+    -- local x = -100
+    -- local y = -100
 
     function self:run()
         local ok, err = pcall(testFunc, self)
@@ -54,8 +54,11 @@ function Case.new(testName, testFunc)
         return item
     end
 
-    function self:createUnit(unitTypeId)
-        local unit = CreateUnit(Player(0), FourCC(unitTypeId), x, y, 270)
+    function self:createUnit(unitTypeId, player)
+        if player == nil then
+            player = Player(0)
+        end
+        local unit = CreateUnit(player, FourCC(unitTypeId), x, y, 270)
         units[#units + 1] = unit
         return unit
     end

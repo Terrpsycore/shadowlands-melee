@@ -23,6 +23,7 @@ local db = {
         autocastRange = 0,
         buffs = { "soulbind" },
         levels = 3,
+        ---@param a AbilityDefinitionInnerFire
         apply = function(a)
             a:setRequirements("")
             a:setDefenseIncrease(1, 2)
@@ -34,13 +35,41 @@ local db = {
         end,
     },
     defenceProtocol = {
-        parent = AbilityIds.evasion,
+        parent = AbilityIds.exhume,
+        ---@param a AbilityDefinitionExhume
+        apply = function(a)
+            a:setRequirements("")
+            a:setMaximumNumberofCorpses(1, 0)
+            a:setCooldown(1, 0)
+        end,
+    },
+    defenceProtocolBuff = {
+        parent = AbilityIds.bloodlust,
+        buffs = { "defenceProtocol" },
+        ---@param a AbilityDefinitionBloodlust
         apply = function(a)
             a:setRequirements("")
         end,
     },
-    defenceProtocolBuff = {
-        parent = AbilityIds.bloodlust1,
+    pride = {
+        parent = AbilityIds.evasion,
+        ---@param a AbilityDefinitionEvasion
+        apply = function(a)
+            a:setRequirements("")
+            a:setChancetoEvade(1, 0)
+        end,
+    },
+    prideDamage = {
+        parent = AbilityIds.itemDamageBonus,
+        name = "",
+        levels = 5,
+        ---@param a AbilityDefinitionAttackBonus
+        apply = function(a)
+            a:setItemAbility(true)
+            for level = 1, 5 do
+                a:setAttackBonus(level, 4 * level)
+            end
+        end,
     },
 }
 

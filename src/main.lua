@@ -1,10 +1,5 @@
 require("lib.init")
 
-seterrorhandler(function(msg)
-    Debug.original.print("ERROR: " .. tostring(msg))
-    Debug.original.print(Debug.traceback())
-end)
-
 require("tests.init")
 
 local dump = require("utils.logger")
@@ -17,6 +12,7 @@ CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.praetor), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.larion), 219.4, -90.4, 293.630)
+CreateUnit(Player(1), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 
 -- CreateUnit(Player(0), FourCC(Ids.paladin), 219.4, -90.4, 293.630)
 

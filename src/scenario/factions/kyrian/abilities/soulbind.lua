@@ -1,5 +1,6 @@
 -- TODO:
--- - BUG: break range twice on 3rd level of Soulbind -> buff stops disappearing on range break
+-- - BUG: dispellability. Try replacing dummy buff with item abilities (3 separate abilities instead of leveled one or so)
+--
 -- - [1] - check save-load
 -- - check upgrades (GetPlayerTechCount, GetOwningPlayer)
 -- - - probably update on trigger and store instead of polling each soulbind tick

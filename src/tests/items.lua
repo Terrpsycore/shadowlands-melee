@@ -2,7 +2,7 @@ local Ids = require("data.generated.ids")
 local Items = require("lib.items")
 local T = require("tests.support.runner")
 
-T.test("Unit can pick unit item", function(case)
+T:test("Unit can pick unit item", function(case)
     local unit = case:createUnit(Ids.units.dummy)
     UnitAddAbility(unit, FourCC(Ids.abilities.inventory))
 
@@ -15,7 +15,7 @@ T.test("Unit can pick unit item", function(case)
     end)
 end)
 
-T.test("Unit can't pick hero item", function(case)
+T:test("Unit can't pick hero item", function(case)
     local unit = case:createUnit(Ids.units.dummy)
     UnitAddAbility(unit, FourCC(Ids.abilities.inventory))
 
@@ -28,7 +28,7 @@ T.test("Unit can't pick hero item", function(case)
     end)
 end)
 
-T.test("Hero can pick unit item", function(case)
+T:test("Hero can pick unit item", function(case)
     local hero = case:createUnit(Ids.units.dummyHero)
     local unitItem = case:createItem(Ids.items.dummyUnitItem)
 
@@ -39,7 +39,7 @@ T.test("Hero can pick unit item", function(case)
     end)
 end)
 
-T.test("Hero can pick hero item", function(case)
+T:test("Hero can pick hero item", function(case)
     local hero = case:createUnit(Ids.units.dummyHero)
     local heroItem = case:createItem(Ids.items.dummyHeroItem)
 
