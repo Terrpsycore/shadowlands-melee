@@ -14,7 +14,7 @@ T:test("Buff is applied, cooldown starts", function(case)
 
     IssueTargetOrder(attacker, "attack", target)
 
-    case:delay(2, function()
+    return case:delay(2, function()
         assert(UnitHasBuffBJ(praetor, config.buffId), "praetor doesn't receive buff")
         assert(BlzGetUnitAbilityCooldown(praetor, config.abilityId, 1) <= 0, "cooldown didn't start")
     end)
@@ -27,7 +27,7 @@ T:test("Buff is applied", function(case)
 
     IssueTargetOrder(attacker, "attack", target)
 
-    case:delay(2, function()
+    return case:delay(2, function()
         assert(UnitHasBuffBJ(praetor, config.buffId), "praetor doesn't receive buff")
     end)
 end)
@@ -39,7 +39,7 @@ T:test("Buff not applied", function(case)
 
     IssueTargetOrder(attacker, "attack", target)
 
-    case:delay(2, function()
+    return case:delay(2, function()
         assert(not UnitHasBuffBJ(unit, config.buffId), "wrong triggering unit")
     end)
 end)
@@ -54,7 +54,7 @@ T:test("Cooldown affects", function(case)
 
     IssueTargetOrder(attacker, "attack", target)
 
-    case:delay(2, function()
+    return case:delay(2, function()
         assert(not UnitHasBuffBJ(unit, config.buffId), "ability works when on cooldown")
     end)
 end)

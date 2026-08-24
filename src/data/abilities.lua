@@ -5,6 +5,16 @@ local db = {
     inventory = {
         parent = AbilityIds.inventory,
     },
+    phase = {
+        parent = AbilityIds.windWalk,
+        ---@param a AbilityDefinitionWindWalk
+        apply = function(a)
+            a:setRequirements("")
+            a:setManaCost(1, 0)
+            a:setTransitionTime(1, -1)
+            a:setBackstabDamage(1, 0)
+        end,
+    },
 
     soulbind = {
         parent = AbilityIds.channel,

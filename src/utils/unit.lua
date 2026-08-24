@@ -17,6 +17,27 @@ function Unit.isOffCooldown(unit, abilityId)
     return remainingCd <= 0
 end
 
+function Unit.getUnitsInRadius(unit, radius)
+    local resultsTable = {}
+    local x = GetUnitX(unit)
+    local y = GetUnitY(unit)
+
+    local tempGroup = CreateGroup()
+    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
+
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
+        local u = BlzGroupUnitAt(tempGroup, i)
+
+        if u and UnitAlive(u) and u ~= unit then
+            table.insert(resultsTable, u)
+        end
+    end
+
+    DestroyGroup(tempGroup)
+
+    return resultsTable
+end
+
 function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     local resultsTable = {}
     local x = GetUnitX(unit)
@@ -26,7 +47,7 @@ function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     local tempGroup = CreateGroup()
     GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
 
-    for i = 1, BlzGroupGetSize(tempGroup) do
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
         local u = BlzGroupUnitAt(tempGroup, i)
 
         if

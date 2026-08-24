@@ -98,6 +98,11 @@ local byParent = {
             return AbilityDefinitionIllidanChannel:new(id)
         end,
     },
+    [AbilityIds.windWalk] = {
+        new = function(id)
+            return AbilityDefinitionWindWalk:new(id)
+        end,
+    },
 }
 
 return {

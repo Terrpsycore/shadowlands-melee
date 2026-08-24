@@ -20,8 +20,4 @@ local item = CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))
 
 Debug.original.print("IngameConsole:", IngameConsole ~= nil)
 
-dump("test", { message = "test" })
-
-dump("item", item)
-
 require("scenario.triggers")

@@ -21,6 +21,7 @@ return {
         defenceProtocol = "A100",
         defenceProtocolBuff = "A101",
         inventory = "A102",
+        phase = "A107",
         pride = "A105",
         prideDamage = "A106",
         soulbind = "A103",

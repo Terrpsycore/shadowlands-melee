@@ -1,7 +1,9 @@
--- scenario/factions/kyrian/abilities/pride.lua
+-- todo: handle revive, etc.
 local Ids = require("data.generated.ids")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
+
+local PrideStore = require("scenario.store.pride")
 
 local CONFIG = {
     radius = 600,
@@ -66,21 +68,39 @@ local function applyPride(unit)
 end
 
 local function onTick()
-    dump("onTick pride")
-    local group = GetUnitsOfTypeIdAll(CONFIG.carrierTypeId)
-    for i = 1, BlzGroupGetSize(group) do
-        local unit = group[i] -- Influa: группа = 1-based table
-        dump("onTick larion check")
-        if unit and Unit.isAlive(unit) and GetUnitAbilityLevel(unit, CONFIG.abilityId) > 0 then
-            dump("onTick larion check success")
+    -- dump("onTick pride")
+    PrideStore.forEach(function(unit)
+        if Unit.isAlive(unit) then
             applyPride(unit)
         end
+    end)
+end
+
+local function onTrain(unit)
+    if unit == nil then
+        unit = GetTrainedUnit()
     end
-    DestroyGroup(group)
+    PrideStore.add(unit)
+end
+
+local function onDeath(unit)
+    if unit == nil then
+        unit = GetDyingUnit()
+    end
+    PrideStore.remove(unit)
 end
 
 return {
     triggers = {
+        EVENT_PLAYER_UNIT_TRAIN_FINISH = {
+            unitType = CONFIG.carrierTypeId,
+            action = onTrain,
+        },
+        EVENT_PLAYER_UNIT_DEATH = {
+            unitType = CONFIG.carrierTypeId,
+            action = onDeath,
+        },
+        -- on death - clean storage
         TIMER = {
             delta = CONFIG.tickSeconds,
             action = onTick,
@@ -89,4 +109,9 @@ return {
     config = CONFIG,
     countStacks = countStacks,
     effectiveStacks = effectiveStacks,
+    debug = {
+        onTrain = onTrain,
+        onDeath = onDeath,
+        applyPride = applyPride,
+    },
 }

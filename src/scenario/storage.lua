@@ -3,14 +3,15 @@ local ht = InitHashtable()
 -- Реестр namespace'ов — чтобы способности не пересекались
 local NS = {
     GLOBAL = 0,
-    SOULBIND = 1, -- childKey = bondId или field
-    OTHER_ABIL = 2,
+    SOULBIND = 1,
+    PRIDE = 2,
 }
 
 local activeRegistry = {} -- runtime-only: ns -> { [id] = true }
 
 local ALLOC = {
     soulbind_next_bond = 1,
+    pride_next = 2,
 }
 
 local function getInt(parent, child)

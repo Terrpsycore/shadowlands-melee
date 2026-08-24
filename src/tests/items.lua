@@ -10,7 +10,7 @@ T:test("Unit can pick unit item", function(case)
 
     IssueTargetOrder(unit, "smart", unitItem)
 
-    case:delay(1, function()
+    return case:delay(1, function()
         assert(UnitHasItem(unit, unitItem), "unit can't pick unit item")
     end)
 end)
@@ -23,7 +23,7 @@ T:test("Unit can't pick hero item", function(case)
 
     IssueTargetOrder(unit, "smart", heroItem)
 
-    case:delay(1, function()
+    return case:delay(1, function()
         assert(not UnitHasItem(unit, heroItem), "unit can pick hero item")
     end)
 end)
@@ -34,7 +34,7 @@ T:test("Hero can pick unit item", function(case)
 
     IssueTargetOrder(hero, "smart", unitItem)
 
-    case:delay(1, function()
+    return case:delay(1, function()
         assert(UnitHasItem(hero, unitItem), "hero can't pick unit item")
     end)
 end)
@@ -45,7 +45,7 @@ T:test("Hero can pick hero item", function(case)
 
     IssueTargetOrder(hero, "smart", heroItem)
 
-    case:delay(1, function()
+    return case:delay(1, function()
         assert(UnitHasItem(hero, heroItem), "hero can't pick hero item")
     end)
 end)
