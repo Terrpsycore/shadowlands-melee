@@ -17,6 +17,17 @@ function Unit.isOffCooldown(unit, abilityId)
     return remainingCd <= 0
 end
 
+function Unit.isAtPoint(whichUnit, targetX, targetY, range)
+    local uX = GetUnitX(whichUnit)
+    local uY = GetUnitY(whichUnit)
+
+    local dx = targetX - uX
+    local dy = targetY - uY
+    local distanceSq = (dx * dx) + (dy * dy)
+
+    return distanceSq <= (range * range)
+end
+
 function Unit.getUnitsInRadius(unit, radius)
     local resultsTable = {}
     local x = GetUnitX(unit)

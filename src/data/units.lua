@@ -31,7 +31,7 @@ local db = {
     larion = {
         parent = UnitIds.druidoftheclaw,
         name = "Larion",
-        abilities = { "pride" },
+        abilities = { "cannibalizeSearch", "pride" },
     },
     purity = {
         parent = UnitIds.priest,
@@ -46,8 +46,8 @@ local db = {
         name = "Praetor",
     },
     phalynx = {
-        parent = UnitIds.footman,
-        name = "Praetor",
+        parent = UnitIds.whitewolf,
+        name = "Phalynx",
     },
     goliath = {
         parent = UnitIds.footman,

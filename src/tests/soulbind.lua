@@ -1,3 +1,6 @@
+-- TODO:
+-- - forbid 2 bonds on same target
+-- - forbid 2 bonds from same caster
 -- Generated
 local Ids = require("data.generated.ids")
 local Store = require("scenario.store.soulbind")

@@ -15,7 +15,6 @@ local db = {
             a:setBackstabDamage(1, 0)
         end,
     },
-
     soulbind = {
         parent = AbilityIds.channel,
         name = "Soulbind",
@@ -79,6 +78,54 @@ local db = {
             for level = 1, 5 do
                 a:setAttackBonus(level, 4 * level)
             end
+        end,
+    },
+    formation = {
+        parent = AbilityIds.evasion,
+        ---@param a AbilityDefinitionEvasion
+        apply = function(a)
+            a:setRequirements("")
+            a:setChancetoEvade(1, 0)
+        end,
+    },
+    formationBuffSpeed = {
+        parent = AbilityIds.itemAuraCommand,
+        name = "",
+        ---@param a AbilityDefinitionItemAuraCommand
+        apply = function(a)
+            a:setItemAbility(true)
+            a:setAreaofEffect(1, 0)
+            a:setAttackDamageIncrease(1, 0.2)
+        end,
+    },
+    formationBuffDamage = {
+        parent = AbilityIds.itemAuraEndurance,
+        name = "",
+        ---@param a AbilityDefinitionItemAuraEndurance
+        apply = function(a)
+            a:setItemAbility(true)
+            a:setAreaofEffect(1, 0)
+            a:setMovementSpeedIncrease(1, 0.2)
+            a:setAttackSpeedIncrease(1, 0.2)
+        end,
+    },
+    cannibalizeSearch = {
+        parent = AbilityIds.channel,
+        name = "Cannibalize",
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        apply = function(a)
+            a:setTargetType(1, 2)
+            a:setDisableOtherAbilities(1, false)
+        end,
+    },
+    cannibalize = {
+        parent = AbilityIds.cannibalize,
+        name = "",
+        ---@param a AbilityDefinitionCannibalize
+        apply = function(a)
+            a:setRequirements("")
         end,
     },
 }

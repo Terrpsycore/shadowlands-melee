@@ -5,6 +5,8 @@ local NS = {
     GLOBAL = 0,
     SOULBIND = 1,
     PRIDE = 2,
+    PHALYNX = 3,
+    CONTROL = 4,
 }
 
 local activeRegistry = {} -- runtime-only: ns -> { [id] = true }
@@ -12,6 +14,8 @@ local activeRegistry = {} -- runtime-only: ns -> { [id] = true }
 local ALLOC = {
     soulbind_next_bond = 1,
     pride_next = 2,
+    phalynx_next = 3,
+    control_next = 4,
 }
 
 local function getInt(parent, child)

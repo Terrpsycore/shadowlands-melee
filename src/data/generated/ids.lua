@@ -18,8 +18,13 @@ return {
         wisdom = "h113",
     },
     abilities = {
+        cannibalize = "A111",
+        cannibalizeSearch = "A112",
         defenceProtocol = "A100",
         defenceProtocolBuff = "A101",
+        formation = "A108",
+        formationBuffDamage = "A109",
+        formationBuffSpeed = "A110",
         inventory = "A102",
         phase = "A107",
         pride = "A105",

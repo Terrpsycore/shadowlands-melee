@@ -103,6 +103,21 @@ local byParent = {
             return AbilityDefinitionWindWalk:new(id)
         end,
     },
+    [AbilityIds.itemAuraCommand] = {
+        new = function(id)
+            return AbilityDefinitionItemAuraCommand:new(id)
+        end,
+    },
+    [AbilityIds.itemAuraEndurance] = {
+        new = function(id)
+            return AbilityDefinitionItemAuraEndurance:new(id)
+        end,
+    },
+    [AbilityIds.cannibalize] = {
+        new = function(id)
+            return AbilityDefinitionCannibalize:new(id)
+        end,
+    },
 }
 
 return {
