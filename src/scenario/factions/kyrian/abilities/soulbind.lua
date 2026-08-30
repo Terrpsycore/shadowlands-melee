@@ -1,4 +1,6 @@
 -- TODO:
+-- - CHECK: soulbind charge + bond level & buff constistency on morphing
+-- - BUG: soulbind abil charge reappears after morph
 -- - BUG: dispellability. Try replacing dummy buff with item abilities (3 separate abilities instead of leveled one or so)
 --
 -- - [1] - check save-load

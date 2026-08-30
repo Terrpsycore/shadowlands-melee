@@ -133,3 +133,5 @@ f:close()
 
 local genItemMeta = dofile("objediting/gen_item_meta.lua")
 genItemMeta(assigned.items, require("data.items"))
+
+dofile("objediting/gen_ability_kinds.lua")

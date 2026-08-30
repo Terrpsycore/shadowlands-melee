@@ -8,10 +8,14 @@ Debug.original.print("Hello warcraft-vscode !")
 
 -- src/main.lua
 local Ids = require("data.generated.ids")
+CreateUnit(Player(0), FourCC(Ids.units.steward), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.praetor), 219.4, -90.4, 293.630)
+CreateUnit(Player(0), FourCC(Ids.units.praetor), 219.4, -90.4, 293.630)
+CreateUnit(Player(0), FourCC(Ids.units.purity), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.larion), 219.4, -90.4, 293.630)
+CreateUnit(Player(1), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 local e = CreateUnit(Player(1), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 BlzSetUnitMaxHP(e, 1)
 

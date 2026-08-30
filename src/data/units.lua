@@ -17,16 +17,38 @@ local db = {
     steward = {
         parent = UnitIds.peasant,
         name = "Steward",
+        abilities = { "soakAnima", "fuseAnima" },
+        apply = function(u)
+            u:setManaMaximum(200)
+            u:setManaInitialAmount(100)
+        end,
     },
     aspirant = {
-        parent = UnitIds.footman,
+        parent = UnitIds.headhunter,
         name = "Aspirant",
-        abilities = { "soulbind" },
+        abilities = { "soulbind", "rangeSwitch" },
+    },
+    aspirantMelee = {
+        parent = UnitIds.headhunter,
+        name = "Aspirant",
+        abilities = { "soulbind", "rangeSwitch" },
+        apply = function(u)
+            u:setAttack1AttackType("normal")
+            u:setAttack1WeaponType(WeaponType.Normal) -- melee, без снаряда
+            u:setAttack1Range(90) -- 90–128; иначе «мили» с дистанции 450
+            -- u:setAttack1ProjectileArt("") -- гигиена; для Normal снаряд и так не летит
+            u:setAttack1WeaponSound(WeaponSound.MetalMediumChop) -- удар, не полёт топора
+        end,
     },
     praetor = {
         parent = UnitIds.grunt,
         name = "Praetor",
         abilities = { "defenceProtocol" },
+        apply = function(u)
+            u:setUnitClassification("Mechanical")
+            u:setManaMaximum(200)
+            u:setManaInitialAmount(100)
+        end,
     },
     larion = {
         parent = UnitIds.druidoftheclaw,
@@ -35,7 +57,8 @@ local db = {
     },
     purity = {
         parent = UnitIds.priest,
-        name = "Praetor",
+        name = "Purity",
+        abilities = { "vesperBell", "humility" },
     },
     wisdom = {
         parent = UnitIds.sorceress,
@@ -48,14 +71,29 @@ local db = {
     phalynx = {
         parent = UnitIds.whitewolf,
         name = "Phalynx",
+        apply = function(u)
+            u:setUnitClassification("Mechanical")
+            u:setManaMaximum(200)
+            u:setManaInitialAmount(100)
+        end,
     },
     goliath = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Goliath",
+        apply = function(u)
+            u:setUnitClassification("Mechanical")
+            u:setManaMaximum(200)
+            u:setManaInitialAmount(100)
+        end,
     },
     colossus = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Colossus",
+        apply = function(u)
+            u:setUnitClassification("Mechanical")
+            u:setManaMaximum(200)
+            u:setManaInitialAmount(100)
+        end,
     },
     ascendedWarrior = {
         parent = UnitIds.footman,

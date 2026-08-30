@@ -3,6 +3,7 @@
 -- check GetIssuedOrderId for toggle on off
 
 local Ids = require("data.generated.ids")
+local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
@@ -19,11 +20,7 @@ local CONFIG = {
 }
 
 local function applyDefenceProtocolBuff(unit)
-    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
-    local abilityId = CONFIG.dummyAbilityId
-    UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
-    UnitAddAbility(dummy, abilityId)
-    IssueTargetOrder(dummy, "bloodlust", unit)
+    Dummy.applyDummyOrder(GetOwningPlayer(unit), unit, CONFIG.dummyAbilityId, "bloodlust")
 end
 
 local function activateDefenceProtocol(event, unit)

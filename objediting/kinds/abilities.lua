@@ -1,5 +1,6 @@
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
 local Ids = require("data.generated.ids")
+local generated = require("data.generated.ability_classes")
 
 local reserved = {
     parent = true,
@@ -59,7 +60,7 @@ local fallback = {
     end,
 }
 
-local byParent = {
+local overrides = {
     [AbilityIds.inventory] = {
         new = function(id, parent)
             return AbilityInventory:new(id, parent)
@@ -68,61 +69,23 @@ local byParent = {
             a:setCanUseItems(1, false)
         end,
     },
-    [AbilityIds.innerFire] = {
-        new = function(id)
-            return AbilityDefinitionInnerFire:new(id)
-        end,
-    },
-    [AbilityIds.itemDamageBonus] = {
-        new = function(id)
-            return AbilityDefinitionAttackBonus:new(id)
-        end,
-    },
-    [AbilityIds.evasion] = {
-        new = function(id)
-            return AbilityDefinitionEvasion:new(id)
-        end,
-    },
-    [AbilityIds.exhume] = {
-        new = function(id)
-            return AbilityDefinitionExhume:new(id)
-        end,
-    },
-    [AbilityIds.bloodlust] = {
-        new = function(id)
-            return AbilityDefinitionBloodlust:new(id)
-        end,
-    },
-    [AbilityIds.channel] = {
-        new = function(id)
-            return AbilityDefinitionIllidanChannel:new(id)
-        end,
-    },
-    [AbilityIds.windWalk] = {
-        new = function(id)
-            return AbilityDefinitionWindWalk:new(id)
-        end,
-    },
-    [AbilityIds.itemAuraCommand] = {
-        new = function(id)
-            return AbilityDefinitionItemAuraCommand:new(id)
-        end,
-    },
-    [AbilityIds.itemAuraEndurance] = {
-        new = function(id)
-            return AbilityDefinitionItemAuraEndurance:new(id)
-        end,
-    },
-    [AbilityIds.cannibalize] = {
-        new = function(id)
-            return AbilityDefinitionCannibalize:new(id)
-        end,
-    },
 }
 
 return {
     resolve = function(parent)
-        return byParent[parent] or fallback
+        local override = overrides[parent]
+        if override then
+            return override
+        end
+        local cls = generated[parent]
+        if cls then
+            return {
+                new = function(id)
+                    return cls:new(id)
+                end,
+            }
+        end
+        return fallback
     end,
     defaults = function(a)
         a:setHeroAbility(false)

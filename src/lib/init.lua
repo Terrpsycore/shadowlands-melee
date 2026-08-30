@@ -19,3 +19,5 @@ require("lib.community.Influa")
 require("lib.community.DamageEngine")
 
 Debug.original.print("imports ready")
+
+require("lib.triggers.init")

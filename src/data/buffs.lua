@@ -9,4 +9,8 @@ return {
         parent = BuffIds.bloodlust,
         name = "Defence Protocol",
     },
+    huntedAnimal = {
+        parent = BuffIds.bloodlust,
+        name = "Hunted Animal",
+    },
 }

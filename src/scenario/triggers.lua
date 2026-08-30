@@ -4,12 +4,28 @@ local abilities = require("scenario.abilities")
 local dump = require("utils.logger")
 local Type = require("utils.type")
 
-local T = {}
+local T = {
+    callbacks = {},
+}
 
-T.register = function(callbacks)
+T.registerEvents = function(callbacks)
     for event, triggers in pairs(callbacks) do
         -- dump("T.register: try - " .. event)
         T.methods[event](triggers)
+    end
+end
+
+T.registerCallback = function(event, callbackOptions)
+    if T.callbacks[event] == nil then
+        T.callbacks[event] = {}
+    end
+    table.insert(T.callbacks[event], callbackOptions)
+end
+
+T.fireEvent = function(event)
+    local callbacks = T.callbacks[event]
+    for k, callback in pairs(callbacks[event]) do
+        callback()
     end
 end
 
@@ -140,6 +156,8 @@ T.methods = {
     DAMAGE = T.onDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,
+    STUN = T.onStun,
+    ROOT = T.onRoot,
 }
 
 local callbacks = {}
@@ -147,16 +165,15 @@ local callbacks = {}
 for _, ability in ipairs(abilities) do
     if ability.triggers[1] then
         for _, options in ipairs(ability.triggers) do
-            local event = options.trigger
-            callbacks[event] = callbacks[event] or {}
-            table.insert(callbacks[event], options)
+            T.registerCallback(options.trigger, options)
         end
     else
         for event, options in pairs(ability.triggers) do
-            callbacks[event] = callbacks[event] or {}
-            table.insert(callbacks[event], options)
+            T.registerCallback(event, options)
         end
     end
 end
 
-T.register(callbacks)
+T.registerEvents(T.callbacks)
+
+return T
