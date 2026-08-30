@@ -15,7 +15,7 @@ local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local ControlStore = require("scenario.store.control")
+local ControlStore = require("scenario.storage.control")
 
 local CONFIG = {
     radius = 600,
@@ -68,14 +68,14 @@ local function searchCorpse(unit, x, y)
             IssueImmediateOrder(unit, "cannibalize")
             -- TODO: check if corpse disappeared
             -- TODO: remove phase buff
-            ControlStore.remove(unit)
+            ControlStore:remove(unit)
             state[unit] = nil
         else
             IssuePointOrder(unit, "move", cX, cY)
         end
     end
 
-    ControlStore.add(unit)
+    ControlStore:add(unit)
 
     UnitAddAbility(unit, CONFIG.phaseAbilityId)
     IssueImmediateOrder(unit, "windwalk")

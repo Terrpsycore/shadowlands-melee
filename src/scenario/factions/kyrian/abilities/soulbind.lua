@@ -19,7 +19,7 @@ local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local SoulbindStorage = require("scenario.store.soulbind")
+local SoulbindStorage = require("scenario.storage.soulbind")
 
 local CONFIG = {
     radius = 600,
@@ -76,7 +76,7 @@ local function isValidTarget(caster, target)
     if caster == target then
         return false
     end
-    if SoulbindStorage.getBondIdByUnit(caster) or SoulbindStorage.getBondIdByUnit(target) then
+    if SoulbindStorage:getByUnit(caster) or SoulbindStorage:getByUnit(target) then
         return false
     end
     if not isSoulbindCarrier(target) then
@@ -113,21 +113,21 @@ local function onSoulbindCast()
         return false
     end
 
-    if not SoulbindStorage.create(SoulbindStorage.allocBondId(), caster, target) then
+    if not SoulbindStorage:create(SoulbindStorage:alloc(), { unit_a = caster, unit_b = target }) then
         error("Can't create soulbind")
     end
     consumeCharge(caster, target)
 end
 
 local function tickBond(bondId)
-    local bond = SoulbindStorage.open(bondId)
+    local bond = SoulbindStorage:open(bondId)
     if not bond then
         return
     end
 
-    local u1, u2 = bond.units[1], bond.units[2]
+    local u1, u2 = bond.unit_a, bond.unit_b
     if not Unit.isAlive(u1) or not Unit.isAlive(u2) then
-        SoulbindStorage.destroy(bondId)
+        SoulbindStorage:destroy(bondId)
         return
     end
 
@@ -163,7 +163,7 @@ local function tickBond(bondId)
 end
 
 local function updateSoulbindStatus()
-    SoulbindStorage.forEachActive(tickBond)
+    SoulbindStorage:forEachActive(tickBond)
 end
 
 return {

@@ -72,6 +72,7 @@ local db = {
         buffs = { "defenceProtocol" },
         apply = A.bloodlust.apply(function(a)
             a:setRequirements("")
+            a:setTargetsAllowed(1, "allied,ground,mechanical,nonhero,player")
         end),
     }),
     pride = A.evasion({

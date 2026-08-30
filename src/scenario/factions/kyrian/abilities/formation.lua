@@ -4,7 +4,7 @@ local Ids = require("data.generated.ids")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local PhalynxStore = require("scenario.store.phalynx")
+local PhalynxStore = require("scenario.storage.phalynx")
 
 local CONFIG = {
     radius = 600,
@@ -38,7 +38,7 @@ local function onTick()
     -- dump("onTick formation")
     -- 1) короткий список: только живые из стора
     local units = {}
-    PhalynxStore.forEach(function(unit)
+    PhalynxStore:forEach(function(unit)
         if Unit.isAlive(unit) then
             units[#units + 1] = unit
         end
@@ -92,14 +92,14 @@ local function onTrain(unit)
     if unit == nil then
         unit = GetTrainedUnit()
     end
-    PhalynxStore.add(unit)
+    PhalynxStore:add(unit)
 end
 
 local function onDeath(unit)
     if unit == nil then
         unit = GetDyingUnit()
     end
-    PhalynxStore.remove(unit)
+    PhalynxStore:remove(unit)
 end
 
 return {

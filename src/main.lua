@@ -27,6 +27,9 @@ Debug.original.print("IngameConsole:", IngameConsole ~= nil)
 
 require("scenario.triggers")
 
+local Storage = require("lib.storage.storage")
+Storage.initAll()
+
 local formation = require("scenario.factions.kyrian.abilities.formation")
 for i = 1, 12 do
     -- local phalynx = CreateUnit(Player(0), FourCC(Ids.units.phalynx), 219.4, -90.4, 293.630)

@@ -3,7 +3,7 @@ local Ids = require("data.generated.ids")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local PrideStore = require("scenario.store.pride")
+local PrideStore = require("scenario.storage.pride")
 
 local CONFIG = {
     radius = 600,
@@ -69,7 +69,7 @@ end
 
 local function onTick()
     -- dump("onTick pride")
-    PrideStore.forEach(function(unit)
+    PrideStore:forEach(function(unit)
         if Unit.isAlive(unit) then
             applyPride(unit)
         end
@@ -80,14 +80,14 @@ local function onTrain(unit)
     if unit == nil then
         unit = GetTrainedUnit()
     end
-    PrideStore.add(unit)
+    PrideStore:add(unit)
 end
 
 local function onDeath(unit)
     if unit == nil then
         unit = GetDyingUnit()
     end
-    PrideStore.remove(unit)
+    PrideStore:remove(unit)
 end
 
 return {
