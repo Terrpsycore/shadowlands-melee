@@ -14,7 +14,7 @@
 -- - prevent bond progress when next level upgrade is not done
 -- - autocheck object ability levels VS script ability levels
 
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")

@@ -1,9 +1,11 @@
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 
 ENUM_WAIT = "WAIT"
 
 local Case = {}
 
+---@param testFunc TestFn
+---@return TestCase
 function Case.new(testName, testFunc, x, y)
     local self = {}
 
@@ -75,6 +77,21 @@ function Case.new(testName, testFunc, x, y)
         end
         units[#units + 1] = unit
         return unit
+    end
+
+    function self:applyDummyOrder(owner, target, abilityId, order, level)
+        local dummy = self:createUnit(Ids.units.dummy, owner, true)
+        UnitApplyTimedLife(dummy, FourCC("BTLF"), 10)
+        local abilityAdded = UnitAddAbility(dummy, abilityId)
+        if level then
+            SetUnitAbilityLevel(dummy, abilityId, level)
+        end
+        local orderIssued = IssueTargetOrder(dummy, order, target)
+        return {
+            dummy = dummy,
+            abilityAdded = abilityAdded,
+            orderIssued = orderIssued,
+        }
     end
 
     function self:flush()

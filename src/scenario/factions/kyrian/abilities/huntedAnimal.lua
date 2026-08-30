@@ -1,4 +1,4 @@
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")

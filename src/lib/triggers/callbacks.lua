@@ -1,7 +1,13 @@
 -- TODO:
 -- - use conditions
+local Storage = require("lib.storage.storage")
 local dump = require("utils.logger")
 local Type = require("utils.type")
+
+local Disable = Storage.unitFields("scan_mark", {
+    rooted = "bool",
+    stunned = "bool",
+})
 
 local T = {
     callbacks = {},
@@ -29,10 +35,10 @@ T.registerBuffs = function(tag, buffs)
     T.buffs[tag] = buffs
 end
 
-T.fireEvent = function(event)
+T.fireEvent = function(event, data)
     local callbacks = T.callbacks[event]
     for _, callback in pairs(callbacks) do
-        callback()
+        callback(data)
     end
 end
 
@@ -90,17 +96,28 @@ T.onDamage = function(triggers)
     end, 1.0)
     Damage.register("After", function(info)
         local unit = info.target
-        for _, v in ipairs(T.buffs.root) do
-            if UnitHasBuffBJ(unit, v) then
-                T.fireEvent("ROOT")
-                break
+
+        if not Disable:get(unit, "rooted") then
+            for _, v in ipairs(T.buffs.root) do
+                if UnitHasBuffBJ(unit, FourCC(v)) then
+                    T.fireEvent("ROOT", info)
+                    Disable:set(unit, "rooted", true)
+                    break
+                end
             end
         end
-        for _, v in ipairs(T.buffs.stun) do
-            if UnitHasBuffBJ(unit, v) then
-                T.fireEvent("STUN")
-                break
+        if not Disable:get(unit, "stunned") then
+            for _, v in ipairs(T.buffs.stun) do
+                if UnitHasBuffBJ(unit, FourCC(v)) then
+                    T.fireEvent("STUN", info)
+                    Disable:set(unit, "stunned", true)
+                    break
+                end
             end
+        end
+
+        if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
+            Disable:clear(unit)
         end
     end, 1.0)
 end

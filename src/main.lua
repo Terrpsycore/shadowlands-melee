@@ -7,7 +7,7 @@ local dump = require("utils.logger")
 Debug.original.print("Hello warcraft-vscode !")
 
 -- src/main.lua
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 CreateUnit(Player(0), FourCC(Ids.units.steward), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
@@ -24,8 +24,6 @@ BlzSetUnitMaxHP(e, 1)
 local item = CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))
 
 Debug.original.print("IngameConsole:", IngameConsole ~= nil)
-
-require("scenario.triggers")
 
 local Storage = require("lib.storage.storage")
 Storage.initAll()

@@ -9,7 +9,7 @@
 -- - remove cannibalism on spell finish (exists?)
 -- - bug: glitch if unit just died - trigger provoked, but cannibalism doesn't work
 
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 local removeControl = require("scenario.common.control")
 local Type = require("utils.type")
 local Unit = require("utils.unit")

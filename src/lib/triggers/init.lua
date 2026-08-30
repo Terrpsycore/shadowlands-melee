@@ -14,5 +14,5 @@ for _, ability in ipairs(abilities.abilities) do
 end
 
 T.registerEvents(T.callbacks)
-T.registerBuffs("root", abilities.buffs.stun)
+T.registerBuffs("root", abilities.buffs.root)
 T.registerBuffs("stun", abilities.buffs.stun)

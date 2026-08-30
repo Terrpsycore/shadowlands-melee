@@ -2,7 +2,7 @@
 -- - forbid 2 bonds on same target
 -- - forbid 2 bonds from same caster
 -- Generated
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 local Store = require("scenario.storage.soulbind")
 local Storage = require("lib.storage.storage")
 local Soulbind = require("scenario.factions.kyrian.abilities.soulbind")

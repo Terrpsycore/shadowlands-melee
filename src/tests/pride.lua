@@ -1,4 +1,4 @@
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 local Items = require("lib.items")
 local T = require("tests.support.runner")
 

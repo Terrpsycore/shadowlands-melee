@@ -1,6 +1,8 @@
+local Ids = require("data.ids")
+
 return {
     buffs = {
-        stun = {},
+        stun = { Ids.buffs.stunned, Ids.buffs.stunnedPause },
         root = {},
     },
     abilities = {

@@ -9,6 +9,7 @@ return {
         colossus = "h105",
         dummy = "h106",
         dummyHero = "H100",
+        dummyTarget = "h114",
         goliath = "h107",
         larion = "h108",
         loyalty = "h109",
