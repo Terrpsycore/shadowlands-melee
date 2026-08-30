@@ -1,9 +1,15 @@
 local Case = require("tests.support.case")
 local dump = require("utils.logger")
 
+---@class TestRunner
+---@field test fun(self: TestRunner, name: string, testFunc: TestFn)
+---@field createCase fun(self: TestRunner, name: string, testFunc: TestFn): TestCase
+---@field freeCell fun(self: TestRunner, i: integer)
 local T = {}
 
+---@return TestRunner
 function T.new()
+    ---@type TestRunner
     local self = {}
     local world = GetWorldBounds()
     local margin = 800
@@ -53,11 +59,16 @@ function T.new()
         grid[i] = nil
     end
 
+    ---@param name string
+    ---@param testFunc TestFn
+    ---@return TestCase
     function self:createCase(name, testFunc)
         local x, y = alloc(cellSize)
         return Case.new(name, testFunc, x, y)
     end
 
+    ---@param name string
+    ---@param testFunc TestFn
     function self:test(name, testFunc)
         return self:createCase(name, testFunc):run()
     end
@@ -65,4 +76,5 @@ function T.new()
     return self
 end
 
+---@return TestRunner
 return T:new()
