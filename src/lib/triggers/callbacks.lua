@@ -86,9 +86,19 @@ T.onAttack = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ATTACKED)
     TriggerAddAction(trig, function()
-        local unitId = GetUnitTypeId(GetDyingUnit())
         for _, trigger in ipairs(triggers) do
-            trigger.action()
+            if trigger.attacker and trigger.attacker.type then
+                if GetUnitTypeId(GetAttacker()) == trigger.attacker.type then
+                    trigger.action()
+                    dump("GetIssuedOrderId", OrderId2String(GetIssuedOrderId()), "trigger.order", trigger.order)
+                    dump("trigger.action() 1")
+                    goto continue
+                end
+            else
+                trigger.action()
+                -- dump("trigger.action() 2")
+            end
+            ::continue::
         end
     end)
 end
@@ -106,7 +116,22 @@ T.onDeath = function(triggers)
     end)
 end
 
-T.onSpell = function(triggers)
+T.onSpellCast = function(triggers)
+    local castTrig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_CAST)
+    TriggerAddAction(castTrig, function()
+        -- local caster
+        -- local target
+        local spellId = GetSpellAbilityId()
+        for _, trigger in ipairs(triggers) do
+            if spellId == trigger.spellId then
+                trigger.action()
+            end
+        end
+    end)
+end
+
+T.onSpellEffect = function(triggers)
     local castTrig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
     TriggerAddAction(castTrig, function()
@@ -172,7 +197,18 @@ T.onOrder = function(triggers)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_ORDER)
     TriggerAddAction(trig, function()
         for _, trigger in ipairs(triggers) do
-            trigger.action()
+            if trigger.order then
+                if GetIssuedOrderId() == String2OrderIdBJ(trigger.order) then
+                    trigger.action()
+                    dump("GetIssuedOrderId", OrderId2String(GetIssuedOrderId()), "trigger.order", trigger.order)
+                    dump("trigger.action() 1")
+                    goto continue
+                end
+            else
+                trigger.action()
+                dump("trigger.action() 2")
+            end
+            ::continue::
         end
     end)
 end
@@ -220,7 +256,8 @@ end
 
 T.methods = {
     EVENT_PLAYER_UNIT_ATTACKED = T.onAttack,
-    EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpell,
+    EVENT_PLAYER_UNIT_SPELL_CAST = T.onSpellCast,
+    EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_ISSUED_ORDER = T.onOrder,

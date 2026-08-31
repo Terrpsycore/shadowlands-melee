@@ -21,4 +21,8 @@ return {
         parent = BuffIds.innerFire,
         name = "Dedication",
     },
+    judgingGazeEvent = {
+        parent = BuffIds.coldArrowsInfo,
+        name = "Dedication",
+    },
 }

@@ -2,22 +2,7 @@ local Ids = require("data.ids")
 
 local A = require("data.ability")
 
-local db = {
-    inventory = A.inventory({}),
-    phase = A.windWalk({
-        apply = A.windWalk.apply(function(a)
-            a:setRequirements("")
-            a:setManaCost(1, 0)
-            a:setTransitionTime(1, -1)
-            a:setBackstabDamage(1, 0)
-        end),
-    }),
-    dummyEnsnare = A.ensnare({
-        apply = A.ensnare.apply(function(a)
-            a:setRequirements("")
-        end),
-    }),
-    --
+return {
     soakAnima = A.manaSteal({
         name = "Soak Anima",
         apply = A.manaSteal.apply(function(a)
@@ -216,5 +201,3 @@ local db = {
         end),
     }),
 }
-
-return db

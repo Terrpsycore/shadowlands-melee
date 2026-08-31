@@ -19,6 +19,10 @@ return function(name)
         return id
     end
 
+    function store:get(unit)
+        return not not unitToId[unit]
+    end
+
     function store:remove(unit)
         local id = unitToId[unit]
         if not id then

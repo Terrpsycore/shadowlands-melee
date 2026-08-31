@@ -11,6 +11,7 @@ local db = {}
 
 local sources = {
     "data.units.common",
+    "data.units.kyrian.heroes",
     "data.units.kyrian.units",
     "data.units.kyrian.buildings",
 }
