@@ -42,6 +42,25 @@ local db = {
             a:setAlternateFormUnit(1, Ids.units.aspirantMelee)
         end),
     }),
+    ascendAspirant = A.stormCrowForm({
+        name = "Ascend",
+        apply = A.stormCrowForm.apply(function(a)
+            a:setRequirements("")
+            a:setMorphingFlags(1, 29) -- uninterruptable,immediate take off, permanent, requires payment
+            a:setManaCost(1, 0)
+            a:setAlternateFormUnit(1, Ids.units.ascendedWarriorFlying)
+        end),
+    }),
+    ascendedWarriorFly = A.stormCrowForm({
+        name = "Ascend/Descend",
+        apply = A.stormCrowForm.apply(function(a)
+            a:setRequirements("")
+            a:setMorphingFlags(1, 1) -- uninterruptable
+            a:setManaCost(1, 0)
+            a:setNormalFormUnit(1, Ids.units.ascendedWarriorFlying)
+            a:setAlternateFormUnit(1, Ids.units.ascendedWarrior)
+        end),
+    }),
     soulbind = A.channel({
         name = "Soulbind",
         options = 1,
@@ -163,6 +182,37 @@ local db = {
             a:setDamageReduction(1, 0.6)
             a:setAttackSpeedReduction(1, 0)
             a:setMovementSpeedReduction(1, 0)
+        end),
+    }),
+    dedication = A.channel({
+        name = "Dedication",
+        apply = A.channel.apply(function(a)
+            a:setTargetType(1, 1)
+            a:setDisableOtherAbilities(1, false)
+        end),
+    }),
+    dedicationDamageBuff = A.innerFire({
+        name = "Dedication",
+        apply = A.innerFire.apply(function(a)
+            a:setRequirements("")
+            a:setDefenseIncrease(1, 0)
+            a:setDamageIncrease(1, 0.25)
+        end),
+    }),
+    dedicationAttackSpeedBuff = A.attackSpeedIncrease({
+        name = "Dedication",
+        apply = A.attackSpeedIncrease.apply(function(a)
+            a:setRequirements("")
+            a:setAttackSpeedIncrease(1, 0.25)
+        end),
+    }),
+    spiritLink = A.spiritLink({
+        name = "Spirit Link",
+        buffs = { "spiritLink" },
+        apply = A.spiritLink.apply(function(a)
+            a:setRequirements("")
+            a:setMaximumNumberofTargets(1, 2)
+            a:setDistributedDamageFactor(1, 0.5)
         end),
     }),
 }

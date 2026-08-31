@@ -18,7 +18,9 @@ src:close()
 
 local classesByParent = {}
 for className, parentId in
-    text:gmatch("function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, '([^']+)'%)")
+    text:gmatch(
+        "function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, '([^']+)'%)"
+    )
 do
     local list = classesByParent[parentId]
     if not list then
@@ -133,9 +135,7 @@ for _, row in ipairs(factoryRows) do
     factoriesFile:write(
         ("---@overload fun(data: AbilityRow<%s>?): AbilityRow<%s>\n"):format(row.className, row.className)
     )
-    factoriesFile:write(
-        ("---@field apply fun(fn: fun(a: %s)): fun(a: %s)\n\n"):format(row.className, row.className)
-    )
+    factoriesFile:write(("---@field apply fun(fn: fun(a: %s)): fun(a: %s)\n\n"):format(row.className, row.className))
     factoriesFile:write(("---@type %s\n"):format(factoryClass))
     factoriesFile:write(("A.%s = setmetatable({\n"):format(row.key))
     factoriesFile:write(("    parent = AbilityIds.%s,\n"):format(row.key))

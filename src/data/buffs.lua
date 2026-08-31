@@ -13,4 +13,12 @@ return {
         parent = BuffIds.bloodlust,
         name = "Hunted Animal",
     },
+    spiritLink = {
+        parent = BuffIds.spiritLink,
+        name = "Spirit Link",
+    },
+    dedication = {
+        parent = BuffIds.innerFire,
+        name = "Dedication",
+    },
 }

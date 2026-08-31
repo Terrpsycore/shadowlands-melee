@@ -15,6 +15,7 @@ CreateUnit(Player(0), FourCC(Ids.units.praetor), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.praetor), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.purity), 219.4, -90.4, 293.630)
 CreateUnit(Player(0), FourCC(Ids.units.larion), 219.4, -90.4, 293.630)
+CreateUnit(Player(0), FourCC(Ids.units.loyalty), 219.4, -90.4, 293.630)
 CreateUnit(Player(1), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 local e = CreateUnit(Player(1), FourCC(Ids.units.aspirant), 219.4, -90.4, 293.630)
 BlzSetUnitMaxHP(e, 1)
@@ -33,3 +34,7 @@ for i = 1, 12 do
     -- local phalynx = CreateUnit(Player(0), FourCC(Ids.units.phalynx), 219.4, -90.4, 293.630)
     -- formation.debug.onTrain(phalynx)
 end
+
+SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_GOLD, 100000)
+SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_LUMBER, 100000)
+SetPlayerState(Player(0), PLAYER_STATE_RESOURCE_FOOD_CAP, 70)

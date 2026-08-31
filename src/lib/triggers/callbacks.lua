@@ -4,7 +4,7 @@ local Storage = require("lib.storage.storage")
 local dump = require("utils.logger")
 local Type = require("utils.type")
 
-local Disable = Storage.unitFields("scan_mark", {
+local Disable = Storage.unitFields("disable", {
     rooted = "bool",
     stunned = "bool",
 })
@@ -82,6 +82,17 @@ T.onRoot = function(triggers)
     end, 1.0)
 end
 
+T.onAttack = function(triggers)
+    local trig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ATTACKED)
+    TriggerAddAction(trig, function()
+        local unitId = GetUnitTypeId(GetDyingUnit())
+        for _, trigger in ipairs(triggers) do
+            trigger.action()
+        end
+    end)
+end
+
 T.onDeath = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_DEATH)
@@ -110,6 +121,14 @@ T.onSpell = function(triggers)
     end)
 end
 
+T.onPreDamage = function(triggers)
+    Damage.register("Pre", function(info)
+        for _, trigger in ipairs(triggers) do
+            trigger.action(info)
+        end
+    end, 1.0)
+end
+
 T.onDamage = function(triggers)
     -- dump("onDamage register")
     Damage.register("On", function(info)
@@ -132,32 +151,6 @@ T.onDamage = function(triggers)
                 trigger.action(info)
             end
             ::continue::
-        end
-    end, 1.0)
-    Damage.register("After", function(info)
-        local unit = info.target
-
-        if not Disable:get(unit, "rooted") then
-            for _, v in ipairs(T.buffs.root) do
-                if UnitHasBuffBJ(unit, FourCC(v)) then
-                    T.fireEvent("ROOT", info)
-                    Disable:set(unit, "rooted", true)
-                    break
-                end
-            end
-        end
-        if not Disable:get(unit, "stunned") then
-            for _, v in ipairs(T.buffs.stun) do
-                if UnitHasBuffBJ(unit, FourCC(v)) then
-                    T.fireEvent("STUN", info)
-                    Disable:set(unit, "stunned", true)
-                    break
-                end
-            end
-        end
-
-        if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
-            Disable:clear(unit)
         end
     end, 1.0)
 end
@@ -226,12 +219,14 @@ T.onTimer = function(triggers)
 end
 
 T.methods = {
+    EVENT_PLAYER_UNIT_ATTACKED = T.onAttack,
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpell,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_ISSUED_ORDER = T.onOrder,
     EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER = T.onPointOrder,
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,
+    PRE_DAMAGE = T.onPreDamage,
     DAMAGE = T.onDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,

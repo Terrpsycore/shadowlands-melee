@@ -6,5 +6,8 @@
       "src/?.lua",
       "src/?/init.lua"
     ]
-  }
+  },
+    "diagnostics.disable": [
+        "unused-local"
+    ]
 }

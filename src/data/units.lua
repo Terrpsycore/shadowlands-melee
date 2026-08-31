@@ -33,12 +33,12 @@ local db = {
     aspirant = {
         parent = UnitIds.headhunter,
         name = "Aspirant",
-        abilities = { "soulbind", "rangeSwitch" },
+        abilities = { "soulbind", "rangeSwitch", "ascendAspirant" },
     },
     aspirantMelee = {
         parent = UnitIds.headhunter,
         name = "Aspirant",
-        abilities = { "soulbind", "rangeSwitch" },
+        abilities = { "soulbind", "rangeSwitch", "ascendAspirant" },
         apply = function(u)
             u:setAttack1AttackType("normal")
             u:setAttack1WeaponType(WeaponType.Normal) -- melee, без снаряда
@@ -46,6 +46,16 @@ local db = {
             -- u:setAttack1ProjectileArt("") -- гигиена; для Normal снаряд и так не летит
             u:setAttack1WeaponSound(WeaponSound.MetalMediumChop) -- удар, не полёт топора
         end,
+    },
+    ascendedWarrior = {
+        parent = UnitIds.knight,
+        name = "Ascended Warrior",
+        abilities = { "ascendedWarriorFly" },
+    },
+    ascendedWarriorFlying = {
+        parent = UnitIds.gryphonrider,
+        name = "Ascended Warrior",
+        abilities = { "ascendedWarriorFly" },
     },
     praetor = {
         parent = UnitIds.grunt,
@@ -69,11 +79,12 @@ local db = {
     },
     wisdom = {
         parent = UnitIds.sorceress,
-        name = "Praetor",
+        name = "Wisdom",
     },
     loyalty = {
         parent = UnitIds.spellbreaker,
-        name = "Praetor",
+        name = "Loyalty",
+        abilities = { "spiritLink" },
     },
     phalynx = {
         parent = UnitIds.whitewolf,
@@ -101,10 +112,6 @@ local db = {
             u:setManaMaximum(200)
             u:setManaInitialAmount(100)
         end,
-    },
-    ascendedWarrior = {
-        parent = UnitIds.footman,
-        name = "Praetor",
     },
     ascendedPurity = {
         parent = UnitIds.footman,

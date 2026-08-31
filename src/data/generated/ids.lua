@@ -3,6 +3,7 @@ return {
         ascendedLoyalty = "h100",
         ascendedPurity = "h101",
         ascendedWarrior = "h102",
+        ascendedWarriorFlying = "h115",
         ascendedWisdom = "h103",
         aspirant = "h104",
         aspirantMelee = "o101",
@@ -20,8 +21,13 @@ return {
         wisdom = "h113",
     },
     abilities = {
+        ascendAspirant = "A122",
+        ascendedWarriorFly = "A128",
         cannibalize = "A111",
         cannibalizeSearch = "A112",
+        dedication = "A123",
+        dedicationAttackSpeedBuff = "A124",
+        dedicationDamageBuff = "A125",
         defenceProtocol = "A100",
         defenceProtocolBuff = "A101",
         dummyEnsnare = "A120",
@@ -40,6 +46,7 @@ return {
         soakAnima = "A115",
         soulbind = "A103",
         soulbindBuff = "A104",
+        spiritLink = "A121",
         vesperBell = "A117",
     },
     items = {
@@ -47,8 +54,10 @@ return {
         dummyUnitItem = "I101",
     },
     buffs = {
+        dedication = "B104",
         defenceProtocol = "B100",
         huntedAnimal = "B102",
         soulbind = "B101",
+        spiritLink = "B103",
     },
 }

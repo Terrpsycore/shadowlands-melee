@@ -5,6 +5,7 @@ local Storage = require("lib.storage.instance")
 return function(name, fieldSchema)
     local store = Storage.new(name, { mode = "unitFields" })
     local fields = schema.buildFieldMap(fieldSchema)
+    local units = {}
 
     local function requireField(fieldName)
         local field = fields[fieldName]
@@ -16,6 +17,7 @@ return function(name, fieldSchema)
 
     function store:set(unit, fieldName, value)
         local field = requireField(fieldName)
+        units[unit] = true
         field.access.set(self:unitParent(unit), field.child, value)
     end
 
@@ -31,6 +33,13 @@ return function(name, fieldSchema)
 
     function store:clear(unit)
         htApi.flushChild(self:unitParent(unit))
+        units[unit] = nil
+    end
+
+    function store:forEach(fn)
+        for unit in pairs(units) do
+            fn(unit)
+        end
     end
 
     return store
