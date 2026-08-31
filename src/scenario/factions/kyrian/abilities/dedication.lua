@@ -18,6 +18,7 @@ local CONFIG = {
 }
 
 local function removeDedicationEffect(unit)
+    print("removeDedicationEffect")
     UnitRemoveBuffBJ(CONFIG.adBuffId, unit)
     UnitRemoveAbility(unit, CONFIG.asAbilityId)
     Storage:clear(unit)
@@ -41,6 +42,8 @@ end
 local function onAttack()
     local unit = GetAttacker()
     local target = GetTriggerUnit()
+
+    dump("Dedication onAttack", Storage:get(unit, "target"), target)
 
     if Storage:get(unit, "target") == nil then
         Storage:set(unit, "target", target)

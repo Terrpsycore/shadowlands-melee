@@ -13,7 +13,7 @@ local Storage = require("scenario.storage.autocast")
 local CONFIG = {
     -- radius = 600,
     -- cooldown = 5,
-    manacost = 10,
+    manacost = 8,
 
     unitId = FourCC(Ids.units.watcher),
 

@@ -171,6 +171,9 @@ return {
     }),
     dedication = A.channel({
         name = "Dedication",
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
         apply = A.channel.apply(function(a)
             a:setTargetType(1, 1)
             a:setDisableOtherAbilities(1, false)
@@ -178,6 +181,7 @@ return {
     }),
     dedicationDamageBuff = A.innerFire({
         name = "Dedication",
+        buffs = { "dedication" },
         apply = A.innerFire.apply(function(a)
             a:setRequirements("")
             a:setDefenseIncrease(1, 0)

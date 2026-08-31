@@ -60,6 +60,7 @@ return {
     wisdom = {
         parent = UnitIds.sorceress,
         name = "Wisdom",
+        abilities = { "dedication" },
     },
     loyalty = {
         parent = UnitIds.spellbreaker,
