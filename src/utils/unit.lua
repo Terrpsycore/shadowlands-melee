@@ -12,6 +12,10 @@ function Unit.isAlive(unit)
     return GetUnitState(unit, UNIT_STATE_LIFE) > 0
 end
 
+function Unit.isFlying(unit)
+    return IsUnitType(unit, UNIT_TYPE_FLYING)
+end
+
 function Unit.isOffCooldown(unit, abilityId)
     local remainingCd = BlzGetUnitAbilityCooldownRemaining(unit, abilityId)
     return remainingCd <= 0
