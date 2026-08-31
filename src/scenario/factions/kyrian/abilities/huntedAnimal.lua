@@ -19,13 +19,21 @@ local function activateAbility(unit)
     Dummy.applyDummyOrder(GetOwningPlayer(unit), unit, CONFIG.dummyAbilityId, "bloodlust")
 end
 
-local function onFullDisable(unit)
+local function onFullDisable(info)
+    local unit = info.target
     if Unit.isOffCooldown(unit, CONFIG.abilityId) then
         activateAbility(unit)
     end
 end
 
 return {
-    triggers = {},
+    triggers = {
+        STUN = {
+            action = onFullDisable,
+        },
+        ROOT = {
+            action = onFullDisable,
+        },
+    },
     config = CONFIG,
 }

@@ -12,6 +12,12 @@ local db = {
             a:setBackstabDamage(1, 0)
         end),
     }),
+    dummyEnsnare = A.ensnare({
+        apply = A.ensnare.apply(function(a)
+            a:setRequirements("")
+        end),
+    }),
+    --
     soakAnima = A.manaSteal({
         name = "Soak Anima",
         apply = A.manaSteal.apply(function(a)

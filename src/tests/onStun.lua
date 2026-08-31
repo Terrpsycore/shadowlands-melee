@@ -11,11 +11,13 @@ T:test("onStun callback run", function(case)
     local triggered = nil
 
     local target = case:createUnit(Ids.units.dummyTarget, nil, true)
-    Callback.registerCallback("STUN", function(info)
-        if info.target == target then
-            triggered = true
-        end
-    end)
+    Callback.registerCallback("STUN", {
+        action = function(info)
+            if info.target == target then
+                triggered = true
+            end
+        end,
+    })
     local r =
         case:applyDummyOrder(Player(PLAYER_NEUTRAL_AGGRESSIVE), target, FourCC(Ids.abilities.stormBolt), "thunderbolt")
 

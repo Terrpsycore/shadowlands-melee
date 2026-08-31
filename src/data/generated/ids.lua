@@ -24,6 +24,7 @@ return {
         cannibalizeSearch = "A112",
         defenceProtocol = "A100",
         defenceProtocolBuff = "A101",
+        dummyEnsnare = "A120",
         formation = "A108",
         formationBuffDamage = "A109",
         formationBuffSpeed = "A110",

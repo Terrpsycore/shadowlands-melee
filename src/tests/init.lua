@@ -2,6 +2,7 @@
 require("tests.defenceProtocol")
 require("tests.formation")
 require("tests.pride")
+require("tests.huntedAnimal")
 --
 require("tests.onStun")
 -- require("tests.soulbind")

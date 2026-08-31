@@ -38,8 +38,48 @@ end
 T.fireEvent = function(event, data)
     local callbacks = T.callbacks[event]
     for _, callback in pairs(callbacks) do
-        callback(data)
+        callback.action(data)
     end
+end
+
+T.onStun = function(triggers)
+    Damage.register("After", function(info)
+        local unit = info.target
+
+        if not Disable:get(unit, "stunned") then
+            for _, v in ipairs(T.buffs.stun) do
+                if UnitHasBuffBJ(unit, FourCC(v)) then
+                    T.fireEvent("STUN", info)
+                    Disable:set(unit, "stunned", true)
+                    break
+                end
+            end
+        end
+
+        if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
+            Disable:clear(unit)
+        end
+    end, 1.0)
+end
+
+T.onRoot = function(triggers)
+    Damage.register("After", function(info)
+        local unit = info.target
+
+        if not Disable:get(unit, "rooted") then
+            for _, v in ipairs(T.buffs.root) do
+                if UnitHasBuffBJ(unit, FourCC(v)) then
+                    T.fireEvent("ROOT", info)
+                    Disable:set(unit, "rooted", true)
+                    break
+                end
+            end
+        end
+
+        if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
+            Disable:clear(unit)
+        end
+    end, 1.0)
 end
 
 T.onDeath = function(triggers)
@@ -195,8 +235,8 @@ T.methods = {
     DAMAGE = T.onDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,
-    STUN = T.onStun,
-    ROOT = T.onRoot,
+    STUN = T.onStun, -- registered in onDamage - won't register without
+    ROOT = T.onRoot, -- registered in onDamage - won't register without
 }
 
 return T
