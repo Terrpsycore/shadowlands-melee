@@ -25,14 +25,14 @@ local CONFIG = {
 }
 
 local function applyEffect(caster, target)
-    dump("onOrbEffect")
+    -- dump("onOrbEffect")
     local owner = GetOwningPlayer(caster)
     Dummy.applyDummyOrder(owner, target, CONFIG.dummyMissAbilityId, "curse")
     Dummy.applyDummyOrder(owner, target, CONFIG.dummyArmorAbilityId, "acidbomb")
 end
 
 local function onManualUse()
-    dump("onManualUse")
+    -- dump("onManualUse")
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
     applyEffect(caster, target)
@@ -41,17 +41,17 @@ end
 local function onTurnOn()
     local unit = GetTriggerUnit()
     Storage:add(unit)
-    dump("onTurnOn ->", Storage:get(unit))
+    -- dump("onTurnOn ->", Storage:get(unit))
 end
 
 local function onTurnOff()
     local unit = GetTriggerUnit()
     Storage:remove(unit)
-    dump("onTurnOff ->", Storage:get(unit))
+    -- dump("onTurnOff ->", Storage:get(unit))
 end
 
 local function onDamage(info)
-    dump("onDamage ->", Storage:get(info.source), UnitHasBuffBJ(info.target, CONFIG.buffId))
+    -- dump("onDamage ->", Storage:get(info.source), UnitHasBuffBJ(info.target, CONFIG.buffId))
     if Storage:get(info.source) and UnitHasBuffBJ(info.target, CONFIG.buffId) then
         UnitRemoveBuffBJ(CONFIG.buffId, info.target)
         applyEffect(info.source, info.target)

@@ -4,6 +4,6 @@ return {
     watcher = {
         parent = UnitIds.jaina,
         name = "Watcher",
-        abilities = { "judgingGaze" },
+        abilities = { "judgingGaze", "memoryPeer" },
     },
 }

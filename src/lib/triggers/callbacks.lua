@@ -116,6 +116,19 @@ T.onDeath = function(triggers)
     end)
 end
 
+T.onSummon = function(triggers)
+    local trig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_SUMMON)
+    TriggerAddAction(trig, function()
+        local unitId = GetUnitTypeId(GetSummonedUnit())
+        for _, trigger in ipairs(triggers) do
+            if unitId == trigger.unitType then
+                trigger.action()
+            end
+        end
+    end)
+end
+
 T.onSpellCast = function(triggers)
     local castTrig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_CAST)
@@ -164,11 +177,13 @@ T.onDamage = function(triggers)
                 local types = {}
                 for _, v in ipairs(trigger.target.type) do
                     types[FourCC(v)] = true
-                    -- dump("onDamage trigger check :: ", GetUnitTypeId(info.target), FourCC(v))
                 end
-                -- dump("types[GetUnitTypeId(info.target)]", types[GetUnitTypeId(info.target)])
                 if types[GetUnitTypeId(info.target)] then
-                    -- dump("trigger.action(info)")
+                    trigger.action(info)
+                    goto continue
+                end
+            elseif trigger.source and trigger.source.type then
+                if GetUnitTypeId(info.source) == trigger.source.type then
                     trigger.action(info)
                     goto continue
                 end
@@ -200,8 +215,11 @@ T.onOrder = function(triggers)
             if trigger.order then
                 if GetIssuedOrderId() == String2OrderIdBJ(trigger.order) then
                     trigger.action()
-                    dump("GetIssuedOrderId", OrderId2String(GetIssuedOrderId()), "trigger.order", trigger.order)
-                    dump("trigger.action() 1")
+                    goto continue
+                end
+            elseif trigger.unit and trigger.unit.type then
+                if GetUnitTypeId(GetOrderedUnit()) == trigger.unit.type then
+                    trigger.action()
                     goto continue
                 end
             else
@@ -260,6 +278,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
+    EVENT_PLAYER_UNIT_SUMMON = T.onSummon,
     EVENT_PLAYER_UNIT_ISSUED_ORDER = T.onOrder,
     EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER = T.onPointOrder,
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,

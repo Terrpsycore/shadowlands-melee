@@ -1,3 +1,6 @@
+-- TODO:
+-- - refactor have/exists
+
 local htApi = require("lib.storage.ht")
 local schema = require("lib.storage.schema")
 local Storage = require("lib.storage.instance")
@@ -26,9 +29,8 @@ return function(name, fieldSchema)
         return field.access.get(self:unitParent(unit), field.child)
     end
 
-    function store:have(unit, fieldName)
-        local field = requireField(fieldName)
-        return field.access.have(self:unitParent(unit), field.child)
+    function store:have(unit)
+        return not not units[unit]
     end
 
     function store:clear(unit)

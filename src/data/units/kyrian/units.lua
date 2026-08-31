@@ -106,4 +106,15 @@ return {
         parent = UnitIds.footman,
         name = "Praetor",
     },
+    memorySpirit = {
+        parent = UnitIds.ghost,
+        name = "Burden Memory",
+        abilities = {},
+        apply = function(u)
+            u:setFoodCost(0)
+            u:setGoldBountyAwardedBase(0)
+            u:setGoldBountyAwardedNumberofDice(0)
+            u:setAttack1AttackType("normal")
+        end,
+    },
 }

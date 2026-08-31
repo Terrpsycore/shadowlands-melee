@@ -25,4 +25,8 @@ return {
         parent = BuffIds.coldArrowsInfo,
         name = "Dedication",
     },
+    memoryPeer = {
+        parent = BuffIds.slowPoisonNonStacking,
+        name = "Memory Peer",
+    },
 }

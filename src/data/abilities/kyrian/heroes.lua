@@ -31,4 +31,50 @@ return {
         end),
     }),
     -- judgingGazeDummy
+    memoryPeer = A.channel({
+        name = "Memory Peer",
+        levels = 3,
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setTargetType(level, 1)
+                a:setDisableOtherAbilities(level, false)
+            end
+        end),
+    }),
+    memoryPeerSummon = A.feralSpirit({
+        name = "",
+        levels = 3,
+        apply = A.feralSpirit.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setSummonedUnit(level, Ids.units.memorySpirit)
+                a:setNumberofSummonedUnits(level, level)
+                a:setManaCost(level, 0)
+                a:setCooldown(level, 0)
+                a:setDurationNormal(level, 60)
+                a:setDurationHero(level, 20)
+            end
+        end),
+    }),
+    -- Slow Poison Non-stacking: physical, single-target, not dispelled
+    memoryPeerSlow = A.slowPoison({
+        name = "",
+        levels = 3,
+        buffs = { "memoryPeer" },
+        apply = A.slowPoison.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setDamagePerSecond(level, 0)
+                a:setMovementSpeedFactor(level, 0.6)
+                a:setAttackSpeedFactor(level, 0.25)
+                a:setStackingType(level, StackingType.Damage)
+                a:setDurationNormal(level, 60)
+                a:setDurationHero(level, 20)
+            end
+        end),
+    }),
 }
