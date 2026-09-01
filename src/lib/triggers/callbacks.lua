@@ -109,7 +109,11 @@ T.onDeath = function(triggers)
     TriggerAddAction(trig, function()
         local unitId = GetUnitTypeId(GetDyingUnit())
         for _, trigger in ipairs(triggers) do
-            if unitId == trigger.unitType then
+            if trigger.unitType then
+                if unitId == trigger.unitType then
+                    trigger.action()
+                end
+            else
                 trigger.action()
             end
         end

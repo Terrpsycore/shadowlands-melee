@@ -77,4 +77,53 @@ return {
             end
         end),
     }),
+    oneMoreChance = A.channel({
+        name = "One More Chance",
+        levels = 3,
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        buffs = { "oneMoreChance" },
+        apply = A.channel.apply(function(a)
+            a:setHotkeyNormal("E")
+            a:setBaseOrderID(1, "innerfire")
+            a:setBaseOrderID(2, "innerfire")
+            a:setBaseOrderID(3, "innerfire")
+            a:setOrderStringUseTurnOn("innerfire")
+            a:setRequirements("")
+            a:setTargetType(1, 1)
+            a:setDisableOtherAbilities(1, false)
+            a:setHeroAbility(true)
+        end),
+    }),
+    oneMoreChanceBuffDummy = A.innerFire({
+        name = "One More Chance",
+        levels = 3,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        buffs = { "oneMoreChance" },
+        apply = A.innerFire.apply(function(a)
+            a:setRequirements("")
+            a:setHeroAbility(true)
+            a:setDefenseIncrease(1, 0)
+            a:setDamageIncrease(1, 0)
+            a:setDurationNormal(1, 5)
+            a:setDurationHero(1, 5)
+        end),
+    }),
+    oneMoreChanceCross = A.reincarnation({
+        name = "One More Chance",
+        levels = 3,
+        apply = A.reincarnation.apply(function(a)
+            a:setReincarnationDelay(1, 3)
+            a:setReincarnationDelay(2, 3)
+            a:setReincarnationDelay(3, 3)
+        end),
+    }),
+    oneMoreChanceHealDummy = A.holyLight({
+        name = "One More Chance",
+        levels = 3,
+        buffs = { "oneMoreChance" },
+        apply = A.holyLight.apply(function(a) end),
+    }),
 }

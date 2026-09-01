@@ -29,4 +29,8 @@ return {
         parent = BuffIds.slowPoisonNonStacking,
         name = "Memory Peer",
     },
+    oneMoreChance = {
+        parent = BuffIds.innerFire,
+        name = "One More Chance",
+    },
 }

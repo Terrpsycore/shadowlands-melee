@@ -15,4 +15,9 @@ return {
             a:setRequirements("")
         end),
     }),
+    reincarnationCheck = A.defend({
+        apply = A.defend.apply(function(a)
+            a:setRequirements("")
+        end),
+    }),
 }
