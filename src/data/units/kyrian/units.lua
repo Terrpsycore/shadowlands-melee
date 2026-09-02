@@ -40,7 +40,7 @@ return {
     praetor = {
         parent = UnitIds.grunt,
         name = "Praetor",
-        abilities = { "defenceProtocol", "immolation" },
+        abilities = { "defenceProtocol", "defenceProtocolToggle" },
         apply = function(u)
             u:setLumberCost(50)
             u:setUnitClassification("Mechanical")

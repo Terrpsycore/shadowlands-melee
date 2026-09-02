@@ -85,6 +85,16 @@ return {
             a:setTargetsAllowed(1, "allied,ground,mechanical,nonhero,player")
         end),
     }),
+    defenceProtocolToggle = A.immolation({
+        name = "Defence Protocol",
+        apply = A.immolation.apply(function(a)
+            a:setRequirements("")
+            a:setManaCost(1, 20)
+            a:setDamageperInterval(1, 0)
+            a:setManaDrainedperSecond(1, 0)
+            a:setBufferManaRequired(1, 0)
+        end),
+    }),
     pride = A.evasion({
         apply = A.evasion.apply(function(a)
             a:setRequirements("")

@@ -38,6 +38,7 @@ return {
         deepMeditationStunDummy = "A147",
         defenceProtocol = "A100",
         defenceProtocolBuff = "A101",
+        defenceProtocolToggle = "A156",
         dummyEnsnare = "A120",
         formation = "A108",
         formationBuffDamage = "A109",
