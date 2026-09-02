@@ -1,8 +1,23 @@
+-- TODO: fly-ground abilities
 local Ids = require("data.ids")
 
 local A = require("data.ability")
 
 return {
+    overcharge = A.channel({
+        name = "Overcharge",
+        levels = 3,
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setDisableOtherAbilities(level, false)
+                a:setFollowThroughTime(level, 0)
+            end
+        end),
+    }),
     judgingGaze = A.seaWitchFrostArrows({
         name = "Judging Gaze",
         levels = 3,
@@ -125,5 +140,38 @@ return {
         levels = 3,
         buffs = { "oneMoreChance" },
         apply = A.holyLight.apply(function(a) end),
+    }),
+    lastStand = A.channel({
+        name = "Last Stand",
+        options = 1,
+        buttonNormalX = 0,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
+            a:setRequirements("")
+            a:setFollowThroughTime(1, 5)
+            a:setHotkeyNormal("R")
+            a:setOrderStringUseTurnOn("bloodlust")
+            a:setDisableOtherAbilities(1, false)
+            a:setHeroAbility(true)
+        end),
+    }),
+    lastStandAura = A.slowAura({
+        name = "Last Stand",
+        buffs = { "lastStand" },
+        apply = A.slowAura.apply(function(a)
+            a:setRequirements("")
+            a:setMovementSpeedFactor(1, 0)
+            a:setAttackSpeedFactor(1, 0)
+            a:setAreaofEffect(1, 600)
+            a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+        end),
+    }),
+    lastStandHealDummy = A.itemAreaHealing({
+        name = "Last Stand",
+        apply = A.itemAreaHealing.apply(function(a)
+            a:setRequirements("")
+            a:setHitPointsGained(1, 200)
+            a:setAreaofEffect(1, 600)
+        end),
     }),
 }

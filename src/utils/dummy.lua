@@ -19,11 +19,13 @@ Dummy.applyDummyOrder = function(owner, target, abilityId, order, level)
 end
 
 Dummy.applyDummyAttack = function(owner, target, abilityId, level)
-    IssueTargetOrder(
-        spawnDummy(owner, target, abilityId, level, FourCC(Ids.units.dummyAttack)),
-        "attack",
-        target
-    )
+    IssueTargetOrder(spawnDummy(owner, target, abilityId, level, FourCC(Ids.units.dummyAttack)), "attack", target)
+end
+
+Dummy.applyDummyImmediateOrder = function(owner, target, abilityId, order, level)
+    local dummy = spawnDummy(owner, target, abilityId, level)
+    IssueImmediateOrder(dummy, order)
+    return dummy
 end
 
 return Dummy

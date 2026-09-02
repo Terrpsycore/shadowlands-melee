@@ -11,6 +11,7 @@ return {
         require("scenario.factions.kyrian.abilities.defenceProtocol"),
         require("scenario.factions.kyrian.abilities.formation"),
         require("scenario.factions.kyrian.abilities.judgingGaze"),
+        require("scenario.factions.kyrian.abilities.lastStand"),
         require("scenario.factions.kyrian.abilities.huntedAnimal"),
         require("scenario.factions.kyrian.abilities.memoryPeer"),
         require("scenario.factions.kyrian.abilities.oneMoreChance"),

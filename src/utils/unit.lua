@@ -81,4 +81,31 @@ function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     return resultsTable
 end
 
+function Unit.getAllyUnitsInRadius(unit, radius)
+    local resultsTable = {}
+    local x = GetUnitX(unit)
+    local y = GetUnitY(unit)
+    local owner = GetOwningPlayer(unit)
+
+    local tempGroup = CreateGroup()
+    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
+
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
+        local u = BlzGroupUnitAt(tempGroup, i)
+
+        if
+            u
+            and UnitAlive(u)
+            and IsUnitAlly(u, owner)
+            -- and IsUnitInRangeXY(u, x, y, radius)
+        then
+            table.insert(resultsTable, u)
+        end
+    end
+
+    DestroyGroup(tempGroup)
+
+    return resultsTable
+end
+
 return Unit

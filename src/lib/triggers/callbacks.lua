@@ -163,6 +163,19 @@ T.onSpellEffect = function(triggers)
     end)
 end
 
+T.onSpellEndcast = function(triggers)
+    local castTrig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_ENDCAST)
+    TriggerAddAction(castTrig, function()
+        local spellId = GetSpellAbilityId()
+        for _, trigger in ipairs(triggers) do
+            if spellId == trigger.spellId then
+                trigger.action()
+            end
+        end
+    end)
+end
+
 T.onPreDamage = function(triggers)
     Damage.register("Pre", function(info)
         for _, trigger in ipairs(triggers) do
@@ -280,6 +293,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_ATTACKED = T.onAttack,
     EVENT_PLAYER_UNIT_SPELL_CAST = T.onSpellCast,
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,
+    EVENT_PLAYER_UNIT_SPELL_ENDCAST = T.onSpellEndcast,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_SUMMON = T.onSummon,

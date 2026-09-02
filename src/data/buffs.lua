@@ -33,4 +33,8 @@ return {
         parent = BuffIds.innerFire,
         name = "One More Chance",
     },
+    lastStand = {
+        parent = BuffIds.devotionAura,
+        name = "Last Stand",
+    },
 }
