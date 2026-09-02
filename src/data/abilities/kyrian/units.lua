@@ -204,4 +204,43 @@ return {
             a:setDistributedDamageFactor(1, 0.5)
         end),
     }),
+    deepMeditation = A.channel({
+        name = "Deep Meditation",
+        options = 1,
+        buttonNormalX = 1,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
+            a:setRequirements("")
+            a:setTargetType(1, 1)
+            a:setDisableOtherAbilities(1, false)
+            a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
+        end),
+    }),
+    deepMeditationStunDummy = A.stormBolt({
+        name = "Deep Meditation",
+        buffs = { "deepMeditationStun" },
+        apply = A.stormBolt.apply(function(a)
+            a:setRequirements("")
+            a:setDamage(1, 0)
+            a:setDurationNormal(1, 8)
+            a:setDurationHero(1, 8)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+        end),
+    }),
+    deepMeditationRejuvDummy = A.rejuvenation1({
+        name = "Deep Meditation",
+        buffs = { "deepMeditation" },
+        apply = A.rejuvenation1.apply(function(a)
+            a:setRequirements("")
+            a:setManaPointsGained(1, 300)
+            a:setNoTargetRequired(1, false)
+            a:setHitPointsGained(1, 0)
+            a:setAllowWhenFull(1, 0)
+            a:setDurationNormal(1, 8)
+            -- a:setDurationHero(1, 8)
+            a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+        end),
+    }),
 }

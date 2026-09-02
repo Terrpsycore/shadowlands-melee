@@ -6,4 +6,9 @@ return {
         name = "Watcher",
         abilities = { "judgingGaze", "memoryPeer", "oneMoreChance", "lastStand" },
     },
+    forgelite = {
+        parent = UnitIds.tinker,
+        name = "Forgelite",
+        abilities = { "overcharge", "reusables", "securityLeak", "piloting" },
+    },
 }

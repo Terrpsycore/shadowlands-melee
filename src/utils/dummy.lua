@@ -24,7 +24,11 @@ end
 
 Dummy.applyDummyImmediateOrder = function(owner, target, abilityId, order, level)
     local dummy = spawnDummy(owner, target, abilityId, level)
-    IssueImmediateOrder(dummy, order)
+    if type(order) == "number" then
+        IssueImmediateOrderById(dummy, order)
+    else
+        IssueImmediateOrder(dummy, order)
+    end
     return dummy
 end
 

@@ -4,6 +4,7 @@
 -- check GetIssuedOrderId for toggle on off
 
 -- TODO:
+-- - BUG - "eat corpse" tmp ability doesn't remove after eating (only after moving)
 -- - store corpses which start being cannibalized - prevent glitches when 2 units try to eat same corpse
 -- - remove controlstore
 -- - remove cannibalism on spell finish (exists?)
@@ -130,7 +131,7 @@ local function issueUncontrollableOrders()
 end
 
 local function onAnyOrder()
-    -- dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
+    dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
     if not state[GetTriggerUnit()] then
         return
     end

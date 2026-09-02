@@ -18,6 +18,70 @@ return {
             end
         end),
     }),
+    overchargeManaDummy = A.itemAreaManaRegain({
+        name = "",
+        levels = 3,
+        apply = A.itemAreaManaRegain.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setManaPointsGained(level, level * 50)
+                a:setAreaofEffect(level, 600)
+                a:setTargetsAllowed(level, "allied,ground,mechanical,nonhero,player")
+            end
+        end),
+    }),
+    overchargeDummyDamageBuff = A.innerFire({
+        buffs = { "overchargeDamage" },
+        levels = 3,
+        apply = A.innerFire.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setDefenseIncrease(level, 0)
+                a:setDamageIncrease(level, level * 0.1)
+                a:setTargetsAllowed(level, "allied,ground,mechanical,nonhero,player")
+            end
+        end),
+    }),
+    overchargeDummySpeedBuff = A.bloodlust({
+        buffs = { "overchargeSpeed" },
+        levels = 3,
+        apply = A.bloodlust.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setTargetsAllowed(level, "allied,ground,mechanical,nonhero,player")
+            end
+        end),
+    }),
+    reusables = A.darkRitual({
+        name = "Reusables",
+        levels = 3,
+        apply = A.darkRitual.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                --
+            end
+        end),
+    }),
+    securityLeak = A.evasion({
+        name = "Reusables",
+        levels = 3,
+        apply = A.evasion.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                --
+            end
+        end),
+    }),
+    piloting = A.evasion({
+        name = "Piloting",
+        levels = 1,
+        apply = A.evasion.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                --
+            end
+        end),
+    }),
     judgingGaze = A.seaWitchFrostArrows({
         name = "Judging Gaze",
         levels = 3,

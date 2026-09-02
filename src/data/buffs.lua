@@ -37,4 +37,20 @@ return {
         parent = BuffIds.devotionAura,
         name = "Last Stand",
     },
+    deepMeditation = {
+        parent = BuffIds.rejuvenationItem,
+        name = "Deep Meditation",
+    },
+    deepMeditationStun = {
+        parent = BuffIds.stunned,
+        name = "Deep Meditation",
+    },
+    overchargeDamage = {
+        parent = BuffIds.innerFire,
+        name = "Overcharge",
+    },
+    overchargeSpeed = {
+        parent = BuffIds.bloodlust,
+        name = "Overcharge",
+    },
 }

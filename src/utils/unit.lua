@@ -1,3 +1,5 @@
+local dump = require("utils.logger")
+
 local Unit = {}
 
 --- @param a unit
@@ -14,6 +16,14 @@ end
 
 function Unit.isFlying(unit)
     return IsUnitType(unit, UNIT_TYPE_FLYING)
+end
+
+function Unit.isMech(unit)
+    return IsUnitType(unit, UNIT_TYPE_MECHANICAL)
+end
+
+function Unit.isManaFull(unit)
+    return GetUnitState(unit, UNIT_STATE_MANA) >= GetUnitState(unit, UNIT_STATE_MAX_MANA) - 0.01
 end
 
 function Unit.isOffCooldown(unit, abilityId)
@@ -81,7 +91,7 @@ function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     return resultsTable
 end
 
-function Unit.getAllyUnitsInRadius(unit, radius)
+function Unit.getAllyUnitsInRadius(unit, radius, filter)
     local resultsTable = {}
     local x = GetUnitX(unit)
     local y = GetUnitY(unit)
@@ -92,11 +102,12 @@ function Unit.getAllyUnitsInRadius(unit, radius)
 
     for i = 0, BlzGroupGetSize(tempGroup) - 1 do
         local u = BlzGroupUnitAt(tempGroup, i)
-
+        -- dump("Unit.getAllyUnitsInRadius", u, UnitAlive(u), IsUnitAlly(u, owner), filter, filter and filter(unit))
         if
             u
             and UnitAlive(u)
             and IsUnitAlly(u, owner)
+            and (filter and filter(u))
             -- and IsUnitInRangeXY(u, x, y, radius)
         then
             table.insert(resultsTable, u)
