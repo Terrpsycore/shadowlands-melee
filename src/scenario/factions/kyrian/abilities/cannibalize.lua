@@ -131,7 +131,7 @@ local function issueUncontrollableOrders()
 end
 
 local function onAnyOrder()
-    dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
+    -- dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
     if not state[GetTriggerUnit()] then
         return
     end

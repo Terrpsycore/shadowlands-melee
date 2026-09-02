@@ -19,6 +19,7 @@ return {
         require("scenario.factions.kyrian.abilities.memoryPeer"),
         require("scenario.factions.kyrian.abilities.oneMoreChance"),
         require("scenario.factions.kyrian.abilities.overcharge"),
+        require("scenario.factions.kyrian.abilities.pulseback"),
         require("scenario.factions.kyrian.abilities.reusables"),
         require("scenario.factions.kyrian.abilities.soulbind"),
         require("scenario.factions.kyrian.abilities.spiritLink"),

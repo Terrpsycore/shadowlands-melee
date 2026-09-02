@@ -95,6 +95,35 @@ return {
             a:setBufferManaRequired(1, 0)
         end),
     }),
+    pulseback = A.exhume({
+        apply = A.exhume.apply(function(a)
+            a:setRequirements("")
+            a:setMaximumNumberofCorpses(1, 0)
+            a:setCooldown(1, 0)
+        end),
+    }),
+    pulsebackToggle = A.immolation({
+        name = "Pulseback",
+        apply = A.immolation.apply(function(a)
+            a:setRequirements("")
+            a:setManaCost(1, 20)
+            a:setDamageperInterval(1, 0)
+            a:setManaDrainedperSecond(1, 0)
+            a:setBufferManaRequired(1, 0)
+        end),
+    }),
+    pulsebackPulse = A.blizzard1({
+        name = "",
+        apply = A.blizzard1.apply(function(a)
+            a:setRequirements("")
+            a:setNumberofWaves(1, 1)
+            a:setNumberofShards(1, 1)
+            a:setDamage(1, 0)
+            a:setMaximumDamageperWave(1, 0)
+            a:setDamagePerSecond(1, 0)
+            a:setTargetsAllowed(1, "enemy,ground,air,structure")
+        end),
+    }),
     pride = A.evasion({
         apply = A.evasion.apply(function(a)
             a:setRequirements("")

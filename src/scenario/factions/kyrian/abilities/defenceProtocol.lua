@@ -1,6 +1,7 @@
 local Ids = require("data.ids")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
+local dump = require("utils.logger")
 
 local MechStorage = require("scenario.storage.mech")
 
@@ -15,10 +16,6 @@ local CONFIG = {
     dummyAbilityId = FourCC(Ids.abilities.defenceProtocolBuff),
     toggleAbilityId = FourCC(Ids.abilities.defenceProtocolToggle),
 }
-
-local function applyDefenceProtocolBuff(unit)
-    Dummy.applyDummyOrder(GetOwningPlayer(unit), unit, CONFIG.dummyAbilityId, "bloodlust")
-end
 
 local function activateDefenceProtocol(event, unit)
     if IsUnitAlly(event.target, GetOwningPlayer(event.source)) then
@@ -35,7 +32,7 @@ local function activateDefenceProtocol(event, unit)
         return
     end
     BlzStartUnitAbilityCooldown(unit, CONFIG.abilityId, CONFIG.cooldown)
-    applyDefenceProtocolBuff(unit)
+    Dummy.applyDummyOrder(GetOwningPlayer(unit), unit, CONFIG.dummyAbilityId, "bloodlust")
     SetUnitState(unit, UNIT_STATE_MANA, mana - CONFIG.manacost)
 end
 
@@ -43,6 +40,7 @@ local function onTurnOn()
     local unit = GetTriggerUnit()
     local mana = GetUnitState(unit, UNIT_STATE_MANA)
     SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.manacost)
+    dump("onTurnOn defenceProtocol", mana, mana + CONFIG.manacost)
     MechStorage:set(unit, "active", true)
 end
 
@@ -65,8 +63,8 @@ end
 return {
     triggers = {
         {
-            trigger = "EVENT_PLAYER_UNIT_ISSUED_ORDER",
-            order = "immolation",
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.toggleAbilityId,
             action = onTurnOn,
         },
         {

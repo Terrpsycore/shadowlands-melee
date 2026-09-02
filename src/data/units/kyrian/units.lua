@@ -78,8 +78,9 @@ return {
         end,
     },
     goliath = {
-        parent = UnitIds.footman,
+        parent = UnitIds.knight,
         name = "Goliath",
+        abilities = { "pulseback", "pulsebackToggle" },
         apply = function(u)
             u:setUnitClassification("Mechanical")
             u:setManaMaximum(200)
