@@ -6,6 +6,8 @@ return {
         root = {},
     },
     abilities = {
+        require("scenario.common.selection"),
+        --
         require("scenario.factions.kyrian.abilities.cannibalize"),
         require("scenario.factions.kyrian.abilities.dedication"),
         require("scenario.factions.kyrian.abilities.deepMeditation"),
@@ -17,6 +19,7 @@ return {
         require("scenario.factions.kyrian.abilities.memoryPeer"),
         require("scenario.factions.kyrian.abilities.oneMoreChance"),
         require("scenario.factions.kyrian.abilities.overcharge"),
+        require("scenario.factions.kyrian.abilities.reusables"),
         require("scenario.factions.kyrian.abilities.soulbind"),
         require("scenario.factions.kyrian.abilities.spiritLink"),
         require("scenario.factions.kyrian.abilities.pride"),

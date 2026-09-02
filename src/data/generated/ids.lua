@@ -22,6 +22,7 @@ return {
         purity = "h111",
         steward = "h112",
         watcher = "E100",
+        watcherFlying = "H101",
         wisdom = "h113",
     },
     abilities = {
@@ -76,6 +77,7 @@ return {
         soulbindBuff = "A104",
         spiritLink = "A121",
         vesperBell = "A117",
+        watcherFly = "A155",
     },
     items = {
         dummyHeroItem = "I100",

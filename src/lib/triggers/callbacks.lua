@@ -281,6 +281,16 @@ T.onTrain = function(triggers)
     end)
 end
 
+T.onSelect = function(triggers)
+    local trig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_SELECTED)
+    TriggerAddAction(trig, function()
+        for _, trigger in ipairs(triggers) do
+            trigger.action()
+        end
+    end)
+end
+
 T.onTimer = function(triggers)
     for _, timer in ipairs(triggers) do
         TimerStart(CreateTimer(), timer.delta, true, function()
@@ -290,6 +300,7 @@ T.onTimer = function(triggers)
 end
 
 T.methods = {
+    EVENT_PLAYER_UNIT_SELECTED = T.onSelect,
     EVENT_PLAYER_UNIT_ATTACKED = T.onAttack,
     EVENT_PLAYER_UNIT_SPELL_CAST = T.onSpellCast,
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,

@@ -33,15 +33,16 @@ return {
         abilities = { "ascendedWarriorFly" },
     },
     ascendedWarriorFlying = {
-        parent = UnitIds.gryphonrider,
+        parent = UnitIds.dragonhawk,
         name = "Ascended Warrior",
         abilities = { "ascendedWarriorFly" },
     },
     praetor = {
         parent = UnitIds.grunt,
         name = "Praetor",
-        abilities = { "defenceProtocol" },
+        abilities = { "defenceProtocol", "immolation" },
         apply = function(u)
+            u:setLumberCost(50)
             u:setUnitClassification("Mechanical")
             u:setManaMaximum(200)
             u:setManaInitialAmount(100)

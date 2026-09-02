@@ -13,6 +13,7 @@ return {
         apply = A.channel.apply(function(a)
             a:setRequirements("")
             for level = 1, 3 do
+                a:setManaCost(level, 100)
                 a:setDisableOtherAbilities(level, false)
                 a:setFollowThroughTime(level, 0)
             end
@@ -52,13 +53,21 @@ return {
             end
         end),
     }),
-    reusables = A.darkRitual({
+    reusables = A.channel({
         name = "Reusables",
         levels = 3,
-        apply = A.darkRitual.apply(function(a)
+        options = 1,
+        buttonNormalX = 1,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
             a:setRequirements("")
             for level = 1, 3 do
-                --
+                a:setBaseOrderID(level, "taunt")
+                a:setTargetType(level, 1)
+                a:setDisableOtherAbilities(level, false)
+                a:setFollowThroughTime(level, 0)
+                a:setArtDuration(level, 0)
+                a:setTargetsAllowed(level, "allied,ground,mechanical,nonhero,player")
             end
         end),
     }),
@@ -236,6 +245,16 @@ return {
             a:setRequirements("")
             a:setHitPointsGained(1, 200)
             a:setAreaofEffect(1, 600)
+        end),
+    }),
+    watcherFly = A.stormCrowForm({
+        name = "Ascend/Descend",
+        apply = A.stormCrowForm.apply(function(a)
+            a:setRequirements("")
+            a:setMorphingFlags(1, 1) -- uninterruptable
+            a:setManaCost(1, 0)
+            a:setNormalFormUnit(1, Ids.units.watcher)
+            a:setAlternateFormUnit(1, Ids.units.watcherFlying)
         end),
     }),
 }
