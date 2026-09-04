@@ -339,4 +339,44 @@ return {
             a:setRequirements("")
         end),
     }),
+    bastionSpear = A.channel({
+        name = "Bastion Spear",
+        options = 3,
+        buttonNormalX = 1,
+        buttonNormalY = 2,
+        apply = A.channel.apply(function(a)
+            a:setRequirements("")
+            a:setTargetType(1, 2)
+            a:setAreaofEffect(1, 100)
+            a:setDisableOtherAbilities(1, false)
+            a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
+        end),
+    }),
+    bastionSpearBonusDamageDebuff = A.slow({
+        name = "Bastion Spear",
+        buffs = { "bastionSpearBonusDamage" },
+        apply = A.slow.apply(function(a)
+            a:setRequirements("")
+            a:setDurationHero(1, 5)
+            a:setDurationNormal(1, 5)
+            a:setMovementSpeedFactor(1, 0)
+            a:setAttackSpeedFactor(1, 0)
+        end),
+    }),
+    bastionSpearSlow = A.shadowStrike({
+        name = "Bastion Spear",
+        buffs = { "bastionSpearSlow" },
+        apply = A.shadowStrike.apply(function(a)
+            a:setRequirements("")
+            a:setMovementSpeedFactor(1, 1)
+            a:setInitialDamage(1, 0)
+            a:setDecayPower(1, 3)
+            a:setDecayingDamage(1, 0)
+            a:setAttackSpeedFactor(1, 0)
+            a:setDurationHero(1, 3)
+            a:setDurationNormal(1, 5)
+        end),
+    }),
 }

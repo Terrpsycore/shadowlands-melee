@@ -11,6 +11,7 @@ return {
         -- require("scenario.common.order"),
         --
         require("scenario.factions.kyrian.abilities.animaBarrage"),
+        require("scenario.factions.kyrian.abilities.bastionSpear"),
         require("scenario.factions.kyrian.abilities.cannibalize"),
         require("scenario.factions.kyrian.abilities.dedication"),
         require("scenario.factions.kyrian.abilities.deepMeditation"),

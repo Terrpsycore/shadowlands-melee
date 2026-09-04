@@ -72,7 +72,7 @@ return {
         end),
     }),
     securityLeak = A.evasion({
-        name = "Reusables",
+        name = "Security Leak",
         levels = 3,
         apply = A.evasion.apply(function(a)
             a:setRequirements("")

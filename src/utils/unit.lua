@@ -73,6 +73,25 @@ function Unit.getUnitsInRadius(unit, radius, filter)
     return resultsTable
 end
 
+function Unit.getUnitsInPointRadius(x, y, radius, filter)
+    local resultsTable = {}
+
+    local tempGroup = CreateGroup()
+    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
+
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
+        local u = BlzGroupUnitAt(tempGroup, i)
+
+        if u and UnitAlive(u) and (not filter or filter(u)) then
+            table.insert(resultsTable, u)
+        end
+    end
+
+    DestroyGroup(tempGroup)
+
+    return resultsTable
+end
+
 function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     local resultsTable = {}
     local x = GetUnitX(unit)

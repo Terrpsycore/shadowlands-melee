@@ -30,12 +30,12 @@ return {
     ascendedWarrior = {
         parent = UnitIds.knight,
         name = "Ascended Warrior",
-        abilities = { "ascendedWarriorFly" },
+        abilities = { "ascendedWarriorFly", "bastionSpear" },
     },
     ascendedWarriorFlying = {
         parent = UnitIds.dragonhawk,
         name = "Ascended Warrior",
-        abilities = { "ascendedWarriorFly" },
+        abilities = { "ascendedWarriorFly", "bastionSpear" },
     },
     praetor = {
         parent = UnitIds.grunt,
@@ -102,11 +102,23 @@ return {
         parent = UnitIds.footman,
         name = "Praetor",
     },
+    ascendedPurityFlying = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
     ascendedWisdom = {
         parent = UnitIds.footman,
         name = "Praetor",
     },
+    ascendedWisdomFlying = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
     ascendedLoyalty = {
+        parent = UnitIds.footman,
+        name = "Praetor",
+    },
+    ascendedLoyaltyFlying = {
         parent = UnitIds.footman,
         name = "Praetor",
     },

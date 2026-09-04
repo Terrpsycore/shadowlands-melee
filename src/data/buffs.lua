@@ -65,4 +65,12 @@ return {
         parent = BuffIds.innerFire,
         name = "Scan",
     },
+    bastionSpearBonusDamage = {
+        parent = BuffIds.slow,
+        name = "Bastion Spear",
+    },
+    bastionSpearSlow = {
+        parent = BuffIds.shadowStrike,
+        name = "Bastion Spear",
+    },
 }

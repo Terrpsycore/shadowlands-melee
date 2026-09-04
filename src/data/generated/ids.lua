@@ -1,10 +1,13 @@
 return {
     units = {
         ascendedLoyalty = "h100",
+        ascendedLoyaltyFlying = "h117",
         ascendedPurity = "h101",
+        ascendedPurityFlying = "h118",
         ascendedWarrior = "h102",
         ascendedWarriorFlying = "h115",
         ascendedWisdom = "h103",
+        ascendedWisdomFlying = "h119",
         aspirant = "h104",
         aspirantMelee = "o101",
         colossus = "h105",
@@ -31,6 +34,9 @@ return {
         animaBarrageToggle = "A161",
         ascendAspirant = "A122",
         ascendedWarriorFly = "A128",
+        bastionSpear = "A169",
+        bastionSpearBonusDamageDebuff = "A170",
+        bastionSpearSlow = "A171",
         cannibalize = "A111",
         cannibalizeSearch = "A112",
         dedication = "A123",
@@ -96,6 +102,8 @@ return {
         dummyUnitItem = "I101",
     },
     buffs = {
+        bastionSpearBonusDamage = "B116",
+        bastionSpearSlow = "B117",
         dedication = "B104",
         deepMeditation = "B109",
         deepMeditationStun = "B110",
