@@ -1,3 +1,4 @@
+local buffTypes = require("data.buffTypes")
 local dump = require("utils.logger")
 
 local Unit = {}
@@ -22,6 +23,15 @@ function Unit.isMech(unit)
     return IsUnitType(unit, UNIT_TYPE_MECHANICAL)
 end
 
+function Unit.hasInvisibilityBuff(unit)
+    for _, buffId in ipairs(buffTypes.invisibility) do
+        if UnitHasBuffBJ(unit, FourCC(buffId)) then
+            return true
+        end
+    end
+    return false
+end
+
 function Unit.isManaFull(unit)
     return GetUnitState(unit, UNIT_STATE_MANA) >= GetUnitState(unit, UNIT_STATE_MAX_MANA) - 0.01
 end
@@ -42,7 +52,7 @@ function Unit.isAtPoint(whichUnit, targetX, targetY, range)
     return distanceSq <= (range * range)
 end
 
-function Unit.getUnitsInRadius(unit, radius)
+function Unit.getUnitsInRadius(unit, radius, filter)
     local resultsTable = {}
     local x = GetUnitX(unit)
     local y = GetUnitY(unit)
@@ -53,7 +63,7 @@ function Unit.getUnitsInRadius(unit, radius)
     for i = 0, BlzGroupGetSize(tempGroup) - 1 do
         local u = BlzGroupUnitAt(tempGroup, i)
 
-        if u and UnitAlive(u) and u ~= unit then
+        if u and UnitAlive(u) and u ~= unit and (not filter or filter(u)) then
             table.insert(resultsTable, u)
         end
     end

@@ -9,6 +9,9 @@ return {
             u:setManaMaximum(1000)
             u:setManaInitialAmount(1000)
             u:setAttacksEnabled(0)
+            u:setAnimationCastPoint(0)
+            u:setAnimationCastBackswing(0)
+            u:setTurnRate(3)
             -- u:setModelFile("")
         end,
     },
@@ -42,5 +45,10 @@ return {
     dummyHero = {
         parent = UnitIds.paladin,
         name = "Name",
+    },
+    dummyInvis = {
+        parent = UnitIds.paladin,
+        name = "dummyInvis",
+        abilities = { "windWalk" },
     },
 }

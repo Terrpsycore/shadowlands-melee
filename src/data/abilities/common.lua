@@ -20,4 +20,10 @@ return {
             a:setRequirements("")
         end),
     }),
+    trueSight = A.trueSight1({
+        name = "",
+        apply = A.trueSight1.apply(function(a)
+            a:setRequirements("")
+        end),
+    }),
 }

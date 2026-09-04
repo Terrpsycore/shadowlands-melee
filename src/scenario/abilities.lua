@@ -1,13 +1,16 @@
 local Ids = require("data.ids")
+local buffTypes = require("data.buffTypes")
 
 return {
     buffs = {
-        stun = { Ids.buffs.stunned, Ids.buffs.stunnedPause, Ids.buffs.deepMeditationStun },
-        root = {},
+        stun = buffTypes.stun,
+        root = buffTypes.root,
     },
     abilities = {
         require("scenario.common.selection"),
+        -- require("scenario.common.order"),
         --
+        require("scenario.factions.kyrian.abilities.animaBarrage"),
         require("scenario.factions.kyrian.abilities.cannibalize"),
         require("scenario.factions.kyrian.abilities.dedication"),
         require("scenario.factions.kyrian.abilities.deepMeditation"),
@@ -21,6 +24,7 @@ return {
         require("scenario.factions.kyrian.abilities.overcharge"),
         require("scenario.factions.kyrian.abilities.pulseback"),
         require("scenario.factions.kyrian.abilities.reusables"),
+        require("scenario.factions.kyrian.abilities.scan"),
         require("scenario.factions.kyrian.abilities.soulbind"),
         require("scenario.factions.kyrian.abilities.spiritLink"),
         require("scenario.factions.kyrian.abilities.pride"),

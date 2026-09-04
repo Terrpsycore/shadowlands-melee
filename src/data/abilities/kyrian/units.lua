@@ -140,10 +140,51 @@ return {
             end
         end),
     }),
-    formation = A.evasion({
-        apply = A.evasion.apply(function(a)
+    scanToggle = A.immolation({
+        name = "Scan",
+        apply = A.immolation.apply(function(a)
             a:setRequirements("")
-            a:setChancetoEvade(1, 0)
+            a:setManaCost(1, 20)
+            a:setDamageperInterval(1, 0)
+            a:setManaDrainedperSecond(1, 1)
+            a:setBufferManaRequired(1, 0)
+        end),
+    }),
+    scanRevealArea = A.farSight({
+        name = "Scan",
+        apply = A.farSight.apply(function(a)
+            a:setRequirements("")
+            a:setAreaofEffect(1, 64)
+            a:setCastingTime(1, 0)
+            a:setMissileArt("")
+            a:setMissileSpeed(99999)
+        end),
+    }),
+    scanReveal = A.faerieFire({
+        name = "Scan Reveal",
+        buffs = { "scanReveal" },
+        apply = A.faerieFire.apply(function(a)
+            a:setRequirements("")
+            a:setDefenseReduction(1, 0)
+            a:setCastingTime(1, 0)
+            a:setMissileArt("")
+            a:setMissileSpeed(99999)
+        end),
+    }),
+    scanBuffSpeed = A.bloodlust({
+        buffs = { "scanBuffSpeed" },
+        apply = A.bloodlust.apply(function(a)
+            a:setRequirements("")
+            a:setTargetsAllowed(1, "allied,ground,mechanical,nonhero,player")
+            a:setScalingFactor(1, 0)
+        end),
+    }),
+    scanBuffDamage = A.innerFire({
+        buffs = { "scanBuffDamage" },
+        apply = A.innerFire.apply(function(a)
+            a:setRequirements("")
+            a:setDefenseIncrease(1, 0)
+            a:setDamageIncrease(1, 0.3)
         end),
     }),
     formationBuffSpeed = A.itemAuraCommand({
@@ -280,6 +321,22 @@ return {
             a:setDurationNormal(1, 8)
             -- a:setDurationHero(1, 8)
             a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+        end),
+    }),
+    animaBarrageToggle = A.immolation({
+        name = "Anima Barrage",
+        apply = A.immolation.apply(function(a)
+            a:setRequirements("")
+            a:setManaCost(1, 5)
+            a:setDamageperInterval(1, 0)
+            a:setManaDrainedperSecond(1, 0)
+            a:setBufferManaRequired(1, 5)
+        end),
+    }),
+    animaBarrage = A.rocketAttack({
+        name = "Anima Barrage",
+        apply = A.rocketAttack.apply(function(a)
+            a:setRequirements("")
         end),
     }),
 }

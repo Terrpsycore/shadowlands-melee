@@ -53,4 +53,16 @@ return {
         parent = BuffIds.bloodlust,
         name = "Overcharge",
     },
+    scanReveal = {
+        parent = BuffIds.faerieFire,
+        name = "Scan Reveal",
+    },
+    scanBuffSpeed = {
+        parent = BuffIds.bloodlust,
+        name = "Scan",
+    },
+    scanBuffDamage = {
+        parent = BuffIds.innerFire,
+        name = "Scan",
+    },
 }

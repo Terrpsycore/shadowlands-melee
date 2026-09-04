@@ -7,5 +7,7 @@
       "src/?/init.lua"
     ]
   },
-  "diagnostics.disable": []
+  "diagnostics.disable": [
+        "empty-block"
+    ]
 }

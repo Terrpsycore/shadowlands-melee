@@ -212,6 +212,34 @@ T.onDamage = function(triggers)
     end, 1.0)
 end
 
+T.afterDamage = function(triggers)
+    -- dump("onDamage register")
+    Damage.register("After", function(info)
+        -- dump("onDamage fired")
+        for _, trigger in ipairs(triggers) do
+            -- dump("onDamage trigger check ..")
+            if trigger.target and trigger.target.type then
+                local types = {}
+                for _, v in ipairs(trigger.target.type) do
+                    types[FourCC(v)] = true
+                end
+                if types[GetUnitTypeId(info.target)] then
+                    trigger.action(info)
+                    goto continue
+                end
+            elseif trigger.source and trigger.source.type then
+                if GetUnitTypeId(info.source) == trigger.source.type then
+                    trigger.action(info)
+                    goto continue
+                end
+            else
+                trigger.action(info)
+            end
+            ::continue::
+        end
+    end, 1.0)
+end
+
 T.onAnyOrder = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_ORDER)
@@ -313,6 +341,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,
     PRE_DAMAGE = T.onPreDamage,
     DAMAGE = T.onDamage,
+    AFTER_DAMAGE = T.afterDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,
     STUN = T.onStun, -- registered in onDamage - won't register without

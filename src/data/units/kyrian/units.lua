@@ -71,6 +71,7 @@ return {
     phalynx = {
         parent = UnitIds.whitewolf,
         name = "Phalynx",
+        abilities = { "scanToggle" },
         apply = function(u)
             u:setUnitClassification("Mechanical")
             u:setManaMaximum(200)
@@ -88,8 +89,9 @@ return {
         end,
     },
     colossus = {
-        parent = UnitIds.footman,
+        parent = UnitIds.archer,
         name = "Colossus",
+        abilities = { "animaBarrageToggle" },
         apply = function(u)
             u:setUnitClassification("Mechanical")
             u:setManaMaximum(200)
