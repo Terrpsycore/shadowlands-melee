@@ -3,19 +3,38 @@ local Ids = require("data.generated.ids")
 local generated = require("data.generated.ability_classes")
 
 local reserved = {
+    class = true,
     parent = true,
     apply = true,
 }
 
+local function eachLevel(data)
+    local levels = data.levels or 1
+    local level = 0
+    return function()
+        level = level + 1
+        if level <= levels then
+            return level
+        end
+    end
+end
+
 local fields = {
-    name = function(a, value)
+    --- @param a AbilityDefinition
+    name = function(a, value, data)
         a:setName(value)
+        for level in eachLevel(data) do
+            a:setTooltipNormal(level, value .. " [" .. level .. "]")
+        end
+        a:setTooltipLearn(value)
     end,
     autocastRange = function(a, value)
         a:setAutocastRange(1, value)
     end,
-    options = function(a, value)
-        a:setOptions(1, value)
+    options = function(a, value, data)
+        for level in eachLevel(data) do
+            a:setOptions(level, value)
+        end
     end,
     buttonNormalX = function(a, value)
         a:setButtonPositionNormalX(value)
@@ -35,8 +54,7 @@ local fields = {
             end
             parts[#parts + 1] = id
         end
-        local levels = data.levels or 1
-        for level = 1, levels do
+        for level in eachLevel(data) do
             a:setBuffs(level, table.concat(parts, ","))
         end
     end,
@@ -87,8 +105,8 @@ return {
         end
         return fallback
     end,
-    defaults = function(a)
-        a:setHeroAbility(false)
+    defaults = function(a, data)
+        a:setHeroAbility(data.class == "hero")
     end,
     applyFields = applyFields,
 }

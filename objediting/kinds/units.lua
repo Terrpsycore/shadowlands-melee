@@ -2,6 +2,7 @@ local Ids = require("data.generated.ids")
 
 local reserved = {
     parent = true,
+    class = true,
     apply = true,
 }
 
@@ -20,6 +21,17 @@ local fields = {
         end
         u:setNormalAbilities(table.concat(parts, ","))
     end,
+    heroAbilities = function(u, slugs)
+        local parts = {}
+        for _, slug in ipairs(slugs) do
+            local id = Ids.abilities[slug]
+            if not id then
+                error("unknown ability '" .. slug .. "'")
+            end
+            parts[#parts + 1] = id
+        end
+        u:setHeroAbilities(table.concat(parts, ","))
+    end,
 }
 
 local function applyFields(u, data, slug)
@@ -34,11 +46,18 @@ local function applyFields(u, data, slug)
     end
 end
 
+local classMapping = {
+    unit = UnitDefinition,
+    hero = HeroDefinition,
+    building = BuildingDefinition,
+}
+
 return {
     resolve = function()
         return {
-            new = function(id, parent)
-                return UnitDefinition:new(id, parent)
+            new = function(id, parent, class)
+                local Definition = classMapping[class] or UnitDefinition
+                return Definition:new(id, parent)
             end,
         }
     end,

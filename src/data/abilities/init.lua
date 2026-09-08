@@ -1,23 +1,27 @@
-local function merge(into, part, source)
+local function merge(into, part, source, class)
     for slug, row in pairs(part) do
         if into[slug] then
-            error("duplicate ability slug '" .. slug .. "' in " .. source)
+            error("duplicate unit slug '" .. slug .. "' in " .. source)
         end
         into[slug] = row
+
+        if not row.class then
+            row.class = class
+        end
     end
 end
 
 local db = {}
 
 local sources = {
-    "data.abilities.common",
-    "data.abilities.kyrian.common",
-    "data.abilities.kyrian.units",
-    "data.abilities.kyrian.heroes",
+    { class = "unit", path = "data.abilities.common" },
+    { class = "unit", path = "data.abilities.kyrian.common" },
+    { class = "hero", path = "data.abilities.kyrian.heroes" },
+    { class = "unit", path = "data.abilities.kyrian.units" },
 }
 
-for _, path in ipairs(sources) do
-    merge(db, require(path), path)
+for _, source in ipairs(sources) do
+    merge(db, require(source.path), source.path, source.class)
 end
 
 return db

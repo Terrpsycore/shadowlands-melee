@@ -278,7 +278,7 @@ end
 
 T.onTargetOrder = function(triggers)
     local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
     TriggerAddAction(trig, function()
         for _, trigger in ipairs(triggers) do
             trigger.action()
@@ -288,7 +288,7 @@ end
 
 T.onPointOrder = function(triggers)
     local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
+    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     TriggerAddAction(trig, function()
         for _, trigger in ipairs(triggers) do
             trigger.action()

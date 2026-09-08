@@ -19,7 +19,7 @@ src:close()
 local classesByParent = {}
 for className, parentId in
     text:gmatch(
-        "function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, '([^']+)'%)"
+        'function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, "([^"]+)"%)'
     )
 do
     local list = classesByParent[parentId]

@@ -71,13 +71,47 @@ return {
             end
         end),
     }),
-    securityLeak = A.evasion({
+    securityLeak = A.tinkererDemolishLevel0({
         name = "Security Leak",
         levels = 3,
-        apply = A.evasion.apply(function(a)
+        apply = A.tinkererDemolishLevel0.apply(function(a)
             a:setRequirements("")
             for level = 1, 3 do
-                --
+                a:setDamageMultiplierBuildings(level, 0.2 + ((level - 1) * 0.1))
+            end
+        end),
+    }),
+    securityLeakBlockRepair = A.liquidFire({
+        name = "Security Leak",
+        levels = 3,
+        apply = A.liquidFire.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setExtraDamagePerSecond(level, 0)
+                a:setAttackSpeedReduction(level, 0.5)
+                a:setRepairsAllowed(level, false)
+                a:setDurationNormal(level, 1 + level * 0.8)
+            end
+        end),
+    }),
+    securityLeakBlockAttackDummy = A.cloudofFog({ -- cloudoffog
+        name = "Security Leak",
+        levels = 1,
+        apply = A.cloudofFog.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setAreaofEffect(level, 1)
+                a:setDurationNormal(level, 1 + level * 0.8)
+            end
+        end),
+    }),
+    securityLeakBlockProduction = A.freezingBreath({
+        name = "Security Leak",
+        levels = 1,
+        apply = A.freezingBreath.apply(function(a)
+            a:setRequirements("")
+            for level = 1, 3 do
+                a:setDurationNormal(level, 1 + level * 0.8)
             end
         end),
     }),

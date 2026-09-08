@@ -55,11 +55,17 @@ def build(project_path: Path):
 
 
 def bake(project_path: Path):
-    subprocess.run(
-        [LUA, "objediting/gen_ids.lua"],
-        cwd=project_path,
-        check=True,
-    )
+    try:
+        subprocess.run(
+            [LUA, "objediting/gen_ids.lua"],
+            cwd=project_path,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print("Error occurred!")
+        print("Return code:", e.returncode)
+        print("Error output:", e.stderr)
+        print("Standard output:", e.stdout)
 
 
 def run(project_path: Path):

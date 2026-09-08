@@ -4719,6 +4719,16 @@ A.flakCannon = setmetatable({
     apply = identity,
 }, callMt)
 
+---@class AbilityFactoryFreezingBreath
+---@overload fun(data: AbilityRow<AbilityDefinitionFreezingBreath>?): AbilityRow<AbilityDefinitionFreezingBreath>
+---@field apply fun(fn: fun(a: AbilityDefinitionFreezingBreath)): fun(a: AbilityDefinitionFreezingBreath)
+
+---@type AbilityFactoryFreezingBreath
+A.freezingBreath = setmetatable({
+    parent = AbilityIds.freezingBreath,
+    apply = identity,
+}, callMt)
+
 ---@class AbilityFactoryFragShards
 ---@overload fun(data: AbilityRow<AbilityDefinitionFragShards>?): AbilityRow<AbilityDefinitionFragShards>
 ---@field apply fun(fn: fun(a: AbilityDefinitionFragShards)): fun(a: AbilityDefinitionFragShards)

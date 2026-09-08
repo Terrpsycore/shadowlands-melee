@@ -469,6 +469,7 @@ return {
     Afbt = AbilityDefinitionFeedbackArcaneTower,
     Afla = AbilityDefinitionFlare,
     Aflk = AbilityDefinitionFlakCannon,
+    Afrz = AbilityDefinitionFreezingBreath,
     Afsh = AbilityDefinitionFragShards,
     Afzy = AbilityDefinitionFrenzy,
     Agho = AbilityDefinitionGhost,

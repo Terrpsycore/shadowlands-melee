@@ -73,4 +73,16 @@ return {
         parent = BuffIds.shadowStrike,
         name = "Bastion Spear",
     },
+    securityLeakRepair = {
+        parent = BuffIds.liquidFire,
+        name = "Security Leak",
+    },
+    securityLeakAttack = {
+        parent = BuffIds.cloud,
+        name = "Security Leak",
+    },
+    securityLeakProduction = {
+        parent = BuffIds.freezingBreath,
+        name = "Security Leak",
+    },
 }

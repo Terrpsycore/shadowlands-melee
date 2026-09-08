@@ -4,12 +4,14 @@ return {
     watcher = {
         parent = UnitIds.jaina,
         name = "Watcher",
-        abilities = { "watcherFly", "judgingGaze", "memoryPeer", "oneMoreChance", "lastStand" },
+        abilities = { "watcherFly" },
+        heroAbilities = { "judgingGaze", "memoryPeer", "oneMoreChance", "lastStand" },
     },
     watcherFlying = {
         parent = UnitIds.jaina,
         name = "Watcher",
-        abilities = { "watcherFly", "judgingGaze", "memoryPeer", "oneMoreChance", "lastStand" },
+        abilities = { "watcherFly" },
+        heroAbilities = { "judgingGaze", "memoryPeer", "oneMoreChance", "lastStand" },
         apply = function(u)
             u:setMovementType(MovementType.Fly)
             u:setMovementHeight(240)
@@ -18,6 +20,6 @@ return {
     forgelite = {
         parent = UnitIds.tinker,
         name = "Forgelite",
-        abilities = { "overcharge", "reusables", "securityLeak", "piloting" },
+        heroAbilities = { "overcharge", "reusables", "securityLeak", "piloting" },
     },
 }
