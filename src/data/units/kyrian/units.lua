@@ -17,10 +17,7 @@ return {
             "animaStorage",
             "shop",
         },
-        apply = function(u)
-            u:setManaMaximum(200)
-            u:setManaInitialAmount(100)
-        end,
+        mana = { max = 200, initial = 100 },
     },
     aspirant = {
         parent = UnitIds.headhunter,
@@ -31,13 +28,12 @@ return {
         parent = UnitIds.headhunter,
         name = "Aspirant",
         abilities = { "soulbind", "rangeSwitch", "ascendAspirant" },
-        apply = function(u)
-            u:setAttack1AttackType("normal")
-            u:setAttack1WeaponType(WeaponType.Normal) -- melee, без снаряда
-            u:setAttack1Range(90) -- 90–128; иначе «мили» с дистанции 450
-            -- u:setAttack1ProjectileArt("") -- гигиена; для Normal снаряд и так не летит
-            u:setAttack1WeaponSound(WeaponSound.MetalMediumChop) -- удар, не полёт топора
-        end,
+        attack1 = {
+            type = "normal",
+            weapon = WeaponType.Normal, -- melee, без снаряда
+            range = 90, -- 90–128; иначе «мили» с дистанции 450
+            weaponSound = WeaponSound.MetalMediumChop, -- удар, не полёт топора
+        },
     },
     ascendedWarrior = {
         parent = UnitIds.knight,
@@ -53,12 +49,9 @@ return {
         parent = UnitIds.grunt,
         name = "Praetor",
         abilities = { "defenceProtocol", "defenceProtocolToggle" },
-        apply = function(u)
-            u:setLumberCost(50)
-            u:setUnitClassification("Mechanical")
-            u:setManaMaximum(200)
-            u:setManaInitialAmount(100)
-        end,
+        classification = "Mechanical",
+        mana = { max = 200, initial = 100 },
+        cost = { lumber = 50 },
     },
     larion = {
         parent = UnitIds.druidoftheclaw,
@@ -84,31 +77,22 @@ return {
         parent = UnitIds.whitewolf,
         name = "Phalynx",
         abilities = { "scanToggle" },
-        apply = function(u)
-            u:setUnitClassification("Mechanical")
-            u:setManaMaximum(200)
-            u:setManaInitialAmount(100)
-        end,
+        classification = "Mechanical",
+        mana = { max = 200, initial = 100 },
     },
     goliath = {
         parent = UnitIds.knight,
         name = "Goliath",
         abilities = { "pulseback", "pulsebackToggle" },
-        apply = function(u)
-            u:setUnitClassification("Mechanical")
-            u:setManaMaximum(200)
-            u:setManaInitialAmount(100)
-        end,
+        classification = "Mechanical",
+        mana = { max = 200, initial = 100 },
     },
     colossus = {
         parent = UnitIds.archer,
         name = "Colossus",
         abilities = { "animaBarrageToggle" },
-        apply = function(u)
-            u:setUnitClassification("Mechanical")
-            u:setManaMaximum(200)
-            u:setManaInitialAmount(100)
-        end,
+        classification = "Mechanical",
+        mana = { max = 200, initial = 100 },
     },
     ascendedPurity = {
         parent = UnitIds.footman,
@@ -138,11 +122,11 @@ return {
         parent = UnitIds.ghost,
         name = "Burden Memory",
         abilities = {},
+        cost = { food = 0 },
+        attack1 = { type = "normal" },
         apply = function(u)
-            u:setFoodCost(0)
             u:setGoldBountyAwardedBase(0)
             u:setGoldBountyAwardedNumberofDice(0)
-            u:setAttack1AttackType("normal")
         end,
     },
 }

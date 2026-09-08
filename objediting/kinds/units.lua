@@ -18,6 +18,16 @@ local function resolveUnitIdList(slugs)
     return table.concat(parts, ",")
 end
 
+local function applySubfields(obj, value, mapping, context)
+    for key, val in pairs(value) do
+        local handler = mapping[key]
+        if not handler then
+            error("unknown " .. context .. " field '" .. key .. "'")
+        end
+        handler(obj, val)
+    end
+end
+
 local fields = {
     name = function(u, value)
         u:setName(value)
@@ -52,6 +62,57 @@ local fields = {
     end,
     revivesDeadHeros = function(u, flag)
         u:setRevivesDeadHeros(flag)
+    end,
+    classification = function(u, value)
+        u:setUnitClassification(value)
+    end,
+    mana = function(u, value)
+        applySubfields(u, value, {
+            max = function(u, v)
+                u:setManaMaximum(v)
+            end,
+            initial = function(u, v)
+                u:setManaInitialAmount(v)
+            end,
+        }, "mana")
+    end,
+    cost = function(u, value)
+        applySubfields(u, value, {
+            gold = function(u, v)
+                u:setGoldCost(v)
+            end,
+            lumber = function(u, v)
+                u:setLumberCost(v)
+            end,
+            food = function(u, v)
+                u:setFoodCost(v)
+            end,
+        }, "cost")
+    end,
+    attack1 = function(u, value)
+        applySubfields(u, value, {
+            type = function(u, v)
+                u:setAttack1AttackType(v)
+            end,
+            weapon = function(u, v)
+                u:setAttack1WeaponType(v)
+            end,
+            range = function(u, v)
+                u:setAttack1Range(v)
+            end,
+            cooldown = function(u, v)
+                u:setAttack1CooldownTime(v)
+            end,
+            damageBase = function(u, v)
+                u:setAttack1DamageBase(v)
+            end,
+            weaponSound = function(u, v)
+                u:setAttack1WeaponSound(v)
+            end,
+            targetsAllowed = function(u, v)
+                u:setAttack1TargetsAllowed(v)
+            end,
+        }, "attack1")
     end,
 }
 

@@ -19,21 +19,23 @@ return {
         parent = UnitIds.footman,
         name = "Dummy AA",
         --abilities = { "locust" },
+        attack1 = {
+            weapon = WeaponType.Instant,
+            range = 99999,
+            cooldown = 0.1,
+            damageBase = 1,
+            type = AttackType.Chaos,
+            targetsAllowed = "ground,air,structure,enemy,neutral,vulnerable",
+        },
         apply = function(u)
             --u:setModelFile("")
             u:setSpeedBase(0)
             u:setCollisionSize(0)
             --u:setAttacksEnabled(1)
-            u:setAttack1WeaponType(WeaponType.Instant)
-            u:setAttack1Range(99999)
-            u:setAttack1CooldownTime(0.1)
             --u:setAttack1AnimationDamagePoint(0)
             --u:setAttack1AnimationBackswingPoint(0)
-            u:setAttack1DamageBase(1)
             --u:setAttack1DamageNumberofDice(0)
             --u:setAttack1DamageSidesperDie(1)
-            u:setAttack1AttackType(AttackType.Chaos)
-            u:setAttack1TargetsAllowed("ground,air,structure,enemy,neutral,vulnerable")
         end,
     },
     dummyTarget = {
