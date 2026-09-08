@@ -1,7 +1,7 @@
 /.build
-/.cursor
 /.def
 /tmp
 /dev
 
 map.w3x/
+docs/design

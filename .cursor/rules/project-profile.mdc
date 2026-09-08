@@ -1,0 +1,48 @@
+---
+description: Контекст этого репозитория (заполнено агентом)
+alwaysApply: true
+---
+
+# shadowlands-melee
+
+## Назначение
+Custom melee-карта Warcraft III в тематике Shadowlands: фракции, юниты, способности и storage-механики. Геймдизайн — в `docs/design/factions/`.
+
+## Стек
+- Lua 5.3 (runtime WC3 + standalone для objediting)
+- warcraft-vscode (сборка карты, `warcraft.json`)
+- Python 3 — `build/wc3.py`
+- LuaLS — `.luarc.json`
+- Community libs: Influa, DamageEngine, IngameConsole (`src/lib/community/`)
+
+## Структура
+- `src/main.lua` — точка входа карты
+- `src/lib/` — инфраструктура (triggers, storage, blizzard, community)
+- `src/data/` — декларативные данные (units, abilities, items, buffs)
+- `src/data/generated/` — **автоген** ID и meta (не править вручную)
+- `src/scenario/` — runtime-логика способностей, storage, код по фракциям (`factions/`)
+- `src/tests/` — in-game автотесты
+- `objediting/` — генераторы и kinds для object editing
+- `map.w3x/` — ассеты карты
+- `docs/design/` — геймдизайн по фракциям
+- `build/wc3.py` — bake → build → run
+
+## Ветки / окружения
+- `dev` и `master` — пока без разделения ролей (solo-разработка)
+- CI отсутствует; локальная сборка через warcraft-vscode + `build/wc3.py`
+- Пути к WC3/Lua в `build/wc3.py` — машинозависимые (Windows)
+
+## Не трогать без согласования
+- `src/data/generated/*` — только через `lua objediting/gen_ids.lua`
+- `src/lib/community/types/assets/*` — vanilla ID-референсы
+- `map.w3x/` — бинарные/редакторские ассеты карты
+- `.build/`, `tmp/`, `dev/` — артефакты сборки
+
+## Тесты
+In-game: модули в `src/tests/` подключаются из `src/tests/init.lua`. Запуск — пользователь в WC3 после `build`/`run`. Отдельного CLI/test-runner нет.
+
+## Заметки
+- Solo-разработка; правила Cursor в git (`.cursor/rules/`)
+- Триггеры способностей — array-формат (см. `.cursor/rules/abilities.mdc`)
+- Новые objediting-классы — сразу LuaLS-аннотации (см. `.cursor/rules/objediting-classes.mdc`)
+- `docs/design` в `.gitignore` — дизайн-доки только локально

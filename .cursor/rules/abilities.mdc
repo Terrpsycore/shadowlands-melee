@@ -1,0 +1,13 @@
+---
+description: Gotcha при генерации WC3-способностей
+globs: src/data/abilities/**/*.lua,src/data/units/**/*.lua,src/scenario/factions/**/abilities/**/*.lua,src/tests/**/*.lua
+alwaysApply: false
+---
+
+# Способности — gotcha
+
+- **Triggers:** все события только в array-формате (как в `abilties/defenceProtocol.lua`.
+
+- **Data IDs:** slug — доменное имя (`pulsebackToggle`), не vanilla (`immolation`)
+
+- Команды после разработки: `lua objediting/gen_ids.lua` и тесты не запускать (их запускает пользователь, напоминать не надо)
