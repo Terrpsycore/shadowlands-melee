@@ -1,10 +1,22 @@
-local Ids = require("data.generated.ids")
+local Ids = require("data.ids")
 
 local reserved = {
     parent = true,
     class = true,
     apply = true,
 }
+
+local function resolveUnitIdList(slugs)
+    local parts = {}
+    for _, slug in ipairs(slugs) do
+        local id = Ids.units[slug]
+        if not id then
+            error("unknown unit '" .. slug .. "'")
+        end
+        parts[#parts + 1] = id
+    end
+    return table.concat(parts, ",")
+end
 
 local fields = {
     name = function(u, value)
@@ -31,6 +43,15 @@ local fields = {
             parts[#parts + 1] = id
         end
         u:setHeroAbilities(table.concat(parts, ","))
+    end,
+    structuresBuilt = function(u, slugs)
+        u:setStructuresBuilt(resolveUnitIdList(slugs))
+    end,
+    unitsTrained = function(u, slugs)
+        u:setUnitsTrained(resolveUnitIdList(slugs))
+    end,
+    revivesDeadHeros = function(u, flag)
+        u:setRevivesDeadHeros(flag)
     end,
 }
 

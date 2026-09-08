@@ -24,7 +24,14 @@ local fields = {
     name = function(a, value, data)
         a:setName(value)
         for level in eachLevel(data) do
-            a:setTooltipNormal(level, value .. " [" .. level .. "]")
+            local isHero = data.class == "hero"
+            local suffix
+            if isHero then
+                suffix = " [" .. level .. "]"
+            else
+                suffix = ""
+            end
+            a:setTooltipNormal(level, value .. suffix)
         end
         a:setTooltipLearn(value)
     end,

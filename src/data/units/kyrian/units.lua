@@ -4,7 +4,19 @@ return {
     steward = {
         parent = UnitIds.peasant,
         name = "Steward",
-        abilities = { "soakAnima", "fuseAnima" },
+        abilities = { "humanBuild", "repairHuman", "harvest", "soakAnima", "fuseAnima" },
+        structuresBuilt = {
+            "main",
+            "animaExtractor",
+            "trainingGrounds",
+            "workshop",
+            "templeOfVirtue",
+            "crestOfAscension",
+            "herosRest",
+            "templeWard",
+            "animaStorage",
+            "shop",
+        },
         apply = function(u)
             u:setManaMaximum(200)
             u:setManaInitialAmount(100)

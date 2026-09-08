@@ -22,4 +22,8 @@ return {
         name = "Forgelite",
         heroAbilities = { "overcharge", "reusables", "securityLeak", "piloting" },
     },
+    bearer = {
+        parent = UnitIds.paladin,
+        name = "Bearer",
+    },
 }
