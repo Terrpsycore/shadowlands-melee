@@ -1,20 +1,29 @@
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local CONFIG = {
-    radius = 100,
-    -- cooldown = 5,
-
-    -- buffId = FourCC(Ids.buffs.defenceProtocol),
-    ability = FourCC(Ids.abilities.bastionSpear),
-    dummyBonusDamageDebuffAbility = FourCC(Ids.abilities.bastionSpearBonusDamageDebuff),
-    dummySlowAbility = FourCC(Ids.abilities.bastionSpearSlow),
-    dummyBonusDamageDebuff = FourCC(Ids.buffs.bastionSpearBonusDamage),
-    -- requiredUpgradeId = nil,
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.bastionSpear,
+            slow = Ids.abilities.bastionSpearSlow,
+            bonusDamage = Ids.abilities.bastionSpearBonusDamageDebuff,
+        },
+        buffs = {
+            bonusDamage = Ids.buffs.bastionSpearBonusDamage,
+        },
+        units = {
+            source = { Ids.units.ascendedWarrior, Ids.units.ascendedWarriorFlying },
+        },
+    },
+    balance = {
+        radius = 100,
+        bonusDamage = 25,
+    },
+})
 
 local function onSpell()
     local caster = GetTriggerUnit()
@@ -22,35 +31,35 @@ local function onSpell()
     local targetX = GetSpellTargetX()
     local targetY = GetSpellTargetY()
 
-    local targets = Unit.getUnitsInPointRadius(targetX, targetY, CONFIG.radius, function(u)
+    local targets = Unit.getUnitsInPointRadius(targetX, targetY, CONFIG.balance.radius, function(u)
         return IsUnitAliveBJ(u) and IsUnitEnemy(u, owner)
     end)
 
     for _, target in ipairs(targets) do
-        Dummy.applyDummyOrder(owner, target, CONFIG.dummySlowAbility, "shadowstrike")
-        Dummy.applyDummyOrder(owner, target, CONFIG.dummyBonusDamageDebuffAbility, "slow")
+        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.slow, "shadowstrike")
+        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.bonusDamage, "slow")
     end
 end
 
 local function onDamage(info)
-    dump("onDamage bastionSpear", UnitHasBuffBJ(info.target, CONFIG.dummyBonusDamageDebuff))
-    if not UnitHasBuffBJ(info.target, CONFIG.dummyBonusDamageDebuff) then
+    dump("onDamage bastionSpear", UnitHasBuffBJ(info.target, CONFIG.refs.buffs.bonusDamage))
+    if not UnitHasBuffBJ(info.target, CONFIG.refs.buffs.bonusDamage) then
         return
     end
-    UnitRemoveBuffBJ(CONFIG.dummyBonusDamageDebuffAbility, info.target)
-    info.damage = info.damage + 25
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.bonusDamage, info.target)
+    info.damage = info.damage + CONFIG.balance.bonusDamage
 end
 
 return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.ability,
+            spellId = CONFIG.refs.abilities.main,
             action = onSpell,
         },
         {
             trigger = "DAMAGE",
-            filter = { source = { FourCC(Ids.units.ascendedWarrior), FourCC(Ids.units.ascendedWarriorFlying) } },
+            filter = { source = CONFIG.refs.units.source },
             action = onDamage,
         },
     },

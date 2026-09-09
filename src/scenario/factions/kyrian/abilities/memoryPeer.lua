@@ -5,19 +5,29 @@
 -- - test 2+ ability level
 
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
 local Storage = require("scenario.storage.memoryPeer")
 
-local CONFIG = {
-    abilityId = FourCC(Ids.abilities.memoryPeer),
-    summonAbilityId = FourCC(Ids.abilities.memoryPeerSummon),
-    slowAbilityId = FourCC(Ids.abilities.memoryPeerSlow),
-    buffId = FourCC(Ids.buffs.memoryPeer),
-    spiritTypeId = FourCC(Ids.units.memorySpirit),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.memoryPeer,
+            summon = Ids.abilities.memoryPeerSummon,
+            slow = Ids.abilities.memoryPeerSlow,
+        },
+        buffs = {
+            main = Ids.buffs.memoryPeer,
+        },
+        units = {
+            spirit = Ids.units.memorySpirit,
+            dummyAttack = Ids.units.dummyAttack,
+        },
+    },
+})
 
 local isOrdering = false
 
@@ -39,14 +49,12 @@ local function onSpell()
     end
 
     local owner = GetOwningPlayer(caster)
-    local level = GetUnitAbilityLevel(caster, CONFIG.abilityId)
-    Dummy.applyDummyAttack(owner, target, CONFIG.slowAbilityId, level)
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    Dummy.applyDummyAttack(owner, target, CONFIG.refs.abilities.slow, level)
 
-    local dummy = Dummy.create(owner, target, CONFIG.summonAbilityId, level)
+    local dummy = Dummy.create(owner, target, CONFIG.refs.abilities.summon, level)
     Storage:set(dummy, "unit", target)
-    -- dump("dummy 2 - ", dummy)
     IssueImmediateOrder(dummy, "spiritwolf")
-    -- dump("r - ", r)
 end
 
 local function onSummoned()
@@ -65,7 +73,7 @@ local function onOrder()
         return
     end
     local unit = GetTriggerUnit()
-    if GetUnitTypeId(unit) ~= CONFIG.spiritTypeId then
+    if GetUnitTypeId(unit) ~= AbilityConfig.unitId(CONFIG.refs.units.spirit) then
         return
     end
     if not Storage:have(unit) then
@@ -84,7 +92,7 @@ local function onDeath()
     local left = Storage:get(target, "summonsLeast") - 1
     Storage:set(target, "summonsLeast", left)
     if left <= 0 then
-        UnitRemoveBuffBJ(CONFIG.buffId, target)
+        UnitRemoveBuffBJ(CONFIG.refs.buffs.main, target)
         Storage:clear(target)
     end
 end
@@ -97,12 +105,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSpell,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SUMMON",
-            filter = { target = CONFIG.spiritTypeId },
+            filter = { target = CONFIG.refs.units.spirit },
             action = onSummoned,
         },
         {
@@ -111,12 +119,12 @@ return {
         },
         {
             trigger = "DAMAGE",
-            filter = { source = FourCC(Ids.units.dummyAttack) },
+            filter = { source = CONFIG.refs.units.dummyAttack },
             action = afterDummyAttack,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = CONFIG.spiritTypeId },
+            filter = { target = CONFIG.refs.units.spirit },
             action = onDeath,
         },
     },

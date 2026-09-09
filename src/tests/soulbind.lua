@@ -9,8 +9,8 @@ local Soulbind = require("scenario.factions.kyrian.abilities.soulbind")
 
 local cfg = Soulbind.config
 local BUFF = FourCC(Ids.buffs.soulbind)
-local TICKS_PER_LEVEL = cfg.secondsForLevel / cfg.tickSeconds
-local OUT_OF_RANGE_OFFSET = cfg.radius + 500
+local TICKS_PER_LEVEL = cfg.balance.secondsForLevel / cfg.balance.tickSeconds
+local OUT_OF_RANGE_OFFSET = cfg.balance.radius + 500
 
 local function report(ok, name)
     DisplayTextToPlayer(GetLocalPlayer(), 0, 0, (ok and "OK: " or "ERROR: ") .. name)

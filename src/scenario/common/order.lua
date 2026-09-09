@@ -1,6 +1,10 @@
+local AbilityConfig = require("scenario.config")
 local dump = require("utils.logger")
 
-local CONFIG = {}
+local CONFIG = AbilityConfig.compile({
+    refs = {},
+    balance = {},
+})
 
 local function onAnyOrder()
     dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))

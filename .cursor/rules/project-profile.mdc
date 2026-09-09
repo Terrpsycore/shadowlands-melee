@@ -19,7 +19,7 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 - `src/main.lua` — точка входа карты
 - `src/lib/` — инфраструктура (triggers, storage, blizzard, community)
 - `src/data/` — декларативные данные (units, abilities, items, buffs)
-- `src/data/generated/` — **автоген** ID и meta (не править вручную)
+- `src/data/generated/` — **автоген** ID, slug aliases (`id_slugs.lua`) и meta (не править вручную)
 - `src/scenario/` — runtime-логика способностей, storage, код по фракциям (`factions/`)
 - `src/tests/` — in-game автотесты
 - `objediting/` — генераторы и kinds для object editing

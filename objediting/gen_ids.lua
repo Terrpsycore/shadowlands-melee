@@ -49,6 +49,14 @@ local SOURCES = {
 }
 
 local OUT_PATH = "src/data/generated/ids.lua"
+local SLUGS_OUT_PATH = "src/data/generated/id_slugs.lua"
+
+local SLUG_ALIAS_BY_DOMAIN = {
+    abilities = "AbilitySlug",
+    units = "UnitSlug",
+    buffs = "BuffSlug",
+    items = "ItemSlug",
+}
 
 ---@class Generator
 ---@field usedIds table<string, boolean>
@@ -70,10 +78,12 @@ function Generator:generateIds()
     local sortedIds = self:sortIds(database)
 
     self:write(database, sortedIds)
+    self:writeSlugAliases(sortedIds)
 
     local genItemMeta = dofile("objediting/gen_item_meta.lua")
     genItemMeta(database.items, require("data.items"))
     dofile("objediting/gen_ability_kinds.lua")
+    -- dofile("objediting/gen_asset_catalogs.lua")
 end
 
 --- @return AssignedMap
@@ -140,6 +150,24 @@ function Generator:write(database, sortedIds)
         f:write("    },\n")
     end
     f:write("}\n")
+    f:close()
+end
+
+--- @param sortedIds DomainSlugs
+function Generator:writeSlugAliases(sortedIds)
+    local f = assert(io.open(SLUGS_OUT_PATH, "w"))
+    f:write("---@meta\n\n")
+    for _, source in ipairs(SOURCES) do
+        local domain = source.domain
+        local aliasName = SLUG_ALIAS_BY_DOMAIN[domain]
+        f:write(("---@alias %s\n"):format(aliasName))
+        local slugs = sortedIds[domain]
+        for i, slug in ipairs(slugs) do
+            local prefix = i == 1 and "---" or "---|"
+            f:write(('%s "%s"\n'):format(prefix, slug))
+        end
+        f:write("\n")
+    end
     f:close()
 end
 

@@ -1,28 +1,38 @@
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local dump = require("utils.logger")
 local Unit = require("utils.unit")
 
 local MechStorage = require("scenario.storage.mech")
 
-local CONFIG = {
-    manacost = 5,
-    radius = 500,
-    toggleAbility = FourCC(Ids.abilities.animaBarrageToggle),
-    effectAbility = FourCC(Ids.abilities.animaBarrage),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.animaBarrage,
+            toggle = Ids.abilities.animaBarrageToggle,
+        },
+        units = {
+            carrier = Ids.units.colossus,
+        },
+    },
+    balance = {
+        manacost = 5,
+        radius = 500,
+    },
+})
 
 local function onTurnOn()
     local unit = GetTriggerUnit()
     local mana = GetUnitState(unit, UNIT_STATE_MANA)
-    SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.manacost)
-    UnitAddAbility(unit, CONFIG.effectAbility)
+    SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.balance.manacost)
+    UnitAddAbility(unit, CONFIG.refs.abilities.main)
     MechStorage:set(unit, "active", true)
 end
 
 local function onTurnOff()
     local unit = GetTriggerUnit()
-    UnitRemoveAbility(unit, CONFIG.effectAbility)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.main)
     MechStorage:set(GetTriggerUnit(), "active", false)
 end
 
@@ -37,16 +47,16 @@ end
 
 local function onAttack()
     local unit = GetAttacker()
-    local nearbyAirUnits = Unit.getUnitsInRadius(unit, CONFIG.radius, function(u)
+    local nearbyAirUnits = Unit.getUnitsInRadius(unit, CONFIG.balance.radius, function(u)
         return Unit.isFlying(u) and not IsUnitAlly(u, GetOwningPlayer(unit))
     end)
     dump("onAttack animaBarrage", MechStorage:get(unit, "active"))
     if MechStorage:get(unit, "active") and #nearbyAirUnits > 0 then
         local mana = GetUnitState(unit, UNIT_STATE_MANA)
-        if mana < CONFIG.manacost then
+        if mana < CONFIG.balance.manacost then
             return
         end
-        SetUnitState(unit, UNIT_STATE_MANA, mana - CONFIG.manacost)
+        SetUnitState(unit, UNIT_STATE_MANA, mana - CONFIG.balance.manacost)
     end
 end
 
@@ -54,7 +64,7 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.toggleAbility,
+            spellId = CONFIG.refs.abilities.toggle,
             action = onTurnOn,
         },
         {
@@ -64,17 +74,17 @@ return {
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
-            filter = { target = FourCC(Ids.units.colossus) },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onTrain,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_ATTACKED",
-            filter = { source = FourCC(Ids.units.colossus) },
+            filter = { source = CONFIG.refs.units.carrier },
             action = onAttack,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = FourCC(Ids.units.colossus) },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onDeath,
         },
     },

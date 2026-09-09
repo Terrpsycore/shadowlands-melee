@@ -2,41 +2,46 @@
 -- - single buff effect
 -- - check at least 1 mana overflow to overcharge buff
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local CONFIG = {
-    radius = 600,
-
-    abilityId = FourCC(Ids.abilities.overcharge),
-    dummyDamageBuffAbilityId = FourCC(Ids.abilities.overchargeDummyDamageBuff),
-    dummySpeedBuffAbilityId = FourCC(Ids.abilities.overchargeDummySpeedBuff),
-    dummyManaAbilityId = FourCC(Ids.abilities.overchargeManaDummy),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.overcharge,
+            damageBuff = Ids.abilities.overchargeDummyDamageBuff,
+            speedBuff = Ids.abilities.overchargeDummySpeedBuff,
+            manaDummy = Ids.abilities.overchargeManaDummy,
+        },
+    },
+    balance = {
+        radius = 600,
+        manaOrder = 852277,
+    },
+})
 
 local onSpell = function()
-    -- dump("overcharge onSpell")
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
-    local level = GetUnitAbilityLevel(caster, CONFIG.abilityId)
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
-    Dummy.applyDummyImmediateOrder(owner, caster, CONFIG.dummyManaAbilityId, 852277, level)
+    Dummy.applyDummyImmediateOrder(owner, caster, CONFIG.refs.abilities.manaDummy, CONFIG.balance.manaOrder, level)
 end
 
 local onDummySpell = function()
-    -- dump("overcharge onSpell")
     local dummy = GetTriggerUnit()
     local owner = GetOwningPlayer(dummy)
-    local level = GetUnitAbilityLevel(dummy, CONFIG.dummyManaAbilityId)
+    local level = GetUnitAbilityLevel(dummy, CONFIG.refs.abilities.manaDummy)
 
     Timed.call(0.1, function()
-        for _, unit in ipairs(Unit.getAllyUnitsInRadius(dummy, CONFIG.radius, Unit.isMech)) do
+        for _, unit in ipairs(Unit.getAllyUnitsInRadius(dummy, CONFIG.balance.radius, Unit.isMech)) do
             dump("overcharge timed", Unit.isManaFull(unit))
             if Unit.isManaFull(unit) then
-                Dummy.applyDummyOrder(owner, unit, CONFIG.dummyDamageBuffAbilityId, "innerfire", level)
-                Dummy.applyDummyOrder(owner, unit, CONFIG.dummySpeedBuffAbilityId, "bloodlust", level)
+                Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.damageBuff, "innerfire", level)
+                Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.speedBuff, "bloodlust", level)
             end
         end
     end)
@@ -46,12 +51,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSpell,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.dummyManaAbilityId,
+            spellId = CONFIG.refs.abilities.manaDummy,
             action = onDummySpell,
         },
     },

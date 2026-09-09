@@ -224,6 +224,7 @@ return {
     }),
     lastStand = A.channelNoTarget({
         name = "Last Stand",
+        levels = 1,
         button = { 0, 2 },
         hotkey = "R",
         apply = A.channelNoTarget.apply(function(a)

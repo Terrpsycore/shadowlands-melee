@@ -1,20 +1,29 @@
 -- todo: handle revive, etc.
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
 local PrideStore = require("scenario.storage.pride")
 
-local CONFIG = {
-    radius = 600,
-    tickSeconds = 1,
-    maxStacks = 5,
-    adPerStack = 4,
-    abilityId = FourCC(Ids.abilities.pride),
-    damageAbilityId = FourCC(Ids.abilities.prideDamage),
-    dummyTypeId = FourCC(Ids.units.dummy),
-    carrierTypeId = FourCC(Ids.units.larion),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.pride,
+            damage = Ids.abilities.prideDamage,
+        },
+        units = {
+            dummy = Ids.units.dummy,
+            carrier = Ids.units.larion,
+        },
+    },
+    balance = {
+        radius = 600,
+        tickSeconds = 1,
+        maxStacks = 5,
+        adPerStack = 4,
+    },
+})
 
 local function isCountable(host, other)
     if other == host then
@@ -23,7 +32,7 @@ local function isCountable(host, other)
     if not Unit.isAlive(other) then
         return false
     end
-    if GetUnitTypeId(other) == CONFIG.dummyTypeId then
+    if GetUnitTypeId(other) == AbilityConfig.unitId(CONFIG.refs.units.dummy) then
         return false
     end
     if IsUnitType(other, UNIT_TYPE_STRUCTURE) then
@@ -36,7 +45,7 @@ end
 local function countStacks(unit)
     local selfHp = BlzGetUnitMaxHP(unit)
     local raw = 0
-    for _, other in ipairs(Unit.getUnitsInRadius(unit, CONFIG.radius)) do
+    for _, other in ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.radius)) do
         if isCountable(unit, other) then
             if BlzGetUnitMaxHP(other) < selfHp then
                 raw = raw + 1
@@ -52,23 +61,22 @@ local function effectiveStacks(raw)
     if raw <= 0 then
         return 0
     end
-    if raw > CONFIG.maxStacks then
-        return CONFIG.maxStacks
+    if raw > CONFIG.balance.maxStacks then
+        return CONFIG.balance.maxStacks
     end
     return raw
 end
 
 local function applyPride(unit)
     local stacks = effectiveStacks(countStacks(unit))
-    UnitRemoveAbility(unit, CONFIG.damageAbilityId)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.damage)
     if stacks > 0 then
-        UnitAddAbility(unit, CONFIG.damageAbilityId)
-        SetUnitAbilityLevel(unit, CONFIG.damageAbilityId, stacks)
+        UnitAddAbility(unit, CONFIG.refs.abilities.damage)
+        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.damage, stacks)
     end
 end
 
 local function onTick()
-    -- dump("onTick pride")
     PrideStore:forEach(function(unit)
         if Unit.isAlive(unit) then
             applyPride(unit)
@@ -94,17 +102,17 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
-            filter = { target = CONFIG.carrierTypeId },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onTrain,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = CONFIG.carrierTypeId },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onDeath,
         },
         {
             trigger = "TIMER",
-            delta = CONFIG.tickSeconds,
+            delta = CONFIG.balance.tickSeconds,
             action = onTick,
         },
     },

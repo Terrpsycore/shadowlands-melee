@@ -2,6 +2,7 @@
 -- - handle stale pending targets
 -- - adjust scan radius to current vision radius (can be affected by Fae debuff)
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local dump = require("utils.logger")
 local Unit = require("utils.unit")
@@ -9,32 +10,44 @@ local Unit = require("utils.unit")
 local MechStorage = require("scenario.storage.mech")
 local PhalynxStorage = require("scenario.storage.phalynx")
 
-local CONFIG = {
-    toggleManacost = 10,
-    scanToggleAbility = FourCC(Ids.abilities.scanToggle),
-    scanRevealTrueSightAbility = FourCC(Ids.abilities.trueSight),
-    scanRevealAreaAbility = FourCC(Ids.abilities.scanRevealArea),
-    scanRevealAbility = FourCC(Ids.abilities.scanReveal),
-    scanRevealBuff = FourCC(Ids.buffs.scanReveal),
-    scanBuffSpeedAbility = FourCC(Ids.abilities.scanBuffSpeed),
-    scanSpeedBuff = FourCC(Ids.buffs.scanBuffSpeed),
-    scanBuffDamageAbility = FourCC(Ids.abilities.scanBuffDamage),
-    scanDamageBuff = FourCC(Ids.buffs.scanBuffDamage),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            toggle = Ids.abilities.scanToggle,
+            trueSight = Ids.abilities.trueSight,
+            revealArea = Ids.abilities.scanRevealArea,
+            reveal = Ids.abilities.scanReveal,
+            speedBuff = Ids.abilities.scanBuffSpeed,
+            damageBuff = Ids.abilities.scanBuffDamage,
+        },
+        buffs = {
+            reveal = Ids.buffs.scanReveal,
+            speed = Ids.buffs.scanBuffSpeed,
+            damage = Ids.buffs.scanBuffDamage,
+        },
+        units = {
+            carrier = Ids.units.phalynx,
+        },
+    },
+    balance = {
+        toggleManacost = 10,
+        scanRadius = 600,
+    },
+})
 
 local pendingReveal = {} -- target: unit, processed, queuedAt
 
 local function onTurnOn()
     local unit = GetTriggerUnit()
     local mana = GetUnitState(unit, UNIT_STATE_MANA)
-    SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.toggleManacost)
-    UnitAddAbility(unit, CONFIG.scanRevealTrueSightAbility)
+    SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.balance.toggleManacost)
+    UnitAddAbility(unit, CONFIG.refs.abilities.trueSight)
     MechStorage:set(unit, "active", true)
 end
 
 local function onTurnOff()
     local unit = GetTriggerUnit()
-    UnitRemoveAbility(unit, CONFIG.scanRevealTrueSightAbility)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.trueSight)
     MechStorage:set(GetTriggerUnit(), "active", false)
 end
 
@@ -44,11 +57,11 @@ local function onDeath()
 end
 
 local function afterDamage(info)
-    if UnitHasBuffBJ(info.source, CONFIG.scanSpeedBuff) then
-        UnitRemoveBuffBJ(CONFIG.scanSpeedBuff, info.source)
+    if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.speed) then
+        UnitRemoveBuffBJ(CONFIG.refs.buffs.speed, info.source)
     end
-    if UnitHasBuffBJ(info.source, CONFIG.scanDamageBuff) then
-        UnitRemoveBuffBJ(CONFIG.scanDamageBuff, info.source)
+    if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.damage) then
+        UnitRemoveBuffBJ(CONFIG.refs.buffs.damage, info.source)
     end
 end
 
@@ -58,20 +71,18 @@ local function onReveal()
 end
 
 local function onTimerScan()
-    -- dump("onTimerScan tick")
     PhalynxStorage:forEach(function(unit)
         local owner = GetOwningPlayer(unit)
         if not MechStorage:get(unit, "active") then
             return
         end
-        -- dump("onTimerScan triggered")
         for _, u in
-            ipairs(Unit.getUnitsInRadius(unit, 600, function(t)
+            ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.scanRadius, function(t)
                 return (
                     not pendingReveal[t]
                     and not IsUnitAlly(t, owner)
                     and Unit.hasInvisibilityBuff(t)
-                    and not UnitHasBuffBJ(t, CONFIG.scanRevealBuff)
+                    and not UnitHasBuffBJ(t, CONFIG.refs.buffs.reveal)
                 )
             end))
         do
@@ -81,7 +92,6 @@ local function onTimerScan()
 end
 
 local function onTimerReveal()
-    -- dump("onTimerScan tick")
     for target, data in pairs(pendingReveal) do
         if data.processed then
             goto continue
@@ -89,15 +99,11 @@ local function onTimerReveal()
 
         pendingReveal[target].processed = true
 
-        -- dump("onTimerReveal", target)
-
         local unit = data.unit
         local owner = GetOwningPlayer(unit)
-        -- dump("onTimerScan triggered")
-        Dummy.applyDummyOrder(owner, target, CONFIG.scanRevealAbility, "faeriefire")
-        Dummy.applyDummyOrder(owner, unit, CONFIG.scanBuffSpeedAbility, "bloodlust")
-        Dummy.applyDummyOrder(owner, unit, CONFIG.scanBuffDamageAbility, "innerfire")
-        -- ? phase + ? issue order attack
+        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.reveal, "faeriefire")
+        Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.speedBuff, "bloodlust")
+        Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.damageBuff, "innerfire")
 
         ::continue::
     end
@@ -107,12 +113,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.scanToggleAbility,
+            spellId = CONFIG.refs.abilities.toggle,
             action = onTurnOn,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.scanRevealAbility,
+            spellId = CONFIG.refs.abilities.reveal,
             action = onReveal,
         },
         {
@@ -122,12 +128,12 @@ return {
         },
         {
             trigger = "AFTER_DAMAGE",
-            filter = { source = FourCC(Ids.units.phalynx) },
+            filter = { source = CONFIG.refs.units.carrier },
             action = afterDamage,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = FourCC(Ids.units.phalynx) },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onDeath,
         },
         {

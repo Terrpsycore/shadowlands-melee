@@ -20,8 +20,8 @@ T:test("Buff is applied, cooldown starts", function(case)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(UnitHasBuffBJ(praetor, config.buffId), "praetor doesn't receive buff")
-        assert(BlzGetUnitAbilityCooldown(praetor, config.abilityId, 1) <= 0, "cooldown didn't start")
+        assert(UnitHasBuffBJ(praetor, config.refs.buffs.main), "praetor doesn't receive buff")
+        assert(BlzGetUnitAbilityCooldown(praetor, config.refs.abilities.main, 1) <= 0, "cooldown didn't start")
     end)
 end)
 
@@ -34,7 +34,7 @@ T:test("Buff is applied", function(case)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(UnitHasBuffBJ(praetor, config.buffId), "praetor doesn't receive buff")
+        assert(UnitHasBuffBJ(praetor, config.refs.buffs.main), "praetor doesn't receive buff")
     end)
 end)
 
@@ -46,7 +46,7 @@ T:test("Buff not applied when toggle off", function(case)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(not UnitHasBuffBJ(praetor, config.buffId), "buff applied without toggle")
+        assert(not UnitHasBuffBJ(praetor, config.refs.buffs.main), "buff applied without toggle")
     end)
 end)
 
@@ -59,7 +59,7 @@ T:test("Buff not applied to wrong target type", function(case)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(not UnitHasBuffBJ(praetor, config.buffId), "wrong triggering unit")
+        assert(not UnitHasBuffBJ(praetor, config.refs.buffs.main), "wrong triggering unit")
     end)
 end)
 
@@ -69,11 +69,11 @@ T:test("Cooldown affects", function(case)
     local attacker = case:createUnit(Ids.units.aspirant, Player(PLAYER_NEUTRAL_AGGRESSIVE))
 
     enableToggle(praetor)
-    BlzStartUnitAbilityCooldown(praetor, config.abilityId, config.cooldown)
+    BlzStartUnitAbilityCooldown(praetor, config.refs.abilities.main, config.balance.cooldown)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(not UnitHasBuffBJ(praetor, config.buffId), "ability works when on cooldown")
+        assert(not UnitHasBuffBJ(praetor, config.refs.buffs.main), "ability works when on cooldown")
     end)
 end)
 
@@ -83,11 +83,11 @@ T:test("Passive skipped when mana below cost", function(case)
     local attacker = case:createUnit(Ids.units.aspirant, Player(PLAYER_NEUTRAL_AGGRESSIVE))
 
     enableToggle(praetor)
-    SetUnitState(praetor, UNIT_STATE_MANA, config.manacost - 1)
+    SetUnitState(praetor, UNIT_STATE_MANA, config.balance.manacost - 1)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(not UnitHasBuffBJ(praetor, config.buffId), "buff applied without enough mana")
+        assert(not UnitHasBuffBJ(praetor, config.refs.buffs.main), "buff applied without enough mana")
         assert(MechStorage:get(praetor, "active"), "toggle turned off when passive skipped")
     end)
 end)
@@ -102,9 +102,9 @@ T:test("Passive spends mana", function(case)
     IssueTargetOrder(attacker, "attack", target)
 
     return case:delay(2, function()
-        assert(UnitHasBuffBJ(praetor, config.buffId), "praetor doesn't receive buff")
+        assert(UnitHasBuffBJ(praetor, config.refs.buffs.main), "praetor doesn't receive buff")
         assert(
-            GetUnitState(praetor, UNIT_STATE_MANA) <= manaBefore - config.manacost + 0.01,
+            GetUnitState(praetor, UNIT_STATE_MANA) <= manaBefore - config.balance.manacost + 0.01,
             "mana not spent on passive trigger"
         )
     end)
@@ -113,7 +113,7 @@ end)
 T:test("Toggle not enabled without enough mana", function(case)
     local praetor = case:createUnit(Ids.units.praetor)
 
-    SetUnitState(praetor, UNIT_STATE_MANA, config.manacost - 1)
+    SetUnitState(praetor, UNIT_STATE_MANA, config.balance.manacost - 1)
     enableToggle(praetor)
 
     return case:delay(0.5, function()

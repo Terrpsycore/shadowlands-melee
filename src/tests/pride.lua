@@ -37,7 +37,7 @@ local function testPrideLevelCalc(case, unitsData, expectedResult)
     local populated = populate(case, unitsData.bigger, unitsData.equal, unitsData.lesser)
     pride.debug.applyPride(populated.unit)
 
-    local prideLevel = GetUnitAbilityLevel(populated.unit, pride.config.damageAbilityId)
+    local prideLevel = GetUnitAbilityLevel(populated.unit, pride.config.refs.abilities.damage)
     assert(
         prideLevel == expectedResult,
         "Invalid prideLevel value = " .. prideLevel .. ", expected = " .. expectedResult

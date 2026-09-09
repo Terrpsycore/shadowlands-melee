@@ -1,33 +1,42 @@
 -- todo: handle revive, etc.
 -- - visual buff
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
 local PhalynxStore = require("scenario.storage.phalynx")
 
-local CONFIG = {
-    radius = 600,
-    tickSeconds = 1,
-    buffSpeedId = FourCC(Ids.abilities.formationBuffSpeed),
-    buffDamageId = FourCC(Ids.abilities.formationBuffDamage),
-    dummyTypeId = FourCC(Ids.units.dummy),
-    carrierTypeId = FourCC(Ids.units.phalynx),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            speedBuff = Ids.abilities.formationBuffSpeed,
+            damageBuff = Ids.abilities.formationBuffDamage,
+        },
+        units = {
+            dummy = Ids.units.dummy,
+            carrier = Ids.units.phalynx,
+        },
+    },
+    balance = {
+        radius = 600,
+        tickSeconds = 1,
+        linkRadius = 275,
+    },
+})
 
 local function setBuff(unit, status)
-    -- dump("formation setBuff", status)
     if status then
-        UnitAddAbility(unit, CONFIG.buffDamageId)
-        UnitAddAbility(unit, CONFIG.buffSpeedId)
+        UnitAddAbility(unit, CONFIG.refs.abilities.damageBuff)
+        UnitAddAbility(unit, CONFIG.refs.abilities.speedBuff)
     else
-        UnitRemoveAbility(unit, CONFIG.buffDamageId)
-        UnitRemoveAbility(unit, CONFIG.buffSpeedId)
+        UnitRemoveAbility(unit, CONFIG.refs.abilities.damageBuff)
+        UnitRemoveAbility(unit, CONFIG.refs.abilities.speedBuff)
     end
 end
 
-local RADIUS = 275
-local RADIUS2 = RADIUS * RADIUS
+local linkRadius2 = CONFIG.balance.linkRadius * CONFIG.balance.linkRadius
+
 local function dist2(a, b)
     local dx = GetUnitX(a) - GetUnitX(b)
     local dy = GetUnitY(a) - GetUnitY(b)
@@ -35,8 +44,6 @@ local function dist2(a, b)
 end
 
 local function onTick()
-    -- dump("onTick formation")
-    -- 1) короткий список: только живые из стора
     local units = {}
     PhalynxStore:forEach(function(unit)
         if Unit.isAlive(unit) then
@@ -50,10 +57,9 @@ local function onTick()
         adj[i] = {}
         deg[i] = 0
     end
-    -- 2) пары: A-B, A-C, B-C, ...
     for i = 1, n do
         for j = i + 1, n do
-            if dist2(units[i], units[j]) <= RADIUS2 then
+            if dist2(units[i], units[j]) <= linkRadius2 then
                 adj[i][#adj[i] + 1] = j
                 adj[j][#adj[j] + 1] = i
                 deg[i] = deg[i] + 1
@@ -61,7 +67,6 @@ local function onTick()
             end
         end
     end
-    -- 3) зерно: у кого >= 2 соседей, затем «прилипание» по очереди
     local inChain = {}
     local queue = {}
     for i = 1, n do
@@ -70,7 +75,6 @@ local function onTick()
             queue[#queue + 1] = i
         end
     end
-    -- dump("onTick formation #queue", #queue)
     local head = 1
     while head <= #queue do
         local i = queue[head]
@@ -82,7 +86,6 @@ local function onTick()
             end
         end
     end
-    -- 4) бонус только если состояние изменилось
     for i = 1, n do
         setBuff(units[i], inChain[i] == true)
     end
@@ -106,17 +109,17 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
-            filter = { target = CONFIG.carrierTypeId },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onTrain,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = CONFIG.carrierTypeId },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onDeath,
         },
         {
             trigger = "TIMER",
-            delta = CONFIG.tickSeconds,
+            delta = CONFIG.balance.tickSeconds,
             action = onTick,
         },
     },

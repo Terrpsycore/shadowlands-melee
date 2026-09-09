@@ -15,58 +15,55 @@
 -- - autocheck object ability levels VS script ability levels
 
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
 local SoulbindStorage = require("scenario.storage.soulbind")
 
-local CONFIG = {
-    radius = 600,
-
-    tickSeconds = 1,
-
-    secondsForLevel = 5,
-    maxLevel = 3,
-
-    soulbindAbilityId = FourCC(Ids.abilities.soulbind),
-
-    levels = {
-        [1] = {
-            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
-            buffId = FourCC(Ids.buffs.soulbind),
-            requiredUpgradeId = nil,
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.soulbind,
+            buff = Ids.abilities.soulbindBuff,
         },
-        [2] = {
-            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
-            buffId = FourCC(Ids.buffs.soulbind),
-            requiredUpgradeId = nil,
+        buffs = {
+            main = Ids.buffs.soulbind,
         },
-        [3] = {
-            dummyAbilityId = FourCC(Ids.abilities.soulbindBuff),
-            buffId = FourCC(Ids.buffs.soulbind),
-            requiredUpgradeId = nil,
+        units = {
+            dummy = Ids.units.dummy,
+            carriers = { Ids.units.aspirant, Ids.units.larion },
         },
     },
-    validUnitTypes = Type.toSet({
-        FourCC(Ids.units.aspirant),
-        FourCC(Ids.units.larion),
-    }),
-}
+    balance = {
+        radius = 600,
+        tickSeconds = 1,
+        secondsForLevel = 5,
+        maxLevel = 3,
+        levels = {
+            [1] = { requiredUpgradeId = nil },
+            [2] = { requiredUpgradeId = nil },
+            [3] = { requiredUpgradeId = nil },
+        },
+    },
+})
+
+local carrierTypeSet = Type.toSet(CONFIG.refs.units.carriers)
 
 local function hasCharge(unit)
-    return GetUnitAbilityLevel(unit, CONFIG.soulbindAbilityId) > 0
+    return GetUnitAbilityLevel(unit, CONFIG.refs.abilities.main) > 0
 end
 
 local function consumeCharge(caster, target)
-    local r1 = UnitRemoveAbility(caster, CONFIG.soulbindAbilityId)
-    local r2 = UnitRemoveAbility(target, CONFIG.soulbindAbilityId)
+    local r1 = UnitRemoveAbility(caster, CONFIG.refs.abilities.main)
+    local r2 = UnitRemoveAbility(target, CONFIG.refs.abilities.main)
     return r1 and r2
 end
 
 local function isSoulbindCarrier(unit)
     local t = GetUnitTypeId(unit)
-    return Type.toBool(CONFIG.validUnitTypes[t])
+    return Type.toBool(carrierTypeSet[t])
 end
 
 local function isValidTarget(caster, target)
@@ -89,19 +86,21 @@ local function isValidTarget(caster, target)
 end
 
 local function removeSoulbindBuff(unit)
-    for _, soulbindLevel in ipairs(CONFIG.levels) do
-        UnitRemoveBuffBJ(soulbindLevel.buffId, unit)
-    end
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
 end
 
 local function applySoulbindBuff(unit, level)
-    local dummy = CreateUnit(GetOwningPlayer(unit), FourCC(Ids.units.dummy), GetUnitX(unit), GetUnitY(unit), 270)
-    local abilityId = CONFIG.levels[level].dummyAbilityId
+    local dummy = CreateUnit(
+        GetOwningPlayer(unit),
+        AbilityConfig.unitId(CONFIG.refs.units.dummy),
+        GetUnitX(unit),
+        GetUnitY(unit),
+        270
+    )
+    local abilityId = CONFIG.refs.abilities.buff
     UnitApplyTimedLife(dummy, FourCC("BTLF"), 10.00)
     UnitAddAbility(dummy, abilityId)
     SetUnitAbilityLevel(dummy, abilityId, level)
-    -- dump("dummy ability level", GetUnitAbilityLevel(dummy, abilityId))
-    -- removeSoulbindBuff(unit)
     IssueTargetOrder(dummy, "innerfire", unit)
 end
 
@@ -131,8 +130,7 @@ local function tickBond(bondId)
         return
     end
 
-    local inRange = Unit.distance(u1, u2) <= CONFIG.radius
-    -- dump("tick", { active = bond.active, level = bond.level, inRange = inRange })
+    local inRange = Unit.distance(u1, u2) <= CONFIG.balance.radius
     if not inRange then
         if bond.active then
             bond.active = false
@@ -142,12 +140,11 @@ local function tickBond(bondId)
         return
     end
 
-    -- update progress & level
     local leveledUp
-    if bond.level < CONFIG.maxLevel then
-        local progressDelta = (CONFIG.tickSeconds / CONFIG.secondsForLevel)
+    if bond.level < CONFIG.balance.maxLevel then
+        local progressDelta = (CONFIG.balance.tickSeconds / CONFIG.balance.secondsForLevel)
         bond.progress = math.min(bond.progress + progressDelta, 1)
-        if bond.progress >= 1 and bond.level < CONFIG.maxLevel then
+        if bond.progress >= 1 and bond.level < CONFIG.balance.maxLevel then
             bond.progress = 0
             bond.level = bond.level + 1
             leveledUp = true
@@ -168,16 +165,14 @@ end
 
 return {
     triggers = {
-        -- EVENT_UNIT_RESEARCH_FINISH
-        -- +? unit dies
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.soulbindAbilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSoulbindCast,
         },
         {
             trigger = "TIMER",
-            delta = CONFIG.tickSeconds,
+            delta = CONFIG.balance.tickSeconds,
             action = updateSoulbindStatus,
         },
     },

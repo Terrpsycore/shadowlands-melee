@@ -1,11 +1,18 @@
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Unit = require("utils.unit")
 
-local CONFIG = {
-    abilityId = FourCC(Ids.abilities.reusables),
-    manaPercent = { 0.33, 0.66, 1.0 },
-    costPercent = { 0.25, 0.5, 0.75 },
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.reusables,
+        },
+    },
+    balance = {
+        manaPercent = { 0.33, 0.66, 1.0 },
+        costPercent = { 0.25, 0.5, 0.75 },
+    },
+})
 
 local function getHealthPercent(unit)
     local maxLife = GetUnitState(unit, UNIT_STATE_MAX_LIFE)
@@ -42,9 +49,9 @@ local function onCast()
         return
     end
 
-    local level = GetUnitAbilityLevel(caster, CONFIG.abilityId)
-    local manaPercent = CONFIG.manaPercent[level]
-    local costPercent = CONFIG.costPercent[level]
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    local manaPercent = CONFIG.balance.manaPercent[level]
+    local costPercent = CONFIG.balance.costPercent[level]
     local healthPercent = getHealthPercent(target)
 
     local targetMana = GetUnitState(target, UNIT_STATE_MANA)
@@ -76,7 +83,7 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_CAST",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onCast,
         },
     },

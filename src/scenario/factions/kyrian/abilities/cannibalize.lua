@@ -11,6 +11,7 @@
 -- - bug: glitch if unit just died - trigger provoked, but cannibalism doesn't work
 
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local removeControl = require("scenario.common.control")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
@@ -18,18 +19,20 @@ local dump = require("utils.logger")
 
 local ControlStore = require("scenario.storage.control")
 
-local CONFIG = {
-    radius = 600,
-    cooldown = 5,
-
-    buffId = FourCC(Ids.buffs.defenceProtocol),
-
-    abilityId = FourCC(Ids.abilities.cannibalizeSearch),
-    phaseAbilityId = FourCC(Ids.abilities.phase),
-    cannibalizeAbilityId = FourCC(Ids.abilities.cannibalize),
-    dummyAbilityId = FourCC(Ids.abilities.defenceProtocolBuff),
-    requiredUpgradeId = nil,
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.cannibalizeSearch,
+            phase = Ids.abilities.phase,
+            cannibalize = Ids.abilities.cannibalize,
+        },
+    },
+    balance = {
+        radius = 600,
+        cooldown = 5,
+        requiredUpgradeId = nil,
+    },
+})
 
 local state = {}
 local isOrdering = false
@@ -39,7 +42,6 @@ local function searchCorpse(unit, x, y)
     local searchGroup = CreateGroup()
     GroupEnumUnitsInRange(searchGroup, x, y, 300.0, nil)
 
-    -- Ищем первый мертвый юнит (труп) в группе
     ForGroup(searchGroup, function()
         local u = GetEnumUnit()
         if IsUnitDeadBJ(u) and targetCorpse == nil then
@@ -54,21 +56,14 @@ local function searchCorpse(unit, x, y)
     local cX = GetUnitX(targetCorpse)
     local cY = GetUnitY(targetCorpse)
 
-    local onReach = function() end
-
     local order = function()
-        -- dump("cannib action at point", Unit.isAtPoint(unit, cX, cY, 16))
-        -- dump("cannib corpse found", targetCorpse)
         if Unit.isAtPoint(unit, cX, cY, 16) then
-            UnitRemoveAbility(unit, CONFIG.abilityId)
-            UnitAddAbility(unit, CONFIG.cannibalizeAbilityId)
+            UnitRemoveAbility(unit, CONFIG.refs.abilities.main)
+            UnitAddAbility(unit, CONFIG.refs.abilities.cannibalize)
             if GetUnitState(unit, UNIT_STATE_LIFE) >= BlzGetUnitMaxHP(unit) - 1 then
-                -- dump("full hp, cannib won't work")
                 SetUnitState(unit, UNIT_STATE_LIFE, BlzGetUnitMaxHP(unit) - 5)
             end
             IssueImmediateOrder(unit, "cannibalize")
-            -- TODO: check if corpse disappeared
-            -- TODO: remove phase buff
             ControlStore:remove(unit)
             state[unit] = nil
         else
@@ -78,25 +73,15 @@ local function searchCorpse(unit, x, y)
 
     ControlStore:add(unit)
 
-    UnitAddAbility(unit, CONFIG.phaseAbilityId)
+    UnitAddAbility(unit, CONFIG.refs.abilities.phase)
     IssueImmediateOrder(unit, "windwalk")
-    UnitRemoveAbility(unit, CONFIG.phaseAbilityId)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.phase)
 
     state[unit] = state[unit] or {}
     state[unit].state = "uncontrollable"
     state[unit].order = order
-    -- removeControl(unit, action)
-
-    -- UnitRemoveAbility(unit, CONFIG.phaseAbilityId)
 
     order()
-
-    -- removecontrol
-    -- add phase
-    -- use phase
-    -- move to corpse point
-    -- order cannibalize
-    -- return control
 
     return targetCorpse
 end
@@ -107,7 +92,6 @@ local function onCannibalize()
     state[unit].state = "cannibalizing"
 end
 
--- @
 local function onSearchCast()
     local unit = GetTriggerUnit()
     local targetX = GetSpellTargetX()
@@ -131,7 +115,6 @@ local function issueUncontrollableOrders()
 end
 
 local function onAnyOrder()
-    -- dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
     if not state[GetTriggerUnit()] then
         return
     end
@@ -140,26 +123,24 @@ local function onAnyOrder()
     end
     local unit = GetTriggerUnit()
     if state[unit].state == "uncontrollable" then
-        -- TODO: check - same order shouldn't interrupt
         issueUncontrollableOrders()
     elseif state[unit].state == "cannibalizing" then
-        UnitRemoveAbility(unit, CONFIG.cannibalizeAbilityId)
-        UnitAddAbility(unit, CONFIG.abilityId)
-        BlzSetUnitAbilityCooldown(unit, CONFIG.abilityId, 1, CONFIG.cooldown)
+        UnitRemoveAbility(unit, CONFIG.refs.abilities.cannibalize)
+        UnitAddAbility(unit, CONFIG.refs.abilities.main)
+        BlzSetUnitAbilityCooldown(unit, CONFIG.refs.abilities.main, 1, CONFIG.balance.cooldown)
     end
-    -- dump("onOrder called")
 end
 
 return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSearchCast,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.cannibalizeAbilityId,
+            spellId = CONFIG.refs.abilities.cannibalize,
             action = onCannibalize,
         },
         { trigger = "ORDER", action = onAnyOrder },

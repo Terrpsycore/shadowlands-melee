@@ -18,7 +18,7 @@ T:test("Proc not triggered when toggle off", function(case)
     IssueTargetOrder(attacker, "attack", goliath)
 
     return case:delay(2, function()
-        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.abilityId) <= 0, "proc triggered with toggle off")
+        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main) <= 0, "proc triggered with toggle off")
     end)
 end)
 
@@ -27,11 +27,11 @@ T:test("Proc skipped when mana below cost", function(case)
     local attacker = case:createUnit(Ids.units.aspirant, Player(PLAYER_NEUTRAL_AGGRESSIVE))
 
     setActive(goliath, true)
-    SetUnitState(goliath, UNIT_STATE_MANA, config.pulseManacost - 1)
+    SetUnitState(goliath, UNIT_STATE_MANA, config.balance.pulseManacost - 1)
     IssueTargetOrder(attacker, "attack", goliath)
 
     return case:delay(2, function()
-        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.abilityId) <= 0, "proc triggered without enough mana")
+        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main) <= 0, "proc triggered without enough mana")
         assert(MechStorage:get(goliath, "active") ~= false, "toggle turned off when proc skipped")
     end)
 end)
@@ -41,11 +41,11 @@ T:test("Cooldown blocks proc", function(case)
     local attacker = case:createUnit(Ids.units.aspirant, Player(PLAYER_NEUTRAL_AGGRESSIVE))
 
     setActive(goliath, true)
-    BlzStartUnitAbilityCooldown(goliath, config.abilityId, config.cooldown)
+    BlzStartUnitAbilityCooldown(goliath, config.refs.abilities.main, config.balance.cooldown)
     IssueTargetOrder(attacker, "attack", goliath)
 
     return case:delay(2, function()
-        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.abilityId) > 0, "cooldown was reset")
+        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main) > 0, "cooldown was reset")
     end)
 end)
 
@@ -57,7 +57,7 @@ T:test("Ally attack does not proc", function(case)
     IssueTargetOrder(ally, "attack", goliath)
 
     return case:delay(2, function()
-        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.abilityId) <= 0, "proc triggered by ally attack")
+        assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main) <= 0, "proc triggered by ally attack")
     end)
 end)
 
@@ -80,10 +80,10 @@ T:test("Active by default allows proc attempt", function(case)
     IssueTargetOrder(attacker, "attack", goliath)
 
     return case:delay(3, function()
-        local cdRemaining = BlzGetUnitAbilityCooldownRemaining(goliath, config.abilityId)
+        local cdRemaining = BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main)
         local manaAfter = GetUnitState(goliath, UNIT_STATE_MANA)
         assert(
-            cdRemaining > 0 or manaAfter >= manaBefore - config.pulseManacost + 0.01,
+            cdRemaining > 0 or manaAfter >= manaBefore - config.balance.pulseManacost + 0.01,
             "no proc attempt with default active state"
         )
     end)

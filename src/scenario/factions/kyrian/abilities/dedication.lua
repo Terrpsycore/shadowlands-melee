@@ -1,6 +1,7 @@
 -- TODO
 -- - test dispell removes both buffs
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
@@ -8,19 +9,22 @@ local dump = require("utils.logger")
 
 local Storage = require("scenario.storage.dedication")
 
-local CONFIG = {
-    abilityId = FourCC(Ids.abilities.dedication),
-
-    adBuffAbilityId = FourCC(Ids.abilities.dedicationDamageBuff),
-    adBuffId = FourCC(Ids.buffs.dedication),
-
-    asAbilityId = FourCC(Ids.abilities.dedicationAttackSpeedBuff),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.dedication,
+            damageBuff = Ids.abilities.dedicationDamageBuff,
+            attackSpeed = Ids.abilities.dedicationAttackSpeedBuff,
+        },
+        buffs = {
+            main = Ids.buffs.dedication,
+        },
+    },
+})
 
 local function removeDedicationEffect(unit)
-    -- print("removeDedicationEffect")
-    UnitRemoveBuffBJ(CONFIG.adBuffId, unit)
-    UnitRemoveAbility(unit, CONFIG.asAbilityId)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.attackSpeed)
     Storage:clear(unit)
 end
 
@@ -28,13 +32,13 @@ local function onDedicationCast()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
 
-    Dummy.applyDummyOrder(GetOwningPlayer(caster), target, CONFIG.adBuffAbilityId, "innerfire")
+    Dummy.applyDummyOrder(GetOwningPlayer(caster), target, CONFIG.refs.abilities.damageBuff, "innerfire")
 end
 
 local function onDummyCast()
     local unit = GetSpellTargetUnit()
 
-    UnitAddAbility(unit, CONFIG.asAbilityId)
+    UnitAddAbility(unit, CONFIG.refs.abilities.attackSpeed)
 
     Storage:set(unit, "target", nil)
 end
@@ -42,8 +46,6 @@ end
 local function onAttack()
     local unit = GetAttacker()
     local target = GetTriggerUnit()
-
-    -- dump("Dedication onAttack", Storage:get(unit, "target"), target)
 
     if not Storage:have(unit) then
         return
@@ -56,7 +58,7 @@ end
 
 local function onFrame()
     Storage:forEach(function(unit)
-        if not UnitHasBuffBJ(unit, CONFIG.adBuffId) then
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             removeDedicationEffect(unit)
         end
     end)
@@ -66,12 +68,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onDedicationCast,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.adBuffAbilityId,
+            spellId = CONFIG.refs.abilities.damageBuff,
             action = onDummyCast,
         },
         {

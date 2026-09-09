@@ -2,6 +2,7 @@
 -- - check dispell
 
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local GetElapsedGameTime = require("scenario.common.timer")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
@@ -10,71 +11,65 @@ local dump = require("utils.logger")
 
 local Storage = require("scenario.storage.oneMoreChance")
 
-local CONFIG = {
-    -- radius = 600,
-    duration = 5, -- real duration + delta
-    -- cooldown = 5,
-
-    abilityId = FourCC(Ids.abilities.oneMoreChance),
-
-    dummyBuffAbilityId = FourCC(Ids.abilities.oneMoreChanceBuffDummy),
-    buffId = FourCC(Ids.buffs.oneMoreChance),
-
-    crossAbilityId = FourCC(Ids.abilities.oneMoreChanceCross),
-    reincarnationCheckAbilityId = FourCC(Ids.abilities.reincarnationCheck),
-
-    dummyHealAbilityId = FourCC(Ids.abilities.oneMoreChanceHealDummy),
-    -- requiredUpgradeId = nil,
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.oneMoreChance,
+            buffDummy = Ids.abilities.oneMoreChanceBuffDummy,
+            cross = Ids.abilities.oneMoreChanceCross,
+            reincarnationCheck = Ids.abilities.reincarnationCheck,
+            healDummy = Ids.abilities.oneMoreChanceHealDummy,
+        },
+        buffs = {
+            main = Ids.buffs.oneMoreChance,
+        },
+    },
+    balance = {
+        duration = 5, -- real duration + delta
+    },
+})
 
 local function removeEffect(unit)
-    UnitRemoveAbility(unit, CONFIG.crossAbilityId)
-    UnitRemoveAbility(unit, CONFIG.reincarnationCheckAbilityId)
-    UnitRemoveBuffBJ(CONFIG.buffId, unit)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.cross)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.reincarnationCheck)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
 end
 
 local function onSpell()
-    -- dump("oneMoreChance onSpell")
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
     Dummy.applyDummyOrder(
         GetOwningPlayer(caster),
         target,
-        CONFIG.dummyBuffAbilityId,
+        CONFIG.refs.abilities.buffDummy,
         "innerfire",
-        GetUnitAbilityLevel(caster, CONFIG.dummyBuffAbilityId)
+        GetUnitAbilityLevel(caster, CONFIG.refs.abilities.buffDummy)
     )
 end
 
 local function onDummyBuff()
-    -- dump("oneMoreChance onDummyBuff")
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
-    Storage:set(target, "abilityLevel", GetUnitAbilityLevel(caster, CONFIG.dummyBuffAbilityId))
+    Storage:set(target, "abilityLevel", GetUnitAbilityLevel(caster, CONFIG.refs.abilities.buffDummy))
     Storage:set(target, "buffedAt", GetElapsedGameTime())
-    UnitAddAbility(target, CONFIG.crossAbilityId)
-    UnitAddAbility(target, CONFIG.reincarnationCheckAbilityId)
+    UnitAddAbility(target, CONFIG.refs.abilities.cross)
+    UnitAddAbility(target, CONFIG.refs.abilities.reincarnationCheck)
 end
 
 local function onDummyHeal()
-    -- dump("oneMoreChance onDummyHeal")
     local target = GetSpellTargetUnit()
     Storage:clear(target)
 end
 
 local function onReincarnate()
-    -- dump("oneMoreChance onReincarnate", OrderId2String(GetIssuedOrderId()))
     local unit = GetOrderedUnit()
-    if not GetUnitAbilityLevel(unit, CONFIG.crossAbilityId) then
-        -- dump("oneMoreChance onReincarnate break - no ankh ability")
+    if not GetUnitAbilityLevel(unit, CONFIG.refs.abilities.cross) then
         return
     end
     if GetUnitState(unit, UNIT_STATE_LIFE) >= 0.01 then
-        -- dump("oneMoreChance onReincarnate break - not dead")
         return
     end
     if Storage:have(unit) then
-        -- dump("oneMoreChance onReincarnate remove effect")
         removeEffect(unit)
         Storage:clear(unit)
     end
@@ -85,44 +80,41 @@ local function onTimer()
         if Storage:get(unit, "expired") then
             return
         end
-        if not UnitHasBuffBJ(unit, CONFIG.buffId) then
-            -- dump("oneMoreChance onTimer not UnitHasBuffBJ")
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             removeEffect(unit)
             Storage:clear(unit)
             return
         end
-        local expireTime = Storage:get(unit, "buffedAt") + (CONFIG.duration - 0.1)
+        local expireTime = Storage:get(unit, "buffedAt") + (CONFIG.balance.duration - 0.1)
         if expireTime <= GetElapsedGameTime() then
-            -- dump("oneMoreChance onTimer expired:", expireTime, GetElapsedGameTime())
             removeEffect(unit)
             Dummy.applyDummyOrder(
                 GetOwningPlayer(unit),
                 unit,
-                CONFIG.dummyHealAbilityId,
+                CONFIG.refs.abilities.healDummy,
                 "holybolt",
                 Storage:get(unit, "abilityLevel")
             )
             Storage:set(unit, "expired", true)
         end
     end)
-    -- body
 end
 
 return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSpell,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.dummyBuffAbilityId,
+            spellId = CONFIG.refs.abilities.buffDummy,
             action = onDummyBuff,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.dummyHealAbilityId,
+            spellId = CONFIG.refs.abilities.healDummy,
             action = onDummyHeal,
         },
         {

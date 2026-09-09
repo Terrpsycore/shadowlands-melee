@@ -1,19 +1,27 @@
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
 local dump = require("utils.logger")
 
-local CONFIG = {
-    -- radius = 600,
-    -- cooldown = 5,
-
-    -- buffId = FourCC(Ids.buffs.defenceProtocol),
-
-    abilityId = FourCC(Ids.abilities.defenceProtocol),
-    dummyAbilityId = FourCC(Ids.abilities.defenceProtocolBuff),
-    -- requiredUpgradeId = nil,
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.defenceProtocol,
+            buff = Ids.abilities.defenceProtocolBuff,
+        },
+        units = {
+            carrier = Ids.units.praetor,
+            protected = { Ids.units.steward, Ids.units.aspirant },
+        },
+    },
+    balance = {
+        -- radius = 600,
+        -- cooldown = 5,
+        -- requiredUpgradeId = nil,
+    },
+})
 
 local function onSpell() end
 local function onDeath() end
@@ -23,17 +31,17 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onSpell,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = FourCC(Ids.units.praetor) },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onDeath,
         },
         {
             trigger = "DAMAGE",
-            filter = { target = { FourCC(Ids.units.steward), FourCC(Ids.units.aspirant) } },
+            filter = { target = CONFIG.refs.units.protected },
             action = onDamage,
         },
     },

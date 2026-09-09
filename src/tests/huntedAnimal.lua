@@ -13,6 +13,6 @@ T:test("onStun callback run", function(case)
     case:applyDummyOrder(Player(PLAYER_NEUTRAL_AGGRESSIVE), larion, FourCC(Ids.abilities.stormBolt), "thunderbolt")
 
     return case:delay(2, function()
-        assert(UnitHasBuffBJ(larion, config.buffId), "larion doesn't receive buff")
+        assert(UnitHasBuffBJ(larion, config.refs.buffs.main), "larion doesn't receive buff")
     end)
 end)

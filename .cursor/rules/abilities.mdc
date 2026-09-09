@@ -6,19 +6,42 @@ alwaysApply: false
 
 # Способности — gotcha
 
+- **Scenario CONFIG:** прямой вызов `AbilityConfig.compile({ refs, balance })` — без промежуточной SPEC-переменной. Slug-и в spec, FourCC после compile.
+
+  ```lua
+  local AbilityConfig = require("scenario.config")
+
+  local Ids = require("data.ids")
+
+  local CONFIG = AbilityConfig.compile({
+      refs = {
+          abilities = { main = Ids.abilities.pulseback, toggle = Ids.abilities.pulsebackToggle },
+          buffs = { main = Ids.buffs.defenceProtocol },
+          units = { carrier = Ids.units.goliath, protected = { Ids.units.steward, Ids.units.aspirant } },
+      },
+      balance = { cooldown = 3, manacost = 20 },
+  })
+  ```
+
+  - `refs` — namespace = тип сущности: `abilities`, `buffs`, `units`, `items`; значения — `Ids.<domain>.<slug>` (не `FourCC`, не строковый slug)
+  - **валидация refs** — runtime в `AbilityConfig.compile()` (`nil` id → error); `FourCC` wrap после compile
+  - `balance` — script-only tuning, произвольная nested table (import из `data` — позже)
+  - convention ключей refs: `main`, `toggle`, `carrier`, `buff`, …
+  - scalar unit ref для `CreateUnit` / `GetUnitTypeId`: `AbilityConfig.unitId(CONFIG.refs.units.dummy)`
+
 - **Triggers:** все события только в array-формате (как в `abilities/defenceProtocol.lua`).
 
   ```lua
   triggers = {
-      { trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT", spellId = CONFIG.abilityId, action = onSpell },
-      { trigger = "EVENT_PLAYER_UNIT_DEATH", filter = { target = FourCC(Ids.units.goliath) }, action = onDeath },
-      { trigger = "DAMAGE", filter = { source = FourCC(Ids.units.colossus) }, action = onDamage },
+      { trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT", spellId = CONFIG.refs.abilities.main, action = onSpell },
+      { trigger = "EVENT_PLAYER_UNIT_DEATH", filter = { target = CONFIG.refs.units.carrier }, action = onDeath },
+      { trigger = "DAMAGE", filter = { source = CONFIG.refs.units.carrier }, action = onDamage },
       { trigger = "TIMER", delta = 0.5, action = onTick },
   }
   ```
 
 - **Filter:** опциональный блок `filter = { source, target }` — scalar или array **FourCC id** (number).
-  - значения только через `FourCC(...)` или `CONFIG.*TypeId` (уже FourCC)
+  - значения через `CONFIG.refs.units.*` / `CONFIG.refs.abilities.*` (после compile) или `FourCC(...)` вне CONFIG
   - `filter.source` — инициатор: атакующий (ATTACKED), источник урона (DAMAGE)
   - `filter.target` — объект: умирающий/призванный/обученный (DEATH/SUMMON/TRAIN), цель урона (DAMAGE)
   - оба поля заданы → AND; filter отсутствует → любое событие данного типа
@@ -29,4 +52,4 @@ alwaysApply: false
 
 - **Пресеты** (`data/ability.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
 
-- Команды после разработки: `lua objediting/gen_ids.lua` и тесты не запускать (их запускает пользователь, напоминать не надо)
+- Команды после разработки: `lua objediting/gen_ids.lua` (генерит `ids.lua` и `id_slugs.lua`); тесты не запускать (их запускает пользователь, напоминать не надо)

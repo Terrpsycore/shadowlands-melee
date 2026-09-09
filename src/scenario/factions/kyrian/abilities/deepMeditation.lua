@@ -2,6 +2,7 @@
 -- - percentage regen
 -- - make stun instant
 local Ids = require("data.ids")
+local AbilityConfig = require("scenario.config")
 local GetElapsedGameTime = require("scenario.common.timer")
 local Dummy = require("utils.dummy")
 local dump = require("utils.logger")
@@ -9,20 +10,27 @@ local Unit = require("utils.unit")
 
 local Storage = require("scenario.storage.deepMeditation")
 
-local CONFIG = {
-    duration = 8,
-    damageThreshold = 50,
-
-    abilityId = FourCC(Ids.abilities.deepMeditation),
-    stunDummyId = FourCC(Ids.abilities.deepMeditationStunDummy),
-    rejuvDummyId = FourCC(Ids.abilities.deepMeditationRejuvDummy),
-    buffId = FourCC(Ids.buffs.deepMeditation),
-    stunBuffId = FourCC(Ids.buffs.deepMeditationStun),
-}
+local CONFIG = AbilityConfig.compile({
+    refs = {
+        abilities = {
+            main = Ids.abilities.deepMeditation,
+            stunDummy = Ids.abilities.deepMeditationStunDummy,
+            rejuvDummy = Ids.abilities.deepMeditationRejuvDummy,
+        },
+        buffs = {
+            main = Ids.buffs.deepMeditation,
+            stun = Ids.buffs.deepMeditationStun,
+        },
+    },
+    balance = {
+        duration = 8,
+        damageThreshold = 50,
+    },
+})
 
 local function removeEffects(target)
-    UnitRemoveBuffBJ(CONFIG.buffId, target)
-    UnitRemoveBuffBJ(CONFIG.stunBuffId, target)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.main, target)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.stun, target)
     Storage:clear(target)
 end
 
@@ -35,8 +43,8 @@ local function onCast()
         return
     end
 
-    Dummy.applyDummyOrder(owner, target, CONFIG.stunDummyId, "thunderbolt")
-    Dummy.applyDummyOrder(owner, target, CONFIG.rejuvDummyId, "rejuvination")
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.stunDummy, "thunderbolt")
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.rejuvDummy, "rejuvination")
 end
 
 local function onDummyCast()
@@ -53,15 +61,15 @@ local function onDamage(info)
     local damageReceived = Storage:get(info.target, "damageReceived") + info.damage
     Storage:set(info.target, "damageReceived", damageReceived)
 
-    if damageReceived > CONFIG.damageThreshold then
+    if damageReceived > CONFIG.balance.damageThreshold then
         removeEffects(info.target)
     end
 end
 
 local function onTimer()
     Storage:forEach(function(target)
-        dump("onTimer deepMeditation forEach", UnitHasBuffBJ(target, CONFIG.buffId), Unit.isManaFull(target))
-        if not UnitHasBuffBJ(target, CONFIG.buffId) then
+        dump("onTimer deepMeditation forEach", UnitHasBuffBJ(target, CONFIG.refs.buffs.main), Unit.isManaFull(target))
+        if not UnitHasBuffBJ(target, CONFIG.refs.buffs.main) then
             removeEffects(target)
             return
         end
@@ -77,12 +85,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.abilityId,
+            spellId = CONFIG.refs.abilities.main,
             action = onCast,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.stunDummyId,
+            spellId = CONFIG.refs.abilities.stunDummy,
             action = onDummyCast,
         },
         {
