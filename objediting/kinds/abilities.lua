@@ -1,3 +1,4 @@
+-- Declarative row fields: objediting/ability_row_fields.lua (type hints via gen_ability_kinds.lua)
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
 local Ids = require("data.generated.ids")
 local generated = require("data.generated.ability_classes")
@@ -16,6 +17,19 @@ local function eachLevel(data)
         if level <= levels then
             return level
         end
+    end
+end
+
+---@param value number|number[]
+local function applyPerLevel(a, data, setter, value)
+    if type(value) == "number" then
+        for level in eachLevel(data) do
+            setter(a, level, value)
+        end
+        return
+    end
+    for level, v in ipairs(value) do
+        setter(a, level, v)
     end
 end
 
@@ -43,14 +57,26 @@ local fields = {
             a:setOptions(level, value)
         end
     end,
-    buttonNormalX = function(a, value)
-        a:setButtonPositionNormalX(value)
+    button = function(a, value)
+        if value[1] == nil or value[2] == nil then
+            error("button requires { x, y }")
+        end
+        a:setButtonPositionNormalX(value[1])
+        a:setButtonPositionNormalY(value[2])
     end,
-    buttonNormalY = function(a, value)
-        a:setButtonPositionNormalY(value)
+    hotkey = function(a, value)
+        a:setHotkeyNormal(value)
     end,
     levels = function(a, value)
         a:setLevels(value)
+    end,
+    requirements = function(a, value)
+        a:setRequirements(value)
+    end,
+    manaCost = function(a, value, data)
+        applyPerLevel(a, data, function(ability, level, v)
+            ability:setManaCost(level, v)
+        end, value)
     end,
     buffs = function(a, slugs, data)
         local parts = {}
@@ -114,6 +140,9 @@ return {
     end,
     defaults = function(a, data)
         a:setHeroAbility(data.class == "hero")
+        if data.requirements == nil then
+            a:setRequirements("")
+        end
     end,
     applyFields = applyFields,
 }

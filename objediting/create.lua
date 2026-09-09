@@ -6,7 +6,7 @@ return function(db, kind, ids)
         end
         local spec = kind.resolve(data.parent)
         local obj = spec.new(id, data.parent, data.class)
-        kind.defaults(obj, data.class)
+        kind.defaults(obj, data)
         if spec.apply then
             spec.apply(obj, data)
         end

@@ -8,6 +8,9 @@
     ]
   },
   "diagnostics.disable": [
-        "empty-block"
-    ]
+    "empty-block"
+  ],
+  "workspace": {
+    "preloadFileSize": 1024
+  }
 }

@@ -1,6 +1,7 @@
 package.path = table.concat({ package.path, "src/?.lua", "src/?/init.lua" }, ";")
 
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
+local rowFields = dofile("objediting/ability_row_fields.lua")
 
 local srcPath = "src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua"
 local classesPath = "src/data/generated/ability_classes.lua"
@@ -105,16 +106,17 @@ end
 
 local factoriesFile = assert(io.open(factoriesPath, "w"))
 factoriesFile:write('local AbilityIds = require("lib.community.types.assets.AbilityIds")\n\n')
-factoriesFile:write("---@class AbilityRow<T: AbilityDefinition>\n")
+factoriesFile:write("---@class AbilityRowInput\n")
+for _, field in ipairs(rowFields) do
+    local name, fieldType, optional = field[1], field[2], field.optional
+    local marker = optional and "?" or ""
+    factoriesFile:write(("---@field %s%s %s\n"):format(name, marker, fieldType))
+end
+factoriesFile:write("\n---@class AbilityRow : AbilityRowInput\n")
+factoriesFile:write("---@field parent string\n\n")
+factoriesFile:write("---@class AbilityFactory\n")
 factoriesFile:write("---@field parent string\n")
-factoriesFile:write("---@field name? string\n")
-factoriesFile:write("---@field levels? integer\n")
-factoriesFile:write("---@field buffs? string[]\n")
-factoriesFile:write("---@field autocastRange? number\n")
-factoriesFile:write("---@field options? integer\n")
-factoriesFile:write("---@field buttonNormalX? integer\n")
-factoriesFile:write("---@field buttonNormalY? integer\n")
-factoriesFile:write("---@field apply? fun(a: T)\n\n")
+factoriesFile:write("---@overload fun(data?: AbilityRowInput): AbilityRow\n\n")
 factoriesFile:write("local function pack(parent, data)\n")
 factoriesFile:write("    data = data or {}\n")
 factoriesFile:write("    data.parent = parent\n")
@@ -131,11 +133,10 @@ factoriesFile:write("}\n\n")
 factoriesFile:write("local A = {}\n\n")
 for _, row in ipairs(factoryRows) do
     local factoryClass = factoryClassName(row.key)
-    factoriesFile:write(("---@class %s\n"):format(factoryClass))
+    factoriesFile:write(("---@class %s : AbilityFactory\n"):format(factoryClass))
     factoriesFile:write(
-        ("---@overload fun(data: AbilityRow<%s>?): AbilityRow<%s>\n"):format(row.className, row.className)
+        ("---@field apply fun(fn: fun(a: %s)): fun(a: %s)\n\n"):format(row.className, row.className)
     )
-    factoriesFile:write(("---@field apply fun(fn: fun(a: %s)): fun(a: %s)\n\n"):format(row.className, row.className))
     factoriesFile:write(("---@type %s\n"):format(factoryClass))
     factoriesFile:write(("A.%s = setmetatable({\n"):format(row.key))
     factoriesFile:write(("    parent = AbilityIds.%s,\n"):format(row.key))

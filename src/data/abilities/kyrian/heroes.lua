@@ -4,16 +4,13 @@ local Ids = require("data.ids")
 local A = require("data.ability")
 
 return {
-    overcharge = A.channel({
+    overcharge = A.channelNoTarget({
         name = "Overcharge",
         levels = 3,
-        options = 1,
-        buttonNormalX = 0,
-        buttonNormalY = 2,
-        apply = A.channel.apply(function(a)
-            a:setRequirements("")
+        manaCost = 100,
+        button = { 0, 2 },
+        apply = A.channelNoTarget.apply(function(a)
             for level = 1, 3 do
-                a:setManaCost(level, 100)
                 a:setDisableOtherAbilities(level, false)
                 a:setFollowThroughTime(level, 0)
             end
@@ -23,7 +20,6 @@ return {
         name = "",
         levels = 3,
         apply = A.itemAreaManaRegain.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setManaPointsGained(level, level * 50)
                 a:setAreaofEffect(level, 600)
@@ -35,7 +31,6 @@ return {
         buffs = { "overchargeDamage" },
         levels = 3,
         apply = A.innerFire.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setDefenseIncrease(level, 0)
                 a:setDamageIncrease(level, level * 0.1)
@@ -47,20 +42,16 @@ return {
         buffs = { "overchargeSpeed" },
         levels = 3,
         apply = A.bloodlust.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setTargetsAllowed(level, "allied,ground,mechanical,nonhero,player")
             end
         end),
     }),
-    reusables = A.channel({
+    reusables = A.channelTarget({
         name = "Reusables",
         levels = 3,
-        options = 1,
-        buttonNormalX = 1,
-        buttonNormalY = 2,
-        apply = A.channel.apply(function(a)
-            a:setRequirements("")
+        button = { 1, 2 },
+        apply = A.channelTarget.apply(function(a)
             for level = 1, 3 do
                 a:setBaseOrderID(level, "taunt")
                 a:setTargetType(level, 1)
@@ -75,7 +66,6 @@ return {
         name = "Security Leak",
         levels = 3,
         apply = A.tinkererDemolishLevel0.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setDamageMultiplierBuildings(level, 0.2 + ((level - 1) * 0.1))
             end
@@ -85,7 +75,6 @@ return {
         name = "Security Leak",
         levels = 3,
         apply = A.liquidFire.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setExtraDamagePerSecond(level, 0)
                 a:setAttackSpeedReduction(level, 0.5)
@@ -98,7 +87,6 @@ return {
         name = "Security Leak",
         levels = 1,
         apply = A.cloudofFog.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setAreaofEffect(level, 1)
                 a:setDurationNormal(level, 1 + level * 0.8)
@@ -109,7 +97,6 @@ return {
         name = "Security Leak",
         levels = 1,
         apply = A.freezingBreath.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setDurationNormal(level, 1 + level * 0.8)
             end
@@ -119,7 +106,6 @@ return {
         name = "Piloting",
         levels = 1,
         apply = A.evasion.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 --
             end
@@ -153,14 +139,11 @@ return {
         end),
     }),
     -- judgingGazeDummy
-    memoryPeer = A.channel({
+    memoryPeer = A.channelTarget({
         name = "Memory Peer",
         levels = 3,
-        options = 1,
-        buttonNormalX = 0,
-        buttonNormalY = 2,
-        apply = A.channel.apply(function(a)
-            a:setRequirements("")
+        button = { 0, 2 },
+        apply = A.channelTarget.apply(function(a)
             for level = 1, 3 do
                 a:setTargetType(level, 1)
                 a:setDisableOtherAbilities(level, false)
@@ -171,7 +154,6 @@ return {
         name = "",
         levels = 3,
         apply = A.feralSpirit.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setSummonedUnit(level, Ids.units.memorySpirit)
                 a:setNumberofSummonedUnits(level, level)
@@ -188,7 +170,6 @@ return {
         levels = 3,
         buffs = { "memoryPeer" },
         apply = A.slowPoison.apply(function(a)
-            a:setRequirements("")
             for level = 1, 3 do
                 a:setDamagePerSecond(level, 0)
                 a:setMovementSpeedFactor(level, 0.6)
@@ -199,34 +180,27 @@ return {
             end
         end),
     }),
-    oneMoreChance = A.channel({
+    oneMoreChance = A.channelTarget({
         name = "One More Chance",
         levels = 3,
-        options = 1,
-        buttonNormalX = 0,
-        buttonNormalY = 2,
+        button = { 0, 2 },
+        hotkey = "E",
         buffs = { "oneMoreChance" },
-        apply = A.channel.apply(function(a)
-            a:setHotkeyNormal("E")
+        apply = A.channelTarget.apply(function(a)
             a:setBaseOrderID(1, "innerfire")
             a:setBaseOrderID(2, "innerfire")
             a:setBaseOrderID(3, "innerfire")
             a:setOrderStringUseTurnOn("innerfire")
-            a:setRequirements("")
             a:setTargetType(1, 1)
             a:setDisableOtherAbilities(1, false)
-            a:setHeroAbility(true)
         end),
     }),
     oneMoreChanceBuffDummy = A.innerFire({
         name = "One More Chance",
         levels = 3,
-        buttonNormalX = 0,
-        buttonNormalY = 2,
+        button = { 0, 2 },
         buffs = { "oneMoreChance" },
         apply = A.innerFire.apply(function(a)
-            a:setRequirements("")
-            a:setHeroAbility(true)
             a:setDefenseIncrease(1, 0)
             a:setDamageIncrease(1, 0)
             a:setDurationNormal(1, 5)
@@ -248,25 +222,19 @@ return {
         buffs = { "oneMoreChance" },
         apply = A.holyLight.apply(function(a) end),
     }),
-    lastStand = A.channel({
+    lastStand = A.channelNoTarget({
         name = "Last Stand",
-        options = 1,
-        buttonNormalX = 0,
-        buttonNormalY = 2,
-        apply = A.channel.apply(function(a)
-            a:setRequirements("")
+        button = { 0, 2 },
+        hotkey = "R",
+        apply = A.channelNoTarget.apply(function(a)
             a:setFollowThroughTime(1, 5)
-            a:setHotkeyNormal("R")
             a:setOrderStringUseTurnOn("bloodlust")
-            a:setDisableOtherAbilities(1, false)
-            a:setHeroAbility(true)
         end),
     }),
     lastStandAura = A.slowAura({
         name = "Last Stand",
         buffs = { "lastStand" },
         apply = A.slowAura.apply(function(a)
-            a:setRequirements("")
             a:setMovementSpeedFactor(1, 0)
             a:setAttackSpeedFactor(1, 0)
             a:setAreaofEffect(1, 600)
@@ -276,7 +244,6 @@ return {
     lastStandHealDummy = A.itemAreaHealing({
         name = "Last Stand",
         apply = A.itemAreaHealing.apply(function(a)
-            a:setRequirements("")
             a:setHitPointsGained(1, 200)
             a:setAreaofEffect(1, 600)
         end),
@@ -284,7 +251,6 @@ return {
     watcherFly = A.stormCrowForm({
         name = "Ascend/Descend",
         apply = A.stormCrowForm.apply(function(a)
-            a:setRequirements("")
             a:setMorphingFlags(1, 1) -- uninterruptable
             a:setManaCost(1, 0)
             a:setNormalFormUnit(1, Ids.units.watcher)

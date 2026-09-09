@@ -25,4 +25,8 @@ alwaysApply: false
 
 - **Data IDs:** slug — доменное имя (`pulsebackToggle`), не vanilla (`immolation`)
 
+- **Data row:** декларативные атрибуты — список в `objediting/ability_row_fields.lua` (type hints → `gen_ability_kinds.lua`), runtime handlers → `objediting/kinds/abilities.lua`. Новое поле: добавить в оба файла, затем `lua objediting/gen_ability_kinds.lua`. `requirements` по умолчанию `""` (defaults). `manaCost`: число → все уровни; `{ 100, 150, 200 }` → по уровням. `button = { 0, 2 }` (x, y).
+
+- **Пресеты** (`data/ability.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
+
 - Команды после разработки: `lua objediting/gen_ids.lua` и тесты не запускать (их запускает пользователь, напоминать не надо)
