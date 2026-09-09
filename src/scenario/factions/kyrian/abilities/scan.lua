@@ -1,4 +1,5 @@
 -- TODO:
+-- - [BUG] onDeath nil error
 -- - handle stale pending targets
 -- - adjust scan radius to current vision radius (can be affected by Fae debuff)
 local Ids = require("data.ids")

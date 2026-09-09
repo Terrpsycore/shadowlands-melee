@@ -18,19 +18,60 @@ return function(name, fieldSchema)
         return field
     end
 
-    function store:set(unit, fieldName, value)
+    local function exists(unit)
+        local parent = store:unitParent(unit)
+        for _, field in pairs(fields) do
+            if field.access.have(parent, field.child) then
+                return true
+            end
+        end
+        return false
+    end
+
+    local function readField(unit, fieldName)
         local field = requireField(fieldName)
+        return field.access.get(store:unitParent(unit), field.child)
+    end
+
+    local function writeField(unit, fieldName, value)
         units[unit] = true
-        field.access.set(self:unitParent(unit), field.child, value)
+        local field = requireField(fieldName)
+        field.access.set(store:unitParent(unit), field.child, value)
+    end
+
+    function store:set(unit, fieldName, value)
+        writeField(unit, fieldName, value)
     end
 
     function store:get(unit, fieldName)
-        local field = requireField(fieldName)
-        return field.access.get(self:unitParent(unit), field.child)
+        return readField(unit, fieldName)
     end
 
     function store:have(unit)
-        return not not units[unit]
+        return not not units[unit] or exists(unit)
+    end
+
+    local UNIT_MT = {
+        __index = function(t, key)
+            if fields[key] then
+                return readField(t.unit, key)
+            end
+        end,
+        __newindex = function(t, key, value)
+            if fields[key] then
+                writeField(t.unit, key, value)
+                return
+            end
+            error("unknown field '" .. key .. "' on " .. name)
+        end,
+    }
+
+    function store:open(unit)
+        if not exists(unit) then
+            return nil
+        end
+        units[unit] = true
+        return setmetatable({ unit = unit }, UNIT_MT)
     end
 
     function store:clear(unit)

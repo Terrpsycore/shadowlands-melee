@@ -88,11 +88,7 @@ return {
             a:setTargetsAllowed(1, "enemy,ground,air,structure")
         end),
     }),
-    pride = A.evasion({
-        apply = A.evasion.apply(function(a)
-            a:setChancetoEvade(1, 0)
-        end),
-    }),
+    pride = A.passiveGeneric({}),
     prideDamage = A.itemDamageBonus({
         name = "",
         levels = 5,
@@ -164,11 +160,7 @@ return {
         name = "Cannibalize",
         button = { 0, 2 },
     }),
-    huntedAnimal = A.evasion({
-        apply = A.evasion.apply(function(a)
-            a:setChancetoEvade(1, 0)
-        end),
-    }),
+    huntedAnimal = A.passiveGeneric({}),
     huntedAnimalBuff = A.bloodlust({
         buffs = { "huntedAnimal" },
         apply = A.bloodlust.apply(function(a) end),

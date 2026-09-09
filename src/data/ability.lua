@@ -105,4 +105,11 @@ A.exhumeBased = presetFactory(A.exhume, {
     end,
 })
 
+--- Hidden evasion with 0% — passive marker for script triggers, no gameplay effect.
+A.passiveGeneric = presetFactory(A.evasion, {
+    apply = function(a)
+        a:setChancetoEvade(1, 0)
+    end,
+})
+
 return A

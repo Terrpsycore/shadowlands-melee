@@ -3,6 +3,7 @@ require("tests.defenceProtocol")
 require("tests.pulseback")
 require("tests.formation")
 require("tests.pride")
+require("tests.combatExpertise")
 require("tests.huntedAnimal")
 --
 require("tests.onStun")

@@ -29,5 +29,6 @@ return {
         require("scenario.factions.kyrian.abilities.soulbind"),
         require("scenario.factions.kyrian.abilities.spiritLink"),
         require("scenario.factions.kyrian.abilities.pride"),
+        require("scenario.factions.necrolord.abilities.combatExpertise"),
     },
 }
