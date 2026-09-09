@@ -28,10 +28,12 @@ end
 
 return {
     triggers = {
-        STUN = {
+        {
+            trigger = "STUN",
             action = onFullDisable,
         },
-        ROOT = {
+        {
+            trigger = "ROOT",
             action = onFullDisable,
         },
     },

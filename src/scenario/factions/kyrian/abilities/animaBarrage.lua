@@ -64,19 +64,17 @@ return {
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
-            unitType = FourCC(Ids.units.colossus),
+            filter = { target = FourCC(Ids.units.colossus) },
             action = onTrain,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_ATTACKED",
+            filter = { source = FourCC(Ids.units.colossus) },
             action = onAttack,
-            attacker = {
-                type = FourCC(Ids.units.colossus),
-            },
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            unitType = FourCC(Ids.units.colossus),
+            filter = { target = FourCC(Ids.units.colossus) },
             action = onDeath,
         },
     },

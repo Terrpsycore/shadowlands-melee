@@ -50,17 +50,8 @@ return {
         },
         {
             trigger = "DAMAGE",
+            filter = { source = { FourCC(Ids.units.ascendedWarrior), FourCC(Ids.units.ascendedWarriorFlying) } },
             action = onDamage,
-            source = {
-                type = FourCC(Ids.units.ascendedWarrior), -- TODO: add other ascended, refactor triggers
-            },
-        },
-        {
-            trigger = "DAMAGE",
-            action = onDamage,
-            source = {
-                type = FourCC(Ids.units.ascendedWarriorFlying),
-            },
         },
     },
     config = CONFIG,

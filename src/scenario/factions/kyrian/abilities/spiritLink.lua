@@ -18,7 +18,8 @@ end
 
 return {
     triggers = {
-        PRE_DAMAGE = {
+        {
+            trigger = "PRE_DAMAGE",
             action = onPreDamage,
         },
     },

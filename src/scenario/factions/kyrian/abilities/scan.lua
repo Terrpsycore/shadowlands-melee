@@ -122,14 +122,12 @@ return {
         },
         {
             trigger = "AFTER_DAMAGE",
+            filter = { source = FourCC(Ids.units.phalynx) },
             action = afterDamage,
-            source = {
-                type = FourCC(Ids.units.phalynx),
-            },
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            unitType = FourCC(Ids.units.phalynx),
+            filter = { target = FourCC(Ids.units.phalynx) },
             action = onDeath,
         },
         {

@@ -74,14 +74,12 @@ return {
         },
         {
             trigger = "DAMAGE",
+            filter = { target = { FourCC(Ids.units.steward), FourCC(Ids.units.aspirant) } },
             action = onDamageEvent,
-            target = {
-                type = { Ids.units.steward, Ids.units.aspirant },
-            },
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            unitType = FourCC(Ids.units.praetor),
+            filter = { target = FourCC(Ids.units.praetor) },
             action = onDeath,
         },
     },

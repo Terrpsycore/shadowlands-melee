@@ -15,7 +15,27 @@ local CONFIG = {
     -- requiredUpgradeId = nil,
 }
 
+local function onSpell() end
+local function onDeath() end
+local function onDamage(info) end
+
 return {
-    triggers = {},
+    triggers = {
+        {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.abilityId,
+            action = onSpell,
+        },
+        {
+            trigger = "EVENT_PLAYER_UNIT_DEATH",
+            filter = { target = FourCC(Ids.units.praetor) },
+            action = onDeath,
+        },
+        {
+            trigger = "DAMAGE",
+            filter = { target = { FourCC(Ids.units.steward), FourCC(Ids.units.aspirant) } },
+            action = onDamage,
+        },
+    },
     config = CONFIG,
 }

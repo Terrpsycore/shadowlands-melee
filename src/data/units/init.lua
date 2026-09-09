@@ -1,3 +1,5 @@
+require("lib.community.types.assets.objediting.core.enum")
+
 local function merge(into, part, source, class)
     for slug, row in pairs(part) do
         if into[slug] then

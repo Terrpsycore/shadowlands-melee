@@ -104,16 +104,18 @@ end
 
 return {
     triggers = {
-        EVENT_PLAYER_UNIT_TRAIN_FINISH = {
-            unitType = CONFIG.carrierTypeId,
+        {
+            trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
+            filter = { target = CONFIG.carrierTypeId },
             action = onTrain,
         },
-        EVENT_PLAYER_UNIT_DEATH = {
-            unitType = CONFIG.carrierTypeId,
+        {
+            trigger = "EVENT_PLAYER_UNIT_DEATH",
+            filter = { target = CONFIG.carrierTypeId },
             action = onDeath,
         },
-        -- on death - clean storage
-        TIMER = {
+        {
+            trigger = "TIMER",
             delta = CONFIG.tickSeconds,
             action = onTick,
         },

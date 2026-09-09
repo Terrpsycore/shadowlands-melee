@@ -103,19 +103,17 @@ return {
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
-            unitType = FourCC(Ids.units.goliath),
+            filter = { target = FourCC(Ids.units.goliath) },
             action = onTrain,
         },
         {
             trigger = "DAMAGE",
+            filter = { target = FourCC(Ids.units.goliath) },
             action = onDamage,
-            target = {
-                type = { Ids.units.goliath },
-            },
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            unitType = FourCC(Ids.units.goliath),
+            filter = { target = FourCC(Ids.units.goliath) },
             action = onDeath,
         },
     },

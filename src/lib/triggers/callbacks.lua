@@ -1,8 +1,7 @@
 -- TODO:
 -- - use conditions
 local Storage = require("lib.storage.storage")
-local dump = require("utils.logger")
-local Type = require("utils.type")
+local Filter = require("lib.triggers.filter")
 
 local Disable = Storage.unitFields("disable", {
     rooted = "bool",
@@ -19,12 +18,14 @@ local T = {
 
 T.registerEvents = function(callbacks)
     for event, triggers in pairs(callbacks) do
-        -- dump("T.register: try - " .. event)
         T.methods[event](triggers)
     end
 end
 
+---@param event string
+---@param callbackOptions TriggerDefinition
 T.registerCallback = function(event, callbackOptions)
+    Filter.compileTrigger(callbackOptions)
     if T.callbacks[event] == nil then
         T.callbacks[event] = {}
     end
@@ -37,12 +38,15 @@ end
 
 T.fireEvent = function(event, data)
     local callbacks = T.callbacks[event]
-    for _, callback in pairs(callbacks) do
+    if not callbacks then
+        return
+    end
+    for _, callback in ipairs(callbacks) do
         callback.action(data)
     end
 end
 
-T.onStun = function(triggers)
+T.onStun = function(_triggers)
     Damage.register("After", function(info)
         local unit = info.target
 
@@ -62,7 +66,7 @@ T.onStun = function(triggers)
     end, 1.0)
 end
 
-T.onRoot = function(triggers)
+T.onRoot = function(_triggers)
     Damage.register("After", function(info)
         local unit = info.target
 
@@ -86,20 +90,7 @@ T.onAttack = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ATTACKED)
     TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            if trigger.attacker and trigger.attacker.type then
-                if GetUnitTypeId(GetAttacker()) == trigger.attacker.type then
-                    trigger.action()
-                    dump("GetIssuedOrderId", OrderId2String(GetIssuedOrderId()), "trigger.order", trigger.order)
-                    dump("trigger.action() 1")
-                    goto continue
-                end
-            else
-                trigger.action()
-                -- dump("trigger.action() 2")
-            end
-            ::continue::
-        end
+        Filter.runUnitTriggers(triggers, GetAttacker(), "source")
     end)
 end
 
@@ -107,16 +98,7 @@ T.onDeath = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_DEATH)
     TriggerAddAction(trig, function()
-        local unitId = GetUnitTypeId(GetDyingUnit())
-        for _, trigger in ipairs(triggers) do
-            if trigger.unitType then
-                if unitId == trigger.unitType then
-                    trigger.action()
-                end
-            else
-                trigger.action()
-            end
-        end
+        Filter.runUnitTriggers(triggers, GetDyingUnit(), "target")
     end)
 end
 
@@ -124,12 +106,7 @@ T.onSummon = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_SUMMON)
     TriggerAddAction(trig, function()
-        local unitId = GetUnitTypeId(GetSummonedUnit())
-        for _, trigger in ipairs(triggers) do
-            if unitId == trigger.unitType then
-                trigger.action()
-            end
-        end
+        Filter.runUnitTriggers(triggers, GetSummonedUnit(), "target")
     end)
 end
 
@@ -137,8 +114,6 @@ T.onSpellCast = function(triggers)
     local castTrig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_CAST)
     TriggerAddAction(castTrig, function()
-        -- local caster
-        -- local target
         local spellId = GetSpellAbilityId()
         for _, trigger in ipairs(triggers) do
             if spellId == trigger.spellId then
@@ -152,8 +127,6 @@ T.onSpellEffect = function(triggers)
     local castTrig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
     TriggerAddAction(castTrig, function()
-        -- local caster
-        -- local target
         local spellId = GetSpellAbilityId()
         for _, trigger in ipairs(triggers) do
             if spellId == trigger.spellId then
@@ -178,65 +151,19 @@ end
 
 T.onPreDamage = function(triggers)
     Damage.register("Pre", function(info)
-        for _, trigger in ipairs(triggers) do
-            trigger.action(info)
-        end
+        Filter.runFilteredDamageTriggers(triggers, info)
     end, 1.0)
 end
 
 T.onDamage = function(triggers)
-    -- dump("onDamage register")
     Damage.register("On", function(info)
-        -- dump("onDamage fired")
-        for _, trigger in ipairs(triggers) do
-            -- dump("onDamage trigger check ..")
-            if trigger.target and trigger.target.type then
-                local types = {}
-                for _, v in ipairs(trigger.target.type) do
-                    types[FourCC(v)] = true
-                end
-                if types[GetUnitTypeId(info.target)] then
-                    trigger.action(info)
-                    goto continue
-                end
-            elseif trigger.source and trigger.source.type then
-                if GetUnitTypeId(info.source) == trigger.source.type then
-                    trigger.action(info)
-                    goto continue
-                end
-            else
-                trigger.action(info)
-            end
-            ::continue::
-        end
+        Filter.runFilteredDamageTriggers(triggers, info)
     end, 1.0)
 end
 
 T.afterDamage = function(triggers)
-    -- dump("onDamage register")
     Damage.register("After", function(info)
-        -- dump("onDamage fired")
-        for _, trigger in ipairs(triggers) do
-            -- dump("onDamage trigger check ..")
-            if trigger.target and trigger.target.type then
-                local types = {}
-                for _, v in ipairs(trigger.target.type) do
-                    types[FourCC(v)] = true
-                end
-                if types[GetUnitTypeId(info.target)] then
-                    trigger.action(info)
-                    goto continue
-                end
-            elseif trigger.source and trigger.source.type then
-                if GetUnitTypeId(info.source) == trigger.source.type then
-                    trigger.action(info)
-                    goto continue
-                end
-            else
-                trigger.action(info)
-            end
-            ::continue::
-        end
+        Filter.runFilteredDamageTriggers(triggers, info)
     end, 1.0)
 end
 
@@ -260,18 +187,10 @@ T.onOrder = function(triggers)
             if trigger.order then
                 if GetIssuedOrderId() == String2OrderIdBJ(trigger.order) then
                     trigger.action()
-                    goto continue
-                end
-            elseif trigger.unit and trigger.unit.type then
-                if GetUnitTypeId(GetOrderedUnit()) == trigger.unit.type then
-                    trigger.action()
-                    goto continue
                 end
             else
                 trigger.action()
-                dump("trigger.action() 2")
             end
-            ::continue::
         end
     end)
 end
@@ -300,12 +219,7 @@ T.onTrain = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_TRAIN_FINISH)
     TriggerAddAction(trig, function()
-        local unitId = GetUnitTypeId(GetTrainedUnit())
-        for _, trigger in ipairs(triggers) do
-            if unitId == trigger.unitType then
-                trigger.action()
-            end
-        end
+        Filter.runUnitTriggers(triggers, GetTrainedUnit(), "target")
     end)
 end
 
@@ -344,8 +258,8 @@ T.methods = {
     AFTER_DAMAGE = T.afterDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,
-    STUN = T.onStun, -- registered in onDamage - won't register without
-    ROOT = T.onRoot, -- registered in onDamage - won't register without
+    STUN = T.onStun,
+    ROOT = T.onRoot,
 }
 
 return T

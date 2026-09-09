@@ -170,11 +170,13 @@ return {
     triggers = {
         -- EVENT_UNIT_RESEARCH_FINISH
         -- +? unit dies
-        EVENT_PLAYER_UNIT_SPELL_EFFECT = {
+        {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.soulbindAbilityId,
             action = onSoulbindCast,
         },
-        TIMER = {
+        {
+            trigger = "TIMER",
             delta = CONFIG.tickSeconds,
             action = updateSoulbindStatus,
         },

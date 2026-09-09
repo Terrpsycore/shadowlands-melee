@@ -102,7 +102,7 @@ return {
         },
         {
             trigger = "EVENT_PLAYER_UNIT_SUMMON",
-            unitType = CONFIG.spiritTypeId,
+            filter = { target = CONFIG.spiritTypeId },
             action = onSummoned,
         },
         {
@@ -111,14 +111,12 @@ return {
         },
         {
             trigger = "DAMAGE",
+            filter = { source = FourCC(Ids.units.dummyAttack) },
             action = afterDummyAttack,
-            source = {
-                type = FourCC(Ids.units.dummyAttack),
-            },
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            unitType = CONFIG.spiritTypeId,
+            filter = { target = CONFIG.spiritTypeId },
             action = onDeath,
         },
     },
