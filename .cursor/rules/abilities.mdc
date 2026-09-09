@@ -1,6 +1,6 @@
 ---
 description: Gotcha при генерации WC3-способностей
-globs: src/data/abilities/**/*.lua,src/data/units/**/*.lua,src/scenario/factions/**/abilities/**/*.lua,src/tests/**/*.lua
+globs: src/data/abilities/**/*.lua,src/data/units/**/*.lua,src/scenario/factions/**/abilities/**/*.lua,src/scenario/common/templates/**/*.lua,src/tests/**/*.lua
 alwaysApply: false
 ---
 
@@ -53,3 +53,10 @@ alwaysApply: false
 - **Пресеты** (`data/ability.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
 
 - Команды после разработки: `lua objediting/gen_ids.lua` (генерит `ids.lua` и `id_slugs.lua`); тесты не запускать (их запускает пользователь, напоминать не надо)
+
+- **Scenario templates** (`src/scenario/common/templates/`):
+  - `_reference.lua` — все 18 trigger-типов с примерами filter/spellId/delta; только справочник
+  - archetype `*.lua` — минимальный каркас под тип способности (checklist в шапке)
+  - index и workflow: `src/scenario/common/_template.lua`
+  - **не** подключать templates в `scenario/abilities.lua` — только копировать при создании новой способности
+  - новая способность: `AbilityConfig.compile` → `CONFIG.refs.*` / `CONFIG.balance.*` → `triggers` array → `config = CONFIG`

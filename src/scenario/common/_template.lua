@@ -1,49 +1,32 @@
-local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
-local Dummy = require("utils.dummy")
-local Type = require("utils.type")
-local Unit = require("utils.unit")
-local dump = require("utils.logger")
+--[[
+  Scenario ability templates — start here.
 
-local CONFIG = AbilityConfig.compile({
-    refs = {
-        abilities = {
-            main = Ids.abilities.defenceProtocol,
-            buff = Ids.abilities.defenceProtocolBuff,
-        },
-        units = {
-            carrier = Ids.units.praetor,
-            protected = { Ids.units.steward, Ids.units.aspirant },
-        },
-    },
-    balance = {
-        -- radius = 600,
-        -- cooldown = 5,
-        -- requiredUpgradeId = nil,
-    },
-})
+  DO NOT require this file or anything in templates/ from scenario/abilities.lua.
+  Copy an archetype file into scenario/factions/<faction>/abilities/<slug>.lua.
 
-local function onSpell() end
-local function onDeath() end
-local function onDamage(info) end
+  WORKFLOW:
+    1. Pick archetype below (or _reference.lua for custom trigger mix)
+    2. Copy template → factions/<faction>/abilities/<slug>.lua
+    3. Replace slug placeholders in refs / balance
+    4. Implement unique logic (effect, tryActivate, onTick, …)
+    5. Add data rows (abilities, buffs, units) → lua objediting/gen_ids.lua
+    6. require("scenario.factions.<faction>.abilities.<slug>") in scenario/abilities.lua
+    7. Optional: tests/<slug>.lua
 
-return {
-    triggers = {
-        {
-            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.refs.abilities.main,
-            action = onSpell,
-        },
-        {
-            trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = CONFIG.refs.units.carrier },
-            action = onDeath,
-        },
-        {
-            trigger = "DAMAGE",
-            filter = { target = CONFIG.refs.units.protected },
-            action = onDamage,
-        },
-    },
-    config = CONFIG,
-}
+  ALL TRIGGERS (18 types):
+    templates/_reference.lua
+
+  ARCHETYPES:
+    on-cast-target.lua           — SPELL_CAST on target (Reusables)
+    on-cast-effect.lua           — SPELL_EFFECT, area/point (Bastion Spear)
+    toggle-passive-on-damage.lua — immolation toggle + DAMAGE proc (Defence Protocol, Pulseback)
+    toggle-passive-on-attack.lua — immolation toggle + ATTACKED proc (Anima Barrage)
+    proximity-tick.lua           — TRAIN + DEATH + TIMER proximity buff (Formation)
+    disable-triggered.lua        — STUN/ROOT reactive buff (Hunted Animal)
+    buff-chain-storage.lua       — cast → dummy chain + storage + TIMER (Dedication, Deep Meditation)
+    pre-damage-modifier.lua      — PRE_DAMAGE hook (Spirit Link)
+
+  Too custom for archetype (use _reference.lua): soulbind, scan, cannibalize, oneMoreChance, lastStand
+]]
+
+return {}
