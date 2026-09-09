@@ -4,6 +4,9 @@ return {
     dummy = {
         parent = UnitIds.footman,
         name = "Dummy",
+        art = {
+            model = "",
+        },
         --abilities = { "locust" },
         apply = function(u)
             u:setManaMaximum(1000)
@@ -12,7 +15,6 @@ return {
             u:setAnimationCastPoint(0)
             u:setAnimationCastBackswing(0)
             u:setTurnRate(3)
-            -- u:setModelFile("")
         end,
     },
     dummyAttack = {
@@ -27,8 +29,10 @@ return {
             type = AttackType.Chaos,
             targetsAllowed = "ground,air,structure,enemy,neutral,vulnerable",
         },
+        art = {
+            model = "",
+        },
         apply = function(u)
-            --u:setModelFile("")
             u:setSpeedBase(0)
             u:setCollisionSize(0)
             --u:setAttacksEnabled(1)

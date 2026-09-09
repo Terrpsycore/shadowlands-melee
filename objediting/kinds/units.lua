@@ -18,6 +18,10 @@ local function resolveUnitIdList(slugs)
     return table.concat(parts, ",")
 end
 
+local function normalizePath(path)
+    return path:gsub("/", "\\")
+end
+
 local function applySubfields(obj, value, mapping, context)
     for key, val in pairs(value) do
         local handler = mapping[key]
@@ -113,6 +117,19 @@ local fields = {
                 u:setAttack1TargetsAllowed(v)
             end,
         }, "attack1")
+    end,
+    art = function(u, value)
+        applySubfields(u, value, {
+            model = function(u, v)
+                u:setModelFile(normalizePath(v))
+            end,
+            icon = function(u, v)
+                u:setIconGameInterface(normalizePath(v))
+            end,
+            scale = function(u, v)
+                u:setScalingValue(v)
+            end,
+        }, "art")
     end,
 }
 
