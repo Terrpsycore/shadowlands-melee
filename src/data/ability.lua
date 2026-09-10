@@ -1,27 +1,7 @@
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
 
----@class AbilityRowInput
----@field name? string
----@field levels? integer
----@field buffs? string[]
----@field autocastRange? number
----@field options? integer
----@field button? integer[]
----@field hotkey? string
----@field requirements? string
----@field manaCost? number|number[]
----@field art? { icon?: string, iconOff?: string, iconResearch?: string }
----@field apply? fun(a: AbilityDefinition)
-
----@class AbilityFactory
----@field parent string
----@field apply fun(fn: fun(a: AbilityDefinition)): fun(a: AbilityDefinition)
----@overload fun(data?: AbilityRowInput): AbilityRowInput
-
----@alias AbilityDefinitionChannel AbilityDefinitionIllidanChannel
----@alias AbilityDefinitionImmolation AbilityDefinitionImmolationcreep
-
-local A = require("data.generated.ability_factories")
+---@type AbilityFactories
+local F = require("data.generated.ability_factories")
 
 local function mergeDefaults(preset, data)
     local row = {}
@@ -50,16 +30,13 @@ local function mergeDefaults(preset, data)
     return row
 end
 
----@generic T: AbilityFactory
----@param base T
----@param presetDefaults AbilityRowInput
----@return T
-local function presetFactory(base, presetDefaults)
-    ---@type AbilityFactory
-    local factoryBase = base
+---@type PresetFactory
+local presetFactory
+---@diagnostic disable-next-line
+function presetFactory(base, presetDefaults)
     return setmetatable({
-        parent = factoryBase.parent,
-        apply = factoryBase.apply,
+        parent = base.parent,
+        apply = base.apply,
     }, {
         __call = function(_, data)
             return base(mergeDefaults(presetDefaults, data))
@@ -67,91 +44,67 @@ local function presetFactory(base, presetDefaults)
     })
 end
 
----@class AbilityFactoryInventory : AbilityFactory
----@field apply fun(fn: fun(a: AbilityInventory)): fun(a: AbilityInventory)
+---@return AbilityModule
+return setmetatable({
+    inventory = setmetatable({
+        parent = AbilityIds.inventory,
+        apply = function(fn)
+            return fn
+        end,
+    }, getmetatable(F.innerFire)),
 
----@type AbilityFactoryInventory
-A.inventory = setmetatable({
-    parent = AbilityIds.inventory,
-    apply = function(fn)
-        return fn
-    end,
-}, getmetatable(A.innerFire))
+    channelNoTarget = presetFactory(F.channel, {
+        options = 1,
+        apply = function(a)
+            a:setDisableOtherAbilities(1, false)
+        end,
+    }),
 
----@param a AbilityDefinitionChannel
-local function applyChannelNoTargetDefaults(a)
-    a:setDisableOtherAbilities(1, false)
-end
+    channelTarget = presetFactory(F.channel, {
+        options = 1,
+        apply = function(a)
+            a:setTargetType(1, 1)
+            a:setDisableOtherAbilities(1, false)
+        end,
+    }),
 
----@param a AbilityDefinitionChannel
-local function applyChannelTargetDefaults(a)
-    a:setTargetType(1, 1)
-    a:setDisableOtherAbilities(1, false)
-end
+    channelPoint = presetFactory(F.channel, {
+        options = 1,
+        apply = function(a)
+            a:setTargetType(1, 2)
+            a:setDisableOtherAbilities(1, false)
+        end,
+    }),
 
----@param a AbilityDefinitionChannel
-local function applyChannelPointDefaults(a)
-    a:setTargetType(1, 2)
-    a:setDisableOtherAbilities(1, false)
-end
+    channelArea = presetFactory(F.channel, {
+        options = 3,
+        apply = function(a)
+            a:setTargetType(1, 2)
+            a:setDisableOtherAbilities(1, false)
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
+        end,
+    }),
 
----@param a AbilityDefinitionChannel
-local function applyChannelAreaDefaults(a)
-    a:setTargetType(1, 2)
-    a:setDisableOtherAbilities(1, false)
-    a:setFollowThroughTime(1, 0)
-    a:setArtDuration(1, 0)
-end
+    immolationToggle = presetFactory(F.immolation, {
+        apply = function(a)
+            a:setDamageperInterval(1, 0)
+            a:setManaDrainedperSecond(1, 0)
+            a:setBufferManaRequired(1, 0)
+        end,
+    }),
 
----@param a AbilityDefinitionImmolation
-local function applyImmolationToggleDefaults(a)
-    a:setDamageperInterval(1, 0)
-    a:setManaDrainedperSecond(1, 0)
-    a:setBufferManaRequired(1, 0)
-end
+    exhumeBased = presetFactory(F.exhume, {
+        apply = function(a)
+            a:setMaximumNumberofCorpses(1, 0)
+            a:setCooldown(1, 0)
+        end,
+    }),
 
----@param a AbilityDefinitionExhume
-local function applyExhumeBasedDefaults(a)
-    a:setMaximumNumberofCorpses(1, 0)
-    a:setCooldown(1, 0)
-end
-
----@param a AbilityDefinitionEvasion
-local function applyPassiveGenericDefaults(a)
-    a:setChancetoEvade(1, 0)
-end
-
-A.channelNoTarget = presetFactory(A.channel, {
-    options = 1,
-    apply = applyChannelNoTargetDefaults,
-})
-
-A.channelTarget = presetFactory(A.channel, {
-    options = 1,
-    apply = applyChannelTargetDefaults,
-})
-
-A.channelPoint = presetFactory(A.channel, {
-    options = 1,
-    apply = applyChannelPointDefaults,
-})
-
-A.channelArea = presetFactory(A.channel, {
-    options = 3,
-    apply = applyChannelAreaDefaults,
-})
-
-A.immolationToggle = presetFactory(A.immolation, {
-    apply = applyImmolationToggleDefaults,
-})
-
-A.exhumeBased = presetFactory(A.exhume, {
-    apply = applyExhumeBasedDefaults,
-})
-
---- Hidden evasion with 0% — passive marker for script triggers, no gameplay effect.
-A.passiveGeneric = presetFactory(A.evasion, {
-    apply = applyPassiveGenericDefaults,
-})
-
-return A
+    --- Hidden evasion with 0% — passive marker for script triggers, no gameplay effect.
+    passiveGeneric = presetFactory(F.evasion, {
+        apply = function(a)
+            a:setChancetoEvade(1, 0)
+        end,
+    }),
+}, { __index = F })

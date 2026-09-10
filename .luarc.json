@@ -11,9 +11,13 @@
     "library": [
       "src/lib/blizzard"
     ],
+    "useGitIgnore": false,
     "ignoreDir": [
       "src/lib/community/types/assets/main-debug.lua",
-      "src/lib/community/types/assets/main-release.lua"
+      "src/lib/community/types/assets/main-release.lua",
+      ".build",
+      ".def",
+      "tmp"
     ],
     "preloadFileSize": 1024
   },

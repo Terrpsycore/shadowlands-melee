@@ -17,6 +17,8 @@
 
 package.path = table.concat({ package.path, "src/?.lua", "src/?/init.lua" }, ";")
 
+dofile("objediting/gen_ability_kinds.lua")
+
 local SOURCES = {
     {
         domain = "units",
@@ -82,7 +84,6 @@ function Generator:generateIds()
 
     local genItemMeta = dofile("objediting/gen_item_meta.lua")
     genItemMeta(database.items, require("data.items"))
-    dofile("objediting/gen_ability_kinds.lua")
     -- dofile("objediting/gen_asset_catalogs.lua")
 end
 

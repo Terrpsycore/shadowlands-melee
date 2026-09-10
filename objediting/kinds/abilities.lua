@@ -159,7 +159,7 @@ return {
         if cls then
             return {
                 new = function(id)
-                    return cls:new(id)
+                    return cls:new(id, parent)
                 end,
             }
         end
