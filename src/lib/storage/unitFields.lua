@@ -5,6 +5,8 @@ local htApi = require("lib.storage.ht")
 local schema = require("lib.storage.schema")
 local Storage = require("lib.storage.instance")
 
+---@param name string
+---@param fieldSchema table
 return function(name, fieldSchema)
     local store = Storage.new(name, { mode = "unitFields" })
     local fields = schema.buildFieldMap(fieldSchema)
@@ -47,6 +49,7 @@ return function(name, fieldSchema)
         return readField(unit, fieldName)
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function store:have(unit)
         return not not units[unit] or exists(unit)
     end

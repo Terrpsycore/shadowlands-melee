@@ -7,10 +7,29 @@
       "src/?/init.lua"
     ]
   },
-  "diagnostics.disable": [
-    "empty-block"
-  ],
   "workspace": {
-    "preloadFileSize": 1024,
+    "library": [
+      "src/lib/blizzard"
+    ],
+    "ignoreDir": [
+      "src/lib/community/types/assets/main-debug.lua",
+      "src/lib/community/types/assets/main-release.lua"
+    ],
+    "preloadFileSize": 1024
+  },
+  "diagnostics": {
+    "disable": [
+      "empty-block"
+    ],
+    "globals": [
+      "Timed",
+      "Debug",
+      "ENUM_WAIT",
+      "Hook",
+      "UnitEvent",
+      "seterrorhandler",
+      "args",
+      "sourcecode"
+    ]
   }
 }

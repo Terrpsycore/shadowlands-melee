@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class AbilityInventory: AbilityDefinition
----@field def Definition
+---@field def ObjectDefinition
 
 ---@param id string|integer
 ---@param superId string|integer

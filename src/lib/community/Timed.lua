@@ -18,9 +18,10 @@ do
         Args: [delay, ]userFunc
         Desc: After "delay" seconds, call "userFunc". Delay defaults to 0 seconds.
     ----------------------------------------------------------------------------------------]]
-        ---@param delay? number
-        ---@param userFunc function
-        ---@return fun(doNotDestroy:boolean):number removalFunc -> only gets returned if the delay is > 0.
+        ---@overload fun(userFunc: function)
+        ---@param delay? number|function
+        ---@param userFunc? function
+        ---@return (fun(doNotDestroy:boolean):number)?
         call = function(delay, userFunc)
             if type(delay) == "function" then
                 userFunc, delay = delay, userFunc
@@ -40,25 +41,31 @@ do
                     end)
                 end
             else
-                local t = CreateTimer()
-                TimerStart(t, delay, false, function()
-                    DestroyTimer(t)
-                    t = nil
-                    userFunc()
+                ---@type { handle: timer? }
+                local timerRef = { handle = CreateTimer() }
+                TimerStart(timerRef.handle, delay, false, function()
+                    if timerRef.handle then
+                        DestroyTimer(timerRef.handle)
+                        timerRef.handle = nil
+                    end
+                    if userFunc then
+                        userFunc()
+                    end
                 end)
                 return function(doNotDestroy)
                     local result = 0
-                    if t then
-                        result = TimerGetRemaining(t)
+                    if timerRef.handle then
+                        result = TimerGetRemaining(timerRef.handle)
                         if not doNotDestroy then
-                            PauseTimer(t)
-                            DestroyTimer(t)
-                            t = nil
+                            PauseTimer(timerRef.handle)
+                            DestroyTimer(timerRef.handle)
+                            timerRef.handle = nil
                         end
                     end
                     return result
                 end
             end
+            return nil
         end,
 
         --[[--------------------------------------------------------------------------------------
@@ -71,9 +78,10 @@ do
     Note: This merges all matching timeouts together, so it is advisable only to use this
         for smaller numbers (e.g. <.3 seconds) where the difference is less noticeable.
     ----------------------------------------------------------------------------------------]]
-        ---@param timeout? number
-        ---@param duration? number
-        ---@param userFunc fun():boolean -- if true, echo will stop
+        ---@overload fun(userFunc: fun():boolean)
+        ---@param timeout? number|function
+        ---@param duration? number|function
+        ---@param userFunc? fun():boolean? -- if true, echo will stop
         ---@param onExpire? function     -- If the duration is specified and expiration occurs naturally, call this function.
         ---@param tolerance? number      -- Ranges from 0-1. If the duration is specified, the tolerance helps to measure the accuracy of the final tick.
         ---@return function remove_func
@@ -86,8 +94,10 @@ do
                 userFunc, duration = duration, nil
                 --else params were exactly as defined.
             end
+            ---@type (fun():boolean?)?
+            local cb = userFunc
             local wrapper = function()
-                return not userFunc or userFunc() --this wrapper function allows manual removal to be understood and processed accordingly.
+                return not cb or cb() --this wrapper function allows manual removal to be understood and processed accordingly.
             end
             timeout = timeout or _DEFAULT_ECHO_TIMEOUT
             if duration then
@@ -149,7 +159,7 @@ do
             end
             return function(doNotDestroy)
                 if not doNotDestroy then
-                    userFunc = nil
+                    cb = nil
                 end
                 return duration
             end

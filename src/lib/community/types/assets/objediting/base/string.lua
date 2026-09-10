@@ -5,6 +5,8 @@
 
 local string, table = string, table
 
+---@diagnostic disable: inject-field, undefined-field, redundant-return-value
+
 ---trimleft
 ---@param s string
 ---@return string

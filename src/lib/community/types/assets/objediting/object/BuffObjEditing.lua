@@ -1,5 +1,5 @@
 ---@class BuffDefinition: object
----@field def Definition
+---@field def ObjectDefinition
 BuffDefinition = class('BuffDefinition')
 _G.BuffDefinition = BuffDefinition
 

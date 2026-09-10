@@ -7,7 +7,7 @@ local CONFIG = AbilityConfig.compile({
 })
 
 local function onAnyOrder()
-    dump(GetIssuedOrderId(), OrderId2String(GetIssuedOrderId()))
+    dump("order", OrderId2String(GetIssuedOrderId()))
 end
 
 return {

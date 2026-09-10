@@ -1,5 +1,5 @@
 ---@class W3TDefinition: object
----@field def Definition
+---@field def ObjectDefinition
 W3TDefinition = class('W3TDefinition')
 _G.W3TDefinition = W3TDefinition
 

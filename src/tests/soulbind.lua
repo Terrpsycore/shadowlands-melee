@@ -49,7 +49,7 @@ Timed.call(0, function()
     local x, y = -200, -200
     local u1, u2 = pair(x, y)
     local id = bond(u1, u2)
-    local b = Store:get(id)
+    local b = assert(Store:get(id), "bond missing")
 
     report(b.level == 1 and b.progress == 0 and not b.active, "bond starts at level 1")
     report(Store:getByUnit(u1) == id, "unit lookup works")
@@ -65,18 +65,18 @@ Timed.call(0, function()
 
     local halfTicks = math.ceil(TICKS_PER_LEVEL / 2)
     tick(id, halfTicks)
-    local mid = Store:get(id)
+    local mid = assert(Store:get(id), "bond missing")
     report(mid.level == 1 and mid.progress > 0 and mid.progress < 1, "partial progress mid level")
 
     tick(id, TICKS_PER_LEVEL - halfTicks)
-    local lvl2 = Store:get(id)
+    local lvl2 = assert(Store:get(id), "bond missing")
     report(lvl2.level == 2 and lvl2.progress == 0, "level 2 after full cycle")
 
     tick(id, TICKS_PER_LEVEL)
-    report(Store:get(id).level == 3, "level 3 after second cycle")
+    report(assert(Store:get(id), "bond missing").level == 3, "level 3 after second cycle")
 
     tick(id, TICKS_PER_LEVEL)
-    local capped = Store:get(id)
+    local capped = assert(Store:get(id), "bond missing")
     report(capped.level == 3 and capped.progress == 0, "stays at max level")
 
     cleanup(id, u1, u2)
@@ -90,7 +90,7 @@ Timed.call(0, function()
 
     SetUnitPosition(u2, x + OUT_OF_RANGE_OFFSET, y)
     Soulbind.tickBond(id)
-    local b = Store:get(id)
+    local b = assert(Store:get(id), "bond missing")
 
     report(not b.active and b.level == 1 and b.progress == 0, "no progress when out of range")
 

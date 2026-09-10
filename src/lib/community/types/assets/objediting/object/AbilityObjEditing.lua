@@ -1,5 +1,6 @@
+---@diagnostic disable: duplicate-set-field
 ---@class AbilityDefinition: object
----@field def Definition
+---@field def ObjectDefinition
 AbilityDefinition = class("AbilityDefinition")
 _G.AbilityDefinition = AbilityDefinition
 

@@ -25,21 +25,21 @@ Damage                   =
 ---@field target        unit
 ---@field damage        number
 ---@field prevAmt       number
----@field userAmt       number
+---@field userAmt?      number
 ---@field isAttack      boolean
----@field isRanged      boolean
----@field isMelee       boolean
+---@field isRanged?     boolean
+---@field isMelee?      boolean
 ---@field attackType    attacktype
 ---@field damageType    damagetype
 ---@field weaponType    weapontype
 ---@field isCode        boolean
----@field isSpell       boolean
+---@field isSpell?      boolean
 ---@field userData      any
----@field armorPierced  number
----@field armorType     integer
----@field defenseType   integer
----@field prevArmorT    integer
----@field prevDefenseT  integer
+---@field armorPierced? number
+---@field armorType?    integer
+---@field defenseType?  integer
+---@field prevArmorT?   integer
+---@field prevDefenseT? integer
 local currentInfo
 local yieldedInfo ---@type damageInfo
 local execute            = {} ---@type { [string]: fun(info:damageInfo) }

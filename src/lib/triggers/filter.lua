@@ -3,7 +3,7 @@
 ---@field target? integer|integer[]
 
 ---@class TriggerDefinition
----@field trigger string
+---@field trigger? string
 ---@field action fun(ctx?: any)
 ---@field spellId? integer
 ---@field order? string
@@ -55,8 +55,9 @@ function Filter.compileTrigger(entry)
     if not filter then
         return
     end
-    entry._sourceTypes = toTypeSet(filter.source, entry.trigger, "source")
-    entry._targetTypes = toTypeSet(filter.target, entry.trigger, "target")
+    local triggerName = entry.trigger or "callback"
+    entry._sourceTypes = toTypeSet(filter.source, triggerName, "source")
+    entry._targetTypes = toTypeSet(filter.target, triggerName, "target")
 end
 
 ---@param set? table<integer, boolean>

@@ -22,8 +22,8 @@ if Hook then --https://www.hiveworkshop.com/threads/hook.339153
 
     ---GlobalRemap
     ---@param var string
-    ---@param getFunc? fun() ->value?
-    ---@param setFunc? fun(value)
+    ---@param getFunc? fun(): any
+    ---@param setFunc? fun(value: any)
     function GlobalRemap(var, getFunc, setFunc)
         if not skip then
             getters, setters, skip = {}, {}, DoNothing

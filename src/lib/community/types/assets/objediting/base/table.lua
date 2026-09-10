@@ -6,6 +6,8 @@
 local pairs, ipairs, select, type = pairs, ipairs, select, type
 local table = table
 
+---@diagnostic disable: inject-field, redundant-return-value, missing-return, undefined-doc-name, return-type-mismatch
+
 ---@class integer: number
 ---@class float: number
 

@@ -1,4 +1,5 @@
----@class Dummper
+---@diagnostic disable: assign-type-mismatch
+---@class Dummper: object
 Dummper = class('Dummper')
 
 function Dummper:constructor(defType)

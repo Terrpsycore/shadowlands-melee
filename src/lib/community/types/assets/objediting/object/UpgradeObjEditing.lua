@@ -1,5 +1,5 @@
 ---@class W3QDefinition: object
----@field def Definition
+---@field def ObjectDefinition
 W3QDefinition = class('W3QDefinition')
 _G.W3QDefinition = W3QDefinition
 

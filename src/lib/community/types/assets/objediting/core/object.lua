@@ -1,3 +1,4 @@
+---@diagnostic disable
 -- object.lua
 -- @Author : Dencer (tdaddon@163.com)
 -- @Link   : https://dengsir.github.io
@@ -29,7 +30,7 @@ DefinitionType = {
 ---@class Definition
 ---@field id string
 ---@field superId string
----@field type DefinitionType
+---@field type string
 ---@field fields table<string, Filed>
 
 ---@class ObjectDefinition: object
@@ -187,9 +188,10 @@ local DEFINITIONS = DEFINITIONS
 local TYPED_DEFINITIONS = TYPED_DEFINITIONS
 local CREATED_DEFINITIONS = {}
 
----@param defType DefinitionType
+---@param defType string
 ---@param id string
 ---@param superId string
+---@return ObjectDefinition
 function createDefinition(defType, id, superId)
     if type(id) == 'number' then
         id = string.pack('>I', id)

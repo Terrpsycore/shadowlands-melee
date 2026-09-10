@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields, undefined-field
 -- objectreader.lua
 -- @Author : Dencer (tdaddon@163.com)
 -- @Link   : https://dengsir.github.io

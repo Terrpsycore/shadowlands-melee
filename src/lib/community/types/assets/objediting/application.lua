@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global, undefined-field
 -- manager.lua
 -- @Author : Dencer (tdaddon@163.com)
 -- @Link   : https://dengsir.github.io

@@ -45,18 +45,19 @@ do
     LinkedList.__index = LinkedList
 
     ---@class listNode:LinkedList
+    ---@field value? any
     ---@field remove fun(node:listNode)->boolean
     ---@field onRemove fun(self:listNode)
 
     ---Creates or resets a table as a LinkedList head.
     ---@param head? LinkedList allows a user-specified head or generates a new one.
-    ---@return LinkedList
+    ---@return LinkedList?
     function LinkedList.create(head)
         if head and type(head) == "table" then
             local h = head.head
             if h then
                 if h ~= head then
-                    return --user passed an active ListNode. This is not allowed.
+                    return nil --user passed an active ListNode. This is not allowed.
                 end
                 if h.n > 0 then --first empty any lists that still have nodes.
                     for node in head:loop() do
@@ -65,6 +66,7 @@ do
                 end
             end
         else
+            ---@diagnostic disable-next-line: missing-fields
             head = {}
         end
         setmetatable(head, LinkedList)
@@ -81,14 +83,14 @@ do
     ---@param list listNode|LinkedList
     ---@param node_or_value? any
     ---@param insertAfter? boolean
-    ---@return listNode node that was added to the list (if addition was successful)
+    ---@return listNode? node that was added to the list (if addition was successful)
     function LinkedList.insert(list, node_or_value, insertAfter)
         if not list then
-            return
+            return nil
         end
         local head = list.head
         if not head then
-            return
+            return nil
         end
         local node, value
 
@@ -140,6 +142,7 @@ do
                 return true
             end
         end
+        return false
     end
 
     ---Enables the generic for-loop for LinkedLists.

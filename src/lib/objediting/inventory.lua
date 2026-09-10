@@ -1,5 +1,4 @@
 ---@class AbilityInventory: AbilityDefinition
----@field def Definition
 AbilityInventory = class("AbilityInventory", AbilityDefinition)
 
 function AbilityInventory:setCanDropItems(level, value)

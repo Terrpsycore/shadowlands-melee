@@ -1,3 +1,4 @@
+---@diagnostic disable: inject-field, undefined-field, undefined-doc-param
 -- objectwriter.lua
 -- @Author : Dencer (tdaddon@163.com)
 -- @Link   : https://dengsir.github.io

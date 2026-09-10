@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 -- data.lua
 -- @Author : DengSir (tdaddon@163.com)
 -- @Link   : https://dengsir.github.io
@@ -31,6 +32,7 @@ local function inherit(cls, super)
     end
 end
 
+---@diagnostic disable: inject-field, undefined-field, undefined-doc-name, missing-return
 ---@class object
 object = {}
 
@@ -163,7 +165,7 @@ end
 
 ---class
 ---@param name string
----@param super object
+---@param super? object
 ---@return object
 function class(name, super)
     if type(name) ~= 'string' then
