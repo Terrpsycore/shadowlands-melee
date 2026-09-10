@@ -7,8 +7,9 @@ return {
         root = buffTypes.root,
     },
     abilities = {
+        require("scenario.common.death"),
         require("scenario.common.selection"),
-        -- require("scenario.common.order"),
+        require("scenario.common.order"),
         --
         require("scenario.factions.kyrian.abilities.animaBarrage"),
         require("scenario.factions.kyrian.abilities.bastionSpear"),
@@ -29,6 +30,8 @@ return {
         require("scenario.factions.kyrian.abilities.soulbind"),
         require("scenario.factions.kyrian.abilities.spiritLink"),
         require("scenario.factions.kyrian.abilities.pride"),
+        require("scenario.factions.necrolord.abilities.animateDead"),
         require("scenario.factions.necrolord.abilities.combatExpertise"),
+        require("scenario.factions.necrolord.abilities.vanish"),
     },
 }

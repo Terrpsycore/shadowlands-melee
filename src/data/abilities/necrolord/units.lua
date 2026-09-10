@@ -14,4 +14,12 @@ return {
             end
         end),
     }),
+    animateDead = A.raiseDead({
+        name = "Animate Dead",
+    }),
+    animateDeadResurrection = A.resurrection({
+        apply = A.resurrection.apply(function(a)
+            a:setNumberofCorpsesRaised(1, 1)
+        end),
+    }),
 }

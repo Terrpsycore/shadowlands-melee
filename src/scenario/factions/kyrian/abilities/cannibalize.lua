@@ -29,6 +29,7 @@ local CONFIG = AbilityConfig.compile({
     },
     balance = {
         radius = 600,
+        searchRadiusPoint = 300,
         cooldown = 5,
         requiredUpgradeId = nil,
     },
@@ -38,17 +39,7 @@ local state = {}
 local isOrdering = false
 
 local function searchCorpse(unit, x, y)
-    local targetCorpse = nil
-    local searchGroup = CreateGroup()
-    GroupEnumUnitsInRange(searchGroup, x, y, 300.0, nil)
-
-    ForGroup(searchGroup, function()
-        local u = GetEnumUnit()
-        if IsUnitDeadBJ(u) and targetCorpse == nil then
-            targetCorpse = u
-        end
-    end)
-
+    local targetCorpse = Unit.getNearestCorpse(unit, CONFIG.balance.searchRadiusPoint)
     if targetCorpse == nil then
         return
     end

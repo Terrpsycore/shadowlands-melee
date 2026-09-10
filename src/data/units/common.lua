@@ -5,9 +5,10 @@ return {
         parent = UnitIds.footman,
         name = "Dummy",
         art = {
-            model = "",
+            -- model = "",
         },
         --abilities = { "locust" },
+        classification = "Suicidal",
         apply = function(u)
             u:setManaMaximum(1000)
             u:setManaInitialAmount(1000)
@@ -21,6 +22,7 @@ return {
         parent = UnitIds.footman,
         name = "Dummy AA",
         --abilities = { "locust" },
+        classification = "Suicidal",
         attack1 = {
             weapon = WeaponType.Instant,
             range = 99999,
@@ -44,16 +46,19 @@ return {
     },
     dummyTarget = {
         parent = UnitIds.footman,
+        classification = "Suicidal",
         apply = function(u)
             u:setAttacksEnabled(0)
         end,
     },
     dummyHero = {
         parent = UnitIds.paladin,
+        classification = "Suicidal",
         name = "Name",
     },
     dummyInvis = {
         parent = UnitIds.paladin,
+        classification = "Suicidal",
         name = "dummyInvis",
         abilities = { "windWalk" },
     },

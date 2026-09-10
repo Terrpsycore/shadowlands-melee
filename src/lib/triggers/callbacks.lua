@@ -47,6 +47,7 @@ T.fireEvent = function(event, data)
 end
 
 T.onStun = function(_triggers)
+    -- TODO: change to UNIT_TYPE_STUNNED
     Damage.register("After", function(info)
         local unit = info.target
 
@@ -67,6 +68,7 @@ T.onStun = function(_triggers)
 end
 
 T.onRoot = function(_triggers)
+    -- TODO: ? change to UNIT_TYPE_SNARED
     Damage.register("After", function(info)
         local unit = info.target
 
@@ -157,6 +159,12 @@ end
 
 T.onDamage = function(triggers)
     Damage.register("On", function(info)
+        Filter.runFilteredDamageTriggers(triggers, info)
+    end, 1.0)
+end
+
+T.onLethalDamage = function(triggers)
+    Damage.register("Lethal", function(info)
         Filter.runFilteredDamageTriggers(triggers, info)
     end, 1.0)
 end
@@ -255,6 +263,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,
     PRE_DAMAGE = T.onPreDamage,
     DAMAGE = T.onDamage,
+    LETHAL_DAMAGE = T.onLethalDamage,
     AFTER_DAMAGE = T.afterDamage,
     TIMER = T.onTimer,
     ORDER = T.onAnyOrder,

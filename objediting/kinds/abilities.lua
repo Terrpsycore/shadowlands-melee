@@ -9,6 +9,20 @@ local reserved = {
     apply = true,
 }
 
+local function normalizePath(path)
+    return path:gsub("/", "\\")
+end
+
+local function applySubfields(obj, value, mapping, context)
+    for key, val in pairs(value) do
+        local handler = mapping[key]
+        if not handler then
+            error("unknown " .. context .. " field '" .. key .. "'")
+        end
+        handler(obj, val)
+    end
+end
+
 local function eachLevel(data)
     local levels = data.levels or 1
     local level = 0
@@ -90,6 +104,19 @@ local fields = {
         for level in eachLevel(data) do
             a:setBuffs(level, table.concat(parts, ","))
         end
+    end,
+    art = function(a, value)
+        applySubfields(a, value, {
+            icon = function(a, v)
+                a:setIconNormal(normalizePath(v))
+            end,
+            iconOff = function(a, v)
+                a:setIconTurnOff(normalizePath(v))
+            end,
+            iconResearch = function(a, v)
+                a:setIconResearch(normalizePath(v))
+            end,
+        }, "art")
     end,
 }
 

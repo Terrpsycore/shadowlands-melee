@@ -11,5 +11,6 @@ return {
     { "hotkey", "string", optional = true },
     { "requirements", "string", optional = true },
     { "manaCost", "number|number[]", optional = true },
+    { "art", "{ icon?: string, iconOff?: string, iconResearch?: string }", optional = true },
     { "apply", "fun(a: AbilityDefinition)", optional = true },
 }

@@ -54,12 +54,12 @@ return function(name, fieldSchema)
     local UNIT_MT = {
         __index = function(t, key)
             if fields[key] then
-                return readField(t.unit, key)
+                return readField(t._key, key)
             end
         end,
         __newindex = function(t, key, value)
             if fields[key] then
-                writeField(t.unit, key, value)
+                writeField(t._key, key, value)
                 return
             end
             error("unknown field '" .. key .. "' on " .. name)
@@ -71,7 +71,7 @@ return function(name, fieldSchema)
             return nil
         end
         units[unit] = true
-        return setmetatable({ unit = unit }, UNIT_MT)
+        return setmetatable({ _key = unit }, UNIT_MT)
     end
 
     function store:clear(unit)

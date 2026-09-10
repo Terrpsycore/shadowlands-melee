@@ -32,6 +32,18 @@ function Unit.hasInvisibilityBuff(unit)
     return false
 end
 
+function Unit.substractMana(unit, amount)
+    local maxMana = GetUnitState(unit, UNIT_STATE_MAX_MANA)
+    local currentMana = GetUnitState(unit, UNIT_STATE_MANA)
+    return SetUnitState(unit, UNIT_STATE_MANA, math.max(0, currentMana - amount))
+end
+
+function Unit.restoreMana(unit, amount)
+    local maxMana = GetUnitState(unit, UNIT_STATE_MAX_MANA)
+    local currentMana = GetUnitState(unit, UNIT_STATE_MANA)
+    return SetUnitState(unit, UNIT_STATE_MANA, math.min(maxMana, currentMana + amount))
+end
+
 function Unit.isManaFull(unit)
     return GetUnitState(unit, UNIT_STATE_MANA) >= GetUnitState(unit, UNIT_STATE_MAX_MANA) - 0.01
 end
@@ -136,7 +148,7 @@ function Unit.getAllyUnitsInRadius(unit, radius, filter)
             u
             and UnitAlive(u)
             and IsUnitAlly(u, owner)
-            and (filter and filter(u))
+            and (not filter or filter(u))
             -- and IsUnitInRangeXY(u, x, y, radius)
         then
             table.insert(resultsTable, u)
@@ -146,6 +158,27 @@ function Unit.getAllyUnitsInRadius(unit, radius, filter)
     DestroyGroup(tempGroup)
 
     return resultsTable
+end
+
+function Unit.getNearestCorpse(unit, radius)
+    local corpse = nil
+    local x = GetUnitX(unit)
+    local y = GetUnitY(unit)
+
+    local tempGroup = CreateGroup()
+    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
+
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
+        local u = BlzGroupUnitAt(tempGroup, i)
+
+        if IsUnitDeadBJ(u) and corpse == nil then
+            corpse = u
+        end
+    end
+
+    DestroyGroup(tempGroup)
+
+    return corpse
 end
 
 return Unit

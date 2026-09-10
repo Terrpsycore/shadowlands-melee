@@ -6,4 +6,8 @@ return {
         name = "Animate Warrior",
         abilities = { "combatExpertise" },
     },
+    necromancer = {
+        parent = UnitIds.necromancer,
+        abilities = { "animateDead" },
+    },
 }
