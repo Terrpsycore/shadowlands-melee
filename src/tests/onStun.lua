@@ -3,7 +3,7 @@
 local Ids = require("data.ids")
 local dump = require("utils.logger")
 
-local T = require("tests.support.runner")
+local T = require("tests.support.runner").suite("onStun")
 
 local Callback = require("lib.triggers.callbacks")
 

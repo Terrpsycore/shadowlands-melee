@@ -2,33 +2,15 @@ local Ids = require("data.ids")
 
 ENUM_WAIT = "WAIT"
 
----@alias TestWait "WAIT"
-
----@class TestCase
----@field run fun(self: TestCase)
----@field delay fun(self: TestCase, delta: number, callback: fun()): TestWait
----@field finish fun(self: TestCase, ok: boolean, err: any)
----@field ok fun(self: TestCase)
----@field fail fun(self: TestCase, msg: string)
----@field report fun(self: TestCase, msg: string)
----@field createItem fun(self: TestCase, itemTypeId: string): item
----@field createUnit fun(self: TestCase, unitTypeId: string, player?: player, collision?: boolean): unit
----@field applyDummyOrder fun(self: TestCase, owner: player, target: unit, abilityId: integer, order: string, level?: integer)
----@field flush fun(self: TestCase): boolean
----@field addFlushCallback fun(self: TestCase, callback: fun())
-
----@alias TestFn fun(case: TestCase): TestWait|nil
-
----@class CaseModule
 local Case = {}
 
 ---@param testName string
 ---@param testFunc TestFn
 ---@param x number
 ---@param y number
+---@param reporter TestReporterFn
 ---@return TestCase
-function Case.new(testName, testFunc, x, y)
-    ---@type TestCase
+function Case.new(testName, testFunc, x, y, reporter)
     local self = {}
 
     local items = {}
@@ -67,15 +49,11 @@ function Case.new(testName, testFunc, x, y)
     end
 
     function self:ok()
-        return self:report("OK: [" .. testName .. "]")
+        reporter(testName, true)
     end
 
     function self:fail(msg)
-        return self:report("ERROR: [" .. testName .. "] -> " .. msg)
-    end
-
-    function self:report(msg)
-        return DisplayTextToPlayer(GetLocalPlayer(), 0, 0, msg)
+        reporter(testName, false, tostring(msg))
     end
 
     ---
@@ -133,7 +111,8 @@ function Case.new(testName, testFunc, x, y)
         table.insert(flushCallbacks, callback)
     end
 
-    return self
+    return self --[[@as TestCase]]
 end
 
+---@cast Case CaseModule
 return Case

@@ -1,6 +1,6 @@
 require("lib.init")
 
--- require("tests.init")
+require("tests.init")
 
 local dump = require("utils.logger")
 

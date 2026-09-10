@@ -9,7 +9,7 @@ return {
     abilities = {
         require("scenario.common.death"),
         require("scenario.common.selection"),
-        require("scenario.common.order"),
+        -- require("scenario.common.order"),
         --
         require("scenario.factions.kyrian.abilities.animaBarrage"),
         require("scenario.factions.kyrian.abilities.bastionSpear"),

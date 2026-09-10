@@ -1,5 +1,5 @@
 local Ids = require("data.ids")
-local T = require("tests.support.runner")
+local T = require("tests.support.runner").suite("pulseback")
 
 local pulseback = require("scenario.factions.kyrian.abilities.pulseback")
 local MechStorage = require("scenario.storage.mech")

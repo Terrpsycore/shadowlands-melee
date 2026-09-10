@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "Lua 5.3",
+    "path": [
+      "../?.lua",
+      "../?/init.lua"
+    ]
+  },
+  "workspace": {
+    "library": [
+      "../lib/blizzard"
+    ]
+  },
+  "diagnostics": {
+    "globals": [
+      "Timed",
+      "Debug",
+      "ENUM_WAIT"
+    ]
+  }
+}

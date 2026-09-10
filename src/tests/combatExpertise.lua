@@ -1,5 +1,5 @@
 local Ids = require("data.ids")
-local T = require("tests.support.runner")
+local T = require("tests.support.runner").suite("combatExpertise")
 
 local combatExpertise = require("scenario.factions.necrolord.abilities.combatExpertise")
 

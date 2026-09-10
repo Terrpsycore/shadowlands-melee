@@ -14,6 +14,12 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 In-game автотесты в `src/tests/`. Если `tests.init` импортирован из `src/main.lua`, тесты регистрируются и **запускаются автоматически при старте карты**. Отдельного CLI test-runner нет.
 
+Статическая проверка типов (LuaLS) — только `src/tests`, не корень репозитория (в корне шумят `src/lib/community/`):
+
+```powershell
+& "C:/Programs/Lua/LuaLS/bin/lua-language-server.exe" --check src/tests
+```
+
 ## Ссылки
 
 - [warcraft-vscode](https://marketplace.visualstudio.com/items?itemName=dencer.warcraft-vscode)

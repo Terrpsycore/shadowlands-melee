@@ -11,6 +11,6 @@
     "empty-block"
   ],
   "workspace": {
-    "preloadFileSize": 1024
+    "preloadFileSize": 1024,
   }
 }
