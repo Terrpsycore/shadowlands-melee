@@ -14,6 +14,14 @@ return {
             end
         end),
     }),
+    vanish = A.channelNoTarget({
+        name = "Vanish",
+    }),
+    vanishDummy = A.invisibility({
+        apply = A.invisibility.apply(function(a)
+            a:setTransitionTimeseconds(1, 2)
+        end),
+    }),
     animateDead = A.raiseDead({
         name = "Animate Dead",
     }),

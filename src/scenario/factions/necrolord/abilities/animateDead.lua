@@ -2,6 +2,8 @@
 TODO:
 - BUG: some mechanical units spawn corpses
 - visual effect
+- check dispell damage
+- revive block mechanic
 ]]
 
 local Ids = require("data.ids")
