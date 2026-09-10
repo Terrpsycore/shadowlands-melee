@@ -1,4 +1,7 @@
-local generated = require("data.generated.ids")
+local ok, generated = pcall(require, "data.generated.ids")
+if not ok then
+    generated = { units = {}, abilities = {}, buffs = {}, items = {} }
+end
 local UnitIds = require("lib.community.types.assets.UnitIds")
 local AbilityIds = require("lib.community.types.assets.AbilityIds")
 local BuffIds = require("lib.community.types.assets.BuffIds")

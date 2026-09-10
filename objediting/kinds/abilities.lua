@@ -159,7 +159,9 @@ return {
         if cls then
             return {
                 new = function(id)
-                    return cls:new(id, parent)
+                    -- Subclass ctor calls createDefinition; super must not receive parent.
+                    ---@diagnostic disable-next-line: missing-parameter
+                    return cls:new(id)
                 end,
             }
         end

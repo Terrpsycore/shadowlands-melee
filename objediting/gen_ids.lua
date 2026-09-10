@@ -17,6 +17,10 @@
 
 package.path = table.concat({ package.path, "src/?.lua", "src/?/init.lua" }, ";")
 
+local GENERATED_DIR = "src/data/generated"
+local winPath = GENERATED_DIR:gsub("/", "\\")
+os.execute('if not exist "' .. winPath .. '" mkdir "' .. winPath .. '"')
+
 dofile("objediting/gen_ability_kinds.lua")
 
 local SOURCES = {
@@ -77,6 +81,8 @@ end
 function Generator:generateIds()
     local previous = self:loadPreviousState()
     local database = self:registerNewIds(previous)
+    self:pruneOrphans(database)
+    self:validate(database)
     local sortedIds = self:sortIds(database)
 
     self:write(database, sortedIds)
@@ -106,6 +112,56 @@ function Generator:loadPreviousState()
     end
 
     return assigned
+end
+
+--- @param database AssignedMap
+function Generator:pruneOrphans(database)
+    for _, source in ipairs(SOURCES) do
+        local domainAssigned = database[source.domain]
+        for slug in pairs(domainAssigned) do
+            if not source.db[slug] then
+                domainAssigned[slug] = nil
+            end
+        end
+    end
+end
+
+--- @param database AssignedMap
+function Generator:validate(database)
+    local idOwner = {}
+    for _, source in ipairs(SOURCES) do
+        local domain = source.domain
+        local seenInDomain = {}
+        for slug, id in pairs(database[domain]) do
+            if seenInDomain[id] then
+                error(
+                    string.format(
+                        "duplicate id %s in %s: %s and %s",
+                        id,
+                        domain,
+                        seenInDomain[id],
+                        slug
+                    )
+                )
+            end
+            seenInDomain[id] = slug
+
+            local owner = idOwner[id]
+            if owner then
+                error(
+                    string.format(
+                        "cross-domain id collision %s: %s.%s and %s.%s",
+                        id,
+                        owner.domain,
+                        owner.slug,
+                        domain,
+                        slug
+                    )
+                )
+            end
+            idOwner[id] = { domain = domain, slug = slug }
+        end
+    end
 end
 
 --- @param database AssignedMap

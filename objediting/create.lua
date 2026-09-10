@@ -5,7 +5,10 @@ return function(db, kind, ids)
             error("missing generated id for " .. slug)
         end
         local spec = kind.resolve(data.parent)
-        local obj = spec.new(id, data.parent, data.class)
+        local ok, obj = pcall(spec.new, id, data.parent, data.class)
+        if not ok then
+            error(string.format("failed to create %s (%s): %s", slug, id, obj), 0)
+        end
         kind.defaults(obj, data)
         if spec.apply then
             spec.apply(obj, data)

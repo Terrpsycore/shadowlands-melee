@@ -10,6 +10,7 @@ class Mode(StrEnum):
     BUILD = "build"
     RUN = "run"
     GO = "go"
+    DESIGN = "design"
 
 
 parser = argparse.ArgumentParser(description="...")
@@ -37,6 +38,8 @@ def main(mode: Mode, _project_path: str):
             run(project_path)
         case Mode.GO:
             go(project_path)
+        case Mode.DESIGN:
+            design(project_path)
 
 
 def edit(project_path: Path):
@@ -55,17 +58,11 @@ def build(project_path: Path):
 
 
 def bake(project_path: Path):
-    try:
-        subprocess.run(
-            [LUA, "objediting/gen_ids.lua"],
-            cwd=project_path,
-            check=True,
-        )
-    except subprocess.CalledProcessError as e:
-        print("Error occurred!")
-        print("Return code:", e.returncode)
-        print("Error output:", e.stderr)
-        print("Standard output:", e.stdout)
+    subprocess.run(
+        [LUA, "objediting/gen_ids.lua"],
+        cwd=project_path,
+        check=True,
+    )
 
 
 def run(project_path: Path):
@@ -79,6 +76,16 @@ def copy(map_path: Path) -> Path:
     destination_path = MAPS_DIR / map_fn
     shutil.copy(map_path, destination_path)
     return destination_path
+
+
+def design(project_path: Path):
+    if not os.path.isfile(project_path / "warcraft.json"):
+        raise ValueError("Not warcraft map folder")
+    src = Path("D:/Workspace/mine/obsidian-core/glagol/game/wc3/factions")
+    dst = Path(project_path / "docs/design/factions")
+    if dst.exists():
+        shutil.rmtree(dst)
+    shutil.copytree(src, dst)
 
 
 def run_map(map_path: Path):
