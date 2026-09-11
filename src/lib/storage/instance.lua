@@ -55,7 +55,7 @@ function Storage.new(name, opts)
         activeRegistry[id] = nil
     end
 
-    function instance:forEachActive(fn)
+    function instance:eachActive(fn)
         for id in pairs(activeRegistry) do
             fn(id)
         end
@@ -75,7 +75,7 @@ function Storage.new(name, opts)
         htApi.flushChild(self:parent(key))
     end
 
-    function instance:have(parentKey, fieldKey)
+    function instance:hasSaved(parentKey, fieldKey)
         return htApi.haveSaved(self:parent(parentKey), fieldKey)
     end
 
@@ -88,7 +88,7 @@ function Storage.new(name, opts)
         end
     end
 
-    if mode == "record" or mode == "unit" then
+    if mode == "record" or mode == "unit" or mode == "unitFields" then
         local slot = htApi.allocSlot(name)
 
         function instance:maxAlloc()

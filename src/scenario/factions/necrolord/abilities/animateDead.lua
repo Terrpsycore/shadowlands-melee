@@ -39,7 +39,7 @@ local function onCastStart()
         return
     end
 
-    local corpseInfo = Storage:open(corpse)
+    local corpseInfo = Storage:bind(corpse)
 
     if corpseInfo then
         dump("revifeAfter", corpseInfo.reviveAfter)
@@ -56,7 +56,7 @@ local function onCastStart()
         if not corpseInfo.isPeon then
             UnitRemoveType(resurrectUnit, UNIT_TYPE_PEON)
         end
-        Storage:clear(corpse)
+        Storage:drop(corpse)
         RemoveUnit(corpse)
     end
 end

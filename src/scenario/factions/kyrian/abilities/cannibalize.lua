@@ -55,7 +55,7 @@ local function searchCorpse(unit, x, y)
                 SetUnitState(unit, UNIT_STATE_LIFE, BlzGetUnitMaxHP(unit) - 5)
             end
             IssueImmediateOrder(unit, "cannibalize")
-            ControlStore:remove(unit)
+            ControlStore:drop(unit)
             state[unit] = nil
         else
             IssuePointOrder(unit, "move", cX, cY)

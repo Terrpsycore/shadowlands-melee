@@ -25,7 +25,7 @@ local CONFIG = AbilityConfig.compile({
 local function removeDedicationEffect(unit)
     UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
     UnitRemoveAbility(unit, CONFIG.refs.abilities.attackSpeed)
-    Storage:clear(unit)
+    Storage:drop(unit)
 end
 
 local function onDedicationCast()
@@ -47,7 +47,7 @@ local function onAttack()
     local unit = GetAttacker()
     local target = GetTriggerUnit()
 
-    if not Storage:have(unit) then
+    if not Storage:has(unit) then
         return
     elseif Storage:get(unit, "target") == nil then
         Storage:set(unit, "target", target)
@@ -57,7 +57,7 @@ local function onAttack()
 end
 
 local function onFrame()
-    Storage:forEach(function(unit)
+    Storage:each(function(unit)
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             removeDedicationEffect(unit)
         end

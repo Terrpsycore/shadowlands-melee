@@ -45,7 +45,7 @@ end
 
 local function onTick()
     local units = {}
-    PhalynxStore:forEach(function(unit)
+    PhalynxStore:each(function(unit)
         if Unit.isAlive(unit) then
             units[#units + 1] = unit
         end
@@ -102,7 +102,7 @@ local function onDeath(unit)
     if unit == nil then
         unit = GetDyingUnit()
     end
-    PhalynxStore:remove(unit)
+    PhalynxStore:drop(unit)
 end
 
 return {

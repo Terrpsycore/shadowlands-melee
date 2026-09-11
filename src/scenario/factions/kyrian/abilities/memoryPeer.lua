@@ -76,7 +76,7 @@ local function onOrder()
     if GetUnitTypeId(unit) ~= AbilityConfig.unitId(CONFIG.refs.units.spirit) then
         return
     end
-    if not Storage:have(unit) then
+    if not Storage:has(unit) then
         return
     end
     orderAttack(unit)
@@ -85,7 +85,7 @@ end
 local function onDeath()
     local spirit = GetDyingUnit()
     local target = Storage:get(spirit, "unit")
-    Storage:clear(spirit)
+    Storage:drop(spirit)
     if not target then
         return
     end
@@ -93,7 +93,7 @@ local function onDeath()
     Storage:set(target, "summonsLeast", left)
     if left <= 0 then
         UnitRemoveBuffBJ(CONFIG.refs.buffs.main, target)
-        Storage:clear(target)
+        Storage:drop(target)
     end
 end
 

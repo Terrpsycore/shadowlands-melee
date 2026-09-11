@@ -62,7 +62,7 @@ local function onDummySpell()
 end
 
 local function onDamage(info)
-    if not Storage:get(info.source) then
+    if not Storage:has(info.source) then
         return
     end
     if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.main) then
@@ -74,20 +74,20 @@ local function onTimer()
     -- optional: modify damage when debuff present
     -- iterate storage
     -- if buff faded - remove bonus damage ability
-    Storage:forEach(function(u)
+    Storage:each(function(u)
         if not UnitHasBuffBJ(u, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(u, CONFIG.refs.abilities.bonus)
-            Storage:remove(u)
+            Storage:drop(u)
         end
     end)
 end
 
 local function onDeath()
     local unit = GetDyingUnit()
-    if not Storage:get(unit) then
+    if not Storage:has(unit) then
         return
     end
-    Storage:remove(unit)
+    Storage:drop(unit)
 end
 
 return {

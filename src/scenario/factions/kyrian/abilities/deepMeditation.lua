@@ -31,7 +31,7 @@ local CONFIG = AbilityConfig.compile({
 local function removeEffects(target)
     UnitRemoveBuffBJ(CONFIG.refs.buffs.main, target)
     UnitRemoveBuffBJ(CONFIG.refs.buffs.stun, target)
-    Storage:clear(target)
+    Storage:drop(target)
 end
 
 local function onCast()
@@ -54,7 +54,7 @@ local function onDummyCast()
 end
 
 local function onDamage(info)
-    if not Storage:have(info.target) then
+    if not Storage:has(info.target) then
         return
     end
 
@@ -67,7 +67,7 @@ local function onDamage(info)
 end
 
 local function onTimer()
-    Storage:forEach(function(target)
+    Storage:each(function(target)
         dump("onTimer deepMeditation forEach", UnitHasBuffBJ(target, CONFIG.refs.buffs.main), Unit.isManaFull(target))
         if not UnitHasBuffBJ(target, CONFIG.refs.buffs.main) then
             removeEffects(target)

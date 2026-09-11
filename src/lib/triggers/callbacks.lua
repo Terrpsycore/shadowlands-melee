@@ -66,7 +66,7 @@ T.onStun = function(_triggers)
         end
 
         if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
-            Disable:clear(unit)
+            Disable:drop(unit)
         end
     end, 1.0)
 end
@@ -87,7 +87,7 @@ T.onRoot = function(_triggers)
         end
 
         if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
-            Disable:clear(unit)
+            Disable:drop(unit)
         end
     end, 1.0)
 end

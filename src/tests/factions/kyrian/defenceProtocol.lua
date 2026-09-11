@@ -88,7 +88,7 @@ T:test("Passive skipped when mana below cost", function(case)
 
     return case:delay(2, function()
         assert(not UnitHasBuffBJ(praetor, config.refs.buffs.main), "buff applied without enough mana")
-        assert(MechStorage:get(praetor, "active"), "toggle turned off when passive skipped")
+        assert(MechStorage:has(praetor), "toggle turned off when passive skipped")
     end)
 end)
 
@@ -117,6 +117,6 @@ T:test("Toggle not enabled without enough mana", function(case)
     enableToggle(praetor)
 
     return case:delay(0.5, function()
-        assert(not MechStorage:get(praetor, "active"), "toggle enabled without enough mana")
+        assert(not MechStorage:has(praetor), "toggle enabled without enough mana")
     end)
 end)

@@ -36,7 +36,7 @@ local function onDeath(unit)
     end
 
     if GetUnitTypeId(unit) == CONFIG.refs.units.carrier then
-        Store:clear(unit)
+        Store:drop(unit)
         return
     end
 
@@ -44,11 +44,11 @@ local function onDeath(unit)
         return GetUnitTypeId(u) == CONFIG.refs.units.carrier
     end)
     for _, carrier in ipairs(nearbyAnimates) do
-        if not Store:have(carrier) then
+        if not Store:has(carrier) then
             Store:set(carrier, "buffLevel", 0)
             Store:set(carrier, "frags", 0)
         end
-        local stat = Store:open(carrier)
+        local stat = Store:bind(carrier)
         if stat and stat.buffLevel < CONFIG.balance.maxLevel then
             stat.frags = stat.frags + 1
             local newLevel = math.min(stat.frags // 2, CONFIG.balance.maxLevel)

@@ -19,11 +19,11 @@ return function(name)
         return id
     end
 
-    function store:get(unit)
+    function store:has(unit)
         return not not unitToId[unit]
     end
 
-    function store:remove(unit)
+    function store:drop(unit)
         local id = unitToId[unit]
         if not id then
             return
@@ -34,7 +34,7 @@ return function(name)
         units[unit] = nil
     end
 
-    function store:forEach(fn)
+    function store:each(fn)
         for unit in pairs(units) do
             fn(unit)
         end
@@ -51,7 +51,7 @@ return function(name)
 
         local maxId = self:maxAlloc()
         for id = 1, maxId do
-            if self:have(id, htApi.FIELD_UNIT) then
+            if self:hasSaved(id, htApi.FIELD_UNIT) then
                 local unit = self:getUnitHandle(id, htApi.FIELD_UNIT)
                 if unit then
                     self:register(id)

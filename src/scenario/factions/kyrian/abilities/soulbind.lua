@@ -73,7 +73,7 @@ local function isValidTarget(caster, target)
     if caster == target then
         return false
     end
-    if SoulbindStorage:getByUnit(caster) or SoulbindStorage:getByUnit(target) then
+    if SoulbindStorage:find(caster) or SoulbindStorage:find(target) then
         return false
     end
     if not isSoulbindCarrier(target) then
@@ -119,14 +119,14 @@ local function onSoulbindCast()
 end
 
 local function tickBond(bondId)
-    local bond = SoulbindStorage:open(bondId)
+    local bond = SoulbindStorage:bind(bondId)
     if not bond then
         return
     end
 
     local u1, u2 = bond.unit_a, bond.unit_b
     if not Unit.isAlive(u1) or not Unit.isAlive(u2) then
-        SoulbindStorage:destroy(bondId)
+        SoulbindStorage:drop(bondId)
         return
     end
 
@@ -160,7 +160,7 @@ local function tickBond(bondId)
 end
 
 local function updateSoulbindStatus()
-    SoulbindStorage:forEachActive(tickBond)
+    SoulbindStorage:each(tickBond)
 end
 
 return {

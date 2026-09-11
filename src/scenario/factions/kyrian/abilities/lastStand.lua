@@ -47,7 +47,7 @@ local function onHeal()
     local dummy = GetTriggerUnit()
     local caster = Storage:get(dummy, "caster")
     UnitRemoveAbility(caster, CONFIG.refs.abilities.aura)
-    Storage:clear(dummy)
+    Storage:drop(dummy)
     for _, target in ipairs(Unit.getAllyUnitsInRadius(caster, CONFIG.balance.radius)) do
         UnitRemoveBuffBJ(CONFIG.refs.buffs.main, target)
     end

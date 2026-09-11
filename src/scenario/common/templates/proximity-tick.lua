@@ -56,7 +56,7 @@ local function onTrain()
 end
 
 local function onDeath()
-    -- Store:remove(GetDyingUnit())
+    -- Store:drop(GetDyingUnit())
 end
 
 return {

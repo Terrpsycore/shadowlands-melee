@@ -49,11 +49,11 @@ end
 
 local function onTurnOff()
     local unit = GetTriggerUnit()
-    Storage:remove(unit)
+    Storage:drop(unit)
 end
 
 local function onDamage(info)
-    if Storage:get(info.source) and UnitHasBuffBJ(info.target, CONFIG.refs.buffs.event) then
+    if Storage:has(info.source) and UnitHasBuffBJ(info.target, CONFIG.refs.buffs.event) then
         UnitRemoveBuffBJ(CONFIG.refs.buffs.event, info.target)
         applyEffect(info.source, info.target)
     end

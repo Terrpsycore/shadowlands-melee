@@ -48,7 +48,7 @@ end
 local function onTurnOff()
     local unit = GetTriggerUnit()
     UnitRemoveAbility(unit, CONFIG.refs.abilities.main)
-    MechStorage:set(unit, "active", false)
+    MechStorage:drop(unit)
 end
 
 local function onTrain()
@@ -57,12 +57,12 @@ local function onTrain()
 end
 
 local function onDeath()
-    MechStorage:clear(GetDyingUnit())
+    MechStorage:drop(GetDyingUnit())
 end
 
 local function onAttack()
     local unit = GetAttacker()
-    if not MechStorage:get(unit, "active") then
+    if not MechStorage:has(unit) then
         return
     end
 

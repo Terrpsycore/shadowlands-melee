@@ -44,7 +44,7 @@ local CONFIG = AbilityConfig.compile({
 local function removeEffect(unit)
     UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
     UnitRemoveAbility(unit, CONFIG.refs.abilities.followUp)
-    -- Storage:clear(unit)
+    -- Storage:drop(unit)
 end
 
 local function onCast()

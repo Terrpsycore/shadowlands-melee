@@ -32,7 +32,7 @@ local function activateDefenceProtocol(event, unit)
     if IsUnitAlly(event.target, GetOwningPlayer(event.source)) then
         return
     end
-    if not MechStorage:get(unit, "active") then
+    if not MechStorage:has(unit) then
         return
     end
     if not Unit.isOffCooldown(unit, CONFIG.refs.abilities.main) then
@@ -57,11 +57,11 @@ end
 
 local function onTurnOff()
     local unit = GetTriggerUnit()
-    MechStorage:set(unit, "active", false)
+    MechStorage:drop(unit)
 end
 
 local function onDeath()
-    MechStorage:clear(GetDyingUnit())
+    MechStorage:drop(GetDyingUnit())
 end
 
 local function onDamageEvent(info)

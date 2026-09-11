@@ -77,7 +77,7 @@ local function applyPride(unit)
 end
 
 local function onTick()
-    PrideStore:forEach(function(unit)
+    PrideStore:each(function(unit)
         if Unit.isAlive(unit) then
             applyPride(unit)
         end
@@ -95,7 +95,7 @@ local function onDeath(unit)
     if unit == nil then
         unit = GetDyingUnit()
     end
-    PrideStore:remove(unit)
+    PrideStore:drop(unit)
 end
 
 return {

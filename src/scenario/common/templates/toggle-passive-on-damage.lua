@@ -55,7 +55,7 @@ end
 
 local function tryActivate(info)
     local unit = info.target -- CHANGE: may be nearby carrier instead
-    if MechStorage:get(unit, "active") == false then
+    if not MechStorage:has(unit) then
         return
     end
     if not Unit.isOffCooldown(unit, CONFIG.refs.abilities.main) then
@@ -81,7 +81,7 @@ local function onTurnOn()
 end
 
 local function onTurnOff()
-    MechStorage:set(GetTriggerUnit(), "active", false)
+    MechStorage:drop(GetTriggerUnit())
 end
 
 local function onTrain()
@@ -91,7 +91,7 @@ local function onTrain()
 end
 
 local function onDeath()
-    MechStorage:clear(GetDyingUnit())
+    MechStorage:drop(GetDyingUnit())
 end
 
 local function onDamage(info)

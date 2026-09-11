@@ -7,7 +7,11 @@ local MechStorage = require("scenario.storage.mech")
 local config = pulseback.config
 
 local function setActive(unit, active)
-    MechStorage:set(unit, "active", active)
+    if active then
+        MechStorage:set(unit, "active", true)
+    else
+        MechStorage:drop(unit)
+    end
 end
 
 T:test("Proc not triggered when toggle off", function(case)
@@ -32,7 +36,7 @@ T:test("Proc skipped when mana below cost", function(case)
 
     return case:delay(2, function()
         assert(BlzGetUnitAbilityCooldownRemaining(goliath, config.refs.abilities.main) <= 0, "proc triggered without enough mana")
-        assert(MechStorage:get(goliath, "active") ~= false, "toggle turned off when proc skipped")
+        assert(MechStorage:has(goliath), "toggle turned off when proc skipped")
     end)
 end)
 
@@ -68,7 +72,7 @@ T:test("Toggle off via unimmolation", function(case)
     IssueImmediateOrder(goliath, "unimmolation")
 
     return case:delay(1, function()
-        assert(MechStorage:get(goliath, "active") == false, "toggle not disabled")
+        assert(not MechStorage:has(goliath), "toggle not disabled")
     end)
 end)
 

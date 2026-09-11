@@ -49,12 +49,12 @@ end
 local function onTurnOff()
     local unit = GetTriggerUnit()
     UnitRemoveAbility(unit, CONFIG.refs.abilities.trueSight)
-    MechStorage:set(GetTriggerUnit(), "active", false)
+    MechStorage:drop(GetTriggerUnit())
 end
 
 local function onDeath()
-    MechStorage:clear(GetDyingUnit())
-    PhalynxStorage:remove(GetDyingUnit())
+    MechStorage:drop(GetDyingUnit())
+    PhalynxStorage:drop(GetDyingUnit())
 end
 
 local function afterDamage(info)
@@ -72,9 +72,9 @@ local function onReveal()
 end
 
 local function onTimerScan()
-    PhalynxStorage:forEach(function(unit)
+    PhalynxStorage:each(function(unit)
         local owner = GetOwningPlayer(unit)
-        if not MechStorage:get(unit, "active") then
+        if not MechStorage:has(unit) then
             return
         end
         for _, u in

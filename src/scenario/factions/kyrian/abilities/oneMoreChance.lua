@@ -58,7 +58,7 @@ end
 
 local function onDummyHeal()
     local target = GetSpellTargetUnit()
-    Storage:clear(target)
+    Storage:drop(target)
 end
 
 local function onReincarnate()
@@ -69,20 +69,20 @@ local function onReincarnate()
     if GetUnitState(unit, UNIT_STATE_LIFE) >= 0.01 then
         return
     end
-    if Storage:have(unit) then
+    if Storage:has(unit) then
         removeEffect(unit)
-        Storage:clear(unit)
+        Storage:drop(unit)
     end
 end
 
 local function onTimer()
-    Storage:forEach(function(unit)
+    Storage:each(function(unit)
         if Storage:get(unit, "expired") then
             return
         end
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             removeEffect(unit)
-            Storage:clear(unit)
+            Storage:drop(unit)
             return
         end
         local expireTime = Storage:get(unit, "buffedAt") + (CONFIG.balance.duration - 0.1)

@@ -94,7 +94,11 @@ return function(name, recordSchema)
         return false
     end
 
-    function store:get(recordId)
+    function store:has(recordId)
+        return exists(recordId)
+    end
+
+    function store:read(recordId)
         if not exists(recordId) then
             return nil
         end
@@ -151,14 +155,14 @@ return function(name, recordSchema)
         end,
     }
 
-    function store:open(recordId)
+    function store:bind(recordId)
         if not exists(recordId) then
             return nil
         end
         return setmetatable({ id = recordId }, RECORD_MT)
     end
 
-    function store:destroy(recordId)
+    function store:drop(recordId)
         if not exists(recordId) then
             return
         end
@@ -167,7 +171,7 @@ return function(name, recordSchema)
         self:unregister(recordId)
     end
 
-    function store:getByUnit(unit)
+    function store:find(unit)
         for _, index in pairs(indexMaps) do
             local recordId = index.map[unit]
             if recordId then
@@ -175,6 +179,10 @@ return function(name, recordSchema)
             end
         end
         return nil
+    end
+
+    function store:each(fn)
+        self:eachActive(fn)
     end
 
     function store:init()
@@ -187,7 +195,7 @@ return function(name, recordSchema)
 
         local maxId = self:maxAlloc()
         for recordId = 1, maxId do
-            local data = self:get(recordId)
+            local data = self:read(recordId)
             if data then
                 self:register(recordId)
                 registerIndexes(recordId, data)
