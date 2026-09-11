@@ -13,11 +13,12 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 - warcraft-vscode (сборка карты, `warcraft.json`)
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
-- Community libs: Influa, DamageEngine, IngameConsole (`src/lib/community/`)
+- Community libs: Influa, DamageEngine, IngameConsole (`src/vendor/ext/`)
 
 ## Структура
 - `src/main.lua` — точка входа карты
-- `src/lib/` — инфраструктура (triggers, storage, blizzard, community)
+- `src/lib/` — инфраструктура проекта (triggers, storage)
+- `src/vendor/` — внешние зависимости (`ext/`, `blizzard/`, `assets/`)
 - `src/data/` — декларативные данные (units, abilities, items, buffs)
 - `src/data/generated/` — **автоген** ID, slug aliases (`id_slugs.lua`) и meta (не править вручную)
 - `src/scenario/` — runtime-логика способностей, storage, код по фракциям (`factions/`)
@@ -34,7 +35,7 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 
 ## Не трогать без согласования
 - `src/data/generated/*` — только через `lua objediting/gen_ids.lua`
-- `src/lib/community/types/assets/*` — vanilla ID-референсы
+- `src/vendor/assets/*` — vanilla ID-референсы и objediting stubs
 - `map.w3x/` — бинарные/редакторские ассеты карты
 - `.build/`, `tmp/`, `dev/` — артефакты сборки
 

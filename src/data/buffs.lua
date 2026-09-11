@@ -1,4 +1,4 @@
-local BuffIds = require("lib.community.types.assets.BuffIds")
+local BuffIds = require("vendor.assets.BuffIds")
 
 return {
     soulbind = {

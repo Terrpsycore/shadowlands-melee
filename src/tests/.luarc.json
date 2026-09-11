@@ -4,12 +4,14 @@
     "version": "Lua 5.3",
     "path": [
       "../?.lua",
-      "../?/init.lua"
+      "../?/init.lua",
+      "../vendor/assets/objediting/?.lua",
+      "../vendor/assets/objediting/?/init.lua"
     ]
   },
   "workspace": {
     "library": [
-      "../lib/blizzard"
+      "../vendor/blizzard"
     ]
   },
   "diagnostics": {

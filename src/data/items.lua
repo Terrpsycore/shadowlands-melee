@@ -1,4 +1,4 @@
-local ItemIds = require("lib.community.types.assets.ItemIds")
+local ItemIds = require("vendor.assets.ItemIds")
 
 local db = {
     dummyUnitItem = {

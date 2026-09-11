@@ -4,17 +4,19 @@
     "version": "Lua 5.3",
     "path": [
       "src/?.lua",
-      "src/?/init.lua"
+      "src/?/init.lua",
+      "src/vendor/assets/objediting/?.lua",
+      "src/vendor/assets/objediting/?/init.lua"
     ]
   },
   "workspace": {
     "library": [
-      "src/lib/blizzard"
+      "src/vendor/blizzard"
     ],
     "useGitIgnore": false,
     "ignoreDir": [
-      "src/lib/community/types/assets/main-debug.lua",
-      "src/lib/community/types/assets/main-release.lua",
+      "src/vendor/assets/main-debug.lua",
+      "src/vendor/assets/main-release.lua",
       ".build",
       ".def",
       "tmp"

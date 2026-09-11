@@ -6,6 +6,8 @@ package.path = table.concat({
     package.path,
     "src/?.lua",
     "src/?/init.lua",
+    "src/vendor/assets/objediting/?.lua",
+    "src/vendor/assets/objediting/?/init.lua",
 }, ";")
 
 local function resolveAssetsRoot(raw)
@@ -25,7 +27,7 @@ local function resolveAssetsRoot(raw)
 end
 
 local ASSETS_ROOT = resolveAssetsRoot(os.getenv("WC3_ASSETS") or "../wc3-assets")
-local OUT_DIR = "src/lib/community/types/assets/generated"
+local OUT_DIR = "src/vendor/assets/generated"
 local METADATA_DIR = ASSETS_ROOT .. "\\units"
 
 local UNITFUNC_FILES = {
@@ -470,7 +472,7 @@ local function buildUnitArt(unitSkin, unitFunc)
 end
 
 local function buildUnitArtBySlug(unitArt)
-    local UnitIds = require("lib.community.types.assets.UnitIds")
+    local UnitIds = require("vendor.assets.UnitIds")
     local bySlug = {}
 
     for slug, rawId in pairs(UnitIds) do

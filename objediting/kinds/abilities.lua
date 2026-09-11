@@ -1,5 +1,5 @@
 -- Declarative row fields: objediting/ability_row_fields.lua (type hints via gen_ability_kinds.lua)
-local AbilityIds = require("lib.community.types.assets.AbilityIds")
+local AbilityIds = require("vendor.assets.AbilityIds")
 local Ids = require("data.generated.ids")
 local generated = require("data.generated.ability_classes")
 

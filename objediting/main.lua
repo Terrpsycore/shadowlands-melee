@@ -2,6 +2,8 @@ package.path = table.concat({
     package.path,
     "../src/?.lua",
     "../src/?/init.lua", -- imports <kind>/init.lua on require
+    "../src/vendor/assets/objediting/?.lua",
+    "../src/vendor/assets/objediting/?/init.lua",
 }, ";")
 
 require("lib.objediting.inventory")

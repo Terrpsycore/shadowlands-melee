@@ -39,12 +39,12 @@
 | Область | Что сделано | Цена |
 |---------|-------------|------|
 | Objediting core (`object.lua`, `application.lua`, `objectwriter`, …) | File-level `---@diagnostic disable` (полный или частичный) | **Слепые зоны**: реальные ошибки в tooling-stubs не видны в `--check .`. |
-| [`AbilityObjEditing.lua`](../../src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua) | `disable: duplicate-set-field` на файл | Скрыт [баг дубликата `setBackstabDamage`](../known-issues.md#windwalk-duplicate-setbackstabdamage) — не исправлен в runtime. |
+| [`AbilityObjEditing.lua`](../../src/vendor/assets/objediting/object/AbilityObjEditing.lua) | `disable: duplicate-set-field` на файл | Скрыт [баг дубликата `setBackstabDamage`](../known-issues.md#windwalk-duplicate-setbackstabdamage) — не исправлен в runtime. |
 | `main-debug.lua` / `main-release.lua` | `workspace.ignoreDir` | Шаблоны с `%PLACEHOLDER%` не проверяются; поломка шаблона не ловится LuaLS. |
-| [`DamageEngine.lua`](../../src/lib/community/DamageEngine.lua) | Часть полей `damageInfo` сделана optional | Слабее контроль полноты инициализации при доработках. |
-| [`GlobalRemap.lua`](../../src/lib/community/GlobalRemap.lua) | Getter `fun(): any` | Return type getter'ов не проверяется. |
+| [`DamageEngine.lua`](../../src/vendor/ext/DamageEngine.lua) | Часть полей `damageInfo` сделана optional | Слабее контроль полноты инициализации при доработках. |
+| [`GlobalRemap.lua`](../../src/vendor/ext/GlobalRemap.lua) | Getter `fun(): any` | Return type getter'ов не проверяется. |
 | `createDefinition(defType: string)` | Вместо `DefinitionType` | Опечатка в строке типа определения не ловится. |
-| Весь `src/lib/community/` | Правки аннотаций | Сложнее merge с upstream; по project-profile — «не трогать без согласования» (согласовано выбором fix_all). |
+| Весь `src/vendor/` | Правки аннотаций | Сложнее merge с upstream; по project-profile — «не трогать без согласования» (согласовано выбором fix_all). |
 
 ### Конфигурация
 

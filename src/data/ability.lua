@@ -1,4 +1,4 @@
-local AbilityIds = require("lib.community.types.assets.AbilityIds")
+local AbilityIds = require("vendor.assets.AbilityIds")
 
 ---@type AbilityFactories
 local F = require("data.generated.ability_factories")

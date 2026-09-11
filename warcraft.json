@@ -1,7 +1,11 @@
 {
   "mapdir": "map.w3x",
   "lua.package.path": [
+    "?.lua",
+    "?/init.lua",
     "lib/?.lua",
-    "lib/?/init.lua"
+    "lib/?/init.lua",
+    "vendor/assets/objediting/?.lua",
+    "vendor/assets/objediting/?/init.lua"
   ]
 }

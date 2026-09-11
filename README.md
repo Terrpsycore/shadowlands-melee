@@ -8,7 +8,7 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 - [warcraft-vscode](https://marketplace.visualstudio.com/items?itemName=dencer.warcraft-vscode) — сборка карты
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
-- Community libs: Influa, DamageEngine, IngameConsole (`src/lib/community/`)
+- Community libs: Influa, DamageEngine, IngameConsole (`src/vendor/ext/`)
 
 ## Тесты
 

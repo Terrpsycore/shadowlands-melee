@@ -15,7 +15,13 @@
 ---@field items string[]
 ---@field buffs string[]
 
-package.path = table.concat({ package.path, "src/?.lua", "src/?/init.lua" }, ";")
+package.path = table.concat({
+    package.path,
+    "src/?.lua",
+    "src/?/init.lua",
+    "src/vendor/assets/objediting/?.lua",
+    "src/vendor/assets/objediting/?/init.lua",
+}, ";")
 
 local GENERATED_DIR = "src/data/generated"
 local winPath = GENERATED_DIR:gsub("/", "\\")

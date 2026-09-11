@@ -1,9 +1,15 @@
-package.path = table.concat({ package.path, "src/?.lua", "src/?/init.lua" }, ";")
+package.path = table.concat({
+    package.path,
+    "src/?.lua",
+    "src/?/init.lua",
+    "src/vendor/assets/objediting/?.lua",
+    "src/vendor/assets/objediting/?/init.lua",
+}, ";")
 
-local AbilityIds = require("lib.community.types.assets.AbilityIds")
+local AbilityIds = require("vendor.assets.AbilityIds")
 local rowFields = dofile("objediting/ability_row_fields.lua")
 
-local srcPath = "src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua"
+local srcPath = "src/vendor/assets/objediting/object/AbilityObjEditing.lua"
 local abilityLuaPath = "src/data/ability.lua"
 local classesPath = "src/data/generated/ability_classes.lua"
 local factoriesPath = "src/data/generated/ability_factories.lua"
@@ -134,7 +140,7 @@ local function parseAbilityPresets(path)
 end
 
 local factoriesFile = assert(io.open(factoriesPath, "w"))
-factoriesFile:write('local AbilityIds = require("lib.community.types.assets.AbilityIds")\n\n')
+factoriesFile:write('local AbilityIds = require("vendor.assets.AbilityIds")\n\n')
 factoriesFile:write("---@class AbilityRowInput\n")
 for _, field in ipairs(rowFields) do
     local name, fieldType, optional = field[1], field[2], field.optional

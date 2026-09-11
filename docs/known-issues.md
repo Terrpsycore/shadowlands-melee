@@ -7,7 +7,7 @@
 ## WindWalk: duplicate setBackstabDamage
 
 **ID:** `objediting-windwalk-duplicate-setbackstabdamage`  
-**Файл:** [`src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua`](../src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua)  
+**Файл:** [`src/vendor/assets/objediting/object/AbilityObjEditing.lua`](../src/vendor/assets/objediting/object/AbilityObjEditing.lua)  
 **Класс:** `AbilityDefinitionWindWalk` (parent `ANwk`)  
 **Строки:** ~3395–3405
 
@@ -34,7 +34,7 @@
 ### Проверка актуальности
 
 ```powershell
-Select-String -Path "src/lib/community/types/assets/objediting/object/AbilityObjEditing.lua" -Pattern "function AbilityDefinitionWindWalk:setBackstabDamage"
+Select-String -Path "src/vendor/assets/objediting/object/AbilityObjEditing.lua" -Pattern "function AbilityDefinitionWindWalk:setBackstabDamage"
 ```
 
 Ожидается 2 совпадения — баг ещё жив.

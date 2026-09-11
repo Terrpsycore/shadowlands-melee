@@ -2,8 +2,8 @@
 -- require('lib.base')
 -- require('lib.oop')
 
-require("lib.community.DebugUtils")
-require("lib.community.IngameConsole")
+require("vendor.ext.DebugUtils")
+require("vendor.ext.IngameConsole")
 IngameConsole.createTriggers()
 
 seterrorhandler(function(msg)
@@ -11,12 +11,12 @@ seterrorhandler(function(msg)
     Debug.original.print(Debug.traceback())
 end)
 
-require("lib.community.TotalInitialization")
+require("vendor.ext.TotalInitialization")
 
-require("lib.community.Timed")
-require("lib.community.LinkedList")
-require("lib.community.Influa")
-require("lib.community.DamageEngine")
+require("vendor.ext.Timed")
+require("vendor.ext.LinkedList")
+require("vendor.ext.Influa")
+require("vendor.ext.DamageEngine")
 
 Debug.original.print("imports ready")
 
