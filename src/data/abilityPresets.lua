@@ -107,4 +107,19 @@ return setmetatable({
             a:setChancetoEvade(1, 0)
         end,
     }),
+    passiveAura = presetFactory(F.slowAura, {
+        apply = function(a)
+            a:setMovementSpeedFactor(1, 0)
+            a:setAttackSpeedFactor(1, 0)
+            a:setAreaofEffect(1, 1)
+            a:setTargetsAllowed(1, "self")
+        end,
+    }),
+    nonDispellableSelfBuffTimed = presetFactory(F.berserkerRage1, {
+        apply = function(a)
+            a:setAttackSpeedIncrease(1, 0.2)
+            a:setMovementSpeedIncrease(1, 0.2)
+            a:setDamageTakenIncrease(1, 0)
+        end,
+    }),
 }, { __index = F })

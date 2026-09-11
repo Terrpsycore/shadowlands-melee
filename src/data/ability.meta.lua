@@ -12,5 +12,7 @@
 ---@field channelTarget AbilityFactoryChannel
 ---@field exhumeBased AbilityFactoryExhume
 ---@field immolationToggle AbilityFactoryImmolation
+---@field nonDispellableSelfBuffTimed AbilityFactoryBerserkerRage1
+---@field passiveAura AbilityFactorySlowAura
 ---@field passiveGeneric AbilityFactoryEvasion
 ---@field inventory AbilityFactoryInventory

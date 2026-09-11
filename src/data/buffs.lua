@@ -89,4 +89,52 @@ return {
         parent = BuffIds.innerFire,
         name = "Counterattack Call",
     },
+    surviveWish = {
+        parent = BuffIds.berserk,
+        name = "Survive Wish",
+    },
+    stitchingBaseKyrian = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingBaseNecrolord = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingBaseFae = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingBaseVenthyr = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingBaseMawsworn = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedKyrian = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedNecrolord = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedFae = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedVenthyr = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedMawsworn = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedVersatile = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
 }

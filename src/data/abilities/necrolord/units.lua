@@ -5,6 +5,7 @@ local A = require("data.abilityPresets")
 return {
     surviveWish = A.passiveGeneric({
         name = "Survive Wish",
+        buffs = { "surviveWish" },
     }),
     surviveWishActive = A.berserkerRage1({
         name = "Survive Wish",
