@@ -45,7 +45,7 @@ local function onSpell()
     local targetX = GetSpellTargetX()
     local targetY = GetSpellTargetY()
 
-    local targets = Unit.getUnitsInPointRadius(targetX, targetY, CONFIG.balance.radius, function(u)
+    local targets = Unit.getUnitsInRadius({ x = targetX, y = targetY }, CONFIG.balance.radius, function(u)
         return IsUnitAliveBJ(u) and IsUnitEnemy(u, owner)
     end)
 

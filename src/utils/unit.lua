@@ -1,7 +1,32 @@
 local buffTypes = require("data.buffTypes")
-local dump = require("utils.logger")
 
 local Unit = {}
+
+---@alias Point unit|{ x: number, y: number }
+
+---@param point Point
+---@return number x
+---@return number y
+local function pointXY(point)
+    if type(point) == "table" then
+        return point.x, point.y
+    end
+    return GetUnitX(point), GetUnitY(point)
+end
+
+local function forEachInRadius(x, y, radius, fn)
+    local tempGroup = CreateGroup()
+    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
+
+    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
+        local u = BlzGroupUnitAt(tempGroup, i)
+        if u then
+            fn(u)
+        end
+    end
+
+    DestroyGroup(tempGroup)
+end
 
 --- @param a unit
 --- @param b unit
@@ -64,120 +89,45 @@ function Unit.isAtPoint(whichUnit, targetX, targetY, range)
     return distanceSq <= (range * range)
 end
 
-function Unit.getUnitsInRadius(unit, radius, filter)
+---@param point Point unit center excludes self; { x, y } does not
+---@param radius number
+---@param filter? fun(u: unit): boolean
+function Unit.getUnitsInRadius(point, radius, filter)
+    local x, y = pointXY(point)
+    local exclude = type(point) ~= "table" and point or nil
     local resultsTable = {}
-    local x = GetUnitX(unit)
-    local y = GetUnitY(unit)
-
-    local tempGroup = CreateGroup()
-    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
-
-    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
-        local u = BlzGroupUnitAt(tempGroup, i)
-
-        if u and UnitAlive(u) and u ~= unit and (not filter or filter(u)) then
+    forEachInRadius(x, y, radius, function(u)
+        if UnitAlive(u) and u ~= exclude and (not filter or filter(u)) then
             table.insert(resultsTable, u)
         end
-    end
-
-    DestroyGroup(tempGroup)
-
-    return resultsTable
-end
-
-function Unit.getUnitsInPointRadius(x, y, radius, filter)
-    local resultsTable = {}
-
-    local tempGroup = CreateGroup()
-    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
-
-    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
-        local u = BlzGroupUnitAt(tempGroup, i)
-
-        if u and UnitAlive(u) and (not filter or filter(u)) then
-            table.insert(resultsTable, u)
-        end
-    end
-
-    DestroyGroup(tempGroup)
-
-    return resultsTable
-end
-
-function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
-    local resultsTable = {}
-    local x = GetUnitX(unit)
-    local y = GetUnitY(unit)
-    local owner = GetOwningPlayer(unit)
-
-    local tempGroup = CreateGroup()
-    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
-
-    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
-        local u = BlzGroupUnitAt(tempGroup, i)
-
-        if
-            u
-            and UnitAlive(u)
-            and GetUnitTypeId(u) == targetTypeId
-            and IsUnitAlly(u, owner)
-            -- and IsUnitInRangeXY(u, x, y, radius)
-        then
-            table.insert(resultsTable, u)
-        end
-    end
-
-    DestroyGroup(tempGroup)
-
+    end)
     return resultsTable
 end
 
 function Unit.getAllyUnitsInRadius(unit, radius, filter)
     local resultsTable = {}
-    local x = GetUnitX(unit)
-    local y = GetUnitY(unit)
     local owner = GetOwningPlayer(unit)
-
-    local tempGroup = CreateGroup()
-    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
-
-    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
-        local u = BlzGroupUnitAt(tempGroup, i)
-        -- dump("Unit.getAllyUnitsInRadius", u, UnitAlive(u), IsUnitAlly(u, owner), filter, filter and filter(unit))
-        if
-            u
-            and UnitAlive(u)
-            and IsUnitAlly(u, owner)
-            and (not filter or filter(u))
-            -- and IsUnitInRangeXY(u, x, y, radius)
-        then
+    forEachInRadius(GetUnitX(unit), GetUnitY(unit), radius, function(u)
+        if UnitAlive(u) and IsUnitAlly(u, owner) and (not filter or filter(u)) then
             table.insert(resultsTable, u)
         end
-    end
-
-    DestroyGroup(tempGroup)
-
+    end)
     return resultsTable
 end
 
+function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
+    return Unit.getAllyUnitsInRadius(unit, radius, function(u)
+        return GetUnitTypeId(u) == targetTypeId
+    end)
+end
+
 function Unit.getNearestCorpse(unit, radius)
-    local corpse = nil
-    local x = GetUnitX(unit)
-    local y = GetUnitY(unit)
-
-    local tempGroup = CreateGroup()
-    GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
-
-    for i = 0, BlzGroupGetSize(tempGroup) - 1 do
-        local u = BlzGroupUnitAt(tempGroup, i)
-
-        if IsUnitDeadBJ(u) and corpse == nil then
+    local corpse
+    forEachInRadius(GetUnitX(unit), GetUnitY(unit), radius, function(u)
+        if not corpse and IsUnitDeadBJ(u) then
             corpse = u
         end
-    end
-
-    DestroyGroup(tempGroup)
-
+    end)
     return corpse
 end
 
