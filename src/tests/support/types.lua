@@ -33,6 +33,7 @@
 
 ---@class TestRunner
 ---@field test fun(self: TestRunner, name: string, testFunc: TestFn)
+---@field run fun(self: TestRunner)
 
 ---@class ReporterModeEnum
 ---@field summary ReporterMode
@@ -53,3 +54,4 @@
 
 ---@class RunnerModule
 ---@field suite fun(name: string): TestRunner
+---@field runAll fun()

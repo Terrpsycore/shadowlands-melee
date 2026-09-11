@@ -4,6 +4,8 @@ local Suite = require("tests.support.suite")
 
 local T = {}
 
+local pendingRunners = {}
+
 local world = GetWorldBounds()
 local margin = 800
 local minX = GetRectMinX(world) + margin
@@ -47,20 +49,40 @@ end
 ---@return TestRunner
 local function createRunner(suite)
     local self = {}
+    local queued = {}
+    local started = false
 
     ---@param name string
     ---@param testFunc TestFn
     function self:test(name, testFunc)
-        suite:registerTest(name)
-
-        ---@type TestReporterFn
-        local reporter = function(testName, ok, err)
-            Reporter.immediate(testName, ok, err)
-            suite:record(testName, ok, err)
+        if started then
+            error(string.format("[%s] test registered after run: %q", suite.name, name))
         end
 
-        local x, y = alloc(cellSize)
-        Case.new(name, testFunc, x, y, reporter):run()
+        suite:registerTest(name)
+        queued[#queued + 1] = { name = name, testFunc = testFunc }
+    end
+
+    function self:run()
+        if started then
+            error(string.format("[%s] suite already started", suite.name))
+        end
+        started = true
+
+        if #queued == 0 then
+            return
+        end
+
+        for _, entry in ipairs(queued) do
+            ---@type TestReporterFn
+            local reporter = function(testName, ok, err)
+                Reporter.immediate(testName, ok, err)
+                suite:record(testName, ok, err)
+            end
+
+            local x, y = alloc(cellSize)
+            Case.new(entry.name, entry.testFunc, x, y, reporter):run()
+        end
     end
 
     return self --[[@as TestRunner]]
@@ -69,7 +91,15 @@ end
 ---@param name string
 ---@return TestRunner
 function T.suite(name)
-    return createRunner(Suite.new(name))
+    local runner = createRunner(Suite.new(name))
+    pendingRunners[#pendingRunners + 1] = runner
+    return runner
+end
+
+function T.runAll()
+    for _, runner in ipairs(pendingRunners) do
+        runner:run()
+    end
 end
 
 ---@cast T RunnerModule
