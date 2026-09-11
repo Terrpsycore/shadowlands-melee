@@ -193,6 +193,7 @@ def run_map(map_path: Path):
         "1",
         "-testmapprofile",
         "WorldEdit",
+        "-allowLocalFiles",
         "-fixedseed",
         "1",
     ]
