@@ -8,7 +8,7 @@
     - data/buffs.lua: effect buffs
     - scenario/storage/{slug}.lua — per-target state
     - data/units: add "{slug}" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: dedicated per-target fields
   TEST: cast applies buff; condition removes buff; dispell cleanup

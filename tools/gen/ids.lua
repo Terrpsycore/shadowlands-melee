@@ -15,19 +15,9 @@
 ---@field items string[]
 ---@field buffs string[]
 
-package.path = table.concat({
-    package.path,
-    "src/?.lua",
-    "src/?/init.lua",
-    "src/vendor/assets/objediting/?.lua",
-    "src/vendor/assets/objediting/?/init.lua",
-}, ";")
-
 local GENERATED_DIR = "src/data/generated"
 local winPath = GENERATED_DIR:gsub("/", "\\")
 os.execute('if not exist "' .. winPath .. '" mkdir "' .. winPath .. '"')
-
-dofile("objediting/gen_ability_kinds.lua")
 
 local SOURCES = {
     {
@@ -94,9 +84,8 @@ function Generator:generateIds()
     self:write(database, sortedIds)
     self:writeSlugAliases(sortedIds)
 
-    local genItemMeta = dofile("objediting/gen_item_meta.lua")
+    local genItemMeta = dofile("tools/gen/item_meta.lua")
     genItemMeta(database.items, require("data.items"))
-    -- dofile("objediting/gen_asset_catalogs.lua")
 end
 
 --- @return AssignedMap
@@ -172,7 +161,6 @@ end
 
 --- @param database AssignedMap
 function Generator:registerNewIds(database)
-    -- Mutates <database> table param
     for _, source in ipairs(SOURCES) do
         local domainAssigned = database[source.domain]
         for slug in pairs(source.db) do
@@ -190,7 +178,7 @@ function Generator:sortIds(database)
     local domainSlugs = {}
     for _, source in ipairs(SOURCES) do
         local slugs = {}
-        for slug in pairs(database[source.domain]) do -- pairs(source.db) - before
+        for slug in pairs(database[source.domain]) do
             slugs[#slugs + 1] = slug
         end
         table.sort(slugs)
@@ -262,6 +250,3 @@ function Generator:next(prefix)
 end
 
 Generator:new():generateIds()
-
-dofile("objediting/gen_ability_registry.lua")
-dofile("objediting/gen_test_registry.lua")

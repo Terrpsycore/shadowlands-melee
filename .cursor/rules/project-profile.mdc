@@ -9,7 +9,7 @@ alwaysApply: true
 Custom melee-карта Warcraft III в тематике Shadowlands: фракции, юниты, способности и storage-механики. Геймдизайн — в `docs/design/factions/`.
 
 ## Стек
-- Lua 5.3 (runtime WC3 + standalone для objediting)
+- Lua 5.3 (runtime WC3 + standalone для tools/oe)
 - warcraft-vscode (сборка карты, `warcraft.json`)
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
@@ -26,7 +26,7 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 - `src/scenario/generated/` — autogen реестр способностей (`abilities_registry.lua`)
 - `src/tests/` — in-game автотесты (`factions/`, `mechanics/`, `data/`)
 - `src/tests/generated/` — autogen реестр тестов (`registry.lua`)
-- `objediting/` — генераторы и kinds для object editing
+- `tools/` — bake/codegen (`gen/`) и OE bake (`oe/`)
 - `map.w3x/` — ассеты карты
 - `docs/design/` — геймдизайн по фракциям
 - `build/wc3.py` — bake → build → run
@@ -37,8 +37,8 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 - Пути к WC3/Lua в `build/wc3.py` — машинозависимые (Windows)
 
 ## Не трогать без согласования
-- `src/data/generated/*` — только через `lua objediting/gen_ids.lua`
-- `src/scenario/generated/*`, `src/tests/generated/*` — через `lua objediting/gen_ids.lua`
+- `src/data/generated/*` — только через `lua tools/bake.lua`
+- `src/scenario/generated/*`, `src/tests/generated/*` — через `lua tools/bake.lua`
 - `src/vendor/assets/*` — vanilla ID-референсы и objediting stubs
 - `map.w3x/` — бинарные/редакторские ассеты карты
 - `.build/`, `tmp/`, `dev/` — артефакты сборки

@@ -7,7 +7,7 @@
     - data/abilities: {slug}Buff (dummy applier, name="")
     - data/buffs.lua: {slug} buff
     - data/units: add "{slug}" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: usually none (cooldown via ability CD on marker)
   TEST: stun/root triggers buff; cooldown prevents re-trigger

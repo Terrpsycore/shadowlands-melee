@@ -5,7 +5,7 @@
   DATA CHECKLIST:
     - data/abilities: {slug} (e.g. A.channelTarget or active preset)
     - data/units: add "{slug}" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: usually none
   TEST: cast on valid/invalid target

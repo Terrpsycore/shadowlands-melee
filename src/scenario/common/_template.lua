@@ -9,7 +9,7 @@
     2. Copy template → factions/<faction>/abilities/<slug>.lua
     3. Replace slug placeholders in refs / balance
     4. Implement unique logic (effect, tryActivate, onTick, …)
-    5. Add data rows (abilities, buffs, units) → lua objediting/gen_ids.lua
+    5. Add data rows (abilities, buffs, units) → lua tools/bake.lua
     6. Bake подхватит файл в scenario/abilities (gen_ability_registry.lua)
     7. Optional: tests/factions/<faction>/<slug>.lua (gen_test_registry.lua)
 

@@ -6,7 +6,7 @@
     - data/abilities: {slug} (visible cast, applies buff — e.g. A.spiritLink)
     - data/buffs.lua: {slug} buff
     - data/units: add "{slug}" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: usually none (buff state from WC3)
   TEST: damage reduced when buff present; min damage floor

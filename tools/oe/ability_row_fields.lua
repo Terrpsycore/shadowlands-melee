@@ -1,5 +1,5 @@
---- Declarative AbilityRow input fields — type hints for gen_ability_kinds.lua.
---- Runtime handlers: objediting/kinds/abilities.lua (keep in sync).
+--- Declarative AbilityRow input fields — type hints for tools/gen/ability_kinds.lua.
+--- Runtime handlers: tools/oe/kinds/abilities.lua (keep in sync).
 --- `parent` is injected by A.* factory pack(), not passed in data literals.
 return {
     { "name", "string", optional = true },

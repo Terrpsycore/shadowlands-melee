@@ -1,4 +1,5 @@
-local Ids = require("data.ids")
+local Ids = require("data.generated.ids")
+local shared = dofile("tools/oe/kinds/_shared.lua")
 
 local reserved = {
     parent = true,
@@ -16,20 +17,6 @@ local function resolveUnitIdList(slugs)
         parts[#parts + 1] = id
     end
     return table.concat(parts, ",")
-end
-
-local function normalizePath(path)
-    return path:gsub("/", "\\")
-end
-
-local function applySubfields(obj, value, mapping, context)
-    for key, val in pairs(value) do
-        local handler = mapping[key]
-        if not handler then
-            error("unknown " .. context .. " field '" .. key .. "'")
-        end
-        handler(obj, val)
-    end
 end
 
 local fields = {
@@ -71,7 +58,7 @@ local fields = {
         u:setUnitClassification(value)
     end,
     mana = function(u, value)
-        applySubfields(u, value, {
+        shared.applySubfields(u, value, {
             max = function(u, v)
                 u:setManaMaximum(v)
             end,
@@ -81,7 +68,7 @@ local fields = {
         }, "mana")
     end,
     cost = function(u, value)
-        applySubfields(u, value, {
+        shared.applySubfields(u, value, {
             gold = function(u, v)
                 u:setGoldCost(v)
             end,
@@ -94,7 +81,7 @@ local fields = {
         }, "cost")
     end,
     attack1 = function(u, value)
-        applySubfields(u, value, {
+        shared.applySubfields(u, value, {
             type = function(u, v)
                 u:setAttack1AttackType(v)
             end,
@@ -119,12 +106,12 @@ local fields = {
         }, "attack1")
     end,
     art = function(u, value)
-        applySubfields(u, value, {
+        shared.applySubfields(u, value, {
             model = function(u, v)
-                u:setModelFile(normalizePath(v))
+                u:setModelFile(shared.normalizePath(v))
             end,
             icon = function(u, v)
-                u:setIconGameInterface(normalizePath(v))
+                u:setIconGameInterface(shared.normalizePath(v))
             end,
             scale = function(u, v)
                 u:setScalingValue(v)

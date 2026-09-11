@@ -1,27 +1,14 @@
--- Declarative row fields: objediting/ability_row_fields.lua (type hints via gen_ability_kinds.lua)
+-- Declarative row fields: tools/oe/ability_row_fields.lua (type hints via tools/gen/ability_kinds.lua)
 local AbilityIds = require("vendor.assets.AbilityIds")
 local Ids = require("data.generated.ids")
 local generated = require("data.generated.ability_classes")
+local shared = dofile("tools/oe/kinds/_shared.lua")
 
 local reserved = {
     class = true,
     parent = true,
     apply = true,
 }
-
-local function normalizePath(path)
-    return path:gsub("/", "\\")
-end
-
-local function applySubfields(obj, value, mapping, context)
-    for key, val in pairs(value) do
-        local handler = mapping[key]
-        if not handler then
-            error("unknown " .. context .. " field '" .. key .. "'")
-        end
-        handler(obj, val)
-    end
-end
 
 local function eachLevel(data)
     local levels = data.levels or 1
@@ -106,15 +93,15 @@ local fields = {
         end
     end,
     art = function(a, value)
-        applySubfields(a, value, {
+        shared.applySubfields(a, value, {
             icon = function(a, v)
-                a:setIconNormal(normalizePath(v))
+                a:setIconNormal(shared.normalizePath(v))
             end,
             iconOff = function(a, v)
-                a:setIconTurnOff(normalizePath(v))
+                a:setIconTurnOff(shared.normalizePath(v))
             end,
             iconResearch = function(a, v)
-                a:setIconResearch(normalizePath(v))
+                a:setIconResearch(shared.normalizePath(v))
             end,
         }, "art")
     end,

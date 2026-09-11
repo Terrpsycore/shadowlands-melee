@@ -7,7 +7,7 @@
     - optional hidden abilities for dummy debuffs
     - data/buffs.lua for debuff slugs
     - data/units: add "{slug}" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: usually none
   TEST: cast hits targets in radius; optional DAMAGE hook

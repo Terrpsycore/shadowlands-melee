@@ -6,7 +6,7 @@
     - data/abilities: {slug}BuffSpeed, {slug}BuffDamage (A.itemAura*, name="")
     - data/units: carrier has passive marker ability (e.g. A.evasion with 0%)
     - scenario/storage/{slug}.lua — unit set registry
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: dedicated unit set (add on train, remove on death)
   TEST: units in range get buff; leave range lose buff; death cleanup

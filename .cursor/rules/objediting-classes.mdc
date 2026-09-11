@@ -1,17 +1,17 @@
 ---
 description: при новом user-классе objediting сразу LuaLS-аннотации
-globs: objediting/**/*.lua
+globs: tools/oe/**/*.lua,src/lib/objediting/**/*.lua
 alwaysApply: false
 ---
 
 # User-классы objediting — сразу аннотации
 
-Каждый новый `class("Name", Super)` в `objediting/` без LuaLS-аннотаций — незавершённая работа (`undefined-field` на `:new`).
+Каждый новый `class("Name", Super)` в `tools/oe/` или `src/lib/objediting/` без LuaLS-аннотаций — незавершённая работа (`undefined-field` на `:new`).
 
-Эталон: `AbilityInventory` в `objediting/inventory.lua` + стаб в `objediting/.meta.lua`.
+Эталон: `AbilityInventory` в `src/lib/objediting/inventory.lua` + стаб в `src/lib/objediting/.meta.lua`.
 
 Чеклист:
 
 - В файле класса: `---@class Name: Super` и `---@field def Definition` (если это object-definition).
-- В `objediting/.meta.lua`: тот же `---@class` и стаб `Name:new(...)` с `@return Name`.
+- В `src/lib/objediting/.meta.lua`: тот же `---@class` и стаб `Name:new(...)` с `@return Name`.
 - Не писать runtime `function Name:new` — перебьёт `object:new`. Стаб только в `---@meta`.

@@ -8,7 +8,7 @@
     - data/abilities: {slug}Buff or {slug}Pulse (dummy effect, optional)
     - data/buffs.lua (if buff applied)
     - data/units: add "{slug}Toggle" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: scenario.storage.mech (shared toggle state)
   TEST: toggle on/off, damage triggers effect, cooldown, mana cost

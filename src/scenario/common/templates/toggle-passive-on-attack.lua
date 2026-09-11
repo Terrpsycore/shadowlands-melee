@@ -6,7 +6,7 @@
     - data/abilities: {slug} (passive effect ability, added/removed on toggle)
     - data/abilities: {slug}Toggle (A.immolationToggle)
     - data/units: add "{slug}Toggle" to carrier.abilities
-    - lua objediting/gen_ids.lua
+    - lua tools/bake.lua
 
   STORAGE: scenario.storage.mech
   TEST: toggle on/off, attack triggers mana spend, train default-on

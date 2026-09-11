@@ -59,7 +59,7 @@ def build(project_path: Path):
 
 def bake(project_path: Path):
     subprocess.run(
-        [LUA, "objediting/gen_ids.lua"],
+        [LUA, "tools/bake.lua"],
         cwd=project_path,
         check=True,
     )

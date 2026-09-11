@@ -7,5 +7,5 @@
 | Файл | Когда |
 |------|--------|
 | `global-standards.mdc` | всегда |
-| `objediting-classes.mdc` | при работе с `objediting/` |
+| `objediting-classes.mdc` | при работе с `tools/oe/` и `src/lib/objediting/` |
 | `project-profile-bootstrap.mdc` | создать `project-profile.mdc`, если его нет |

@@ -4,7 +4,7 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 ## Стек
 
-- Lua 5.3 — runtime WC3 + standalone для objediting
+- Lua 5.3 — runtime WC3 + standalone для tools/oe
 - [warcraft-vscode](https://marketplace.visualstudio.com/items?itemName=dencer.warcraft-vscode) — сборка карты
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
@@ -12,7 +12,7 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 ## Bake
 
-Перед сборкой `build/wc3.py` запускает `objediting/gen_ids.lua`, который генерит IDs/slugs/meta и реестры способностей/тестов (`*/generated/`). Папки `*/generated/` в `.gitignore` — после clone нужен bake.
+Перед сборкой `build/wc3.py` запускает `tools/bake.lua`, который генерит IDs/slugs/meta и реестры способностей/тестов (`*/generated/`). Папки `*/generated/` в `.gitignore` — после clone нужен bake.
 
 ## Тесты
 
