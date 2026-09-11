@@ -7,6 +7,16 @@ Reporter.mode = nil
 
 Reporter.Mode = ReporterMode
 
+local COLOR_OK = "55ff55"
+local COLOR_FAIL = "ff5555"
+
+---@param hex string
+---@param text string
+---@return string
+local function color(hex, text)
+    return "|cff" .. hex .. text .. "|r"
+end
+
 ---@param testName string
 ---@param ok boolean
 ---@param err? string
@@ -17,9 +27,9 @@ function Reporter.immediate(testName, ok, err)
 
     local msg
     if ok then
-        msg = "OK: [" .. testName .. "]"
+        msg = color(COLOR_OK, "OK: [" .. testName .. "]")
     else
-        msg = "ERROR: [" .. testName .. "] -> " .. (err or "?")
+        msg = color(COLOR_FAIL, "ERROR: [" .. testName .. "] -> " .. (err or "?"))
     end
     DisplayTextToPlayer(GetLocalPlayer(), 0, 0, msg)
 end
@@ -27,9 +37,9 @@ end
 ---@param suite TestSuite
 ---@param failed { name: string, err?: string }[]
 local function printFailures(suite, failed)
-    Debug.original.print(string.format("[%s] FAILED %d/%d", suite.name, #failed, suite.total))
+    Debug.original.print(color(COLOR_FAIL, string.format("[%s] FAILED %d/%d", suite.name, #failed, suite.total)))
     for _, f in ipairs(failed) do
-        Debug.original.print(string.format("  x %s: %s", f.name, f.err or "?"))
+        Debug.original.print(color(COLOR_FAIL, string.format("  x %s: %s", f.name, f.err or "?")))
     end
 end
 
@@ -60,7 +70,7 @@ function Reporter.flushSuite(suite)
     end
 
     if #failed == 0 then
-        Debug.original.print(string.format("[%s] %d/%d OK", suite.name, passed, suite.total))
+        Debug.original.print(color(COLOR_OK, string.format("[%s] %d/%d OK", suite.name, passed, suite.total)))
         return
     end
 

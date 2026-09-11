@@ -86,4 +86,7 @@ return {
         },
     },
     config = CONFIG,
+    debug = {
+        onDamage = onDamage,
+    },
 }

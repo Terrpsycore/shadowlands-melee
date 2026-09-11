@@ -26,17 +26,15 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
-local function onCastStart()
-    local caster = GetTriggerUnit()
+local function tryRevive(caster, corpse)
     local owner = GetOwningPlayer(caster)
-    local corpse = GetSpellTargetUnit()
 
     Unit.substractMana(caster, CONFIG.balance.manaCost)
     IssueImmediateOrder(caster, "stop")
 
     if corpse == nil then
         Unit.restoreMana(caster, CONFIG.balance.manaCost)
-        return
+        return false
     end
 
     local corpseInfo = Storage:bind(corpse)
@@ -44,7 +42,7 @@ local function onCastStart()
     if corpseInfo then
         if corpseInfo.reviveAfter > 0 then
             corpseInfo.reviveAfter = corpseInfo.reviveAfter - 1
-            return
+            return false
         end
 
         local resurrectUnit = corpseInfo.unit
@@ -59,7 +57,14 @@ local function onCastStart()
         Triggers.fireEvent("REVIVE", { source = caster, target = resurrectUnit })
         Storage:drop(corpse)
         RemoveUnit(corpse)
+        return true
     end
+
+    return false
+end
+
+local function onCastStart()
+    tryRevive(GetTriggerUnit(), GetSpellTargetUnit())
 end
 
 return {
@@ -71,4 +76,7 @@ return {
         },
     },
     config = CONFIG,
+    debug = {
+        tryRevive = tryRevive,
+    },
 }

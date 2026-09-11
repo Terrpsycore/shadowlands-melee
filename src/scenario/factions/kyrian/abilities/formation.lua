@@ -125,5 +125,6 @@ return {
     config = CONFIG,
     debug = {
         onTrain = onTrain,
+        onTick = onTick,
     },
 }
