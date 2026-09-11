@@ -17,10 +17,7 @@ T:test("Toggle on enables true sight and storage", function(case)
 
     return case:delay(0.5, function()
         assert(MechStorage:has(phalynx), "scan toggle not tracked")
-        assert(
-            GetUnitAbilityLevel(phalynx, config.refs.abilities.trueSight) > 0,
-            "true sight not added on toggle"
-        )
+        assert(GetUnitAbilityLevel(phalynx, config.refs.abilities.trueSight) > 0, "true sight not added on toggle")
     end)
 end)
 

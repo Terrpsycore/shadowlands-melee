@@ -1,6 +1,6 @@
 local Reporter = require("tests.support.reporter")
 
-Reporter.mode = Reporter.Mode.summary
+Reporter.mode = Reporter.Mode.errors
 
 local registry = require("tests.generated.registry")
 
