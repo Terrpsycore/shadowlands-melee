@@ -108,6 +108,10 @@ local function onStun(info) end
 -- info: { source, target, damage, ... }
 local function onRoot(info) end
 
+-- REVIVE: custom event when a unit is revived (e.g. animateDead).
+-- ctx: { source, target } — caster and revived unit; fire via Triggers.fireEvent from source ability.
+local function onRevive(ctx) end
+
 return {
     triggers = {
         {
@@ -197,6 +201,11 @@ return {
         {
             trigger = "ROOT",
             action = onRoot,
+        },
+        {
+            trigger = "REVIVE",
+            filter = { target = CONFIG.refs.units.carrier },
+            action = onRevive,
         },
     },
     config = CONFIG,

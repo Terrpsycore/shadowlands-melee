@@ -40,15 +40,15 @@ T.registerBuffs = function(tag, buffs)
     T.buffs[tag] = buffs
 end
 
-T.fireEvent = function(event, data)
+T.fireEvent = function(event, ctx)
     local callbacks = T.callbacks[event]
     if not callbacks then
         return
     end
-    for _, callback in ipairs(callbacks) do
-        callback.action(data)
-    end
+    Filter.runFilteredTriggers(callbacks, ctx or {})
 end
+
+T.onCustomEvent = function(_triggers) end
 
 T.onStun = function(_triggers)
     -- TODO: change to UNIT_TYPE_STUNNED
@@ -273,6 +273,7 @@ T.methods = {
     ORDER = T.onAnyOrder,
     STUN = T.onStun,
     ROOT = T.onRoot,
+    REVIVE = T.onCustomEvent,
 }
 
 return T

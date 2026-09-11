@@ -42,9 +42,11 @@ alwaysApply: false
 
 - **Filter:** опциональный блок `filter = { source, target }` — scalar или array **FourCC id** (number).
   - значения через `CONFIG.refs.units.*` / `CONFIG.refs.abilities.*` (после compile) или `FourCC(...)` вне CONFIG
-  - `filter.source` — инициатор: атакующий (ATTACKED), источник урона (DAMAGE)
-  - `filter.target` — объект: умирающий/призванный/обученный (DEATH/SUMMON/TRAIN), цель урона (DAMAGE)
+  - `filter.source` — инициатор: атакующий (ATTACKED), источник урона (DAMAGE), кастер воскрешения (REVIVE)
+  - `filter.target` — объект: умирающий/призванный/обученный (DEATH/SUMMON/TRAIN), цель урона (DAMAGE), воскрешённый юнит (REVIVE)
   - оба поля заданы → AND; filter отсутствует → любое событие данного типа
+
+- **Custom events** (STUN, ROOT, REVIVE, …): подписка через `trigger = "REVIVE"` (+ filter); dispatch через `Triggers.fireEvent(name, ctx)` → `runFilteredTriggers`. События без WC3-hook (REVIVE) → `onCustomEvent` в `callbacks.methods`; fire из source-способности (напр. `animateDead`). ctx обязан содержать поля, нужные filter — иначе filtered callbacks не сработают.
 
 - **Data IDs:** slug — доменное имя (`pulsebackToggle`), не vanilla (`immolation`)
 
@@ -57,7 +59,7 @@ alwaysApply: false
 - Команды после разработки: `lua tools/bake.lua` (IDs + реестры); тесты не запускать (их запускает пользователь, напоминать не надо)
 
 - **Scenario templates** (`src/scenario/common/templates/`):
-  - `_reference.lua` — все 18 trigger-типов с примерами filter/spellId/delta; только справочник
+  - `_reference.lua` — все 19 trigger-типов с примерами filter/spellId/delta; только справочник
   - archetype `*.lua` — минимальный каркас под тип способности (checklist в шапке)
   - index и workflow: `src/scenario/common/_template.lua`
   - **не** подключать templates в `scenario/abilities.lua` — только копировать при создании новой способности

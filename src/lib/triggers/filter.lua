@@ -73,24 +73,32 @@ local function matchesTypeSet(set, unit)
 end
 
 ---@param trigger TriggerDefinition
-local function matchesDamageFilters(trigger, info)
-    if not matchesTypeSet(trigger._sourceTypes, info.source) then
+---@param ctx { source?: unit, target?: unit }
+local function matchesSourceTargetFilters(trigger, ctx)
+    if not matchesTypeSet(trigger._sourceTypes, ctx.source) then
         return false
     end
-    if not matchesTypeSet(trigger._targetTypes, info.target) then
+    if not matchesTypeSet(trigger._targetTypes, ctx.target) then
         return false
     end
     return true
 end
 
 ---@param triggers TriggerDefinition[]
----@param info table
-function Filter.runFilteredDamageTriggers(triggers, info)
+---@param ctx { source?: unit, target?: unit }
+function Filter.runFilteredTriggers(triggers, ctx)
+    ctx = ctx or {}
     for _, trigger in ipairs(triggers) do
-        if matchesDamageFilters(trigger, info) then
-            trigger.action(info)
+        if matchesSourceTargetFilters(trigger, ctx) then
+            trigger.action(ctx)
         end
     end
+end
+
+---@param triggers TriggerDefinition[]
+---@param info table
+function Filter.runFilteredDamageTriggers(triggers, info)
+    Filter.runFilteredTriggers(triggers, info)
 end
 
 ---@param triggers TriggerDefinition[]

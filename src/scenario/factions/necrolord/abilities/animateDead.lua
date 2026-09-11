@@ -11,6 +11,7 @@ local AbilityConfig = require("lib.ability.config")
 local Unit = require("utils.unit")
 
 local Storage = require("scenario.storage.death")
+local Triggers = require("lib.triggers.callbacks")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -41,7 +42,6 @@ local function onCastStart()
     local corpseInfo = Storage:bind(corpse)
 
     if corpseInfo then
-        dump("revifeAfter", corpseInfo.reviveAfter)
         if corpseInfo.reviveAfter > 0 then
             corpseInfo.reviveAfter = corpseInfo.reviveAfter - 1
             return
@@ -56,6 +56,7 @@ local function onCastStart()
         if not corpseInfo.isPeon then
             UnitRemoveType(resurrectUnit, UNIT_TYPE_PEON)
         end
+        Triggers.fireEvent("REVIVE", { source = caster, target = resurrectUnit })
         Storage:drop(corpse)
         RemoveUnit(corpse)
     end
