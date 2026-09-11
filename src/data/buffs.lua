@@ -85,4 +85,8 @@ return {
         parent = BuffIds.freezingBreath,
         name = "Security Leak",
     },
+    counterattackCall = {
+        parent = BuffIds.innerFire,
+        name = "Counterattack Call",
+    },
 }

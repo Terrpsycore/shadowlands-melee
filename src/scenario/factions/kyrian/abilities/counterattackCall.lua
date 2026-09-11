@@ -1,19 +1,6 @@
 --[[
-  ARCHETYPE: on-cast-effect
-  TEMPLATE ONLY — copy to scenario/factions/<faction>/abilities/<slug>.lua
-
-  DATA CHECKLIST:
-    - data/abilities: {slug} (e.g. A.channelArea, A.channelPoint)
-    - optional hidden abilities for dummy debuffs
-    - data/buffs.lua for debuff slugs
-    - data/units: add "{slug}" to carrier.abilities
-    - lua tools/bake.lua
-
-  STORAGE: usually none
-  TEST: cast hits targets in radius; optional DAMAGE hook
-
-  REFERENCE: scenario/factions/kyrian/abilities/bastionSpear.lua
-  TRIGGERS: templates/_reference.lua
+-- TODO:
+-- - add max targets
 ]]
 
 local Ids = require("data.ids")
@@ -43,21 +30,24 @@ local CONFIG = AbilityConfig.compile({
 local function onSpell()
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
     local targets = Unit.getAllyUnitsInRadius(caster, CONFIG.balance.radius, function(u)
         return IsUnitAliveBJ(u)
     end)
 
     for _, target in ipairs(targets) do
-        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.dummy, "innerfire")
+        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.dummy, "innerfire", level)
     end
 end
 
 local function onDummySpell()
     local target = GetSpellTargetUnit()
     Storage:add(target)
-    if GetUnitAbilityLevel(target, CONFIG.refs.abilities.bonus) then
+    local level = GetUnitAbilityLevel(target, CONFIG.refs.abilities.bonus)
+    if level then
         UnitAddAbility(target, CONFIG.refs.abilities.bonus)
+        SetUnitAbilityLevel(target, CONFIG.refs.abilities.bonus, level)
     end
 end
 

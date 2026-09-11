@@ -258,4 +258,38 @@ return {
             a:setAlternateFormUnit(1, Ids.units.watcherFlying)
         end),
     }),
+    counterattackCall = A.channelNoTarget({
+        name = "Counterattack Call",
+        levels = 3,
+        manaCost = 100,
+        button = { 0, 2 },
+        apply = A.channelNoTarget.apply(function(a)
+            for level = 1, 3 do
+                a:setDisableOtherAbilities(level, false)
+                a:setFollowThroughTime(level, 0)
+            end
+        end),
+    }),
+    counterattackCallDummy = A.innerFire({
+        name = "Counterattack Call",
+        levels = 3,
+        button = { 0, 2 },
+        buffs = { "counterattackCall" },
+        apply = A.innerFire.apply(function(a)
+            for level = 1, 3 do
+                a:setDefenseIncrease(1, 0)
+                a:setDamageIncrease(1, 0)
+                a:setDurationNormal(1, 2)
+                a:setDurationHero(1, 2)
+            end
+        end),
+    }),
+    counterattackCallBonus = A.itemDamageBonus({
+        levels = 3,
+        apply = A.itemDamageBonus.apply(function(a)
+            for level = 1, 3 do
+                a:setAttackBonus(level, 10 * level)
+            end
+        end),
+    }),
 }
