@@ -50,7 +50,7 @@ local function onAttack()
     local nearbyAirUnits = Unit.getUnitsInRadius(unit, CONFIG.balance.radius, function(u)
         return Unit.isFlying(u) and not IsUnitAlly(u, GetOwningPlayer(unit))
     end)
-    dump("onAttack animaBarrage", MechStorage:has(unit))
+    -- dump("onAttack animaBarrage", MechStorage:has(unit))
     if MechStorage:has(unit) and #nearbyAirUnits > 0 then
         local mana = GetUnitState(unit, UNIT_STATE_MANA)
         if mana < CONFIG.balance.manacost then

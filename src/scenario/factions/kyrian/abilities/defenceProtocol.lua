@@ -51,7 +51,7 @@ local function onTurnOn()
     local unit = GetTriggerUnit()
     local mana = GetUnitState(unit, UNIT_STATE_MANA)
     SetUnitState(unit, UNIT_STATE_MANA, mana + CONFIG.balance.manacost)
-    dump("onTurnOn defenceProtocol", mana, mana + CONFIG.balance.manacost)
+    -- dump("onTurnOn defenceProtocol", mana, mana + CONFIG.balance.manacost)
     MechStorage:set(unit, "active", true)
 end
 
@@ -65,11 +65,8 @@ local function onDeath()
 end
 
 local function onDamageEvent(info)
-    local nearbyPraetors = Unit.getAllyUnitsOfTypeInRadius(
-        info.target,
-        CONFIG.refs.units.carrier,
-        CONFIG.balance.radius
-    )
+    local nearbyPraetors =
+        Unit.getAllyUnitsOfTypeInRadius(info.target, CONFIG.refs.units.carrier, CONFIG.balance.radius)
     for _, unit in ipairs(nearbyPraetors) do
         activateDefenceProtocol(info, unit)
     end

@@ -30,8 +30,6 @@ local CONFIG = AbilityConfig.compile({
 
 local function applyPulsebackPulse(unit)
     local owner = GetOwningPlayer(unit)
-    local x = GetUnitX(unit)
-    local y = GetUnitY(unit)
 
     for _, target in ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.pulseRadius)) do
         if not IsUnitAlly(target, owner) then
@@ -48,8 +46,7 @@ local function applyPulsebackPulse(unit)
         end
     end
 
-    local dummy = Dummy.create(owner, unit, CONFIG.refs.abilities.pulse)
-    IssuePointOrder(dummy, "blizzard", x, y)
+    Dummy.applyDummyPointOrder(owner, unit, CONFIG.refs.abilities.pulse, "blizzard")
 end
 
 local function tryActivatePulseback(info)

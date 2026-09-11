@@ -59,7 +59,7 @@ local function onLethalDamage(info)
     Storage:set(corpse, "unit", target)
     Storage:set(corpse, "isPeon", isPeon)
     Storage:set(corpse, "reviveAfter", GetUnitState(target, UNIT_STATE_MAX_LIFE) // 500)
-    dump("\nonLethalDamage set", corpse, target, UnitAlive(target))
+    -- dump("\nonLethalDamage set", corpse, target, UnitAlive(target))
 end
 
 return {

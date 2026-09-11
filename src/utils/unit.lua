@@ -58,7 +58,6 @@ function Unit.hasInvisibilityBuff(unit)
 end
 
 function Unit.substractMana(unit, amount)
-    local maxMana = GetUnitState(unit, UNIT_STATE_MAX_MANA)
     local currentMana = GetUnitState(unit, UNIT_STATE_MANA)
     return SetUnitState(unit, UNIT_STATE_MANA, math.max(0, currentMana - amount))
 end
