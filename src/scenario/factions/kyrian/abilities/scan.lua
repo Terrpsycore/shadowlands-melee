@@ -54,7 +54,7 @@ end
 
 local function onDeath()
     MechStorage:clear(GetDyingUnit())
-    PhalynxStorage:clear(GetDyingUnit())
+    PhalynxStorage:remove(GetDyingUnit())
 end
 
 local function afterDamage(info)

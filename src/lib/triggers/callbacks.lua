@@ -26,6 +26,10 @@ end
 ---@param callbackOptions TriggerDefinition
 T.registerCallback = function(event, callbackOptions)
     Filter.compileTrigger(callbackOptions)
+    local original = callbackOptions.action
+    callbackOptions.action = function(...)
+        Debug.try(original, ...)
+    end
     if T.callbacks[event] == nil then
         T.callbacks[event] = {}
     end

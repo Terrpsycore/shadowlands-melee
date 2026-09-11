@@ -62,7 +62,7 @@ local function onDummySpell()
 end
 
 local function onDamage(info)
-    if not Storage:have(info.source) then
+    if not Storage:get(info.source) then
         return
     end
     if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.main) then
@@ -77,17 +77,17 @@ local function onTimer()
     Storage:forEach(function(u)
         if not UnitHasBuffBJ(u, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(u, CONFIG.refs.abilities.bonus)
-            Storage:clear(u)
+            Storage:remove(u)
         end
     end)
 end
 
 local function onDeath()
     local unit = GetDyingUnit()
-    if not Storage:have(unit) then
+    if not Storage:get(unit) then
         return
     end
-    Storage:clear(unit)
+    Storage:remove(unit)
 end
 
 return {
