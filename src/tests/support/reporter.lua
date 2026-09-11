@@ -1,12 +1,17 @@
-local Reporter = {
-    mode = "summary",
-}
+local ReporterMode = require("tests.support.reporter_mode")
+
+local Reporter = {}
+
+---@type ReporterMode
+Reporter.mode = nil
+
+Reporter.Mode = ReporterMode
 
 ---@param testName string
 ---@param ok boolean
 ---@param err? string
 function Reporter.immediate(testName, ok, err)
-    if Reporter.mode ~= "verbose" then
+    if Reporter.mode ~= ReporterMode.verbose then
         return
     end
 
@@ -30,7 +35,7 @@ end
 
 ---@param suite TestSuite
 function Reporter.flushSuite(suite)
-    if Reporter.mode == "verbose" then
+    if Reporter.mode == ReporterMode.verbose then
         return
     end
 
@@ -46,7 +51,7 @@ function Reporter.flushSuite(suite)
         end
     end
 
-    if Reporter.mode == "errors" then
+    if Reporter.mode == ReporterMode.errors then
         if #failed == 0 then
             return
         end

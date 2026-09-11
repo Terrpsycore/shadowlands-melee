@@ -1,6 +1,5 @@
 ---@meta
 
----@alias ReporterMode "errors" | "summary" | "verbose"
 ---@alias TestWait "WAIT"
 ---@alias TestReporterFn fun(testName: string, ok: boolean, err?: string)
 ---@alias TestFn fun(case: TestCase): TestWait|nil
@@ -35,8 +34,14 @@
 ---@class TestRunner
 ---@field test fun(self: TestRunner, name: string, testFunc: TestFn)
 
+---@class ReporterModeEnum
+---@field summary ReporterMode
+---@field errors ReporterMode
+---@field verbose ReporterMode
+
 ---@class TestReporter
 ---@field mode ReporterMode
+---@field Mode ReporterModeEnum
 ---@field immediate fun(testName: string, ok: boolean, err?: string)
 ---@field flushSuite fun(suite: TestSuite)
 
