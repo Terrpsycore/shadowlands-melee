@@ -1,12 +1,7 @@
--- require("tests.items")
-require("tests.defenceProtocol")
-require("tests.pulseback")
-require("tests.formation")
-require("tests.pride")
-require("tests.combatExpertise")
-require("tests.huntedAnimal")
---
-require("tests.onStun")
--- require("tests.soulbind")
+local registry = require("tests.generated.registry")
+
+for _, mod in ipairs(registry) do
+    require(mod)
+end
 
 Debug.original.print("tests ready")

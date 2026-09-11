@@ -19,10 +19,12 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 - `src/main.lua` — точка входа карты
 - `src/lib/` — инфраструктура проекта (triggers, storage)
 - `src/vendor/` — внешние зависимости (`ext/`, `blizzard/`, `assets/`)
-- `src/data/` — декларативные данные (units, abilities, items, buffs)
+- `src/data/` — декларативные данные (units, abilities, items, buffs); пресеты — `abilityPresets.lua`
 - `src/data/generated/` — **автоген** ID, slug aliases (`id_slugs.lua`) и meta (не править вручную)
-- `src/scenario/` — runtime-логика способностей, storage, код по фракциям (`factions/`)
-- `src/tests/` — in-game автотесты
+- `src/scenario/` — runtime-логика: `factions/*/abilities/`, cross-cutting `mechanics/`, `dev/spawn.lua`
+- `src/scenario/generated/` — autogen реестр способностей (`abilities_registry.lua`)
+- `src/tests/` — in-game автотесты (`factions/`, `mechanics/`, `data/`)
+- `src/tests/generated/` — autogen реестр тестов (`registry.lua`)
 - `objediting/` — генераторы и kinds для object editing
 - `map.w3x/` — ассеты карты
 - `docs/design/` — геймдизайн по фракциям
@@ -35,12 +37,13 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 
 ## Не трогать без согласования
 - `src/data/generated/*` — только через `lua objediting/gen_ids.lua`
+- `src/scenario/generated/*`, `src/tests/generated/*` — через `lua objediting/gen_ids.lua`
 - `src/vendor/assets/*` — vanilla ID-референсы и objediting stubs
 - `map.w3x/` — бинарные/редакторские ассеты карты
 - `.build/`, `tmp/`, `dev/` — артефакты сборки
 
 ## Тесты
-In-game: модули в `src/tests/` подключаются из `src/tests/init.lua`. Запуск — пользователь в WC3 после `build`/`run`. Отдельного CLI/test-runner нет.
+In-game: `src/tests/init.lua` подключает модули из `tests/generated/registry.lua`. Запуск — пользователь в WC3 после `build`/`run`. Отдельного CLI/test-runner нет.
 
 ## Заметки
 - Solo-разработка; правила Cursor в git (`.cursor/rules/`)

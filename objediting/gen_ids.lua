@@ -262,3 +262,6 @@ function Generator:next(prefix)
 end
 
 Generator:new():generateIds()
+
+dofile("objediting/gen_ability_registry.lua")
+dofile("objediting/gen_test_registry.lua")

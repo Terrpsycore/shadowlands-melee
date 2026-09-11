@@ -10,7 +10,7 @@ local AbilityIds = require("vendor.assets.AbilityIds")
 local rowFields = dofile("objediting/ability_row_fields.lua")
 
 local srcPath = "src/vendor/assets/objediting/object/AbilityObjEditing.lua"
-local abilityLuaPath = "src/data/ability.lua"
+local abilityLuaPath = "src/data/abilityPresets.lua"
 local classesPath = "src/data/generated/ability_classes.lua"
 local factoriesPath = "src/data/generated/ability_factories.lua"
 local abilityMetaPath = "src/data/ability.meta.lua"

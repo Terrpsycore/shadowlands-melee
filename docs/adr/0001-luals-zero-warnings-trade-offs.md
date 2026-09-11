@@ -28,7 +28,7 @@
 
 | Область | Что сделано | Цена |
 |---------|-------------|------|
-| [`ability.lua`](../../src/data/ability.lua) | `apply`-логика вынесена в именованные функции с `---@param a ...`; generic `presetFactory`; дубли stub-классов `AbilityFactory` / `AbilityRowInput` | **Хуже читаемость**: пресет и apply разнесены; дублирование контракта с `ability_factories.lua`. Кандидат на рефакторинг (локальный `channelApply(setup)`, types в отдельном файле). |
+| [`abilityPresets.lua`](../../src/data/abilityPresets.lua) | `apply`-логика вынесена в именованные функции с `---@param a ...`; generic `presetFactory`; дубли stub-классов `AbilityFactory` / `AbilityRowInput` | **Хуже читаемость**: пресет и apply разнесены; дублирование контракта с `ability_factories.lua`. Кандидат на рефакторинг (локальный `channelApply(setup)`, types в отдельном файле). |
 | [`filter.lua`](../../src/lib/triggers/filter.lua) | `trigger?` для `registerCallback` без обязательного `trigger` | При filter без `trigger` текст ошибок FourCC использует fallback `"callback"`. |
 | [`unitFields.lua`](../../src/lib/storage/unitFields.lua) | `---@diagnostic disable-next-line: duplicate-set-field` на `store:have` | Конфlict `Storage.instance:have(parent, field)` vs `store:have(unit)` **не решён**, только заглушен (см. TODO в файле). |
 | [`soulbind.lua`](../../src/tests/soulbind.lua) | `assert(Store:get(id), ...)` | Скорее улучшение: явный контракт после `bond`. |
@@ -62,7 +62,7 @@
 ## Последствия
 
 - **Плюс:** один зелёный критерий для CI/merge: `--check .` = 0.
-- **Минус:** часть строгости и читаемости перенесена в disable/ignore/globals; прикладной `ability.lua` — главный регресс по UX кода.
+- **Минус:** часть строгости и читаемости перенесена в disable/ignore/globals; прикладной `abilityPresets.lua` — главный регресс по UX кода.
 - **Рекомендация:** при работе над abilities — держать types отдельно или вернуть inline apply через typed helper (`channelApply`); периодически пересматривать disable в community при обновлении stubs.
 
 ## Связанные документы

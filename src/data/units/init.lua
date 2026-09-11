@@ -1,17 +1,6 @@
 require("vendor.assets.objediting.core.enum")
 
-local function merge(into, part, source, class)
-    for slug, row in pairs(part) do
-        if into[slug] then
-            error("duplicate unit slug '" .. slug .. "' in " .. source)
-        end
-        into[slug] = row
-
-        if not row.class then
-            row.class = class
-        end
-    end
-end
+local merge = require("data._merge").merge
 
 local db = {}
 
@@ -35,7 +24,7 @@ local sources = {
 }
 
 for _, source in ipairs(sources) do
-    merge(db, require(source.path), source.path, source.class)
+    merge(db, require(source.path), source.path, source.class, "unit")
 end
 
 return db

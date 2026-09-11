@@ -10,9 +10,13 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 - LuaLS — `.luarc.json`
 - Community libs: Influa, DamageEngine, IngameConsole (`src/vendor/ext/`)
 
+## Bake
+
+Перед сборкой `build/wc3.py` запускает `objediting/gen_ids.lua`, который генерит IDs/slugs/meta и реестры способностей/тестов (`*/generated/`). Папки `*/generated/` в `.gitignore` — после clone нужен bake.
+
 ## Тесты
 
-In-game автотесты в `src/tests/`. Если `tests.init` импортирован из `src/main.lua`, тесты регистрируются и **запускаются автоматически при старте карты**. Отдельного CLI test-runner нет.
+In-game автотесты в `src/tests/` (`factions/`, `mechanics/`, `data/`). `tests.init` подключает модули из `tests/generated/registry.lua` и **запускает их автоматически при старте карты**. Отдельного CLI test-runner нет.
 
 Статическая проверка типов (LuaLS):
 

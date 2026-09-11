@@ -1,6 +1,6 @@
 local Ids = require("data.ids")
 
-local A = require("data.ability")
+local A = require("data.abilityPresets")
 
 return {
     soakAnima = A.manaSteal({

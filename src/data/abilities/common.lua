@@ -1,4 +1,4 @@
-local A = require("data.ability")
+local A = require("data.abilityPresets")
 
 return {
     inventory = A.inventory({}),
