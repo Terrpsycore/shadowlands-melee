@@ -3,7 +3,6 @@ local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
-local dump = require("utils.logger")
 
 local CONFIG = AbilityConfig.compile({
     refs = {

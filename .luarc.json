@@ -35,7 +35,8 @@
       "UnitEvent",
       "seterrorhandler",
       "args",
-      "sourcecode"
+      "sourcecode",
+      "dump"
     ]
   }
 }

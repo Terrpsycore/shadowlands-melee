@@ -15,7 +15,6 @@ local AbilityConfig = require("lib.ability.config")
 local removeControl = require("scenario.common.control")
 local Type = require("utils.type")
 local Unit = require("utils.unit")
-local dump = require("utils.logger")
 
 local ControlStore = require("scenario.storage.control")
 

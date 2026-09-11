@@ -5,7 +5,6 @@ local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local GetElapsedGameTime = require("scenario.common.timer")
 local Dummy = require("utils.dummy")
-local dump = require("utils.logger")
 local Unit = require("utils.unit")
 
 local Storage = require("scenario.storage.deepMeditation")

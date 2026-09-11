@@ -1,5 +1,4 @@
 local AbilityConfig = require("lib.ability.config")
-local dump = require("utils.logger")
 
 local CONFIG = AbilityConfig.compile({
     refs = {},

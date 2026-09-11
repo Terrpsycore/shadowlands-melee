@@ -1,7 +1,6 @@
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
-local dump = require("utils.logger")
 local Unit = require("utils.unit")
 
 local MechStorage = require("scenario.storage.mech")

@@ -3,7 +3,6 @@
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local Unit = require("utils.unit")
-local dump = require("utils.logger")
 
 local PhalynxStore = require("scenario.storage.phalynx")
 
