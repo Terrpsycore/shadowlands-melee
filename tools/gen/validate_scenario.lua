@@ -1,5 +1,5 @@
 --- Usage: lua tools/gen/validate_scenario.lua (or via tools/bake.lua)
---- Static checks on scenario ability sources: Ids.* slugs and trigger event names.
+--- Bake-time validation: scenario Ids/triggers, data ability buffs, unit abilities.
 
 local root = dofile("tools/_path.lua").setup()
 
@@ -74,4 +74,54 @@ for _, mod in ipairs(registry) do
     validateModule(mod)
 end
 
-print(("Validated %d scenario ability modules"):format(#registry))
+local AbilityIds = require("vendor.assets.AbilityIds")
+
+local function assertAbilitySlug(slug, context)
+    if generated.abilities[slug] or AbilityIds[slug] then
+        return
+    end
+    error(string.format("%s: unknown ability %q", context, slug))
+end
+
+local function assertBuffSlug(slug, context)
+    if generated.buffs[slug] then
+        return
+    end
+    error(string.format("%s: unknown buff %q", context, slug))
+end
+
+local function validateUnitAbilities(slug, row)
+    for _, abilitySlug in ipairs(row.abilities or {}) do
+        assertAbilitySlug(abilitySlug, "units." .. slug .. ".abilities")
+    end
+    for _, abilitySlug in ipairs(row.heroAbilities or {}) do
+        assertAbilitySlug(abilitySlug, "units." .. slug .. ".heroAbilities")
+    end
+end
+
+local function validateAbilityBuffs(slug, row)
+    for _, buffSlug in ipairs(row.buffs or {}) do
+        assertBuffSlug(buffSlug, "abilities." .. slug .. ".buffs")
+    end
+end
+
+local units = require("data.units")
+local abilities = require("data.abilities")
+
+local unitCount = 0
+for unitSlug, row in pairs(units) do
+    unitCount = unitCount + 1
+    validateUnitAbilities(unitSlug, row)
+end
+
+local abilityCount = 0
+for abilitySlug, row in pairs(abilities) do
+    abilityCount = abilityCount + 1
+    validateAbilityBuffs(abilitySlug, row)
+end
+
+print(("Validated %d scenario modules, %d units, %d abilities"):format(
+    #registry,
+    unitCount,
+    abilityCount
+))

@@ -38,6 +38,7 @@ local function onLethalDamage(info)
 
     SetUnitInvulnerable(target, true)
     ShowUnitHide(target)
+    SetUnitUseFood(target, false)
     SetUnitState(target, UNIT_STATE_LIFE, 1)
     Damage.life = 1
     info.damage = 0

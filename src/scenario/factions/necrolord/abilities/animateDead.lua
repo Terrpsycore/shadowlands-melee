@@ -52,6 +52,7 @@ local function onCastStart()
         SetUnitState(resurrectUnit, UNIT_STATE_LIFE, GetUnitState(resurrectUnit, UNIT_STATE_MAX_LIFE))
         SetUnitInvulnerable(resurrectUnit, false)
         ShowUnitShow(resurrectUnit)
+        SetUnitUseFood(resurrectUnit, true)
         if not corpseInfo.isPeon then
             UnitRemoveType(resurrectUnit, UNIT_TYPE_PEON)
         end
