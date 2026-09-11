@@ -39,7 +39,7 @@ end
 
 local registry = {}
 
-addModules(registry, "scenario.mechanics.", listLuaBasenames("src/scenario/mechanics"))
+addModules(registry, "scenario.common.mechanics.", listLuaBasenames("src/scenario/common/mechanics"))
 
 for _, faction in ipairs(factionOrder) do
     local dir = "src/scenario/factions/" .. faction .. "/abilities"

@@ -2,7 +2,7 @@
 -- - hard cancelled like starfall (doesn't cancel on move)
 -- - make aura apply instantly
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 

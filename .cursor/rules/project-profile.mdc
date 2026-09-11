@@ -17,11 +17,12 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 
 ## Структура
 - `src/main.lua` — точка входа карты
-- `src/lib/` — инфраструктура проекта (triggers, storage)
+- `src/lib/` — инфраструктура проекта (triggers, storage, `ability/config`)
+- `src/dev/` — dev bootstrap (`spawn.lua`)
 - `src/vendor/` — внешние зависимости (`ext/`, `blizzard/`, `assets/`)
 - `src/data/` — декларативные данные (units, abilities, items, buffs); пресеты — `abilityPresets.lua`
 - `src/data/generated/` — **автоген** ID, slug aliases (`id_slugs.lua`) и meta (не править вручную)
-- `src/scenario/` — runtime-логика: `factions/*/abilities/`, cross-cutting `mechanics/`, `dev/spawn.lua`
+- `src/scenario/` — runtime-логика: `factions/*/abilities/`, `common/mechanics/`, `common/templates/`
 - `src/scenario/generated/` — autogen реестр способностей (`abilities_registry.lua`)
 - `src/tests/` — in-game автотесты (`factions/`, `mechanics/`, `data/`)
 - `src/tests/generated/` — autogen реестр тестов (`registry.lua`)

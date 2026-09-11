@@ -3,7 +3,7 @@
 -- - handle stale pending targets
 -- - adjust scan radius to current vision radius (can be affected by Fae debuff)
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local dump = require("utils.logger")
 local Unit = require("utils.unit")

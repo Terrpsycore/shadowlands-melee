@@ -1,6 +1,6 @@
 ---
 description: Gotcha при генерации WC3-способностей
-globs: src/data/abilities/**/*.lua,src/data/units/**/*.lua,src/scenario/factions/**/abilities/**/*.lua,src/scenario/mechanics/**/*.lua,src/scenario/common/templates/**/*.lua,src/tests/**/*.lua
+globs: src/data/abilities/**/*.lua,src/data/units/**/*.lua,src/scenario/factions/**/abilities/**/*.lua,src/scenario/common/mechanics/**/*.lua,src/scenario/common/templates/**/*.lua,src/tests/**/*.lua
 alwaysApply: false
 ---
 
@@ -9,7 +9,7 @@ alwaysApply: false
 - **Scenario CONFIG:** прямой вызов `AbilityConfig.compile({ refs, balance })` — без промежуточной SPEC-переменной. Slug-и в spec, FourCC после compile.
 
   ```lua
-  local AbilityConfig = require("scenario.config")
+  local AbilityConfig = require("lib.ability.config")
 
   local Ids = require("data.ids")
 
@@ -52,7 +52,7 @@ alwaysApply: false
 
 - **Пресеты** (`data/abilityPresets.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
 
-- **Реестры:** новая способность — файл в `scenario/factions/<faction>/abilities/` (или `scenario/mechanics/`); bake генерит `scenario/generated/abilities_registry.lua`. Исключения — `objediting/ability_registry_excludes.lua`.
+- **Реестры:** новая способность — файл в `scenario/factions/<faction>/abilities/` (или `scenario/common/mechanics/`); bake генерит `scenario/generated/abilities_registry.lua`. Исключения — `objediting/ability_registry_excludes.lua`.
 
 - Команды после разработки: `lua objediting/gen_ids.lua` (IDs + реестры); тесты не запускать (их запускает пользователь, напоминать не надо)
 

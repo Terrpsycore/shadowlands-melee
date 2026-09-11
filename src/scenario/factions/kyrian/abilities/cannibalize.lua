@@ -11,7 +11,7 @@
 -- - bug: glitch if unit just died - trigger provoked, but cannibalism doesn't work
 
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local removeControl = require("scenario.common.control")
 local Type = require("utils.type")
 local Unit = require("utils.unit")

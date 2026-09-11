@@ -2,7 +2,7 @@
 -- - single buff effect
 -- - check at least 1 mana overflow to overcharge buff
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")

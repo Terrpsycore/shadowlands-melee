@@ -3,7 +3,7 @@
 -- - check range before applying onDamage dummy effect
 -- - mb add delay between turn on/off and affecting dummy
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Type = require("utils.type")
 local Unit = require("utils.unit")

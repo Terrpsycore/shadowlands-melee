@@ -1,7 +1,7 @@
 -- TODO:
 -- - ignore dummy attacks
 local Ids = require("data.ids")
-local AbilityConfig = require("scenario.config")
+local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 
