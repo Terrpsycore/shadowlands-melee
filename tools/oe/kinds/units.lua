@@ -1,9 +1,19 @@
 local Ids = require("data.generated.ids")
+local AbilityIds = require("vendor.assets.AbilityIds")
 local shared = dofile("tools/oe/kinds/_shared.lua")
+
+local function resolveAbilityId(slug)
+    local id = Ids.abilities[slug] or AbilityIds[slug]
+    if not id then
+        error("unknown ability '" .. slug .. "'")
+    end
+    return id
+end
 
 local reserved = {
     parent = true,
     class = true,
+    faction = true,
     apply = true,
 }
 
@@ -26,22 +36,14 @@ local fields = {
     abilities = function(u, slugs)
         local parts = {}
         for _, slug in ipairs(slugs) do
-            local id = Ids.abilities[slug]
-            if not id then
-                error("unknown ability '" .. slug .. "'")
-            end
-            parts[#parts + 1] = id
+            parts[#parts + 1] = resolveAbilityId(slug)
         end
         u:setNormalAbilities(table.concat(parts, ","))
     end,
     heroAbilities = function(u, slugs)
         local parts = {}
         for _, slug in ipairs(slugs) do
-            local id = Ids.abilities[slug]
-            if not id then
-                error("unknown ability '" .. slug .. "'")
-            end
-            parts[#parts + 1] = id
+            parts[#parts + 1] = resolveAbilityId(slug)
         end
         u:setHeroAbilities(table.concat(parts, ","))
     end,

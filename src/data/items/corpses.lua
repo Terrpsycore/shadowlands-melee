@@ -1,0 +1,48 @@
+local ItemIds = require("vendor.assets.ItemIds")
+local UnitArt = require("vendor.assets.generated.UnitArt")
+
+local function resolveIcon(row)
+    if row.art and row.art.icon then
+        return row.art.icon:gsub("/", "\\")
+    end
+
+    local art = UnitArt[row.parent]
+    if not art or not art.icon then
+        error("no icon for unit parent '" .. row.parent .. "' in vendor.assets.generated.UnitArt")
+    end
+    return art.icon
+end
+
+local function build()
+    local units = require("data.units")
+    local db = {}
+
+    local slugs = {}
+    for slug in pairs(units) do
+        slugs[#slugs + 1] = slug
+    end
+    table.sort(slugs)
+
+    for _, unitSlug in ipairs(slugs) do
+        local row = units[unitSlug]
+        if row.class == "unit" then
+            local itemSlug = unitSlug .. "Corpse"
+            local unitName = row.name or unitSlug
+            db[itemSlug] = {
+                parent = ItemIds.emptyVial,
+                name = unitName .. " Corpse",
+                art = {
+                    icon = resolveIcon(row),
+                },
+                unit = true,
+                corpseOf = unitSlug,
+            }
+        end
+    end
+
+    return db
+end
+
+return {
+    build = build,
+}

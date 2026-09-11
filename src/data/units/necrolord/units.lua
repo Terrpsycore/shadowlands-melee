@@ -11,6 +11,10 @@ return {
         name = "Aranakk Spy",
         abilities = { "vanish" },
     },
+    scavenger = {
+        parent = UnitIds.ghoul,
+        abilities = { "inventory", "collectCorpses", "dropCorpses", "exhume" },
+    },
     necromancer = {
         parent = UnitIds.necromancer,
         abilities = { "animateDead" },

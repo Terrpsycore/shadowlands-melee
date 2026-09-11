@@ -52,6 +52,7 @@ local SOURCES = {
 
 local OUT_PATH = "src/data/generated/ids.lua"
 local SLUGS_OUT_PATH = "src/data/generated/id_slugs.lua"
+local REVERSE_OUT_PATH = "src/data/generated/id_reverse.lua"
 
 local SLUG_ALIAS_BY_DOMAIN = {
     abilities = "AbilitySlug",
@@ -83,6 +84,7 @@ function Generator:generateIds()
 
     self:write(database, sortedIds)
     self:writeSlugAliases(sortedIds)
+    self:writeReverse(database, sortedIds)
 
     local genItemMeta = dofile("tools/gen/item_meta.lua")
     genItemMeta(database.items, require("data.items"))
@@ -197,6 +199,24 @@ function Generator:write(database, sortedIds)
         f:write(("    %s = {\n"):format(domain))
         for _, slug in ipairs(sortedIds[domain]) do
             f:write(("        %s = %q,\n"):format(slug, database[domain][slug]))
+        end
+        f:write("    },\n")
+    end
+    f:write("}\n")
+    f:close()
+end
+
+--- @param database AssignedMap
+--- @param sortedIds DomainSlugs
+function Generator:writeReverse(database, sortedIds)
+    local f = assert(io.open(REVERSE_OUT_PATH, "w"))
+    f:write("return {\n")
+    for _, source in ipairs(SOURCES) do
+        local domain = source.domain
+        f:write(("    %s = {\n"):format(domain))
+        for _, slug in ipairs(sortedIds[domain]) do
+            local id = database[domain][slug]
+            f:write(("        [%q] = %q,\n"):format(id, slug))
         end
         f:write("    },\n")
     end

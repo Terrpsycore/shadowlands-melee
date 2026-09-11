@@ -1,5 +1,6 @@
 --[[
 TODO:
+- fire onDeath even on fake death ? most likely yes
 - clean stale corpses data & hidden source units
 ]]
 

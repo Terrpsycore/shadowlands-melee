@@ -1,6 +1,6 @@
 local ItemIds = require("vendor.assets.ItemIds")
 
-local db = {
+return {
     dummyUnitItem = {
         parent = ItemIds.ringProtection1,
         unit = true,
@@ -9,5 +9,3 @@ local db = {
         parent = ItemIds.ringProtection1,
     },
 }
-
-return db

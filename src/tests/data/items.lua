@@ -2,6 +2,16 @@ local Ids = require("data.ids")
 local Items = require("lib.items")
 local T = require("tests.support.runner").suite("items")
 
+T:test("stewardCorpse maps back to steward unit", function(case)
+    local item = case:createItem(Ids.items.stewardCorpse)
+    assert(Items.getCorpseOf(GetItemTypeId(item)) == "steward")
+end)
+
+T:test("steward unit maps to stewardCorpse item", function(case)
+    local unit = case:createUnit(Ids.units.steward)
+    assert(Items.getCorpseItemId(GetUnitTypeId(unit)) == FourCC(Ids.items.stewardCorpse))
+end)
+
 T:test("Unit can pick unit item", function(case)
     local unit = case:createUnit(Ids.units.dummy)
     UnitAddAbility(unit, FourCC(Ids.abilities.inventory))

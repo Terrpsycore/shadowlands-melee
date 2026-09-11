@@ -2,8 +2,8 @@ require("lib.init")
 
 require("tests.init")
 
-Timed.delay(5, function()
-    require("spawn").run()
+Timed.call(5, function()
+    require("spawn").run({ "necrolord" })
 end)
 
 local Storage = require("lib.storage.storage")

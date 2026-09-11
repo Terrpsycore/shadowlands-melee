@@ -1,6 +1,9 @@
 local reserved = {
     parent = true,
     apply = true,
+    name = true,
+    art = true,
+    corpseOf = true,
 }
 
 local tags = {
@@ -32,6 +35,7 @@ return function(assigned, db)
             slug = slug,
             hero = data.unit ~= true,
             unique = data.unique == true,
+            corpseOf = data.corpseOf,
         }
     end
     table.sort(rows, function(a, b)
@@ -41,12 +45,14 @@ return function(assigned, db)
     local f = assert(io.open(outPath, "w"))
     f:write("return {\n")
     for _, row in ipairs(rows) do
+        local corpseOf = row.corpseOf and string.format("%q", row.corpseOf) or "nil"
         f:write(
-            ("    %s = { slug = %q, hero = %s, unique = %s },\n"):format(
+            ("    %s = { slug = %q, hero = %s, unique = %s, corpseOf = %s },\n"):format(
                 row.id,
                 row.slug,
                 tostring(row.hero),
-                tostring(row.unique)
+                tostring(row.unique),
+                corpseOf
             )
         )
     end

@@ -1,3 +1,52 @@
+local shared = dofile("tools/oe/kinds/_shared.lua")
+
+local reserved = {
+    parent = true,
+    apply = true,
+    unit = true,
+    unique = true,
+    corpseOf = true,
+}
+
+local fields = {
+    name = function(item, value)
+        item:setName(value)
+    end,
+    art = function(item, value)
+        shared.applySubfields(item, value, {
+            icon = function(item, path)
+                item:setInterfaceIcon(shared.normalizePath(path))
+            end,
+        }, "art")
+    end,
+}
+
+local function applyFields(item, data, slug)
+    for key, value in pairs(data) do
+        if not reserved[key] then
+            local handler = fields[key]
+            if not handler then
+                error("unknown item field '" .. key .. "' on " .. slug)
+            end
+            handler(item, value)
+        end
+    end
+end
+
+local function defaults(item, data)
+    if not data.corpseOf then
+        return
+    end
+
+    item:setAbilities("")
+    item:setGoldCost(0)
+    item:setLumberCost(0)
+    item:setActivelyUsed(false)
+    item:setPerishable(false)
+    item:setCanBeSoldByMerchants(false)
+    item:setCanBeSoldToMerchants(false)
+end
+
 return {
     resolve = function()
         return {
@@ -6,5 +55,6 @@ return {
             end,
         }
     end,
-    defaults = function() end,
+    defaults = defaults,
+    applyFields = applyFields,
 }
