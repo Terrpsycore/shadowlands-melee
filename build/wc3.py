@@ -1,7 +1,9 @@
 import argparse
+import json
 import os
 import shutil
 import subprocess
+import sys
 from enum import StrEnum
 from pathlib import Path
 
@@ -26,6 +28,32 @@ MAPS_DIR = Path(f"{USER_DIR}/Documents/Warcraft III/Maps/Test")
 GAME_EXE = Path("C:/Games/Warcraft III/_retail_/x86_64/Warcraft III.exe")
 EDITOR_EXE = Path("C:/Games/Warcraft III/_retail_/x86_64/World Editor.exe")
 LUA = Path("C:/Programs/Lua/lua55.exe")  # или полный путь к lua.exe
+
+ERROR = "\033[31m"
+RESET = "\033[0m"
+
+
+def enable_ansi_colors() -> None:
+    if os.name != "nt":
+        return
+    try:
+        import ctypes
+
+        kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
+        mode = ctypes.c_ulong()
+        for handle_id in (-11, -12):
+            handle = kernel32.GetStdHandle(handle_id)
+            if kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
+                kernel32.SetConsoleMode(handle, mode.value | 0x0004)
+    except (AttributeError, OSError):
+        return
+
+
+def print_error(message: str) -> None:
+    print(f"{ERROR}{message}{RESET}", file=sys.stderr)
+
+
+enable_ansi_colors()
 
 
 def main(mode: Mode, _project_path: str):
@@ -52,17 +80,87 @@ def go(project_path: Path):
     run(project_path)
 
 
+def trim_stack_trace(text: str) -> str:
+    if "stack traceback:" in text:
+        return text.split("stack traceback:")[0].rstrip()
+    return text.rstrip()
+
+
+def print_wc3_output(stdout: str) -> None:
+    for line in stdout.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            print(line)
+            continue
+
+        match event.get("event"):
+            case "progress":
+                continue
+            case "error":
+                msg = trim_stack_trace(event.get("message", line))
+                print_error(msg)
+                if event.get("file") and event.get("line"):
+                    print_error(f"  → {event['file']}:{event['line']}")
+            case _:
+                print(line)
+
+
+def run_wc3(args: list[str | Path]) -> None:
+    result = subprocess.run(
+        [str(arg) for arg in args],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.stdout:
+        print_wc3_output(result.stdout)
+    if result.stderr:
+        print_error(result.stderr.rstrip("\n"))
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+
+
 def build(project_path: Path):
     bake(project_path)
-    subprocess.run([BUILDER_EXE, "build", project_path], check=True)
+    run_wc3([BUILDER_EXE, "build", project_path])
 
 
-def bake(project_path: Path):
-    subprocess.run(
-        [LUA, "tools/bake.lua"],
+def bake(project_path: Path) -> None:
+    result = subprocess.run(
+        [str(LUA), "tools/bake.lua"],
         cwd=project_path,
-        check=True,
+        capture_output=True,
+        text=True,
+        check=False,
     )
+    if result.returncode == 0:
+        if result.stdout:
+            end = "" if result.stdout.endswith("\n") else "\n"
+            print(result.stdout, end=end)
+        return
+
+    output = trim_stack_trace(result.stdout or "")
+    if result.stderr:
+        stderr = trim_stack_trace(result.stderr)
+        if stderr:
+            output = f"{output}\n{stderr}" if output else stderr
+
+    lua_prefix = f"{LUA}: "
+    for line in output.splitlines():
+        line = line.rstrip()
+        if not line:
+            continue
+        line = line.removeprefix(lua_prefix)
+        if line.startswith("Generated "):
+            print(line)
+        else:
+            print_error(line)
+
+    sys.exit(result.returncode)
 
 
 def run(project_path: Path):
