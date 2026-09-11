@@ -1,5 +1,6 @@
 local ItemIds = require("vendor.assets.ItemIds")
 local UnitArt = require("vendor.assets.generated.UnitArt")
+local UnitDeath = require("data.units.death")
 
 local function resolveIcon(row)
     if row.art and row.art.icon then
@@ -25,17 +26,20 @@ local function build()
 
     for _, unitSlug in ipairs(slugs) do
         local row = units[unitSlug]
-        if row.class == "unit" then
+        if row.class == "unit" and UnitDeath.leavesCorpse(row) then
             local itemSlug = unitSlug .. "Corpse"
             local unitName = row.name or unitSlug
             db[itemSlug] = {
-                parent = ItemIds.emptyVial,
+                parent = ItemIds.ringProtection1,
                 name = unitName .. " Corpse",
                 art = {
                     icon = resolveIcon(row),
                 },
                 unit = true,
                 corpseOf = unitSlug,
+                apply = function(i)
+                    i:setAbilities("")
+                end,
             }
         end
     end

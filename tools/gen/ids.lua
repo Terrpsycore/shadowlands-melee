@@ -88,6 +88,9 @@ function Generator:generateIds()
 
     local genItemMeta = dofile("tools/gen/item_meta.lua")
     genItemMeta(database.items, require("data.items"))
+
+    local genUnitMeta = dofile("tools/gen/unit_meta.lua")
+    genUnitMeta(database.units, require("data.units"))
 end
 
 --- @return AssignedMap

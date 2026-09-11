@@ -16,6 +16,9 @@ return function(db, kind, ids)
         if kind.applyFields then
             kind.applyFields(obj, data, slug)
         end
+        if kind.finalize then
+            kind.finalize(obj, data, slug)
+        end
         if data.apply then
             data.apply(obj)
         end

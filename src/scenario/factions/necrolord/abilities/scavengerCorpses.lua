@@ -1,5 +1,7 @@
--- todo: handle revive, etc.
--- - visual buff
+-- - create corpse on drop
+-- - preserve corpse lifetime if not in body banks
+-- - ? different storage model (now corpse is PK and it recreates)
+-- - ? pause&hide picked corpse, move&show dropped corpse
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local Slugs = require("lib.slugs")

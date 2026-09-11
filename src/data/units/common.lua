@@ -9,6 +9,8 @@ return {
         },
         --abilities = { "locust" },
         classification = "Suicidal",
+        corpse = false,
+        revive = false,
         apply = function(u)
             u:setManaMaximum(1000)
             u:setManaInitialAmount(1000)
@@ -23,6 +25,8 @@ return {
         name = "Dummy AA",
         --abilities = { "locust" },
         classification = "Suicidal",
+        corpse = false,
+        revive = false,
         attack1 = {
             weapon = WeaponType.Instant,
             range = 99999,
@@ -47,6 +51,8 @@ return {
     dummyTarget = {
         parent = UnitIds.footman,
         classification = "Suicidal",
+        corpse = false,
+        revive = false,
         apply = function(u)
             u:setAttacksEnabled(0)
         end,
@@ -55,11 +61,15 @@ return {
         parent = UnitIds.paladin,
         classification = "Suicidal",
         name = "Name",
+        corpse = false,
+        revive = false,
     },
     dummyInvis = {
         parent = UnitIds.paladin,
         classification = "Suicidal",
         name = "dummyInvis",
         abilities = { "windWalk" },
+        corpse = false,
+        revive = false,
     },
 }

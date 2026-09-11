@@ -1,10 +1,20 @@
 local UnitIds = require("vendor.assets.UnitIds")
+local UnitArt = require("vendor.assets.generated.UnitArt")
 
 return {
+    animate = {
+        parent = UnitIds.peon,
+        name = "Animate",
+        abilities = { "surviveWish" },
+        art = {
+            model = UnitArt[UnitIds.skeletonwarrior].model,
+            scale = 0.9,
+        },
+    },
     animateWarrior = {
         parent = UnitIds.skeletonwarrior,
         name = "Animate Warrior",
-        abilities = { "combatExpertise" },
+        abilities = { "surviveWish", "combatExpertise" },
     },
     aranakkSpy = {
         parent = UnitIds.nerubianwarrior,

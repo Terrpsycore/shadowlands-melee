@@ -132,6 +132,8 @@ local overrides = {
         end,
         apply = function(a)
             a:setCanUseItems(1, false)
+            a:setCanDropItems(1, true)
+            a:setCanGetItems(1, true)
         end,
     },
 }

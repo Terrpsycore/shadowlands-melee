@@ -6,7 +6,8 @@ TODO:
 
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
-local Unit = require("utils.unit")
+local Slugs = require("lib.slugs")
+local Units = require("lib.units")
 
 local Storage = require("scenario.storage.death")
 
@@ -26,16 +27,35 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
+local function shouldUseFakeDeath(target)
+    if IsUnitType(target, UNIT_TYPE_STRUCTURE) or IsUnitType(target, UNIT_TYPE_SAPPER) then
+        return false
+    end
+
+    local unitTypeId = GetUnitTypeId(target)
+    if Slugs.unit(unitTypeId) then
+        return Units.canRevive(unitTypeId)
+    end
+
+    for _, v in ipairs({ UNIT_TYPE_HERO, UNIT_TYPE_MECHANICAL }) do
+        if IsUnitType(target, v) then
+            return false
+        end
+    end
+
+    return true
+end
+
 --- @param info damageInfo
 local function onLethalDamage(info)
     local target = info.target
-    local owner = GetOwningPlayer(target)
-
-    for _, v in ipairs({ UNIT_TYPE_HERO, UNIT_TYPE_STRUCTURE, UNIT_TYPE_MECHANICAL, UNIT_TYPE_SAPPER }) do
-        if IsUnitType(target, v) then
-            return
-        end
+    if not shouldUseFakeDeath(target) then
+        return
     end
+
+    local owner = GetOwningPlayer(target)
+    local unitTypeId = GetUnitTypeId(target)
+    local leavesCorpse = Slugs.unit(unitTypeId) and Units.leavesCorpse(unitTypeId) or true
 
     SetUnitInvulnerable(target, true)
     ShowUnitHide(target)
@@ -53,14 +73,16 @@ local function onLethalDamage(info)
         UnitAddType(target, UNIT_TYPE_PEON)
     end
 
-    local corpse = CreateUnit(owner, GetUnitTypeId(target), GetUnitX(target), GetUnitY(target), GetUnitFacing(target))
-    KillUnit(corpse) -- CAUTION: onDeath triggers
+    local storageUnit = target
+    if leavesCorpse then
+        storageUnit = CreateUnit(owner, unitTypeId, GetUnitX(target), GetUnitY(target), GetUnitFacing(target))
+        KillUnit(storageUnit) -- CAUTION: onDeath triggers
+    end
 
-    Storage:set(corpse, "originalOwner", GetPlayerId(owner))
-    Storage:set(corpse, "unit", target)
-    Storage:set(corpse, "isPeon", isPeon)
-    Storage:set(corpse, "reviveAfter", GetUnitState(target, UNIT_STATE_MAX_LIFE) // 500)
-    -- dump("\nonLethalDamage set", corpse, target, UnitAlive(target))
+    Storage:set(storageUnit, "originalOwner", GetPlayerId(owner))
+    Storage:set(storageUnit, "unit", target)
+    Storage:set(storageUnit, "isPeon", isPeon)
+    Storage:set(storageUnit, "reviveAfter", GetUnitState(target, UNIT_STATE_MAX_LIFE) // 500)
 end
 
 return {

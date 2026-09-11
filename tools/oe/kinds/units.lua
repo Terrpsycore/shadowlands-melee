@@ -1,5 +1,6 @@
 local Ids = require("data.generated.ids")
 local AbilityIds = require("vendor.assets.AbilityIds")
+local UnitDeath = require("data.units.death")
 local shared = dofile("tools/oe/kinds/_shared.lua")
 
 local function resolveAbilityId(slug)
@@ -15,7 +16,40 @@ local reserved = {
     class = true,
     faction = true,
     apply = true,
+    corpse = true,
+    revive = true,
+    deathType = true,
 }
+
+-- WC3 Combat > Death Type (udea)
+local DEATH_TYPE = {
+    noCorpseBone = 0, -- can't raise, does not decay
+    noCorpseFlesh = 1, -- can raise, does not decay
+    decayBone = 2, -- can't raise, does decay
+    decayFlesh = 3, -- can raise, does decay
+}
+
+local function validateTags(data, slug)
+    for key in pairs({ corpse = true, revive = true }) do
+        local value = data[key]
+        if value ~= nil and type(value) ~= "boolean" then
+            error("unit tag '" .. key .. "' on " .. slug .. " must be boolean")
+        end
+    end
+
+    if data.deathType ~= nil and type(data.deathType) ~= "number" then
+        error("unit field 'deathType' on " .. slug .. " must be integer")
+    end
+end
+
+local function applyNoCorpseDeathType(u)
+    u:setDeathType(DEATH_TYPE.noCorpseBone)
+    u:setDeathTimeseconds(0)
+end
+
+local function applyCorpseDeathType(u, data)
+    u:setDeathType(data.deathType or DEATH_TYPE.decayFlesh)
+end
 
 local function resolveUnitIdList(slugs)
     local parts = {}
@@ -123,6 +157,8 @@ local fields = {
 }
 
 local function applyFields(u, data, slug)
+    validateTags(data, slug)
+
     for key, value in pairs(data) do
         if not reserved[key] then
             local handler = fields[key]
@@ -131,6 +167,14 @@ local function applyFields(u, data, slug)
             end
             handler(u, value)
         end
+    end
+end
+
+local function finalize(u, data)
+    if UnitDeath.leavesCorpse(data) then
+        applyCorpseDeathType(u, data)
+    else
+        applyNoCorpseDeathType(u)
     end
 end
 
@@ -153,4 +197,5 @@ return {
         -- u:setNormalAbilities("")
     end,
     applyFields = applyFields,
+    finalize = finalize,
 }

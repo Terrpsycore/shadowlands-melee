@@ -43,8 +43,9 @@ local function defaults(item, data)
     item:setLumberCost(0)
     item:setActivelyUsed(false)
     item:setPerishable(false)
-    item:setCanBeSoldByMerchants(false)
-    item:setCanBeSoldToMerchants(false)
+    item:setCanBeDropped(true)
+    --item:setCanBeSoldByMerchants(false)
+    --item:setCanBeSoldToMerchants(false)
 end
 
 return {

@@ -3,6 +3,17 @@ local Ids = require("data.ids")
 local A = require("data.abilityPresets")
 
 return {
+    surviveWish = A.passiveGeneric({
+        name = "Survive Wish",
+    }),
+    surviveWishActive = A.berserkerRage1({
+        name = "Survive Wish",
+        apply = A.berserkerRage1.apply(function(a)
+            a:setAttackSpeedIncrease(1, 0.2)
+            a:setMovementSpeedIncrease(1, 0.2)
+            a:setDamageTakenIncrease(1, 0)
+        end),
+    }),
     combatExpertise = A.passiveGeneric({
         name = "Combat Expertise",
     }),
