@@ -1,10 +1,11 @@
 local ReporterMode = require("tests.support.reporter_mode")
 
+local logger = require("utils.logger")
+
 local Reporter = {}
 
 ---@type ReporterMode
 Reporter.mode = nil
-
 Reporter.Mode = ReporterMode
 
 local COLOR_OK = "55ff55"
@@ -17,6 +18,14 @@ local function color(hex, text)
     return "|cff" .. hex .. text .. "|r"
 end
 
+---@param hex string
+---@param plain string
+local function printColored(hex, plain)
+    Debug.original.print(color(hex, plain))
+
+    logger.log(plain)
+end
+
 ---@param testName string
 ---@param ok boolean
 ---@param err? string
@@ -25,56 +34,58 @@ function Reporter.immediate(testName, ok, err)
         return
     end
 
-    local msg
+    local plain
+
     if ok then
-        msg = color(COLOR_OK, "OK: [" .. testName .. "]")
+        plain = "OK: [" .. testName .. "]"
     else
-        msg = color(COLOR_FAIL, "ERROR: [" .. testName .. "] -> " .. (err or "?"))
+        plain = "ERROR: [" .. testName .. "] -> " .. (err or "?")
     end
-    DisplayTextToPlayer(GetLocalPlayer(), 0, 0, msg)
+    DisplayTextToPlayer(GetLocalPlayer(), 0, 0, color(ok and COLOR_OK or COLOR_FAIL, plain))
+    logger.log(plain)
 end
 
 ---@param suite TestSuite
 ---@param failed { name: string, err?: string }[]
 local function printFailures(suite, failed)
-    Debug.original.print(color(COLOR_FAIL, string.format("[%s] FAILED %d/%d", suite.name, #failed, suite.total)))
+    printColored(COLOR_FAIL, string.format("[%s] FAILED %d/%d", suite.name, #failed, suite.total))
+
     for _, f in ipairs(failed) do
-        Debug.original.print(color(COLOR_FAIL, string.format("  x %s: %s", f.name, f.err or "?")))
+        printColored(COLOR_FAIL, string.format("  x %s: %s", f.name, f.err or "?"))
     end
 end
 
 ---@param suite TestSuite
 function Reporter.flushSuite(suite)
-    if Reporter.mode == ReporterMode.verbose then
-        return
-    end
+    logger.log(string.format("--- [%s] ---", suite.name))
 
-    local failed = {}
-    local passed = 0
+    if Reporter.mode ~= ReporterMode.verbose then
+        local failed = {}
 
-    for _, testName in ipairs(suite.order) do
-        local result = suite.results[testName]
-        if result.ok then
-            passed = passed + 1
+        local passed = 0
+
+        for _, testName in ipairs(suite.order) do
+            local result = suite.results[testName]
+
+            if result.ok then
+                passed = passed + 1
+            else
+                failed[#failed + 1] = { name = testName, err = result.err }
+            end
+        end
+
+        if Reporter.mode == ReporterMode.errors then
+            if #failed > 0 then
+                printFailures(suite, failed)
+            end
+        elseif #failed == 0 then
+            printColored(COLOR_OK, string.format("[%s] %d/%d OK", suite.name, passed, suite.total))
         else
-            failed[#failed + 1] = { name = testName, err = result.err }
+            printFailures(suite, failed)
         end
     end
 
-    if Reporter.mode == ReporterMode.errors then
-        if #failed == 0 then
-            return
-        end
-        printFailures(suite, failed)
-        return
-    end
-
-    if #failed == 0 then
-        Debug.original.print(color(COLOR_OK, string.format("[%s] %d/%d OK", suite.name, passed, suite.total)))
-        return
-    end
-
-    printFailures(suite, failed)
+    logger.flush()
 end
 
 ---@cast Reporter TestReporter

@@ -41,7 +41,6 @@ local function onSpell()
 end
 
 local function onDamage(info)
-    dump("onDamage bastionSpear", UnitHasBuffBJ(info.target, CONFIG.refs.buffs.bonusDamage))
     if not UnitHasBuffBJ(info.target, CONFIG.refs.buffs.bonusDamage) then
         return
     end

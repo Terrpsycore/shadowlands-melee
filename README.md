@@ -16,6 +16,8 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 ## Тесты
 
+Лог - C:\Users\nornil\Documents\Warcraft III\CustomMapData\shadowlands-melee.txt
+
 In-game автотесты в `src/tests/` (`factions/`, `mechanics/`, `data/`). `tests.init` подключает модули из `tests/generated/registry.lua` и **запускает их автоматически при старте карты**. Отдельного CLI test-runner нет.
 
 Статическая проверка типов (LuaLS):
