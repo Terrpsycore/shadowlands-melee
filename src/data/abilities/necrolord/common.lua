@@ -3,7 +3,8 @@ local A = require("data.abilityPresets")
 -- TODO
 -- - ? diff buff for each ability level
 -- MEMO
--- - passiveAura -> CONSTANT BUFF | abom part, stacking; 3 - max parts; 4th from "apply limb"
+-- - base -> VISIBLE ICON (TODO: render level)
+-- - passiveAura -> CONSTANT BUFF | abom part, stacking; 3 - max parts; 4th from "apply limb"; ability not visible
 -- - toggle / Versatile -> BONUS ACTIVE | abom part from combo
 -- - "effect" -> PASSIVE POWER CONSTRAINT
 -- - [limb] -> TIMED BUFF | non-abom tmp buff (to show buff timer)
@@ -14,27 +15,47 @@ local A = require("data.abilityPresets")
 -- - +always: revert prev "limb" effect before
 
 return {
-    stitchingBaseKyrian = A.passiveAura({
+    stitchingBaseKyrian = A.passiveGeneric({
+        name = "Survive Wish",
+        levels = 3,
+    }),
+    stitchingBaseNecrolord = A.passiveGeneric({
+        name = "Survive Wish",
+        levels = 3,
+    }),
+    stitchingBaseFae = A.passiveGeneric({
+        name = "Survive Wish",
+        levels = 3,
+    }),
+    stitchingBaseVenthyr = A.passiveGeneric({
+        name = "Survive Wish",
+        levels = 3,
+    }),
+    stitchingBaseMawsworn = A.passiveGeneric({
+        name = "Survive Wish",
+        levels = 3,
+    }),
+    stitchingAuraKyrian = A.passiveAura({
         name = "Survive Wish",
         buffs = { "stitchingBaseKyrian" },
         levels = 3,
     }),
-    stitchingBaseNecrolord = A.passiveAura({
+    stitchingAuraNecrolord = A.passiveAura({
         name = "Survive Wish",
         buffs = { "stitchingBaseNecrolord" },
         levels = 3,
     }),
-    stitchingBaseFae = A.passiveAura({
+    stitchingAuraFae = A.passiveAura({
         name = "Survive Wish",
         buffs = { "stitchingBaseFae" },
         levels = 3,
     }),
-    stitchingBaseVenthyr = A.passiveAura({
+    stitchingAuraVenthyr = A.passiveAura({
         name = "Survive Wish",
         buffs = { "stitchingBaseVenthyr" },
         levels = 3,
     }),
-    stitchingBaseMawsworn = A.passiveAura({
+    stitchingAuraMawsworn = A.passiveAura({
         name = "Survive Wish",
         buffs = { "stitchingBaseMawsworn" },
         levels = 3,
@@ -72,6 +93,7 @@ return {
         name = "Survive Wish",
         levels = 4,
         apply = A.itemDamageBonus.apply(function(a)
+            a:setItemAbility(false)
             for level = 1, 4 do
                 a:setAttackBonus(level, 5 * level)
             end
@@ -95,24 +117,67 @@ return {
         levels = 4,
     }),
     --
+    stitchingFaeCreateIllusion = A.itemIllusions({
+        apply = A.itemIllusions.apply(function(a)
+            a:setOrderStringActivate("channel")
+            a:setOrderStringUseTurnOn("channel")
+        end),
+    }),
+    stitchingMawswornReduceHp = A.itemLifeBonus({
+        apply = A.itemLifeBonus.apply(function(a)
+            a:setMaxLifeGained(1, -25)
+            a:setMaxLifeGained(2, -50)
+            a:setMaxLifeGained(3, -75)
+            a:setMaxLifeGained(4, -100)
+        end),
+    }),
+    stitchingMawswornReduceHpDebuff = A.curse({
+        buffs = { "stitchingMawswornReduceHpDebuff" },
+        levels = 4,
+        apply = A.curse.apply(function(a)
+            -- TODO: allow target enemy
+            for level = 1, 4 do
+                a:setChancetoMiss(level, 0)
+            end
+        end),
+    }),
+    stitchingMawswornIncreaseHp = A.itemLifeBonus({
+        apply = A.itemLifeBonus.apply(function(a)
+            a:setMaxLifeGained(1, 25)
+            a:setMaxLifeGained(2, 50)
+            a:setMaxLifeGained(3, 75)
+            a:setMaxLifeGained(4, 100)
+        end),
+    }),
+    stitchingMawswornIncreaseHpBuff = A.innerFire({
+        buffs = { "stitchingMawswornIncreaseHpBuff" },
+        levels = 4,
+        apply = A.innerFire.apply(function(a)
+            for level = 1, 4 do
+                a:setDefenseIncrease(level, 0)
+                a:setDamageIncrease(level, 0)
+            end
+        end),
+    }),
+    --
     stitchingLimbKyrian = A.nonDispellableSelfBuffTimed({
         name = "Survive Wish",
-        buffs = { "stitchingBaseKyrian" },
+        buffs = { "stitchingLimbKyrian" },
     }),
     stitchingLimbNecrolord = A.nonDispellableSelfBuffTimed({
         name = "Survive Wish",
-        buffs = { "stitchingBaseNecrolord" },
+        buffs = { "stitchingLimbNecrolord" },
     }),
     stitchingLimbFae = A.nonDispellableSelfBuffTimed({
         name = "Survive Wish",
-        buffs = { "stitchingBaseFae" },
+        buffs = { "stitchingLimbFae" },
     }),
     stitchingLimbVenthyr = A.nonDispellableSelfBuffTimed({
         name = "Survive Wish",
-        buffs = { "stitchingBaseVenthyr" },
+        buffs = { "stitchingLimbVenthyr" },
     }),
     stitchingLimbMawsworn = A.nonDispellableSelfBuffTimed({
         name = "Survive Wish",
-        buffs = { "stitchingBaseMawsworn" },
+        buffs = { "stitchingLimbMawsworn" },
     }),
 }

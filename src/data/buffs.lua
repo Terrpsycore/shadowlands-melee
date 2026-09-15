@@ -113,6 +113,26 @@ return {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
     },
+    stitchingLimbKyrian = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingLimbNecrolord = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingLimbFae = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingLimbVenthyr = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingLimbMawsworn = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
     stitchingAdvancedKyrian = {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
@@ -135,6 +155,14 @@ return {
     },
     stitchingAdvancedVersatile = {
         parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingMawswornReduceHpDebuff = {
+        parent = BuffIds.curse,
+        name = "Stitching",
+    },
+    stitchingMawswornIncreaseHpBuff = {
+        parent = BuffIds.innerFire,
         name = "Stitching",
     },
 }

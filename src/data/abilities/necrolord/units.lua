@@ -60,4 +60,7 @@ return {
     dropCorpses = A.channelTarget({
         name = "Drop Corpses",
     }),
+    applyLimb = A.channelTarget({
+        name = "Apply Limb",
+    }),
 }

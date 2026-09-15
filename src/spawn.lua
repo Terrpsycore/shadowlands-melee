@@ -1,5 +1,6 @@
 local Ids = require("data.ids")
 local Units = require("data.units")
+local Triggers = require("lib.triggers.callbacks")
 
 local x, y, f = 219.4, -90.4, 293.630
 local p0, p1 = Player(0), Player(1)
@@ -32,6 +33,7 @@ local function spawnSlug(player, slug, row)
     end
 
     local unit = CreateUnit(player, FourCC(id), x, y, f)
+    Triggers.fireEvent("CREATE", { target = unit })
 
     if row.heroAbilities then
         SetHeroLevel(unit, 10, false)

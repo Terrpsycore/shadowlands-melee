@@ -1,5 +1,6 @@
 -- TODO:
 -- - use conditions
+-- - accept function instead of handle or {handle} -> pass event if function(handle) is true
 local Storage = require("lib.storage.storage")
 local Filter = require("lib.triggers.filter")
 
@@ -274,6 +275,7 @@ T.methods = {
     STUN = T.onStun,
     ROOT = T.onRoot,
     REVIVE = T.onCustomEvent,
+    CREATE = T.onCustomEvent,
 }
 
 return T

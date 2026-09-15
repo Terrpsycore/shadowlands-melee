@@ -54,6 +54,9 @@ return function(name, fieldSchema)
     end
 
     function store:get(unit, fieldName)
+        if fieldName == nil then
+            error("unitFields:get(unit, nil) is forbidden call")
+        end
         return readField(unit, fieldName)
     end
 

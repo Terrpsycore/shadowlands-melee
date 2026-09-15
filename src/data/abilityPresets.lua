@@ -117,8 +117,8 @@ return setmetatable({
     }),
     nonDispellableSelfBuffTimed = presetFactory(F.berserkerRage1, {
         apply = function(a)
-            a:setAttackSpeedIncrease(1, 0.2)
-            a:setMovementSpeedIncrease(1, 0.2)
+            a:setAttackSpeedIncrease(1, 0)
+            a:setMovementSpeedIncrease(1, 0)
             a:setDamageTakenIncrease(1, 0)
         end,
     }),

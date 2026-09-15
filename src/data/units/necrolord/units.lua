@@ -25,8 +25,19 @@ return {
         parent = UnitIds.ghoul,
         abilities = { "inventory", "collectCorpses", "dropCorpses", "exhume" },
     },
+    construct = {
+        parent = UnitIds.abomination,
+    },
     necromancer = {
         parent = UnitIds.necromancer,
         abilities = { "animateDead" },
+    },
+    physician = {
+        parent = UnitIds.necromancer,
+        art = {
+            model = UnitArt[UnitIds.acolyte].model,
+            scale = 1,
+        },
+        abilities = { "applyLimb" },
     },
 }
