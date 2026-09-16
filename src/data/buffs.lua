@@ -165,4 +165,8 @@ return {
         parent = BuffIds.innerFire,
         name = "Stitching",
     },
+    healingSlime = {
+        parent = BuffIds.rejuvenation,
+        name = "Healing Slime",
+    },
 }

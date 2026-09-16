@@ -63,4 +63,12 @@ return {
     applyLimb = A.channelTarget({
         name = "Apply Limb",
     }),
+    healingSlime = A.rejuvenation1({
+        name = "Healing Slime",
+        apply = A.rejuvenation1.apply(function(a)
+            a:setHitPointsGained(1, 100)
+            a:setDurationHero(1, 10)
+            a:setDurationNormal(1, 10)
+        end),
+    }),
 }
