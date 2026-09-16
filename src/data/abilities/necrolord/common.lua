@@ -117,10 +117,41 @@ return {
         levels = 4,
     }),
     --
+    stitchingKyrianLifeRegen = A.itemLifeRegeneration({
+        levels = 5, -- on % of life
+        apply = A.itemLifeRegeneration.apply(function(a)
+            for level = 1, 5 do
+                a:setHitPointsRegeneratedPerSecond(level, level * 2)
+            end
+        end),
+    }),
+    stitchingNecrolordHaste = A.itemAttackSpeedBonus({
+        levels = 5, -- on % of life
+        apply = A.itemAttackSpeedBonus.apply(function(a)
+            for level = 1, 5 do
+                a:setAttackSpeedIncrease(level, level * 10)
+            end
+        end),
+    }),
+    stitchingNecrolordVictoryRush = A.healCreepHigh({
+        apply = A.healCreepHigh.apply(function(a)
+            a:setHitPointsGained(1, 100)
+        end),
+    }),
     stitchingFaeCreateIllusion = A.itemIllusions({
         apply = A.itemIllusions.apply(function(a)
             a:setOrderStringActivate("channel")
             a:setOrderStringUseTurnOn("channel")
+        end),
+    }),
+    stitchingVenthyrLeech = A.itemLifeSteal({
+        apply = A.itemLifeSteal.apply(function(a)
+            a:setLifeStolenPerAttack(1, 50)
+        end),
+    }),
+    stitchingVenthyrLeechFixed = A.healCreepHigh({
+        apply = A.healCreepHigh.apply(function(a)
+            a:setHitPointsGained(1, 5)
         end),
     }),
     stitchingMawswornReduceHp = A.itemLifeBonus({

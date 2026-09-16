@@ -1,6 +1,7 @@
 -- TODO:
 -- - use conditions
 -- - accept function instead of handle or {handle} -> pass event if function(handle) is true
+-- - onDamage - filter .isSpell
 local Storage = require("lib.storage.storage")
 local Filter = require("lib.triggers.filter")
 
@@ -246,6 +247,14 @@ T.onSelect = function(triggers)
     end)
 end
 
+T.onCreate = function(triggers)
+    local trig = CreateTrigger()
+    TriggerRegisterEnterRectSimple(trig, GetPlayableMapRect())
+    TriggerAddAction(trig, function()
+        Filter.runUnitTriggers(triggers, GetEnteringUnit(), "target")
+    end)
+end
+
 T.onTimer = function(triggers)
     for _, timer in ipairs(triggers) do
         TimerStart(CreateTimer(), timer.delta, true, function()
@@ -274,8 +283,8 @@ T.methods = {
     ORDER = T.onAnyOrder,
     STUN = T.onStun,
     ROOT = T.onRoot,
+    CREATE = T.onCreate,
     REVIVE = T.onCustomEvent,
-    CREATE = T.onCustomEvent,
 }
 
 return T
