@@ -32,6 +32,14 @@ return {
         parent = UnitIds.necromancer,
         abilities = { "animateDead" },
     },
+    mixologist = {
+        parent = UnitIds.necromancer,
+        art = {
+            model = UnitArt[UnitIds.acolyte].model,
+            scale = 1,
+        },
+        abilities = { "healingSlime" },
+    },
     physician = {
         parent = UnitIds.necromancer,
         art = {

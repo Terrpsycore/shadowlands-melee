@@ -71,4 +71,10 @@ return {
             a:setDurationNormal(1, 10)
         end),
     }),
+    poisonBite = A.slowPoison({
+        name = "Poison Bite",
+        apply = A.slowPoison.apply(function(a)
+            a:setStackingType(1, 0)
+        end),
+    }),
 }
