@@ -66,6 +66,18 @@ return {
     applyLimb = A.channelTarget({
         name = "Apply Limb",
     }),
+    scissorSoul = A.channelTarget({
+        name = "Scissor Soul",
+    }),
+    betterBody = A.channelTarget({
+        name = "Better Body",
+    }),
+    betterBodyPossession = A.possession({
+        name = "Better Body",
+        apply = A.possession.apply(function(a)
+            a:setCastingTime(1, 0)
+        end),
+    }),
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
         buffs = { "healingSlime" },
