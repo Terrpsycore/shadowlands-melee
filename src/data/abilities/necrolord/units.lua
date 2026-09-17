@@ -65,7 +65,9 @@ return {
     }),
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
+        buffs = { "healingSlime" },
         apply = A.rejuvenation1.apply(function(a)
+            -- ? TODO change to autocast heal with spec buff
             a:setHitPointsGained(1, 100)
             a:setDurationHero(1, 10)
             a:setDurationNormal(1, 10)
@@ -75,6 +77,38 @@ return {
         name = "Poison Bite",
         apply = A.slowPoison.apply(function(a)
             a:setStackingType(1, 0)
+        end),
+    }),
+    sporeCloud = A.channelNoTarget({
+        name = "Spore Cloud",
+        apply = A.channelNoTarget.apply(function(a)
+            --
+        end),
+    }),
+    corrosivePlague = A.acidBomb({
+        name = "Corrosive Plague",
+        buffs = { "corrosivePlague" },
+        apply = A.acidBomb.apply(function(a)
+            a:setDamageInterval(1, 1)
+            a:setPrimaryDamage(1, 0)
+            a:setMovementSpeedReduction(1, 0)
+            a:setArmorPenalty(1, 0)
+            a:setSecondaryDamage(1, 0)
+            a:setAttackSpeedReduction(1, 0)
+        end),
+    }),
+    corrosivePlagueSpread = A.auraPlagueAbomination({
+        name = "Corrosive Plague",
+        buffs = { "corrosivePlague" },
+        apply = A.auraPlagueAbomination.apply(function(a)
+            a:setAreaofEffect(1, 64)
+            a:setTargetsAllowed(1, "allied,organic,player")
+        end),
+    }),
+    corrosivePlagueArmorDebuff = A.itemArmorBonus({
+        name = "Corrosive Plague",
+        apply = A.itemArmorBonus.apply(function(a)
+            a:setDefenseBonus(1, -2)
         end),
     }),
 }

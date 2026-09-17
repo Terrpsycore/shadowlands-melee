@@ -169,4 +169,8 @@ return {
         parent = BuffIds.rejuvenation,
         name = "Healing Slime",
     },
+    corrosivePlague = {
+        parent = BuffIds.disease,
+        name = "Corrosive Plague",
+    },
 }

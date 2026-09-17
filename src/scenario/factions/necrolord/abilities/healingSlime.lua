@@ -1,4 +1,6 @@
 --[[
+TODO:
+- test change base to heal with long duration -> autocast slimes
 ]]
 
 local Ids = require("data.ids")
