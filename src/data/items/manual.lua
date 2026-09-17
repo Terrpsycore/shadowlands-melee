@@ -8,4 +8,16 @@ return {
     dummyHeroItem = {
         parent = ItemIds.ringProtection1,
     },
+    explosivePotion = {
+        parent = ItemIds.potionInvisibility,
+        abilities = { "concoctedExplosionActive" },
+    },
+    healingPotion = {
+        parent = ItemIds.potionInvisibility,
+        abilities = { "concoctedHealingActive" },
+    },
+    frenzyPotion = {
+        parent = ItemIds.potionInvisibility,
+        abilities = { "concoctedFrenzyActive" },
+    },
 }

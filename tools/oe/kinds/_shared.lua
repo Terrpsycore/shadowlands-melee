@@ -1,4 +1,15 @@
+local Ids = require("data.generated.ids")
+local AbilityIds = require("vendor.assets.AbilityIds")
+
 local M = {}
+
+function M.resolveAbilityId(slug)
+    local id = Ids.abilities[slug] or AbilityIds[slug]
+    if not id then
+        error("unknown ability '" .. slug .. "'")
+    end
+    return id
+end
 
 function M.normalizePath(path)
     return path:gsub("/", "\\")

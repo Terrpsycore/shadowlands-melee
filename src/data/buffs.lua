@@ -177,6 +177,18 @@ return {
         parent = BuffIds.disease,
         name = "Corrosive Plague",
     },
+    concoctedHealingRejuv = {
+        parent = BuffIds.rejuvenationItem,
+        name = "Concocted Healing",
+    },
+    concoctedHealingStun = {
+        parent = BuffIds.stunned,
+        name = "Concocted Healing (stun)",
+    },
+    concoctedFrenzy = {
+        parent = BuffIds.doom,
+        name = "Concocted Frenzy",
+    },
     sporeCloud = {
         parent = BuffIds.cloud,
         name = "Corrosive Plague",

@@ -4,6 +4,7 @@ local reserved = {
     name = true,
     art = true,
     corpseOf = true,
+    abilities = true,
 }
 
 local tags = {

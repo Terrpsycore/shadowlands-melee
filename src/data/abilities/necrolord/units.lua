@@ -139,6 +139,81 @@ return {
             a:setAttackSpeedReduction(1, 0)
         end),
     }),
+    concoctPotionExplosive = A.channelTarget({
+        name = "Concoct Explosive Potion",
+        apply = A.channelNoTarget.apply(function(a) end),
+    }),
+    concoctPotionHealing = A.channelTarget({
+        name = "Concoct Healing Potion",
+        apply = A.channelNoTarget.apply(function(a) end),
+    }),
+    concoctPotionFrenzy = A.channelTarget({
+        name = "Concoct Frenzy Potion",
+        apply = A.channelNoTarget.apply(function(a) end),
+    }),
+    concoctedExplosionActive = A.channelNoTarget({
+        apply = A.channelNoTarget.apply(function(a)
+            -- a:setOrderStringActivate
+        end),
+    }),
+    concoctedExplosionDummy = A.selfDestruct3ClockwerkGoblins({
+        apply = A.selfDestruct3ClockwerkGoblins.apply(function(a)
+            -- order = selfdestruct
+        end),
+    }),
+    concoctedHealingActive = A.channelNoTarget({
+        apply = A.channelNoTarget.apply(function(a)
+            -- a:setOrderStringActivate
+        end),
+    }),
+    concoctedHealingStunDummy = A.stormBolt({
+        buffs = { "concoctedHealingStun" },
+        apply = A.stormBolt.apply(function(a)
+            a:setDamage(1, 0)
+            a:setDurationNormal(1, 8)
+            a:setDurationHero(1, 8)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+        end),
+    }),
+    concoctedHealingRejuvDummy = A.rejuvenation1({
+        buffs = { "concoctedHealingRejuv" },
+        apply = A.rejuvenation1.apply(function(a)
+            a:setHitPointsGained(1, 1500)
+            a:setManaPointsGained(1, 0)
+            a:setNoTargetRequired(1, false)
+            a:setAllowWhenFull(1, 0)
+            a:setDurationNormal(1, 16)
+            a:setDurationHero(1, 16)
+            a:setTargetsAllowed(1, "allied,ground,organic,nonhero,player")
+        end),
+    }),
+    concoctedFrenzyActive = A.nonDispellableSelfBuffTimed({
+        buffs = { "concoctedFrenzy" },
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a)
+            a:setAttackSpeedIncrease(1, 0.75)
+        end),
+    }),
+    concoctedFrenzyPassiveDoom = A.itemLifeRegeneration({
+        levels = 100,
+        apply = A.itemLifeRegeneration.apply(function(a)
+            for level = 1, 100 do
+                a:setHitPointsRegeneratedPerSecond(level, -4 - level)
+            end
+        end),
+    }),
+    concoctPotion = A.spellBook({
+        name = "Concoct Potion",
+        apply = A.spellBook.apply(function(a)
+            a:setSpellList(
+                1,
+                table.concat({
+                    Ids.abilities.concoctPotionExplosive,
+                    Ids.abilities.concoctPotionHealing,
+                    Ids.abilities.concoctPotionFrenzy,
+                }, ",")
+            )
+        end),
+    }),
     corrosivePlagueSpread = A.auraPlagueAbomination({
         name = "Corrosive Plague",
         buffs = { "corrosivePlague" },

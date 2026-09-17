@@ -28,6 +28,10 @@ local function forEachInRadius(x, y, radius, fn)
     DestroyGroup(tempGroup)
 end
 
+function Unit.getPosition(unit)
+    return { x = GetUnitX(unit), y = GetUnitY(unit) }
+end
+
 --- @param a unit
 --- @param b unit
 function Unit.distance(a, b)

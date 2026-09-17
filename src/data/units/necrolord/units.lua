@@ -40,7 +40,7 @@ return {
     },
     necromancer = {
         parent = UnitIds.necromancer,
-        abilities = { "animateDead", "maldraciteNullify" },
+        abilities = { "animateDead", "maldraciteNullify", "sigilOfBinding" },
     },
     mixologist = {
         parent = UnitIds.necromancer,
@@ -48,7 +48,7 @@ return {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
         },
-        abilities = { "healingSlime", "corrosivePlague" },
+        abilities = { "healingSlime", "corrosivePlague", "concoctPotion" },
     },
     physician = {
         parent = UnitIds.necromancer,

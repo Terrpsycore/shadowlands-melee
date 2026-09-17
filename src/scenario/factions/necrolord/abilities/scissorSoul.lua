@@ -55,6 +55,8 @@ local function onTimer()
             if currentMana > status.frozenAmount then
                 local mana = math.max(status.frozenAmount, currentMana - DECAY_PER_TICK)
                 SetUnitState(unit, UNIT_STATE_MANA, mana)
+            elseif currentMana < status.frozenAmount then
+                status.frozenAmount = currentMana
             end
         end
     end)

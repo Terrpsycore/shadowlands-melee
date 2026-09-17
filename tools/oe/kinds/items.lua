@@ -6,6 +6,7 @@ local reserved = {
     unit = true,
     unique = true,
     corpseOf = true,
+    abilities = true,
 }
 
 local fields = {
@@ -55,6 +56,13 @@ return {
                 return ItemDefinition:new(id, parent)
             end,
         }
+    end,
+    abilities = function(u, slugs)
+        local parts = {}
+        for _, slug in ipairs(slugs) do
+            parts[#parts + 1] = shared.resolveAbilityId(slug)
+        end
+        u:setNormalAbilities(table.concat(parts, ","))
     end,
     defaults = defaults,
     applyFields = applyFields,
