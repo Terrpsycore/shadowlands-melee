@@ -8,7 +8,7 @@ local Stitched = Storage.unitFields("Stitched", {
     fae = "int",
     venthyr = "int",
     mawsworn = "int",
-    -- common = "int"
+    common = "int",
 })
 
 return Stitched

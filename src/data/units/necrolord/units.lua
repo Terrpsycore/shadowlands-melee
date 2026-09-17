@@ -33,17 +33,21 @@ return {
     },
     scavenger = {
         parent = UnitIds.ghoul,
+        name = "Scavenger",
         abilities = { "inventory", "collectCorpses", "dropCorpses", "exhume" },
     },
     construct = {
         parent = UnitIds.abomination,
+        name = "Construct",
     },
     necromancer = {
         parent = UnitIds.necromancer,
+        name = "Necromancer",
         abilities = { "animateDead", "maldraciteNullify", "sigilOfBinding" },
     },
     mixologist = {
         parent = UnitIds.necromancer,
+        name = "Mixologist",
         art = {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
@@ -52,6 +56,7 @@ return {
     },
     physician = {
         parent = UnitIds.necromancer,
+        name = "Physician",
         art = {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
@@ -60,10 +65,12 @@ return {
     },
     necroray = {
         parent = UnitIds.nagacoutl,
+        name = "Necroray",
         abilities = { "sporeCloud" },
     },
     bonestorm = {
         parent = UnitIds.footman,
+        name = "Bonestorm",
         abilities = { "deadlyWhirlwind", "slurp" },
         apply = function(u)
             u:setHitPointsRegenerationRate(-5)
@@ -72,10 +79,12 @@ return {
     --
     warBanner = {
         parent = UnitIds.sentryward,
+        name = "War Banner",
         abilities = { "warBannerAura" },
     },
     sigilOfBinding = {
         parent = UnitIds.stasistraptotem,
+        name = "Sigil of Binding",
         abilities = { "sigilOfBindingActivation" },
     },
 }

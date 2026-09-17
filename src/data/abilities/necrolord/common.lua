@@ -16,81 +16,100 @@ local A = require("data.abilityPresets")
 
 return {
     stitchingBaseKyrian = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseKyrian",
         levels = 3,
     }),
     stitchingBaseNecrolord = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseNecrolord",
         levels = 3,
     }),
     stitchingBaseFae = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseFae",
         levels = 3,
     }),
     stitchingBaseVenthyr = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseVenthyr",
         levels = 3,
     }),
     stitchingBaseMawsworn = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseMawsworn",
         levels = 3,
     }),
+    stitchingBaseCommon = A.criticalStrike({
+        name = "stitchingBaseCommon",
+        levels = 3,
+        apply = A.criticalStrike.apply(function(a)
+            for level = 1, 3 do
+                a:setChancetoCriticalStrike(level, 5 * level)
+                a:setDamageMultiplier(level, 2)
+            end
+        end),
+    }),
     stitchingAuraKyrian = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAuraKyrian",
         buffs = { "stitchingBaseKyrian" },
         levels = 3,
     }),
     stitchingAuraNecrolord = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAuraNecrolord",
         buffs = { "stitchingBaseNecrolord" },
         levels = 3,
     }),
     stitchingAuraFae = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAuraFae",
         buffs = { "stitchingBaseFae" },
         levels = 3,
     }),
     stitchingAuraVenthyr = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAuraVenthyr",
         buffs = { "stitchingBaseVenthyr" },
         levels = 3,
     }),
     stitchingAuraMawsworn = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAuraMawsworn",
         buffs = { "stitchingBaseMawsworn" },
         levels = 3,
     }),
+    stitchingAuraCommon = A.passiveAura({
+        name = "stitchingAuraCommon",
+        buffs = { "stitchingBaseCommon" },
+        levels = 3,
+    }),
     stitchingAdvancedKyrian = A.immolationToggle({
-        name = "Survive Wish",
+        name = "stitchingAdvancedKyrian",
         buffs = { "stitchingAdvancedKyrian" },
     }),
     stitchingAdvancedNecrolord = A.immolationToggle({
-        name = "Survive Wish",
+        name = "stitchingAdvancedNecrolord",
         buffs = { "stitchingAdvancedNecrolord" },
     }),
     stitchingAdvancedFae = A.immolationToggle({
-        name = "Survive Wish",
+        name = "stitchingAdvancedFae",
         buffs = { "stitchingAdvancedFae" },
     }),
     stitchingAdvancedVenthyr = A.immolationToggle({
-        name = "Survive Wish",
+        name = "stitchingAdvancedVenthyr",
         buffs = { "stitchingAdvancedVenthyr" },
     }),
     stitchingAdvancedMawsworn = A.immolationToggle({
-        name = "Survive Wish",
+        name = "stitchingAdvancedMawsworn",
         buffs = { "stitchingAdvancedMawsworn" },
     }),
+    stitchingAdvancedCommon = A.immolationToggle({
+        name = "stitchingAdvancedCommon",
+        buffs = { "stitchingAdvancedCommon" },
+    }),
     stitchingAdvancedVersatile = A.passiveAura({
-        name = "Survive Wish",
+        name = "stitchingAdvancedVersatile",
         buffs = { "stitchingAdvancedVersatile" },
     }),
     --
     stitchingBaseKyrianEffect = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseKyrianEffect",
         levels = 4,
     }),
     stitchingBaseNecrolordEffect = A.itemDamageBonus({
-        name = "Survive Wish",
+        name = "stitchingBaseNecrolordEffect",
         levels = 4,
         apply = A.itemDamageBonus.apply(function(a)
             a:setItemAbility(false)
@@ -100,11 +119,11 @@ return {
         end),
     }),
     stitchingBaseFaeEffect = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseFaeEffect",
         levels = 4,
     }),
     stitchingBaseVenthyrEffect = A.itemAttackSpeedBonus({
-        name = "Survive Wish",
+        name = "stitchingBaseVenthyrEffect",
         levels = 4,
         apply = A.itemAttackSpeedBonus.apply(function(a)
             for level = 1, 4 do
@@ -113,7 +132,11 @@ return {
         end),
     }),
     stitchingBaseMawswornEffect = A.passiveGeneric({
-        name = "Survive Wish",
+        name = "stitchingBaseMawswornEffect",
+        levels = 4,
+    }),
+    stitchingBaseCommonEffect = A.passiveGeneric({
+        name = "stitchingBaseCommonEffect",
         levels = 4,
     }),
     --
@@ -136,6 +159,11 @@ return {
     stitchingNecrolordVictoryRush = A.healCreepHigh({
         apply = A.healCreepHigh.apply(function(a)
             a:setHitPointsGained(1, 100)
+        end),
+    }),
+    stitchingCommonEvasion = A.evasion({
+        apply = A.evasion.apply(function(a)
+            a:setChancetoEvade(1, 10)
         end),
     }),
     stitchingFaeCreateIllusion = A.itemIllusions({
@@ -192,23 +220,27 @@ return {
     }),
     --
     stitchingLimbKyrian = A.nonDispellableSelfBuffTimed({
-        name = "Survive Wish",
+        name = "stitchingLimbKyrian",
         buffs = { "stitchingLimbKyrian" },
     }),
     stitchingLimbNecrolord = A.nonDispellableSelfBuffTimed({
-        name = "Survive Wish",
+        name = "stitchingLimbNecrolord",
         buffs = { "stitchingLimbNecrolord" },
     }),
     stitchingLimbFae = A.nonDispellableSelfBuffTimed({
-        name = "Survive Wish",
+        name = "stitchingLimbFae",
         buffs = { "stitchingLimbFae" },
     }),
     stitchingLimbVenthyr = A.nonDispellableSelfBuffTimed({
-        name = "Survive Wish",
+        name = "stitchingLimbVenthyr",
         buffs = { "stitchingLimbVenthyr" },
     }),
     stitchingLimbMawsworn = A.nonDispellableSelfBuffTimed({
-        name = "Survive Wish",
+        name = "stitchingLimbMawsworn",
         buffs = { "stitchingLimbMawsworn" },
+    }),
+    stitchingLimbCommon = A.nonDispellableSelfBuffTimed({
+        name = "stitchingLimbCommon",
+        buffs = { "stitchingLimbCommon" },
     }),
 }

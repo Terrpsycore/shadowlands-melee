@@ -262,7 +262,7 @@ end
 
 T.onCreate = function(triggers)
     local trig = CreateTrigger()
-    TriggerRegisterEnterRectSimple(trig, GetPlayableMapRect())
+    TriggerRegisterEnterRectSimple(trig, GetWorldBounds())
     TriggerAddAction(trig, function()
         Filter.runUnitTriggers(triggers, GetEnteringUnit(), "target")
     end)

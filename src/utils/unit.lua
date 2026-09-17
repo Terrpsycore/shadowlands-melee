@@ -151,13 +151,12 @@ end
 
 function Unit.getCorpsesInRadius(unit, radius)
     local resultsTable = {}
-    local corpse
     forEachInRadius(GetUnitX(unit), GetUnitY(unit), radius, function(u)
         if IsUnitDeadBJ(u) then
             table.insert(resultsTable, u)
         end
     end)
-    return corpse
+    return resultsTable
 end
 
 return Unit

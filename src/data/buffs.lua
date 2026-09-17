@@ -113,6 +113,10 @@ return {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
     },
+    stitchingBaseCommon = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
     stitchingLimbKyrian = {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
@@ -133,6 +137,10 @@ return {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
     },
+    stitchingLimbCommon = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
     stitchingAdvancedKyrian = {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
@@ -150,6 +158,10 @@ return {
         name = "Stitching",
     },
     stitchingAdvancedMawsworn = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Stitching",
+    },
+    stitchingAdvancedCommon = {
         parent = BuffIds.tornadoSlowAura,
         name = "Stitching",
     },

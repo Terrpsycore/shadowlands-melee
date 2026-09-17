@@ -39,6 +39,7 @@ end
 local indexes = {
     kyrian = getFactionIndex("kyrian"),
     necrolord = getFactionIndex("necrolord"),
+    common = getFactionIndex("common"),
 }
 
 local abilityRefs = {
@@ -54,6 +55,7 @@ local abilityRefs = {
     mawswornReduceHpDebuff = Ids.abilities.stitchingMawswornReduceHpDebuff,
     mawswornIncreaseHp = Ids.abilities.stitchingMawswornIncreaseHp,
     mawswornIncreaseHpBuff = Ids.abilities.stitchingMawswornIncreaseHpBuff,
+    commonEvasion = Ids.abilities.stitchingCommonEvasion,
 }
 
 local buffRefs = {
@@ -84,7 +86,6 @@ for _, factionSlug in ipairs(factionSlugs) do
     stitchRefs[factionSlug].advancedBuff = FourCC(buffRefs["stitchingAdvanced" .. slugCapitalized])
     turnableRefs[stitchRefs[factionSlug].advanced] = factionSlug
 end
-turnableRefs[abilityRefs.stitchingAdvancedVersatile] = "common"
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -250,6 +251,7 @@ end
 
 local function onConstructCreate()
     local unit = GetEnteringUnit()
+    Storage:add(unit)
     Storage:set(unit, "total", 0)
     Storage:set(unit, "max", 0)
     Storage:set(unit, "kyrian", 0)
@@ -257,6 +259,7 @@ local function onConstructCreate()
     Storage:set(unit, "fae", 0)
     Storage:set(unit, "venthyr", 0)
     Storage:set(unit, "mawsworn", 0)
+    Storage:set(unit, "common", 0)
 end
 
 -- ISSUED_ORDER: specific immediate order (e.g. unimmolation for toggle-off).
@@ -366,13 +369,14 @@ local function updateAdvancedActiveAbilities(unit)
         ability = CONFIG.refs.abilities.kyrianLifeRegen
     elseif faction == indexes.necrolord then
         ability = CONFIG.refs.abilities.necrolordHaste
+    elseif faction == indexes.common then
+        ability = CONFIG.refs.abilities.commonEvasion
     end
 
     if ability then
         if GetUnitAbilityLevel(unit, ability) == 0 then
             UnitAddAbility(unit, ability)
         end
-        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.necrolordHaste, level)
     end
 end
 
@@ -412,7 +416,10 @@ local function onDamage(info)
         [stitchRefs.mawsworn.effect] = baseEffectMawsworn,
     }
 
-    if StorageTurnableStatus:get(target, "active") and StorageTurnableStatus:get(target, "common") then
+    if
+        StorageTurnableStatus:get(target, "active")
+        and GetUnitAbilityLevel(target, CONFIG.refs.abilities.stitchingAdvancedVersatile) > 0
+    then
         local lastAttackType = sameDamageTypeMemory[target]
         if lastAttackType == info.weaponType then
             info.damage = info.damage / 2
@@ -483,7 +490,7 @@ return {
             action = onApplyLimb,
         },
         {
-            trigger = "EVENT_PLAYER_UNIT_ISSUED_ORDER",
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = {
                 stitchRefs.kyrian.advanced,
                 stitchRefs.necrolord.advanced,

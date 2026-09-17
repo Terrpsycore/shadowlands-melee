@@ -36,7 +36,9 @@ local CONFIG = AbilityConfig.compile({
             frenzy = Ids.items.frenzyPotion,
         },
     },
-    balance = {},
+    balance = {
+        frenzyDoomMaxLevel = 5,
+    },
 })
 
 local CONCOCT_TABLE = {
@@ -92,7 +94,10 @@ local function onTimer()
         SetUnitAbilityLevel(
             unit,
             CONFIG.refs.abilities.frenzyPassive,
-            math.min(100, GetUnitAbilityLevel(unit, CONFIG.refs.abilities.frenzyPassive) + 1)
+            math.min(
+                CONFIG.balance.frenzyDoomMaxLevel,
+                GetUnitAbilityLevel(unit, CONFIG.refs.abilities.frenzyPassive) + 1
+            )
         )
     end)
 end

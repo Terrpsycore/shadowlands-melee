@@ -120,6 +120,7 @@ return {
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
         buffs = { "healingSlime" },
+        button = { 0, 2 },
         apply = A.rejuvenation1.apply(function(a)
             -- ? TODO change to autocast heal with spec buff
             a:setHitPointsGained(1, 100)
@@ -130,6 +131,7 @@ return {
     corrosivePlague = A.acidBomb({
         name = "Corrosive Plague",
         buffs = { "corrosivePlague" },
+        button = { 1, 2 },
         apply = A.acidBomb.apply(function(a)
             a:setDamageInterval(1, 1)
             a:setPrimaryDamage(1, 0)
@@ -194,15 +196,16 @@ return {
         end),
     }),
     concoctedFrenzyPassiveDoom = A.itemLifeRegeneration({
-        levels = 100,
+        levels = 10,
         apply = A.itemLifeRegeneration.apply(function(a)
-            for level = 1, 100 do
+            for level = 1, 10 do
                 a:setHitPointsRegeneratedPerSecond(level, -4 - level)
             end
         end),
     }),
     concoctPotion = A.spellBook({
         name = "Concoct Potion",
+        button = { 2, 2 },
         apply = A.spellBook.apply(function(a)
             a:setSpellList(
                 1,
