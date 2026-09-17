@@ -40,7 +40,7 @@ local function onSpellFinish()
     Unit.face(caster, target)
     UnitAddAbility(caster, CONFIG.refs.abilities.possession)
     IssueTargetOrder(caster, "possession", target)
-    UnitRemoveAbility(caster, CONFIG.refs.abilities.possession)
+    UnitRemoveAbility(caster, CONFIG.refs.abilities.possession) -- TODO: hide active ability, remove on cast or after short delay
 end
 
 local function onPossession()

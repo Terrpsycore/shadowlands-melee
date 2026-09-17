@@ -34,6 +34,9 @@ return {
             a:setTransitionTimeseconds(1, 2)
         end),
     }),
+    netAmmo = A.web({
+        name = "Net Ammo",
+    }),
     animateDead = A.raiseDead({
         name = "Animate Dead",
     }),

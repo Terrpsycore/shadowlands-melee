@@ -21,6 +21,11 @@ return {
         name = "Aranakk Spy",
         abilities = { "vanish" },
     },
+    ballista = {
+        parent = UnitIds.glaivethrower,
+        name = "Ballista",
+        abilities = { "netAmmo" },
+    },
     gladiator = {
         parent = UnitIds.grunt,
         name = "Gladiator",
