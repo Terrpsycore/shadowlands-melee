@@ -195,9 +195,9 @@ return {
         levels = 4,
         apply = A.curse.apply(function(a)
             -- TODO: allow target enemy
-            for level = 1, 4 do
-                a:setChancetoMiss(level, 0)
-            end
+            -- for level = 1, 4 do
+            --     a:setChancetoMiss(level, 0)
+            -- end
         end),
     }),
     stitchingMawswornIncreaseHp = A.itemLifeBonus({

@@ -251,7 +251,6 @@ end
 
 local function onConstructCreate()
     local unit = GetEnteringUnit()
-    Storage:add(unit)
     Storage:set(unit, "total", 0)
     Storage:set(unit, "max", 0)
     Storage:set(unit, "kyrian", 0)

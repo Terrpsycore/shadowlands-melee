@@ -94,9 +94,19 @@ return {
     }),
     applyLimb = A.channelTarget({
         name = "Apply Limb",
+        hotkey = "Q",
+        apply = A.channelTarget.apply(function(a)
+            a:setBaseOrderID(1, "bloodlust")
+            a:setOrderStringUseTurnOn("bloodlust")
+        end),
     }),
     scissorSoul = A.channelTarget({
         name = "Scissor Soul",
+        hotkey = "W",
+        apply = A.channelTarget.apply(function(a)
+            a:setBaseOrderID(1, "innerfire")
+            a:setOrderStringUseTurnOn("innerfire")
+        end),
     }),
     scissorSoulManaBurn = A.feedback({
         name = "Scissor Soul",
@@ -110,6 +120,11 @@ return {
     }),
     betterBody = A.channelTarget({
         name = "Better Body",
+        hotkey = "E",
+        apply = A.channelTarget.apply(function(a)
+            a:setBaseOrderID(1, "thunderbolt")
+            a:setOrderStringUseTurnOn("thunderbolt")
+        end),
     }),
     betterBodyPossession = A.possession({
         name = "Better Body",
@@ -143,15 +158,27 @@ return {
     }),
     concoctPotionExplosive = A.channelTarget({
         name = "Concoct Explosive Potion",
-        apply = A.channelNoTarget.apply(function(a) end),
+        hotkey = "Q",
+        apply = A.channelNoTarget.apply(function(a)
+            a:setBaseOrderID(1, "bloodlust")
+            a:setOrderStringUseTurnOn("bloodlust")
+        end),
     }),
     concoctPotionHealing = A.channelTarget({
         name = "Concoct Healing Potion",
-        apply = A.channelNoTarget.apply(function(a) end),
+        hotkey = "W",
+        apply = A.channelNoTarget.apply(function(a)
+            a:setBaseOrderID(1, "innerfire")
+            a:setOrderStringUseTurnOn("innerfire")
+        end),
     }),
     concoctPotionFrenzy = A.channelTarget({
         name = "Concoct Frenzy Potion",
-        apply = A.channelNoTarget.apply(function(a) end),
+        hotkey = "E",
+        apply = A.channelNoTarget.apply(function(a)
+            a:setBaseOrderID(1, "thunderbolt")
+            a:setOrderStringUseTurnOn("thunderbolt")
+        end),
     }),
     concoctedExplosionActive = A.channelNoTarget({
         apply = A.channelNoTarget.apply(function(a)
@@ -206,6 +233,7 @@ return {
     concoctPotion = A.spellBook({
         name = "Concoct Potion",
         button = { 2, 2 },
+        hotkey = "E",
         apply = A.spellBook.apply(function(a)
             a:setSpellList(
                 1,
