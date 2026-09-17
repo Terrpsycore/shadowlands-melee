@@ -62,4 +62,8 @@ return {
         parent = UnitIds.sentryward,
         abilities = { "warBannerAura" },
     },
+    sigilOfBinding = {
+        parent = UnitIds.stasistraptotem,
+        abilities = { "sigilOfBindingActivation" },
+    },
 }

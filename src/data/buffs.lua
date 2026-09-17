@@ -185,4 +185,8 @@ return {
         parent = BuffIds.disease,
         name = "Corrosive Plague",
     },
+    sigilOfBinding = {
+        parent = BuffIds.curse,
+        name = "Sigil of Binding",
+    },
 }

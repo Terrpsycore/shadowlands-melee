@@ -45,23 +45,49 @@ return {
     maldraciteNullify = A.dispelMagic({
         name = "Maldracite Nullify",
     }),
-    collectCorpsesSearch = A.channelPoint({
-        name = "Cannibalize",
-        button = { 0, 2 },
+    sigilOfBinding = A.channelArea({
+        name = "Sigil of Binding",
+        apply = A.channelArea.apply(function(a) end),
     }),
-    collectCorpses = A.cannibalize({
-        name = "Collect Corpses",
-        button = { 0, 2 },
-    }),
-    collectCorpsesToggle = A.heal({
-        name = "Collect Corpses",
-        apply = A.heal.apply(function(a)
-            a:setManaCost(1, 0)
-            a:setTargetsAllowed(1, "")
+    sigilOfBindingPlaceDummy = A.itemPlaceGoblinLandMine({
+        name = "Sigil of Binding",
+        apply = A.itemPlaceGoblinLandMine.apply(function(a)
+            a:setOrderStringActivate("channel")
+            a:setUnitType(1, Ids.units.sigilOfBinding)
         end),
     }),
-    dropCorpses = A.channelTarget({
-        name = "Drop Corpses",
+    sigilOfBindingActivation = A.mineexploding({
+        name = "Sigil of Binding",
+        apply = A.mineexploding.apply(function(a) end),
+    }),
+    sigilOfBindingSlow = A.slow({
+        name = "Sigil of Binding",
+        buffs = { "sigilOfBinding" },
+        apply = A.slow.apply(function(a)
+            a:setOrderStringActivate("channel")
+        end),
+    }),
+    sigilOfBindingRoot = A.entanglingRoots({
+        buffs = { "sigilOfBinding" },
+        name = "Sigil of Binding",
+        apply = A.entanglingRoots.apply(function(a)
+            a:setOrderStringActivate("channel")
+            a:setDamageperSecond(1, 0)
+            a:setDurationNormal(1, 8)
+            a:setDurationHero(1, 8)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+        end),
+    }),
+    sigilOfBindingStun = A.stormBolt({
+        name = "Sigil of Binding",
+        buffs = { "sigilOfBinding" },
+        apply = A.stormBolt.apply(function(a)
+            a:setOrderStringActivate("channel")
+            a:setDamage(1, 0)
+            a:setDurationNormal(1, 180)
+            a:setDurationHero(1, 3)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+        end),
     }),
     applyLimb = A.channelTarget({
         name = "Apply Limb",
@@ -123,6 +149,24 @@ return {
         apply = A.itemArmorBonus.apply(function(a)
             a:setDefenseBonus(1, -2)
         end),
+    }),
+    collectCorpsesSearch = A.channelPoint({
+        name = "Cannibalize",
+        button = { 0, 2 },
+    }),
+    collectCorpses = A.cannibalize({
+        name = "Collect Corpses",
+        button = { 0, 2 },
+    }),
+    collectCorpsesToggle = A.heal({
+        name = "Collect Corpses",
+        apply = A.heal.apply(function(a)
+            a:setManaCost(1, 0)
+            a:setTargetsAllowed(1, "")
+        end),
+    }),
+    dropCorpses = A.channelTarget({
+        name = "Drop Corpses",
     }),
     poisonBite = A.slowPoison({
         name = "Poison Bite",
