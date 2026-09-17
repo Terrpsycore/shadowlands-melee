@@ -62,6 +62,13 @@ return {
         parent = UnitIds.nagacoutl,
         abilities = { "sporeCloud" },
     },
+    bonestorm = {
+        parent = UnitIds.footman,
+        abilities = { "deadlyWhirlwind", "slurp" },
+        apply = function(u)
+            u:setHitPointsRegenerationRate(-5)
+        end,
+    },
     --
     warBanner = {
         parent = UnitIds.sentryward,

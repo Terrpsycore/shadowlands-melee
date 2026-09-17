@@ -204,4 +204,14 @@ return {
     warBannerAura = A.auraCommandCreep({
         name = "War Banner",
     }),
+    deadlyWhirlwind = A.permanentInvisibility({
+        name = "Deadly Whirlwind",
+    }),
+    slurp = A.deathPact({
+        name = "Slurp",
+    }),
+    slurpCorpseDummy = A.deathCoil({
+        name = "Slurp",
+        apply = A.deathCoil.apply(function(a) end),
+    }),
 }
