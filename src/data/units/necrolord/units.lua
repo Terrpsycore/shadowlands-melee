@@ -21,6 +21,11 @@ return {
         name = "Aranakk Spy",
         abilities = { "vanish" },
     },
+    gladiator = {
+        parent = UnitIds.grunt,
+        name = "Gladiator",
+        abilities = { "warBanner" },
+    },
     scavenger = {
         parent = UnitIds.ghoul,
         abilities = { "inventory", "collectCorpses", "dropCorpses", "exhume" },
@@ -38,7 +43,7 @@ return {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
         },
-        abilities = { "healingSlime" },
+        abilities = { "healingSlime", "corrosivePlague" },
     },
     physician = {
         parent = UnitIds.necromancer,
@@ -47,5 +52,14 @@ return {
             scale = 1,
         },
         abilities = { "applyLimb" },
+    },
+    necroray = {
+        parent = UnitIds.nagacoutl,
+        abilities = { "sporeCloud" },
+    },
+    --
+    warBanner = {
+        parent = UnitIds.sentryward,
+        abilities = { "warBannerAura" },
     },
 }

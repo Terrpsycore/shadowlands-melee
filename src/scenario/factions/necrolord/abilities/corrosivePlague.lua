@@ -55,7 +55,7 @@ local function onTimer()
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             cleanseDisease(unit)
         else
-            local owner = Storage:get(unit, "owner")
+            local owner = Player(Storage:get(unit, "owner")) -- TODO: ensure player N correct
             for _, u in
                 ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.spreadRadius * 2, function(x)
                     return not Storage:has(x)

@@ -73,18 +73,6 @@ return {
             a:setDurationNormal(1, 10)
         end),
     }),
-    poisonBite = A.slowPoison({
-        name = "Poison Bite",
-        apply = A.slowPoison.apply(function(a)
-            a:setStackingType(1, 0)
-        end),
-    }),
-    sporeCloud = A.channelNoTarget({
-        name = "Spore Cloud",
-        apply = A.channelNoTarget.apply(function(a)
-            --
-        end),
-    }),
     corrosivePlague = A.acidBomb({
         name = "Corrosive Plague",
         buffs = { "corrosivePlague" },
@@ -110,5 +98,38 @@ return {
         apply = A.itemArmorBonus.apply(function(a)
             a:setDefenseBonus(1, -2)
         end),
+    }),
+    poisonBite = A.slowPoison({
+        name = "Poison Bite",
+        apply = A.slowPoison.apply(function(a)
+            a:setStackingType(1, 0)
+        end),
+    }),
+    sporeCloud = A.channelNoTarget({
+        name = "Spore Cloud",
+    }),
+    sporeCloudDummy = A.cloudofFog({
+        name = "Spore Cloud",
+        apply = A.cloudofFog.apply(function(a)
+            a:setAreaofEffect(1, 200)
+            a:setDurationNormal(1, 10)
+            a:setAttacksPrevented(1, 0)
+            a:setChanceToMiss(1, 20)
+        end),
+    }),
+    sporeCloudDamage = A.auraPlagueAbomination({
+        name = "Spore Cloud",
+        apply = A.auraPlagueAbomination.apply(function(a)
+            a:setAreaofEffect(1, 200)
+        end),
+    }),
+    warBanner = A.sentryWard({
+        name = "War Banner",
+        apply = A.sentryWard.apply(function(a)
+            a:setWardUnitType(1, Ids.units.warBanner)
+        end),
+    }),
+    warBannerAura = A.auraCommandCreep({
+        name = "War Banner",
     }),
 }

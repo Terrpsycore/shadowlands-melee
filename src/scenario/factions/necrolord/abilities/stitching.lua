@@ -1,5 +1,8 @@
 --[[
 TODO:
+-- creep stitch abilities (minor crit + minor evasion)
+-- clean storages onDeath + etc.
+
 -- manual test
 -- illusion storage persistance (reinit ephemeral runtime objects on save/load)
 -- ! UI error on "no corpse"

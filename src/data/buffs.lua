@@ -173,4 +173,12 @@ return {
         parent = BuffIds.disease,
         name = "Corrosive Plague",
     },
+    sporeCloud = {
+        parent = BuffIds.cloud,
+        name = "Corrosive Plague",
+    },
+    sporeCloudDamage = {
+        parent = BuffIds.disease,
+        name = "Corrosive Plague",
+    },
 }
