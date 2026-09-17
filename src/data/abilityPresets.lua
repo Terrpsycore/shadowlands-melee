@@ -15,12 +15,15 @@ local function mergeDefaults(preset, data)
             row[k] = v
         end
     end
+    local levels = data.levels or 1
     local presetApply = preset.apply
     local userApply = data and data.apply
     if presetApply or userApply then
         row.apply = function(a)
             if presetApply then
-                presetApply(a)
+                for level = 1, levels do
+                    presetApply(a, level)
+                end
             end
             if userApply then
                 userApply(a)
@@ -57,6 +60,8 @@ return setmetatable({
         options = 1,
         apply = function(a)
             a:setDisableOtherAbilities(1, false)
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
         end,
     }),
 
@@ -65,6 +70,8 @@ return setmetatable({
         apply = function(a)
             a:setTargetType(1, 1)
             a:setDisableOtherAbilities(1, false)
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
         end,
     }),
 
@@ -73,11 +80,13 @@ return setmetatable({
         apply = function(a)
             a:setTargetType(1, 2)
             a:setDisableOtherAbilities(1, false)
+            a:setFollowThroughTime(1, 0)
+            a:setArtDuration(1, 0)
         end,
     }),
 
     channelArea = presetFactory(F.channel, {
-        options = 3,
+        options = 3, -- fix missing area circle
         apply = function(a)
             a:setTargetType(1, 2)
             a:setDisableOtherAbilities(1, false)
@@ -120,6 +129,17 @@ return setmetatable({
             a:setAttackSpeedIncrease(1, 0)
             a:setMovementSpeedIncrease(1, 0)
             a:setDamageTakenIncrease(1, 0)
+        end,
+    }),
+    nonDispellableTargetDebuff = presetFactory(F.shadowStrike, {
+        apply = function(a, level)
+            a:setMovementSpeedFactor(level, 0)
+            a:setInitialDamage(level, 0)
+            a:setDecayPower(level, 0)
+            a:setDecayingDamage(level, 0)
+            a:setAttackSpeedFactor(level, 0)
+            a:setDurationHero(level, 8)
+            a:setDurationNormal(level, 8)
         end,
     }),
 }, { __index = F })

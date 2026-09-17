@@ -5,19 +5,21 @@
 ---@class TriggerDefinition
 ---@field trigger? string
 ---@field action fun(ctx?: any)
----@field spellId? integer
+---@field spellId? integer|integer[]
 ---@field order? string
 ---@field delta? number
 ---@field filter? TriggerFilter
+---@field _spellIds? table<integer, boolean>
 ---@field _sourceTypes? table<integer, boolean>
 ---@field _targetTypes? table<integer, boolean>
+---@field _orderId? integer
 
 local Filter = {}
 
 local function assertFourCC(value, trigger, field)
     if type(value) == "string" then
         error(string.format(
-            'trigger "%s" filter.%s: expected FourCC id, got string %q — wrap with FourCC(...)',
+            'trigger "%s" %s: expected FourCC id, got string %q — wrap with FourCC(...)',
             trigger,
             field,
             value
@@ -25,7 +27,7 @@ local function assertFourCC(value, trigger, field)
     end
     if type(value) ~= "number" then
         error(string.format(
-            'trigger "%s" filter.%s: expected FourCC id (number), got %s',
+            'trigger "%s" %s: expected FourCC id (number), got %s',
             trigger,
             field,
             type(value)
@@ -49,66 +51,58 @@ local function toTypeSet(value, trigger, field)
     return set
 end
 
----@param entry TriggerDefinition
-function Filter.compileTrigger(entry)
-    local filter = entry.filter
-    if not filter then
-        return
-    end
-    local triggerName = entry.trigger or "callback"
-    entry._sourceTypes = toTypeSet(filter.source, triggerName, "source")
-    entry._targetTypes = toTypeSet(filter.target, triggerName, "target")
-end
-
 ---@param set? table<integer, boolean>
----@param unit unit
-local function matchesTypeSet(set, unit)
-    if not set then
-        return true
-    end
-    if not unit then
-        return false
-    end
-    return set[GetUnitTypeId(unit)] == true
+---@param value? integer
+local function inSet(set, value)
+    return set == nil or set[value] == true
 end
 
 ---@param trigger TriggerDefinition
----@param ctx { source?: unit, target?: unit }
-local function matchesSourceTargetFilters(trigger, ctx)
-    if not matchesTypeSet(trigger._sourceTypes, ctx.source) then
+---@param ctx { source?: unit, target?: unit, spellId?: integer, orderId?: integer }
+function Filter.matches(trigger, ctx)
+    ctx = ctx or {}
+    if not inSet(trigger._spellIds, ctx.spellId) then
         return false
     end
-    if not matchesTypeSet(trigger._targetTypes, ctx.target) then
+    if trigger._orderId and ctx.orderId ~= trigger._orderId then
+        return false
+    end
+    if not inSet(trigger._sourceTypes, ctx.source and GetUnitTypeId(ctx.source)) then
+        return false
+    end
+    if not inSet(trigger._targetTypes, ctx.target and GetUnitTypeId(ctx.target)) then
         return false
     end
     return true
 end
 
----@param triggers TriggerDefinition[]
----@param ctx { source?: unit, target?: unit }
-function Filter.runFilteredTriggers(triggers, ctx)
-    ctx = ctx or {}
-    for _, trigger in ipairs(triggers) do
-        if matchesSourceTargetFilters(trigger, ctx) then
-            trigger.action(ctx)
-        end
+---@param entry TriggerDefinition
+function Filter.compileTrigger(entry)
+    local triggerName = entry.trigger or "callback"
+    local filter = entry.filter
+
+    entry._spellIds = toTypeSet(entry.spellId, triggerName, "spellId")
+    if entry.order then
+        entry._orderId = String2OrderIdBJ(entry.order)
+    end
+    if filter then
+        entry._sourceTypes = toTypeSet(filter.source, triggerName, "filter.source")
+        entry._targetTypes = toTypeSet(filter.target, triggerName, "filter.target")
     end
 end
 
 ---@param triggers TriggerDefinition[]
----@param info table
-function Filter.runFilteredDamageTriggers(triggers, info)
-    Filter.runFilteredTriggers(triggers, info)
-end
-
----@param triggers TriggerDefinition[]
----@param unit unit
----@param field "source"|"target"
-function Filter.runUnitTriggers(triggers, unit, field)
+---@param ctx? { source?: unit, target?: unit, spellId?: integer, orderId?: integer }
+---@param passCtx? boolean
+function Filter.run(triggers, ctx, passCtx)
+    ctx = ctx or {}
     for _, trigger in ipairs(triggers) do
-        local set = field == "source" and trigger._sourceTypes or trigger._targetTypes
-        if matchesTypeSet(set, unit) then
-            trigger.action()
+        if Filter.matches(trigger, ctx) then
+            if passCtx then
+                trigger.action(ctx)
+            else
+                trigger.action()
+            end
         end
     end
 end

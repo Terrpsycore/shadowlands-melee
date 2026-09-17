@@ -36,6 +36,7 @@ local function onDamage(info)
         info.damage = info.damage - shieldAmount
 
         if soaked == shieldAmount then
+            UnitRemoveBuffBJ(CONFIG.refs.buffs.main, info.target)
             Storage:drop(info.target)
         else
             Storage:set(info.target, "shieldAmount", shieldAmount - soaked)

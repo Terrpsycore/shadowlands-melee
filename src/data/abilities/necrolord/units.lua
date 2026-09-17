@@ -48,14 +48,10 @@ return {
     maldraciteNullify = A.dispelMagic({
         name = "Maldracite Nullify",
     }),
-    sigilOfBinding = A.channelArea({
-        name = "Sigil of Binding",
-        apply = A.channelArea.apply(function(a) end),
-    }),
-    sigilOfBindingPlaceDummy = A.itemPlaceGoblinLandMine({
+    sigilOfBinding = A.itemPlaceGoblinLandMine({
         name = "Sigil of Binding",
         apply = A.itemPlaceGoblinLandMine.apply(function(a)
-            a:setOrderStringActivate("channel")
+            a:setCastRange(1, 500)
             a:setUnitType(1, Ids.units.sigilOfBinding)
         end),
     }),
@@ -187,6 +183,7 @@ return {
     }),
     concoctedExplosionDummy = A.selfDestruct3ClockwerkGoblins({
         apply = A.selfDestruct3ClockwerkGoblins.apply(function(a)
+            a:setTargetsAllowed(1, "self,allied,enemy,ground,air,organic,mechanical,hero,nonhero,player")
             -- order = selfdestruct
         end),
     }),

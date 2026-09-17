@@ -407,8 +407,19 @@ local function onDamage(info)
     if info.isSpell then
         return
     end
+
     local source = info.source
     local target = info.target
+
+    if
+        not isConstruct(source)
+        and not isConstruct(target)
+        and not StorageTurnableStatus:has(source)
+        and not StorageTurnableStatus:has(target)
+    then
+        return
+    end
+
     local onAttack = {
         [stitchRefs.kyrian.effect] = baseEffectKyrian,
         [stitchRefs.fae.effect] = baseEffectFae,
@@ -433,7 +444,7 @@ local function onDamage(info)
         end
     end
 
-    if GetUnitAbilityLevel(source, CONFIG.refs.abilities.venthyrLeech) then
+    if GetUnitAbilityLevel(source, CONFIG.refs.abilities.venthyrLeech) > 0 then
         Dummy.applyDummyOrder(GetOwningPlayer(source), source, CONFIG.refs.abilities.venthyrLeechFixed, "heal")
     end
 end
@@ -517,10 +528,6 @@ return {
         },
         {
             trigger = "DAMAGE",
-            filter = {
-                source = CONFIG.refs.units.carrier,
-                target = CONFIG.refs.units.protected,
-            },
             action = onDamage,
         },
         {

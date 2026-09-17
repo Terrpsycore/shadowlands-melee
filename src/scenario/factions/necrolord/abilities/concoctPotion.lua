@@ -1,4 +1,6 @@
 --[[
+TODO:
+- timed life for potions
 ]]
 
 local Ids = require("data.ids")
@@ -6,7 +8,8 @@ local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 
-local Storage = require("scenario.storage.frenzyPotion")
+local StorageFrenzy = require("scenario.storage.frenzyPotion")
+local StorageHealing = require("scenario.storage.healingPotion")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -25,7 +28,8 @@ local CONFIG = AbilityConfig.compile({
             frenzyPassive = Ids.abilities.concoctedFrenzyPassiveDoom,
         },
         buffs = {
-            --
+            healingStun = Ids.buffs.concoctedHealingStun,
+            healing = Ids.buffs.concoctedHealingRejuv,
         },
         units = {
             --
@@ -52,7 +56,9 @@ local function activateExplosivePotion(caster)
         caster = GetTriggerUnit()
     end
     local owner = GetOwningPlayer(caster)
-    Dummy.applyDummyImmediateOrder(owner, caster, CONFIG.refs.abilities.explosionDummy, "selfdestruct")
+
+    local dummy = Dummy.create(owner, caster, CONFIG.refs.abilities.explosionDummy)
+    IssueTargetOrder(dummy, "selfdestruct", dummy)
 end
 
 local function activateHealingPotion()
@@ -60,12 +66,13 @@ local function activateHealingPotion()
     local owner = GetOwningPlayer(caster)
     Dummy.applyDummyOrder(owner, caster, CONFIG.refs.abilities.healStunDummy, "thunderbolt")
     Dummy.applyDummyOrder(owner, caster, CONFIG.refs.abilities.healDummy, "rejuvination")
+    StorageHealing:add(caster)
 end
 
 local function activateFrenzyPotion()
     local caster = GetTriggerUnit()
     UnitAddAbility(caster, CONFIG.refs.abilities.frenzyPassive)
-    Storage:add(caster)
+    StorageFrenzy:add(caster)
 end
 
 local function onConcoct()
@@ -80,17 +87,16 @@ local function onConcoct()
     UnitAddItem(target, item)
 end
 
-local function onDeath()
-    local unit = GetDyingUnit()
-
-    if UnitHasItemOfTypeBJ(unit, CONFIG.refs.items.explosive) then
-        activateExplosivePotion(unit)
+local function onLethalDamage(info)
+    dump("onLethalDamage", UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive))
+    if UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive) then
+        activateExplosivePotion(info.target)
     end
 end
 
 local function onTimer()
     -- TODO: beware to keep debuff skill on morph (currently it will drop most likely)
-    Storage:each(function(unit)
+    StorageFrenzy:each(function(unit)
         SetUnitAbilityLevel(
             unit,
             CONFIG.refs.abilities.frenzyPassive,
@@ -99,6 +105,11 @@ local function onTimer()
                 GetUnitAbilityLevel(unit, CONFIG.refs.abilities.frenzyPassive) + 1
             )
         )
+    end)
+    StorageHealing:each(function(unit)
+        if Unit.isHealthFull() then
+            StorageHealing:drop(unit)
+        end
     end)
 end
 
@@ -129,8 +140,8 @@ return {
             action = activateFrenzyPotion,
         },
         {
-            trigger = "EVENT_PLAYER_UNIT_DEATH",
-            action = onDeath,
+            trigger = "LETHAL_DAMAGE",
+            action = onLethalDamage,
         },
         {
             trigger = "TIMER",

@@ -1,7 +1,12 @@
 local A = require("data.abilityPresets")
 
 return {
-    inventory = A.inventory({}),
+    inventory = A.inventory({
+        apply = A.inventory.apply(function(a)
+            a:setCanUseItems(1, true)
+            -- a:setCanDropItems(1, true)
+        end),
+    }),
     phase = A.windWalk({
         apply = A.windWalk.apply(function(a)
             a:setManaCost(1, 0)

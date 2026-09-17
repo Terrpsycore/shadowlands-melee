@@ -213,4 +213,12 @@ return {
         parent = BuffIds.curse,
         name = "Sigil of Binding",
     },
+    moldWeakness = {
+        parent = BuffIds.curse,
+        name = "Mold Weakness",
+    },
+    forgeboneReveries = {
+        parent = BuffIds.innerFire,
+        name = "Forgebone Reveries",
+    },
 }

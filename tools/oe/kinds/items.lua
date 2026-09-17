@@ -6,7 +6,6 @@ local reserved = {
     unit = true,
     unique = true,
     corpseOf = true,
-    abilities = true,
 }
 
 local fields = {
@@ -19,6 +18,13 @@ local fields = {
                 item:setInterfaceIcon(shared.normalizePath(path))
             end,
         }, "art")
+    end,
+    abilities = function(item, slugs)
+        local parts = {}
+        for _, slug in ipairs(slugs) do
+            parts[#parts + 1] = shared.resolveAbilityId(slug)
+        end
+        item:setAbilities(table.concat(parts, ","))
     end,
 }
 
@@ -56,13 +62,6 @@ return {
                 return ItemDefinition:new(id, parent)
             end,
         }
-    end,
-    abilities = function(u, slugs)
-        local parts = {}
-        for _, slug in ipairs(slugs) do
-            parts[#parts + 1] = shared.resolveAbilityId(slug)
-        end
-        u:setNormalAbilities(table.concat(parts, ","))
     end,
     defaults = defaults,
     applyFields = applyFields,

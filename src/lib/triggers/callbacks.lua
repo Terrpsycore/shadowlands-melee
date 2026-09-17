@@ -18,12 +18,6 @@ local T = {
     },
 }
 
-T.registerEvents = function(callbacks)
-    for event, triggers in pairs(callbacks) do
-        T.methods[event](triggers)
-    end
-end
-
 ---@param event string
 ---@param callbackOptions TriggerDefinition
 T.registerCallback = function(event, callbackOptions)
@@ -47,10 +41,18 @@ T.fireEvent = function(event, ctx)
     if not callbacks then
         return
     end
-    Filter.runFilteredTriggers(callbacks, ctx or {})
+    Filter.run(callbacks, ctx or {}, true)
 end
 
 T.onCustomEvent = function(_triggers) end
+
+local function registerUnitEvent(event, triggers, ctxFn)
+    local trig = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(trig, event)
+    TriggerAddAction(trig, function()
+        Filter.run(triggers, ctxFn())
+    end)
+end
 
 T.onStun = function(_triggers)
     -- TODO: change to UNIT_TYPE_STUNNED
@@ -95,102 +97,68 @@ T.onRoot = function(_triggers)
 end
 
 T.onAttack = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ATTACKED)
-    TriggerAddAction(trig, function()
-        Filter.runUnitTriggers(triggers, GetAttacker(), "source")
+    registerUnitEvent(EVENT_PLAYER_UNIT_ATTACKED, triggers, function()
+        return { source = GetAttacker() }
     end)
 end
 
 T.onDeath = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_DEATH)
-    TriggerAddAction(trig, function()
-        Filter.runUnitTriggers(triggers, GetDyingUnit(), "target")
+    registerUnitEvent(EVENT_PLAYER_UNIT_DEATH, triggers, function()
+        return { target = GetDyingUnit() }
     end)
 end
 
 T.onSummon = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_SUMMON)
-    TriggerAddAction(trig, function()
-        Filter.runUnitTriggers(triggers, GetSummonedUnit(), "target")
+    registerUnitEvent(EVENT_PLAYER_UNIT_SUMMON, triggers, function()
+        return { target = GetSummonedUnit() }
     end)
 end
 
 T.onSpellCast = function(triggers)
-    local castTrig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_CAST)
-    TriggerAddAction(castTrig, function()
-        local spellId = GetSpellAbilityId()
-        for _, trigger in ipairs(triggers) do
-            if spellId == trigger.spellId then
-                trigger.action()
-            end
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST, triggers, function()
+        return { spellId = GetSpellAbilityId() }
     end)
 end
 
 T.onSpellEffect = function(triggers)
-    local castTrig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    TriggerAddAction(castTrig, function()
-        local spellId = GetSpellAbilityId()
-        for _, trigger in ipairs(triggers) do
-            if spellId == trigger.spellId then
-                trigger.action()
-            end
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT, triggers, function()
+        return { spellId = GetSpellAbilityId() }
     end)
 end
 
 T.onSpellEndcast = function(triggers)
-    local castTrig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_ENDCAST)
-    TriggerAddAction(castTrig, function()
-        local spellId = GetSpellAbilityId()
-        for _, trigger in ipairs(triggers) do
-            if spellId == trigger.spellId then
-                trigger.action()
-            end
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_SPELL_ENDCAST, triggers, function()
+        return { spellId = GetSpellAbilityId() }
     end)
 end
 
 T.onSpellFinish = function(triggers)
-    local castTrig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(castTrig, EVENT_PLAYER_UNIT_SPELL_FINISH)
-    TriggerAddAction(castTrig, function()
-        local spellId = GetSpellAbilityId()
-        for _, trigger in ipairs(triggers) do
-            if spellId == trigger.spellId then
-                trigger.action()
-            end
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH, triggers, function()
+        return { spellId = GetSpellAbilityId() }
     end)
 end
 
 T.onPreDamage = function(triggers)
     Damage.register("Pre", function(info)
-        Filter.runFilteredDamageTriggers(triggers, info)
+        Filter.run(triggers, info, true)
     end, 1.0)
 end
 
 T.onDamage = function(triggers)
     Damage.register("On", function(info)
-        Filter.runFilteredDamageTriggers(triggers, info)
+        Filter.run(triggers, info, true)
     end, 1.0)
 end
 
 T.onLethalDamage = function(triggers)
     Damage.register("Lethal", function(info)
-        Filter.runFilteredDamageTriggers(triggers, info)
+        Filter.run(triggers, info, true)
     end, 1.0)
 end
 
 T.afterDamage = function(triggers)
     Damage.register("After", function(info)
-        Filter.runFilteredDamageTriggers(triggers, info)
+        Filter.run(triggers, info, true)
     end, 1.0)
 end
 
@@ -200,63 +168,37 @@ T.onAnyOrder = function(triggers)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
     TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            trigger.action()
-        end
+        Filter.run(triggers, {})
     end)
 end
 
 T.onOrder = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_ORDER)
-    TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            if trigger.order then
-                if GetIssuedOrderId() == String2OrderIdBJ(trigger.order) then
-                    trigger.action()
-                end
-            else
-                trigger.action()
-            end
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER, triggers, function()
+        return { orderId = GetIssuedOrderId() }
     end)
 end
 
 T.onTargetOrder = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
-    TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            trigger.action()
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, triggers, function()
+        return {}
     end)
 end
 
 T.onPointOrder = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
-    TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            trigger.action()
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, triggers, function()
+        return {}
     end)
 end
 
 T.onTrain = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_TRAIN_FINISH)
-    TriggerAddAction(trig, function()
-        Filter.runUnitTriggers(triggers, GetTrainedUnit(), "target")
+    registerUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH, triggers, function()
+        return { target = GetTrainedUnit() }
     end)
 end
 
 T.onSelect = function(triggers)
-    local trig = CreateTrigger()
-    TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_SELECTED)
-    TriggerAddAction(trig, function()
-        for _, trigger in ipairs(triggers) do
-            trigger.action()
-        end
+    registerUnitEvent(EVENT_PLAYER_UNIT_SELECTED, triggers, function()
+        return {}
     end)
 end
 
@@ -264,7 +206,7 @@ T.onCreate = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterEnterRectSimple(trig, GetWorldBounds())
     TriggerAddAction(trig, function()
-        Filter.runUnitTriggers(triggers, GetEnteringUnit(), "target")
+        Filter.run(triggers, { target = GetEnteringUnit() })
     end)
 end
 
@@ -273,6 +215,12 @@ T.onTimer = function(triggers)
         TimerStart(CreateTimer(), timer.delta, true, function()
             timer.action()
         end)
+    end
+end
+
+T.registerEvents = function(callbacks)
+    for event, triggers in pairs(callbacks) do
+        T.methods[event](triggers)
     end
 end
 

@@ -5,7 +5,7 @@ return {
     animate = {
         parent = UnitIds.peon,
         name = "Animate",
-        abilities = { "surviveWish" },
+        abilities = { "inventory", "surviveWish" },
         art = {
             model = UnitArt[UnitIds.skeletonwarrior].model,
             scale = 0.9,
@@ -14,12 +14,12 @@ return {
     animateWarrior = {
         parent = UnitIds.skeletonwarrior,
         name = "Animate Warrior",
-        abilities = { "surviveWish", "combatExpertise" },
+        abilities = { "inventory", "surviveWish", "combatExpertise" },
     },
     aranakkSpy = {
         parent = UnitIds.nerubianwarrior,
         name = "Aranakk Spy",
-        abilities = { "vanish" },
+        abilities = { "inventory", "vanish" },
     },
     ballista = {
         parent = UnitIds.glaivethrower,
@@ -30,6 +30,7 @@ return {
         parent = UnitIds.grunt,
         name = "Gladiator",
         abilities = { "warBanner" },
+        mana = { max = 200, initial = 100 },
     },
     scavenger = {
         parent = UnitIds.ghoul,
@@ -39,6 +40,7 @@ return {
     construct = {
         parent = UnitIds.abomination,
         name = "Construct",
+        abilities = {},
     },
     necromancer = {
         parent = UnitIds.necromancer,

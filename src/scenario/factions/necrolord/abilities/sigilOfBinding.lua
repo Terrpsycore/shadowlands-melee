@@ -11,7 +11,6 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.sigilOfBinding,
-            place = Ids.abilities.sigilOfBindingPlaceDummy,
             slow = Ids.abilities.sigilOfBindingSlow,
             root = Ids.abilities.sigilOfBindingRoot,
             stun = Ids.abilities.sigilOfBindingStun,
@@ -31,15 +30,6 @@ local CONFIG = AbilityConfig.compile({
 local memory = {}
 local queue = {} -- list
 local queued = {} -- map
-
-local function onSpell()
-    local caster = GetTriggerUnit()
-    local owner = GetOwningPlayer(caster)
-    local targetX = GetSpellTargetX()
-    local targetY = GetSpellTargetY()
-
-    Dummy.applyDummyPointOrder(owner, { x = targetX, y = targetY }, CONFIG.refs.abilities.place, "channel")
-end
 
 local function onDeath(info)
     local trap = GetDyingUnit()
@@ -115,11 +105,6 @@ end
 
 return {
     triggers = {
-        {
-            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.refs.abilities.main,
-            action = onSpell,
-        },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = { CONFIG.refs.abilities.slow, CONFIG.refs.abilities.root, CONFIG.refs.abilities.stun },
