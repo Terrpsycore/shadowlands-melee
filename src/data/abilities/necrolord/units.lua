@@ -69,6 +69,16 @@ return {
     scissorSoul = A.channelTarget({
         name = "Scissor Soul",
     }),
+    scissorSoulManaBurn = A.feedback({
+        name = "Scissor Soul",
+        apply = A.feedback.apply(function(a)
+            a:setSummonedDamage(1, 200)
+            a:setDamageRatioUnits(1, 0.5)
+            a:setMaxManaDrainedHeros(1, 100)
+            a:setMaxManaDrainedUnits(1, 400)
+            a:setDamageRatioHeros(1, 0.5)
+        end),
+    }),
     betterBody = A.channelTarget({
         name = "Better Body",
     }),

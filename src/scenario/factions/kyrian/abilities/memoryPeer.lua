@@ -97,7 +97,9 @@ local function onDeath()
 end
 
 local function afterDummyAttack(info)
-    RemoveUnit(info.source)
+    if GetUnitAbilityLevel(info.source, CONFIG.refs.abilities.slow) > 0 then
+        RemoveUnit(info.source)
+    end
 end
 
 return {

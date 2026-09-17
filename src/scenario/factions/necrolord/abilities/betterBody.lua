@@ -1,6 +1,8 @@
 --[[
 TODO:
+- fix possession cast time lag (prob won't work now because of unit animation)
 - check cast interrupts on stun
+- save to "POSSESSED" storage (kyrian loyalty)
 ]]
 
 local Ids = require("data.ids")
@@ -15,6 +17,9 @@ local CONFIG = AbilityConfig.compile({
         abilities = {
             main = Ids.abilities.betterBody,
             possession = Ids.abilities.betterBodyPossession,
+            --
+            applyLimb = Ids.abilities.betterBody,
+            scissorSoul = Ids.abilities.scissorSoul,
         },
         buffs = {
             --
@@ -24,8 +29,7 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
-        ticks = 4,
-        tickDelta = 0.25,
+        --
     },
 })
 
@@ -33,8 +37,10 @@ local function onSpellFinish()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
 
+    Unit.face(caster, target)
     UnitAddAbility(caster, CONFIG.refs.abilities.possession)
     IssueTargetOrder(caster, "possession", target)
+    UnitRemoveAbility(caster, CONFIG.refs.abilities.possession)
 end
 
 local function onPossession()
@@ -46,6 +52,13 @@ local function onPossession()
 
     if targetMaxMana < casterMaxMana then
         SetUnitState(target, UNIT_STATE_MAX_MANA, casterMaxMana)
+    end
+
+    local abilities = { CONFIG.refs.abilities.applyLimb, CONFIG.refs.abilities.scissorSoul, CONFIG.refs.abilities.main }
+    for _, a in ipairs(abilities) do
+        if GetUnitAbilityLevel(target, a) == 0 then
+            UnitAddAbility(target, a)
+        end
     end
 end
 

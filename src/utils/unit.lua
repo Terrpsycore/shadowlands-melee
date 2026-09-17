@@ -77,6 +77,21 @@ function Unit.isOffCooldown(unit, abilityId)
     return remainingCd <= 0
 end
 
+function Unit.face(sourceUnit, targetUnit)
+    -- Get coordinates of both units
+    local x1 = GetUnitX(sourceUnit)
+    local y1 = GetUnitY(sourceUnit)
+    local x2 = GetUnitX(targetUnit)
+    local y2 = GetUnitY(targetUnit)
+
+    -- Calculate angle in radians, then convert to degrees
+    local angleRad = math.atan(y2 - y1, x2 - x1)
+    local angleDeg = angleRad * bj_RADTODEG -- bj_RADTODEG is approximately 57.2958
+
+    -- Apply instant facing
+    SetUnitFacing(sourceUnit, angleDeg)
+end
+
 function Unit.isAtPoint(whichUnit, targetX, targetY, range)
     local uX = GetUnitX(whichUnit)
     local uY = GetUnitY(whichUnit)

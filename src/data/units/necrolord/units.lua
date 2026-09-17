@@ -51,7 +51,7 @@ return {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
         },
-        abilities = { "applyLimb" },
+        abilities = { "applyLimb", "scissorSoul", "betterBody" },
     },
     necroray = {
         parent = UnitIds.nagacoutl,
