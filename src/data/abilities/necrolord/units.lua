@@ -42,6 +42,9 @@ return {
             a:setNumberofCorpsesRaised(1, 1)
         end),
     }),
+    maldraciteNullify = A.dispelMagic({
+        name = "Maldracite Nullify",
+    }),
     collectCorpsesSearch = A.channelPoint({
         name = "Cannibalize",
         button = { 0, 2 },

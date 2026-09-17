@@ -35,7 +35,7 @@ return {
     },
     necromancer = {
         parent = UnitIds.necromancer,
-        abilities = { "animateDead" },
+        abilities = { "animateDead", "maldraciteNullify" },
     },
     mixologist = {
         parent = UnitIds.necromancer,
