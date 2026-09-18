@@ -131,15 +131,15 @@ return setmetatable({
             a:setDamageTakenIncrease(1, 0)
         end,
     }),
-    nonDispellableTargetDebuff = presetFactory(F.shadowStrike, {
+    nonDispellableTargetDebuff = presetFactory(F.acidBomb, {
         apply = function(a, level)
-            a:setMovementSpeedFactor(level, 0)
-            a:setInitialDamage(level, 0)
-            a:setDecayPower(level, 0)
-            a:setDecayingDamage(level, 0)
-            a:setAttackSpeedFactor(level, 0)
-            a:setDurationHero(level, 8)
-            a:setDurationNormal(level, 8)
+            a:setDamageInterval(level, 1)
+            a:setPrimaryDamage(level, 0)
+            a:setMovementSpeedReduction(level, 0)
+            a:setArmorPenalty(level, 0)
+            a:setSecondaryDamage(level, 0)
+            a:setAttackSpeedReduction(level, 0)
+            a:setAreaofEffect(level, 0)
         end,
     }),
 }, { __index = F })

@@ -20,8 +20,14 @@ return {
     serratedSpaulders = A.innerFire({
         name = "Serrated Spaulders",
         levels = 3,
+        buffs = { "serratedSpaulders" },
         manaCost = 50,
         hotkey = "W",
+    }),
+    serratedSpauldersThorns = A.nonDispellableTargetDebuff({
+        name = "Forgebone Reveries",
+        levels = 3,
+        buffs = { "serratedSpauldersThorns" },
     }),
     ammunitionControl = A.passiveGeneric({ -- onTrain/onRevive dummy
         name = "Ammunition Control",

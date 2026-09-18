@@ -221,6 +221,8 @@ return {
         parent = BuffIds.innerFire,
         name = "Forgebone Reveries",
     },
+    serratedSpaulders = { parent = BuffIds.innerfire, name = "Serrated Spaulders" },
+    serratedSpauldersThorns = { parent = BuffIds.shadowstrike, name = "Serrated Spaulders" },
     necroticEruptionStun = { parent = BuffIds.thunderbolt, name = "Necrotic Eruption (stun)" },
     necroticEruptionSlow = { parent = BuffIds.frostNova, name = "Necrotic Eruption (slow)" },
     opressiveBanner = { parent = BuffIds.howlofTerror, name = "Opressive Banner" },

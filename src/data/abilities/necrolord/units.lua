@@ -139,17 +139,12 @@ return {
             a:setDurationNormal(1, 10)
         end),
     }),
-    corrosivePlague = A.acidBomb({
+    corrosivePlague = A.curse({
         name = "Corrosive Plague",
         buffs = { "corrosivePlague" },
         button = { 1, 2 },
         apply = A.acidBomb.apply(function(a)
-            a:setDamageInterval(1, 1)
-            a:setPrimaryDamage(1, 0)
-            a:setMovementSpeedReduction(1, 0)
-            a:setArmorPenalty(1, 0)
-            a:setSecondaryDamage(1, 0)
-            a:setAttackSpeedReduction(1, 0)
+            a:setChancetoMiss(1, 0)
         end),
     }),
     concoctPotionExplosive = A.channelTarget({
@@ -217,7 +212,8 @@ return {
         buffs = { "concoctedFrenzy" },
         apply = A.nonDispellableSelfBuffTimed.apply(function(a)
             a:setAttackSpeedIncrease(1, 0.75)
-            a:setDuration(999)
+            a:setDurationNormal(1, 999)
+            a:setDurationHero(1, 999)
         end),
     }),
     concoctedFrenzyPassiveDoom = A.itemLifeRegeneration({
