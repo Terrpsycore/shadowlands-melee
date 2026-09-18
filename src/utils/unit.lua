@@ -76,6 +76,10 @@ function Unit.isManaFull(unit)
     return GetUnitState(unit, UNIT_STATE_MANA) >= GetUnitState(unit, UNIT_STATE_MAX_MANA) - 0.01
 end
 
+function Unit.isHealthFull(unit)
+    return GetUnitState(unit, UNIT_STATE_LIFE) >= GetUnitState(unit, UNIT_STATE_MAX_LIFE) - 0.01
+end
+
 function Unit.isOffCooldown(unit, abilityId)
     local remainingCd = BlzGetUnitAbilityCooldownRemaining(unit, abilityId)
     return remainingCd <= 0

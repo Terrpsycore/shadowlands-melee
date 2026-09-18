@@ -217,6 +217,7 @@ return {
         buffs = { "concoctedFrenzy" },
         apply = A.nonDispellableSelfBuffTimed.apply(function(a)
             a:setAttackSpeedIncrease(1, 0.75)
+            a:setDuration(999)
         end),
     }),
     concoctedFrenzyPassiveDoom = A.itemLifeRegeneration({

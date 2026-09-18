@@ -4,6 +4,16 @@
 -- @Link   : https://dengsir.github.io
 -- @Date   : 7/12/2019, 11:17:25 AM
 
+--- WC3 object field IDs are fixed-width 4 bytes (e.g. "Crs" → "Crs\0").
+---@param id string
+---@return string
+local function padFourCC(id)
+    if #id >= 4 then
+        return id:sub(1, 4)
+    end
+    return id .. string.rep("\0", 4 - #id)
+end
+
 ---@class ObjectWriter: object
 ---@param type DefinitionType
 ObjectWriter = class('ObjectWriter')
@@ -76,7 +86,7 @@ function ObjectWriter:writeDefinition(def)
     self.buffer:addInt(#fields)
 
     for _, field in spairs(fields) do
-        self.buffer:addString(field.id)
+        self.buffer:addString(padFourCC(field.id))
         self.buffer:addInt(field.type)
 
         if self.type == DefinitionType.Doodad or self.type == DefinitionType.Ability or self.type ==
