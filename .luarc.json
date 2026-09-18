@@ -25,7 +25,8 @@
   },
   "diagnostics": {
     "disable": [
-      "empty-block"
+      "empty-block",
+            "undefined-field"
     ],
     "globals": [
       "Timed",

@@ -8,8 +8,14 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
-        buffs = { "moldWeakness" },
         hotkey = "Q",
+    }),
+    moldWeaknessDummy = A.cripple({
+        name = "Mold Weakness",
+        levels = 3,
+        apply = A.cripple.apply(function(a)
+            --
+        end),
     }),
     serratedSpaulders = A.innerFire({
         name = "Serrated Spaulders",
@@ -17,10 +23,17 @@ return {
         manaCost = 50,
         hotkey = "W",
     }),
-    ammunitionControl = A.passiveGeneric({
+    ammunitionControl = A.passiveGeneric({ -- onTrain/onRevive dummy
         name = "Ammunition Control",
         levels = 3,
         hotkey = "E",
+    }),
+    ammunitionControlDummy = A.innerFire({
+        name = "Mold Weakness",
+        levels = 3,
+        apply = A.innerFire.apply(function(a)
+            --
+        end),
     }),
     forgeboneReveries = A.channelTarget({ -- triggered onLethalDamage
         name = "Forgebone Reveries",
@@ -30,16 +43,17 @@ return {
         hotkey = "R",
     }),
     --
-    weaponTest = A.innerFire({
-        name = "Serrated Spaulders",
+    weaponTest = A.innerFire({ -- dummy mirror to hero, repeat on kill
+        name = "Weapon Test",
         levels = 3,
         manaCost = 50,
+        buffs = { "weaponTest" },
         apply = A.innerFire.apply(function(a)
             -- a:setTargetType() -- enemy
         end),
         hotkey = "Q",
     }),
-    opressiveBanner = A.sentryWard({
+    opressiveBanner = A.sentryWard({ -- add invul; timed remove invul
         name = "Opressive Banner",
         levels = 3,
         manaCost = 100,
@@ -48,26 +62,57 @@ return {
         end),
         hotkey = "W",
     }),
-    brutalCombo = A.passiveGeneric({
+    opressiveBannerAura = A.enduranceAura({ -- negative
+        name = "Opressive Banner",
+        levels = 3,
+        buffs = { "opressiveBanner" },
+        apply = A.enduranceAura.apply(function(a)
+            -- a:setUnitType()
+        end),
+    }),
+    brutalCombo = A.passiveGeneric({ -- onDamage
         name = "Brutal Combo",
         levels = 3,
         hotkey = "E",
     }),
-    allOnOne = A.channelNoTarget({
+    allOnOne = A.nonDispellableSelfBuffTimed({ -- triggered taunt + onDamage DAMAGE_TYPE_ENHANCED
         name = "All on One",
         levels = 1,
         hotkey = "R",
     }),
+    allOnOneSplash = A.pitLordCleavingAttack({
+        name = "All on One",
+    }),
     --
-    necroticEruption = A.channelArea({
+    necroticEruption = A.channelArea({ -- timed dummy nova + dummy stomp
         name = "Necrotic Eruption",
         levels = 3,
         hotkey = "Q",
     }),
-    bindDeathwalker = A.feralSpirit({
+    necroticEruptionDummySlow = A.frostNova({
+        name = "Necrotic Eruption",
+        levels = 3,
+        buffs = { "necroticEruptionSlow" },
+        apply = A.frostNova.apply(function(a) end),
+    }),
+    necroticEruptionDummyStun = A.warStomp({
+        name = "Necrotic Eruption",
+        levels = 3,
+        buffs = { "necroticEruptionStun" },
+        apply = A.warStomp.apply(function(a) end),
+    }),
+    bindDeathwalker = A.feralSpirit2({
         name = "Bind Deathwalker",
         levels = 3,
         hotkey = "W",
+        apply = A.feralSpirit2.apply(function(a)
+            a:setSummonedUnit(1, Ids.units.deathwalker1)
+            a:setSummonedUnit(2, Ids.units.deathwalker2)
+            a:setSummonedUnit(3, Ids.units.deathwalker3)
+            a:setNumberofSummonedUnits(1, 3)
+            a:setNumberofSummonedUnits(2, 2)
+            a:setNumberofSummonedUnits(3, 1)
+        end),
     }),
     droughtSigil = A.itemPlaceGoblinLandMine({
         name = "Drought Sigil",
@@ -75,14 +120,25 @@ return {
         apply = A.itemPlaceGoblinLandMine.apply(function(a)
             for level = 1, 3 do
                 a:setCastRange(1, 500)
-                a:setUnitType(1, Ids.units.sigilOfBinding)
+                a:setUnitType(1, Ids.units.sigilOfDrought)
             end
         end),
         hotkey = "E",
     }),
-    explodeCorpses = A.channelArea({
+    sigilOfDroughtActivation = A.mineexploding({
+        name = "Sigil of Drought",
+        apply = A.mineexploding.apply(function(a) end),
+    }),
+    explodeCorpses = A.channelArea({ -- for corpse - dummy nova - onSpell target delete
         name = "Explode Corpses",
         levels = 1,
         hotkey = "R",
+    }),
+    explodeCorpsesDummy = A.frostNova({
+        name = "Explode Corpses",
+        buffs = {},
+        apply = A.frostNova.apply(function(a)
+            -- a:setTargetType() -- dead
+        end),
     }),
 }

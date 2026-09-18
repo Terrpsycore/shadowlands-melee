@@ -8,8 +8,10 @@ local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 
+-- PotionStorage -- timedlife
 local StorageFrenzy = require("scenario.storage.frenzyPotion")
 local StorageHealing = require("scenario.storage.healingPotion")
+local DeathStorage = require("scenario.storage.death")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -51,11 +53,13 @@ local CONCOCT_TABLE = {
     [CONFIG.refs.abilities.frenzyPotion] = CONFIG.refs.items.frenzy,
 }
 
-local function activateExplosivePotion(caster)
+local function activateExplosivePotion(owner, caster)
     if caster == nil then
         caster = GetTriggerUnit()
     end
-    local owner = GetOwningPlayer(caster)
+    if owner == nil then
+        owner = GetOwningPlayer(caster)
+    end
 
     local dummy = Dummy.create(owner, caster, CONFIG.refs.abilities.explosionDummy)
     IssueTargetOrder(dummy, "selfdestruct", dummy)
@@ -90,7 +94,9 @@ end
 local function onLethalDamage(info)
     dump("onLethalDamage", UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive))
     if UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive) then
-        activateExplosivePotion(info.target)
+        dump("onLethalDamage activateExplosivePotion")
+        local owner = Player(DeathStorage:get(info.target, "originalOwner"))
+        activateExplosivePotion(owner, info.target)
     end
 end
 

@@ -304,7 +304,7 @@ return {
             a:setWardUnitType(1, Ids.units.warBanner)
         end),
     }),
-    warBannerAura = A.auraCommandCreep({
+    warBannerAura = A.enduranceAura({
         name = "War Banner",
     }),
     deadlyWhirlwind = A.permanentInvisibility({

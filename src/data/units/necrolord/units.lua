@@ -89,4 +89,21 @@ return {
         name = "Sigil of Binding",
         abilities = { "sigilOfBindingActivation" },
     },
+    sigilOfDrought = {
+        parent = UnitIds.stasistraptotem,
+        name = "Sigil of Binding",
+        abilities = { "sigilOfDroughtActivation" },
+    },
+    deathwalker1 = {
+        parent = UnitIds.waterelemental1,
+        name = "Lesser Deathwalker",
+    },
+    deathwalker2 = {
+        parent = UnitIds.waterelemental2,
+        name = "Deathwalker",
+    },
+    deathwalker3 = {
+        parent = UnitIds.waterelemental3,
+        name = "Greater Deathwalker",
+    },
 }
