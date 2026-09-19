@@ -3,6 +3,7 @@ local Ids = require("data.ids")
 local A = require("data.abilityPresets")
 
 return {
+    --- BONESMITH ---
     moldWeakness = A.nonDispellableTargetDebuff({
         name = "Mold Weakness",
         buffs = { "moldWeaknessAim" },
@@ -73,7 +74,7 @@ return {
         buffs = { "forgeboneReveries" },
         hotkey = "R",
     }),
-    --
+    -- GLADIATOR ---
     weaponTest = A.innerFire({ -- dummy mirror to hero, repeat on kill
         name = "Weapon Test",
         levels = 3,
@@ -114,23 +115,28 @@ return {
     allOnOneSplash = A.pitLordCleavingAttack({
         name = "All on One",
     }),
-    --
+    --- LICH ---
     necroticEruption = A.channelArea({ -- timed dummy nova + dummy stomp
         name = "Necrotic Eruption",
         levels = 3,
         hotkey = "Q",
     }),
-    necroticEruptionDummySlow = A.frostNova({
+    necroticEruptionDummySlow = A.thunderClap({
         name = "Necrotic Eruption",
         levels = 3,
         buffs = { "necroticEruptionSlow" },
-        apply = A.frostNova.apply(function(a) end),
+        apply = A.thunderClap.apply(function(a, level)
+            a:setAreaofEffect(level, 300)
+            a:setAttackSpeedReduction(level, 0)
+        end),
     }),
     necroticEruptionDummyStun = A.warStomp({
         name = "Necrotic Eruption",
         levels = 3,
         buffs = { "necroticEruptionStun" },
-        apply = A.warStomp.apply(function(a) end),
+        apply = A.warStomp.apply(function(a, level)
+            a:setAreaofEffect(level, 150)
+        end),
     }),
     bindDeathwalker = A.feralSpirit2({
         name = "Bind Deathwalker",
