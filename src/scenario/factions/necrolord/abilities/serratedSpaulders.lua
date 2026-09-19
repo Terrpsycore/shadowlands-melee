@@ -29,7 +29,7 @@ local function onSpell()
     memory[target] = level
 end
 
-local function onAttack(info)
+local function onAttack()
     local target = GetTriggerUnit()
     if not UnitHasBuffBJ(target, CONFIG.refs.buffs.thorns) then
         return
@@ -39,7 +39,7 @@ local function onAttack(info)
     Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.thorns, "acidbomb", memory[target])
 end
 
-local function onTimer(info)
+local function onTimer()
     local removeQueue = {}
     for _, unit in pairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.thorns) then

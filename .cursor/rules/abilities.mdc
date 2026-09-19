@@ -54,6 +54,8 @@ alwaysApply: false
 
 - **Пресеты** (`data/abilityPresets.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
 
+- **`apply` per-level:** `function(a, level)` → bake вызывает apply для каждого уровня из `levels`; `function(a)` → один раз. Работает и в пресетах, и в прямом `A.*({ apply = ... })`.
+
 - **Реестры:** новая способность — файл в `scenario/factions/<faction>/abilities/` (или `scenario/common/mechanics/`); bake генерит `scenario/generated/abilities_registry.lua`. Исключения — `tools/gen/config/ability_excludes.lua`.
 
 - Команды после разработки: `lua tools/bake.lua` (IDs + реестры); тесты не запускать (их запускает пользователь, напоминать не надо)

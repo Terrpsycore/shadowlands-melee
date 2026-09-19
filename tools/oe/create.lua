@@ -1,3 +1,5 @@
+local shared = dofile("tools/oe/kinds/_shared.lua")
+
 return function(db, kind, ids)
     for slug, data in pairs(db) do
         local id = ids[slug]
@@ -20,7 +22,7 @@ return function(db, kind, ids)
             kind.finalize(obj, data, slug)
         end
         if data.apply then
-            data.apply(obj)
+            shared.runApplyPerLevel(data.apply, obj, data)
         end
     end
 end

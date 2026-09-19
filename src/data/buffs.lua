@@ -213,6 +213,10 @@ return {
         parent = BuffIds.curse,
         name = "Sigil of Binding",
     },
+    moldWeaknessAim = {
+        parent = BuffIds.trueshotAura,
+        name = "Mold Weakness",
+    },
     moldWeakness = {
         parent = BuffIds.curse,
         name = "Mold Weakness",

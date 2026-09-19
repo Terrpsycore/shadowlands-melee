@@ -3,6 +3,8 @@ local AbilityIds = require("vendor.assets.AbilityIds")
 ---@type AbilityFactories
 local F = require("data.generated.ability_factories")
 
+local shared = dofile("tools/oe/kinds/_shared.lua")
+
 local function mergeDefaults(preset, data)
     local row = {}
     for k, v in pairs(preset) do
@@ -19,14 +21,13 @@ local function mergeDefaults(preset, data)
     local presetApply = preset.apply
     local userApply = data and data.apply
     if presetApply or userApply then
+        local ctx = { levels = levels }
         row.apply = function(a)
             if presetApply then
-                for level = 1, levels do
-                    presetApply(a, level)
-                end
+                shared.runApplyPerLevel(presetApply, a, ctx)
             end
             if userApply then
-                userApply(a)
+                shared.runApplyPerLevel(userApply, a, ctx)
             end
         end
     end

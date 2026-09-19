@@ -12,5 +12,5 @@ return {
     { "requirements", "string", optional = true },
     { "manaCost", "number|number[]", optional = true },
     { "art", "{ icon?: string, iconOff?: string, iconResearch?: string }", optional = true },
-    { "apply", "fun(a: AbilityDefinition)", optional = true },
+    { "apply", "fun(a: AbilityDefinition, level?: integer)", optional = true },
 }

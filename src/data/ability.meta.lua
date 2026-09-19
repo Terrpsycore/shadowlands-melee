@@ -3,7 +3,7 @@
 
 ---@class AbilityFactoryInventory
 ---@field parent string
----@field apply fun(fn: fun(a: AbilityInventory)): fun(a: AbilityInventory)
+---@field apply fun(fn: fun(a: AbilityInventory, level?: integer)): fun(a: AbilityInventory, level?: integer)
 
 ---@class AbilityModule : AbilityFactories
 ---@field channelArea AbilityFactoryChannel

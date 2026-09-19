@@ -5,16 +5,25 @@ local A = require("data.abilityPresets")
 return {
     moldWeakness = A.nonDispellableTargetDebuff({
         name = "Mold Weakness",
+        buffs = { "moldWeaknessAim" },
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
         hotkey = "Q",
     }),
-    moldWeaknessDummy = A.cripple({
+    moldWeaknessDebuff = A.nonDispellableTargetDebuff({
         name = "Mold Weakness",
+        buffs = { "moldWeakness" },
         levels = 3,
-        apply = A.cripple.apply(function(a)
-            --
+        apply = A.nonDispellableTargetDebuff.apply(function(a, level) end),
+    }),
+    moldWeaknessPassiveDebuff = A.auraCommandCreep({
+        name = "Mold Weakness",
+        buffs = {},
+        levels = 3,
+        apply = A.auraCommandCreep.apply(function(a, level)
+            a:setAreaofEffect(level, 0)
+            a:setAttackDamageIncrease(level, -0.33 * level)
         end),
     }),
     serratedSpaulders = A.innerFire({
@@ -34,11 +43,26 @@ return {
         levels = 3,
         hotkey = "E",
     }),
-    ammunitionControlDummy = A.innerFire({
-        name = "Mold Weakness",
+    ammunitionControlBuff = A.nonDispellableSelfBuffTimed({
+        name = "Ammunition Control",
         levels = 3,
-        apply = A.innerFire.apply(function(a)
-            --
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
+            a:setDurationNormal(level, 120 + 60 * level)
+        end),
+    }),
+    ammunitionControlBonusDamage = A.auraCommandCreep({
+        name = "Ammunition Control",
+        levels = 3,
+        buffs = {}, -- TODO: check if works
+        apply = A.auraCommandCreep.apply(function(a, level)
+            a:setAttackDamageIncrease(level, 0.1 * level)
+        end),
+    }),
+    ammunitionControlBonusArmor = A.itemArmorBonus({
+        name = "Ammunition Control",
+        levels = 3,
+        apply = A.itemArmorBonus.apply(function(a, level)
+            a:setDefenseBonus(level, 1 * level)
         end),
     }),
     forgeboneReveries = A.channelTarget({ -- triggered onLethalDamage
