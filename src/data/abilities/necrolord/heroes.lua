@@ -110,6 +110,7 @@ return {
     allOnOne = A.nonDispellableSelfBuffTimed({ -- triggered taunt + onDamage DAMAGE_TYPE_ENHANCED
         name = "All on One",
         levels = 1,
+        buffs = { "allOnOne" },
         hotkey = "R",
     }),
     allOnOneSplash = A.pitLordCleavingAttack({
