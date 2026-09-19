@@ -198,7 +198,40 @@ return {
     }),
     sigilOfDroughtActivation = A.mineexploding({
         name = "Sigil of Drought",
+        levels = 3,
         apply = A.mineexploding.apply(function(a) end),
+    }),
+    sigilOfDroughtDrainMana = A.siphonMana({
+        name = "Sigil of Drought",
+        levels = 3,
+        apply = A.siphonMana.apply(function(a, level)
+            a:setManaCost(level, 0)
+            a:setDurationNormal(level, 1.1)
+            a:setDurationHero(level, 1.1)
+            a:setManaTransferredPerSecond(level, 200 * level)
+            a:setOrderStringActivate("channel")
+        end),
+    }),
+    sigilOfDroughtTransferMana = A.siphonMana({
+        name = "Sigil of Drought",
+        levels = 3,
+        apply = A.siphonMana.apply(function(a, level)
+            a:setManaCost(level, 0)
+            a:setDurationNormal(level, 1)
+            a:setDurationHero(level, 1.1)
+            a:setManaTransferredPerSecond(level, 100 * level)
+            a:setOrderStringActivate("channel")
+        end),
+    }),
+    sigilOfDroughtDrawback = A.rejuvenation1({
+        name = "Sigil of Drought",
+        levels = 10, -- using based on burned mana
+        buffs = { "sigilOfDroughtDrawback" },
+        apply = A.rejuvenation1.apply(function(a, level)
+            a:setHitPointsGained(level, 50 * level)
+            a:setDurationHero(level, 10)
+            a:setDurationNormal(level, 10)
+        end),
     }),
     explodeCorpses = A.channelArea({ -- for corpse - dummy clap - onSpell target delete
         name = "Explode Corpses",

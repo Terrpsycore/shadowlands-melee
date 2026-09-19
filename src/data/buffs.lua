@@ -230,6 +230,7 @@ return {
     serratedSpauldersThorns = { parent = BuffIds.shadowstrike, name = "Serrated Spaulders" },
     necroticEruptionStun = { parent = BuffIds.thunderbolt, name = "Necrotic Eruption (stun)" },
     necroticEruptionSlow = { parent = BuffIds.frostNova, name = "Necrotic Eruption (slow)" },
+    sigilOfDroughtDrawback = { parent = BuffIds.clarityPotion, name = "End of Draught" },
     opressiveBanner = { parent = BuffIds.howlofTerror, name = "Opressive Banner" },
     opressiveBannerShield = { parent = BuffIds.invulnerable, name = "Opressive Banner" },
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },

@@ -114,6 +114,19 @@ end
 ---@param point Point unit center excludes self; { x, y } does not
 ---@param radius number
 ---@param filter? fun(u: unit): boolean
+function Unit.getClosestUnit(point, radius, filter)
+    local x, y = pointXY(point)
+    local exclude = type(point) ~= "table" and point or nil
+    forEachInRadius(x, y, radius, function(u)
+        if UnitAlive(u) and u ~= exclude and (not filter or filter(u)) then
+            return u
+        end
+    end)
+end
+
+---@param point Point unit center excludes self; { x, y } does not
+---@param radius number
+---@param filter? fun(u: unit): boolean
 function Unit.getUnitsInRadius(point, radius, filter)
     local x, y = pointXY(point)
     local exclude = type(point) ~= "table" and point or nil
