@@ -75,15 +75,31 @@ return {
         hotkey = "R",
     }),
     -- GLADIATOR ---
-    weaponTest = A.innerFire({ -- dummy mirror to hero, repeat on kill
+    weaponTest = A.nonDispellableTargetDebuff({ -- dummy mirror to hero, repeat on kill
         name = "Weapon Test",
         levels = 3,
         manaCost = 50,
         buffs = { "weaponTest" },
-        apply = A.innerFire.apply(function(a)
+        apply = A.nonDispellableTargetDebuff.apply(function(a)
             -- a:setTargetType() -- enemy
         end),
         hotkey = "Q",
+    }),
+    weaponTestSelfBuff = A.nonDispellableSelfBuffTimed({
+        name = "Weapon Test",
+        levels = 3,
+        buffs = { "weaponTest" },
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
+            a:setDurationNormal(level, 10)
+            a:setDurationHero(level, 10)
+        end),
+    }),
+    weaponTestEffect = A.itemDamageBonus({
+        name = "Weapon Test",
+        levels = 3,
+        apply = A.itemDamageBonus.apply(function(a, level)
+            a:setAttackBonus(level, 10 * level)
+        end),
     }),
     opressiveBanner = A.sentryWard({ -- ? add invul; timed remove invul
         name = "Opressive Banner",
