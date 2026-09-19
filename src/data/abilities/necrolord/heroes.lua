@@ -46,6 +46,7 @@ return {
     ammunitionControlBuff = A.nonDispellableSelfBuffTimed({
         name = "Ammunition Control",
         levels = 3,
+        buffs = { "ammunitionControl" },
         apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
             a:setDurationNormal(level, 120 + 60 * level)
         end),

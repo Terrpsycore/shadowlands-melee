@@ -225,6 +225,7 @@ return {
         parent = BuffIds.innerFire,
         name = "Forgebone Reveries",
     },
+    ammunitionControl = { parent = BuffIds.devotionAura },
     serratedSpaulders = { parent = BuffIds.innerfire, name = "Serrated Spaulders" },
     serratedSpauldersThorns = { parent = BuffIds.shadowstrike, name = "Serrated Spaulders" },
     necroticEruptionStun = { parent = BuffIds.thunderbolt, name = "Necrotic Eruption (stun)" },
