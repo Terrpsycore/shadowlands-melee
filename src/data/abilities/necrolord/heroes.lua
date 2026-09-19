@@ -67,12 +67,17 @@ return {
             a:setDefenseBonus(level, 1 * level)
         end),
     }),
-    forgeboneReveries = A.channelTarget({ -- triggered onLethalDamage
+    forgeboneReveries = A.nonDispellableTargetDebuff({ -- triggered onLethalDamage
         name = "Forgebone Reveries",
         levels = 1,
         manaCost = 50,
         buffs = { "forgeboneReveries" },
         hotkey = "R",
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
+            a:setDurationNormal(level, 10)
+            a:setDurationHero(level, 10)
+            a:setTargetsAllowed(level, "allied,organic,player")
+        end),
     }),
     -- GLADIATOR ---
     weaponTest = A.nonDispellableTargetDebuff({ -- dummy mirror to hero, repeat on kill

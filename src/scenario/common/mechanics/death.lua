@@ -92,5 +92,8 @@ return {
             action = onLethalDamage,
         },
     },
+    export = {
+        shouldUseFakeDeath = shouldUseFakeDeath,
+    },
     config = CONFIG,
 }
