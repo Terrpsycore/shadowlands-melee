@@ -114,6 +114,13 @@ return {
         levels = 3,
         hotkey = "E",
     }),
+    brutalComboCrit = A.criticalStrike({ -- onDamage
+        name = "Brutal Combo",
+        levels = 3,
+        apply = A.criticalStrike.apply(function(a, level)
+            a:setChancetoCriticalStrike(level, 1)
+        end),
+    }),
     allOnOne = A.nonDispellableSelfBuffTimed({ -- triggered taunt + onDamage DAMAGE_TYPE_ENHANCED
         name = "All on One",
         levels = 1,
