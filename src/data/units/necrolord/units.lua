@@ -84,6 +84,11 @@ return {
         name = "War Banner",
         abilities = { "warBannerAura" },
     },
+    opressiveBanner = {
+        parent = UnitIds.sentryward,
+        name = "Opressive Banner",
+        abilities = { "opressiveBannerAura" }, -- 1 lvl on spawn, increases with trigger
+    },
     sigilOfBinding = {
         parent = UnitIds.stasistraptotem,
         name = "Sigil of Binding",

@@ -231,6 +231,7 @@ return {
     necroticEruptionStun = { parent = BuffIds.thunderbolt, name = "Necrotic Eruption (stun)" },
     necroticEruptionSlow = { parent = BuffIds.frostNova, name = "Necrotic Eruption (slow)" },
     opressiveBanner = { parent = BuffIds.howlofTerror, name = "Opressive Banner" },
+    opressiveBannerShield = { parent = BuffIds.invulnerable, name = "Opressive Banner" },
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },
     allOnOne = { parent = BuffIds.berserk, name = "All on One" },
 }

@@ -85,22 +85,29 @@ return {
         end),
         hotkey = "Q",
     }),
-    opressiveBanner = A.sentryWard({ -- add invul; timed remove invul
+    opressiveBanner = A.sentryWard({ -- ? add invul; timed remove invul
         name = "Opressive Banner",
         levels = 3,
         manaCost = 100,
-        apply = A.sentryWard.apply(function(a)
-            -- a:setUnitType()
+        apply = A.sentryWard.apply(function(a, level)
+            a:setWardUnitType(level, Ids.units.opressiveBanner)
         end),
         hotkey = "W",
     }),
-    opressiveBannerAura = A.enduranceAura({ -- negative
+    opressiveBannerAura = A.slowAura({ -- negative
         name = "Opressive Banner",
         levels = 3,
         buffs = { "opressiveBanner" },
-        apply = A.enduranceAura.apply(function(a)
-            -- a:setUnitType()
+        apply = A.slowAura.apply(function(a, level)
+            a:setMovementSpeedFactor(level, 0.1 * level)
+            a:setAttackSpeedFactor(level, 0.1 * level)
         end),
+    }),
+    opressiveBannerShield = A.nonDispellableSelfBuffTimed({ -- negative
+        name = "Opressive Banner",
+        levels = 3,
+        buffs = { "opressiveBannerShield" },
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level) end),
     }),
     brutalCombo = A.passiveGeneric({ -- onDamage
         name = "Brutal Combo",
