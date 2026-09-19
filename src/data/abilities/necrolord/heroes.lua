@@ -154,11 +154,9 @@ return {
     droughtSigil = A.itemPlaceGoblinLandMine({
         name = "Drought Sigil",
         levels = 3,
-        apply = A.itemPlaceGoblinLandMine.apply(function(a)
-            for level = 1, 3 do
-                a:setCastRange(1, 500)
-                a:setUnitType(1, Ids.units.sigilOfDrought)
-            end
+        apply = A.itemPlaceGoblinLandMine.apply(function(a, level)
+            a:setCastRange(level, 500)
+            a:setUnitType(level, Ids.units.sigilOfDrought)
         end),
         hotkey = "E",
     }),
@@ -166,15 +164,17 @@ return {
         name = "Sigil of Drought",
         apply = A.mineexploding.apply(function(a) end),
     }),
-    explodeCorpses = A.channelArea({ -- for corpse - dummy nova - onSpell target delete
+    explodeCorpses = A.channelArea({ -- for corpse - dummy clap - onSpell target delete
         name = "Explode Corpses",
         levels = 1,
         hotkey = "R",
     }),
-    explodeCorpsesDummy = A.frostNova({
+    explodeCorpsesDummy = A.thunderClap({
         name = "Explode Corpses",
         buffs = {},
-        apply = A.frostNova.apply(function(a)
+        apply = A.thunderClap.apply(function(a, level)
+            a:setAttackSpeedReduction(level, 0)
+            a:setMovementSpeedReduction(level, 0)
             -- a:setTargetType() -- dead
         end),
     }),
