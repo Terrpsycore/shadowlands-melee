@@ -6,6 +6,7 @@ local reserved = {
 local fields = {
     name = function(b, value)
         b:setName(1, value)
+        b:setTooltipNormal(1, value)
     end,
 }
 

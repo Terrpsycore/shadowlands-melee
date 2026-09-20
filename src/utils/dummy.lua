@@ -20,6 +20,9 @@ local function spawn(owner, at, abilityId, level, unitId)
     if level then
         SetUnitAbilityLevel(dummy, abilityId, level)
     end
+    SetUnitInvulnerable(dummy, true)
+    SetUnitPathing(dummy, false)
+    SetUnitPosition(dummy, x, y)
     return dummy
 end
 

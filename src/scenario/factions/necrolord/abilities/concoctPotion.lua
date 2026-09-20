@@ -92,7 +92,6 @@ local function onConcoct()
 end
 
 local function onLethalDamage(info)
-    dump("onLethalDamage", UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive))
     if UnitHasItemOfTypeBJ(info.target, CONFIG.refs.items.explosive) then
         dump("onLethalDamage activateExplosivePotion")
         local owner = Player(DeathStorage:get(info.target, "originalOwner"))

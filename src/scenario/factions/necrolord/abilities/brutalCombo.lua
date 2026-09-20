@@ -29,41 +29,28 @@ local function onAfterDamage(info)
         return
     end
 
+    local owner = GetOwningPlayer(unit)
+
     if memory[unit] == nil then
-        memory[unit] = 2 -- attacks before crit
-    elseif memory[unit] > 0 then
+        memory[unit] = 1 -- attacks before crit
+    elseif memory[unit] > 1 then
         memory[unit] = memory[unit] - 1
+    elseif memory[unit] == 1 then
+        memory[unit] = memory[unit] - 1
+        UnitAddAbility(unit, CONFIG.refs.abilities.crit)
+        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit, level)
+        dump("brutal 1 GetUnitAbilityLevel(unit, crit)", GetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit))
     elseif memory[unit] == 0 then
+        dump("brutal 0 GetUnitAbilityLevel(unit, crit)", GetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit))
         UnitRemoveAbility(unit, CONFIG.refs.abilities.crit)
+        memory[unit] = 2
     else
         error("Broken brutalCombo memory value")
     end
 end
 
-local function onStartAttack(info)
-    local unit = GetAttacker()
-
-    local level = GetUnitAbilityLevel(unit, CONFIG.refs.abilities.main)
-    if level == 0 then
-        return
-    end
-
-    if memory[unit] == 0 then
-        UnitAddAbility(unit, CONFIG.refs.abilities.crit)
-        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit, level)
-        memory[unit] = 2
-    elseif GetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit) > 0 then
-        UnitRemoveAbility(unit, CONFIG.refs.abilities.crit)
-    end
-end
-
 return {
     triggers = {
-        {
-            trigger = "EVENT_PLAYER_UNIT_ATTACKED",
-            filter = { source = CONFIG.refs.units.carrier },
-            action = onStartAttack,
-        },
         {
             trigger = "AFTER_DAMAGE",
             filter = { source = CONFIG.refs.units.carrier },

@@ -25,15 +25,18 @@ local memory = {} -- dies after buff fades or not; TODO: save/load
 local function onSpell()
     local target = GetSpellTargetUnit()
 
-    Timed.call(0, function()
+    Timed.call(0.03, function()
+        -- dump("forgebone has buff", UnitHasBuffBJ(target, CONFIG.refs.buffs.main))
         memory[target] = true
     end)
 end
 
 local function onDamage(info)
+    -- dump("forgebone onDamage! info.damage=", info.damage)
     if not UnitHasBuffBJ(info.target, CONFIG.refs.buffs.main) then
         return
     end
+    -- dump("forgebone onDamage! save")
     local life = GetUnitState(info.target, UNIT_STATE_LIFE)
     if life - info.damage < 1 then
         info.damage = math.max(0, life - 1)

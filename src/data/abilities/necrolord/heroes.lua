@@ -41,6 +41,10 @@ return {
         name = "Forgebone Reveries",
         levels = 3,
         buffs = { "serratedSpauldersThorns" },
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
+            a:setPrimaryDamage(level, 3 * level)
+            a:setSecondaryDamage(level, 5 * level)
+        end),
     }),
     ammunitionControl = A.passiveGeneric({ -- onTrain/onRevive dummy
         name = "Ammunition Control",
@@ -85,12 +89,21 @@ return {
         end),
     }),
     -- GLADIATOR ---
-    weaponTest = A.nonDispellableTargetDebuff({ -- dummy mirror to hero, repeat on kill
+    weaponTest = A.channelTarget({ -- dummy mirror to hero, repeat on kill
+        name = "Weapon Test",
+        levels = 3,
+        manaCost = 50,
+        art = { icon = Icons.orcMeleeUpThree },
+        apply = A.channelTarget.apply(function(a)
+            -- a:setTargetType() -- enemy
+        end),
+        hotkey = "Q",
+    }),
+    weaponTestDummy = A.nonDispellableTargetDebuff({ -- dummy mirror to hero, repeat on kill
         name = "Weapon Test",
         levels = 3,
         manaCost = 50,
         buffs = { "weaponTest" },
-        art = { icon = Icons.orcMeleeUpThree },
         apply = A.nonDispellableTargetDebuff.apply(function(a)
             -- a:setTargetType() -- enemy
         end),
@@ -140,14 +153,15 @@ return {
     brutalCombo = A.passiveGeneric({ -- onDamage
         name = "Brutal Combo",
         levels = 3,
-        art = { icon = Icons.pasCommand },
+        art = { icon = Icons.pasGnollCommandAura },
         hotkey = "E",
     }),
     brutalComboCrit = A.criticalStrike({ -- onDamage
+        class = "unit",
         name = "Brutal Combo",
         levels = 3,
         apply = A.criticalStrike.apply(function(a, level)
-            a:setChancetoCriticalStrike(level, 1)
+            a:setChancetoCriticalStrike(level, 100)
         end),
     }),
     allOnOne = A.nonDispellableSelfBuffTimed({ -- triggered taunt + onDamage DAMAGE_TYPE_ENHANCED
@@ -166,6 +180,11 @@ return {
         levels = 3,
         art = { icon = Icons.orbofdeath },
         hotkey = "Q",
+        apply = A.channelArea.apply(function(a, level)
+            a:setBaseOrderID(level, "shadowstrike")
+            a:setOrderStringUseTurnOn("shadowstrike")
+            a:setOrderStringActivate("shadowstrike")
+        end),
     }),
     necroticEruptionDummySlow = A.thunderClap({
         name = "Necrotic Eruption",
@@ -211,7 +230,9 @@ return {
     sigilOfDroughtActivation = A.mineexploding({
         name = "Sigil of Drought",
         levels = 3,
-        apply = A.mineexploding.apply(function(a) end),
+        apply = A.mineexploding.apply(function(a, level)
+            a:setActivationDelay(level, 1)
+        end),
     }),
     sigilOfDroughtDrainMana = A.siphonMana({
         name = "Sigil of Drought",
@@ -220,8 +241,9 @@ return {
             a:setManaCost(level, 0)
             a:setDurationNormal(level, 1.1)
             a:setDurationHero(level, 1.1)
-            a:setManaTransferredPerSecond(level, 200 * level)
+            a:setManaPointsDrained(level, 200 * level)
             a:setOrderStringActivate("channel")
+            a:setOrderStringUseTurnOn("channel")
         end),
     }),
     sigilOfDroughtTransferMana = A.siphonMana({
@@ -233,6 +255,7 @@ return {
             a:setDurationHero(level, 1.1)
             a:setManaTransferredPerSecond(level, 100 * level)
             a:setOrderStringActivate("channel")
+            a:setOrderStringUseTurnOn("channel")
         end),
     }),
     sigilOfDroughtDrawback = A.rejuvenation1({

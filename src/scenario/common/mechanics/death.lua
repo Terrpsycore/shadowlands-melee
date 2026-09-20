@@ -47,8 +47,11 @@ local function shouldUseFakeDeath(target)
 end
 
 --- @param info damageInfo
-local function onLethalDamage(info)
+local function onAfterDamage(info)
     local target = info.target
+    if GetUnitState(target, UNIT_STATE_LIFE) > 0.5 then
+        return
+    end
     if not shouldUseFakeDeath(target) then
         return
     end
@@ -88,8 +91,9 @@ end
 return {
     triggers = {
         {
-            trigger = "LETHAL_DAMAGE",
-            action = onLethalDamage,
+            trigger = "AFTER_DAMAGE",
+            priority = -1000,
+            action = onAfterDamage,
         },
     },
     export = {

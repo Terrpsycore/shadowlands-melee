@@ -1,6 +1,9 @@
 local Ids = require("data.ids")
 local Units = require("data.units")
 local Triggers = require("lib.triggers.callbacks")
+local Unit = require("utils.unit")
+
+local DeathStorage = require("scenario.storage.death")
 
 local x, y, f = 219.4, -90.4, 293.630
 local p0, p1 = Player(0), Player(1)
@@ -43,6 +46,40 @@ local function spawnSlug(player, slug, row)
     end
 end
 
+local CORPSE_CLUSTER_RADIUS = 56
+
+local kyrianCorpses = { "aspirant", "larion", "purity", "wisdom", "loyalty" }
+local necrolordCorpses = { "animateWarrior", "gladiator", "scavenger", "necromancer", "bonestorm" }
+
+local function finishFakeDeath(unit, px, py)
+    Timed.call(0.1, function()
+        for _, corpse in ipairs(Unit.getCorpsesInRadius({ x = px, y = py }, 48)) do
+            local info = DeathStorage:bind(corpse)
+            if info and info.unit == unit then
+                UnitSuspendDecay(corpse, true)
+                DeathStorage:set(corpse, "reviveAfter", 0)
+                return
+            end
+        end
+    end)
+end
+
+local function spawnCorpseCluster(player, slugs, centerX, centerY)
+    local count = #slugs
+    for i, slug in ipairs(slugs) do
+        local id = Ids.units[slug]
+        if id then
+            local angle = (i - 1) * (360 / count)
+            local rad = math.rad(angle)
+            local px = centerX + CORPSE_CLUSTER_RADIUS * math.cos(rad)
+            local py = centerY + CORPSE_CLUSTER_RADIUS * math.sin(rad)
+            local unit = CreateUnit(player, FourCC(id), px, py, GetRandomReal(0, 360))
+            Damage.apply(unit, unit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED)
+            finishFakeDeath(unit, px, py)
+        end
+    end
+end
+
 local function spawnFaction(faction)
     local slugs = {}
     for slug, row in pairs(Units) do
@@ -64,6 +101,10 @@ local packs = {
     necrolord = function()
         spawnFaction("necrolord")
     end,
+    corpses = function()
+        spawnCorpseCluster(p1, kyrianCorpses, x - 180, y)
+        spawnCorpseCluster(p1, necrolordCorpses, x + 180, y)
+    end,
     enemies = function()
         CreateUnit(p1, FourCC(Ids.units.aspirant), -1000.4, y, f)
         CreateUnit(p1, FourCC(Ids.units.aspirant), -1000.4, y, f)
@@ -80,6 +121,10 @@ local packs = {
         SetUnitState(g, UNIT_STATE_LIFE, 1)
 
         CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))
+
+        CreateUnit(p1, FourCC(Ids.units.footman), -1000.4, y + 1000, f)
+
+        CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1000, f)
     end,
 }
 

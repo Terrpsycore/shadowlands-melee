@@ -20,12 +20,14 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
-        radius = 100,
+        radius = 150,
+        duration = { 60, 60, 60 },
         burnMana = { 200, 400, 600 },
         drawbackDelay = 3,
     },
 })
 
+local spawnQueue = {}
 local memory = {}
 local sigilMemory = {} -- TODO: save/load
 
@@ -33,25 +35,29 @@ local function onSpell()
     -- note: can be rewritten to "onSpawn" trigger
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
-    local targetX = GetSpellTargetX()
-    local targetY = GetSpellTargetY()
 
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    spawnQueue[owner] = { level = level, caster = caster }
+end
 
-    local targets = Unit.getUnitsInRadius({ x = targetX, y = targetY }, 50, function(u)
-        return GetOwningPlayer(u) == owner and GetUnitTypeId(u) == CONFIG.refs.units.sigil
-    end)
+local function onSpawn()
+    -- note: can be rewritten to "onSpawn" trigger
+    local sigil = GetEnteringUnit()
+    local owner = GetOwningPlayer(sigil)
 
-    for _, target in ipairs(targets) do
-        SetUnitAbilityLevel(target, CONFIG.refs.abilities.activation, level)
-        memory[target] = caster
-    end
+    local data = spawnQueue[owner]
+    spawnQueue[owner] = nil
+
+    Unit.applyTimedLife(sigil, CONFIG.balance.duration[data.level])
+    SetUnitAbilityLevel(sigil, CONFIG.refs.abilities.activation, data.level)
+    memory[sigil] = data.caster
 end
 
 local function onActivation()
     local sigil = GetDyingUnit()
     local owner = GetOwningPlayer(sigil)
 
+    dump("sigil onActivation owner=", GetPlayerId(owner))
     local targets = Unit.getUnitsInRadius(sigil, CONFIG.balance.radius, function(u)
         return IsUnitAliveBJ(u) and IsUnitEnemy(u, owner)
     end)
@@ -64,17 +70,16 @@ local function onActivation()
             target = t
             maxMana = mana
         end
+        dump("drought iter", t, mana)
     end
 
     if not maxMana then
+        dump("drought no target with mana, return")
         return
     end
 
     local level = GetUnitAbilityLevel(sigil, CONFIG.refs.abilities.activation)
-    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.drain, "channel", level)
-
     local burnMana = math.min(CONFIG.balance.burnMana[level], maxMana)
-
     local drawbackLevel = math.min((burnMana // 50) + 1, 10)
 
     sigilMemory[target] = {
@@ -83,6 +88,8 @@ local function onActivation()
         drawbackLevel = drawbackLevel,
         mana = maxMana,
     }
+
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.drain, "drain", level)
 end
 
 local function onDrain()
@@ -93,7 +100,7 @@ local function onDrain()
     local data = sigilMemory[target]
 
     local dummy = Dummy.create(owner, caster, CONFIG.refs.abilities.transfer, data.level)
-    IssueTargetOrder(dummy, "channel", data.caster)
+    IssueTargetOrder(dummy, "drain", data.caster)
 
     Timed.call(CONFIG.balance.drawbackDelay, function()
         Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.regen, "rejuvenation", data.drawbackLevel)
@@ -106,6 +113,11 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.refs.abilities.main,
             action = onSpell,
+        },
+        {
+            trigger = "CREATE",
+            filter = { target = CONFIG.refs.units.sigil },
+            action = onSpawn,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",

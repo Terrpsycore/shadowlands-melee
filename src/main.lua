@@ -1,12 +1,14 @@
 local RUN = {
     tests = false,
     spawn = true,
-    spawnPacks = { "necrolord", "enemies" }, -- kyrian | necrolord | enemies | fae | ...
+    spawnPacks = { "necrolord", "corpses", "enemies" }, -- kyrian | necrolord | corpses | enemies | ...
 }
 
 require("lib.init")
 
-require("tests.init")
+if RUN.tests then
+    require("tests.init")
+end
 
 Timed.call((RUN.tests and 5) or 2, function()
     require("spawn").run(RUN.spawnPacks)

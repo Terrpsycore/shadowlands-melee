@@ -179,4 +179,8 @@ function Unit.getCorpsesInRadius(point, radius)
     return resultsTable
 end
 
+function Unit.applyTimedLife(unit, duration)
+    UnitApplyTimedLife(unit, FourCC("BTLF"), duration)
+end
+
 return Unit

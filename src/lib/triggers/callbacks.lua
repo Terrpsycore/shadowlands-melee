@@ -150,10 +150,18 @@ T.onDamage = function(triggers)
     end, 1.0)
 end
 
+local function registerFilteredDamageTriggers(phase, triggers)
+    for _, trigger in ipairs(triggers) do
+        Damage.register(phase, function(info)
+            if Filter.matches(trigger, info) then
+                trigger.action(info)
+            end
+        end, trigger.priority or 0)
+    end
+end
+
 T.onLethalDamage = function(triggers)
-    Damage.register("Lethal", function(info)
-        Filter.run(triggers, info, true)
-    end, 1.0)
+    registerFilteredDamageTriggers("Lethal", triggers)
 end
 
 T.afterDamage = function(triggers)

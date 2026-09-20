@@ -19,11 +19,12 @@ local CONFIG = AbilityConfig.compile({
             debuff = Ids.buffs.sigilOfBinding,
         },
         units = {
-            trap = Ids.units.sigilOfBinding,
+            sigil = Ids.units.sigilOfBinding,
         },
     },
     balance = {
         radius = 150,
+        duration = 60,
     },
 })
 
@@ -31,14 +32,38 @@ local memory = {}
 local queue = {} -- list
 local queued = {} -- map
 
-local function onDeath(info)
-    local trap = GetDyingUnit()
-    local owner = GetOwningPlayer(trap)
+local spawnQueue = {}
 
-    local epicenterTargets = Unit.getUnitsInRadius(trap, CONFIG.balance.radius / 2, function(u)
+local function onSpell()
+    -- note: can be rewritten to "onSpawn" trigger
+    local caster = GetTriggerUnit()
+    local owner = GetOwningPlayer(caster)
+
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    spawnQueue[owner] = { level = level, caster = caster }
+end
+
+local function onSpawn()
+    -- note: can be rewritten to "onSpawn" trigger
+    local sigil = GetEnteringUnit()
+    local owner = GetOwningPlayer(sigil)
+
+    local data = spawnQueue[owner]
+    spawnQueue[owner] = nil
+
+    Unit.applyTimedLife(sigil, CONFIG.balance.duration)
+    -- SetUnitAbilityLevel(sigil, CONFIG.refs.abilities.activation, data.level)
+    memory[sigil] = data.caster
+end
+
+local function onDeath(info)
+    local sigil = GetDyingUnit()
+    local owner = GetOwningPlayer(sigil)
+
+    local epicenterTargets = Unit.getUnitsInRadius(sigil, CONFIG.balance.radius / 2, function(u)
         return IsUnitAliveBJ(u) and IsUnitEnemy(u, owner)
     end)
-    local targets = Unit.getUnitsInRadius(trap, CONFIG.balance.radius, function(u)
+    local targets = Unit.getUnitsInRadius(sigil, CONFIG.balance.radius, function(u)
         return IsUnitAliveBJ(u) and IsUnitEnemy(u, owner)
     end)
 
@@ -75,7 +100,7 @@ local function onDummyDisable()
     end
 end
 
-local function onTimerTrap()
+local function onTimersigil()
     local spellData = {
         [1] = CONFIG.refs.abilities.slow,
         [2] = CONFIG.refs.abilities.root,
@@ -108,18 +133,28 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.refs.abilities.main,
+            action = onSpell,
+        },
+        {
+            trigger = "CREATE",
+            filter = { target = CONFIG.refs.units.sigil },
+            action = onSpawn,
+        },
+        {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = { CONFIG.refs.abilities.slow, CONFIG.refs.abilities.root, CONFIG.refs.abilities.stun },
             action = onDummyDisable,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_DEATH",
-            filter = { target = CONFIG.refs.units.trap },
+            filter = { target = CONFIG.refs.units.sigil },
             action = onDeath,
         },
         {
             trigger = "TIMER",
             delta = 0.15,
-            action = onTimerTrap,
+            action = onTimersigil,
         },
         {
             trigger = "TIMER",

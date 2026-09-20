@@ -45,6 +45,7 @@ return {
     animateDead = A.raiseDead({
         name = "Animate Dead",
         art = { icon = Icons.raiseDeadOn },
+        hotkey = "Q",
     }),
     animateDeadResurrection = A.resurrection({
         apply = A.resurrection.apply(function(a)
@@ -54,6 +55,7 @@ return {
     maldraciteNullify = A.dispelMagic({
         name = "Maldracite Nullify",
         art = { icon = Icons.nerubiannecklace },
+        hotkey = "W",
     }),
     sigilOfBinding = A.itemPlaceGoblinLandMine({
         name = "Sigil of Binding",
@@ -62,6 +64,7 @@ return {
             a:setCastRange(1, 500)
             a:setUnitType(1, Ids.units.sigilOfBinding)
         end),
+        hotkey = "E",
     }),
     sigilOfBindingActivation = A.mineexploding({
         name = "Sigil of Binding",

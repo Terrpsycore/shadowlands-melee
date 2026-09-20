@@ -27,19 +27,23 @@ local CONFIG = AbilityConfig.compile({
 })
 
 local function tryRevive(caster, corpse)
+    dump("tryRevive", caster, corpse)
     local owner = GetOwningPlayer(caster)
 
     Unit.substractMana(caster, CONFIG.balance.manaCost)
     IssueImmediateOrder(caster, "stop")
 
     if corpse == nil then
+        dump("tryRevive nil", corpse)
         Unit.restoreMana(caster, CONFIG.balance.manaCost)
         return false
     end
 
     local corpseInfo = Storage:bind(corpse)
 
+    dump("tryRevive corpseInfo", corpseInfo)
     if corpseInfo then
+        dump("tryRevive corpseInfo.reviveAfter", corpseInfo.reviveAfter)
         if corpseInfo.reviveAfter > 0 then
             corpseInfo.reviveAfter = corpseInfo.reviveAfter - 1
             return false
@@ -57,6 +61,7 @@ local function tryRevive(caster, corpse)
         Triggers.fireEvent("REVIVE", { source = caster, target = resurrectUnit })
         Storage:drop(corpse)
         RemoveUnit(corpse)
+        dump("tryRevive finish")
         return true
     end
 

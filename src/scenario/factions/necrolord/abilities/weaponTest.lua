@@ -10,6 +10,7 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.weaponTest,
+            dummy = Ids.abilities.weaponTestDummy,
             selfBuff = Ids.abilities.weaponTestSelfBuff,
             effect = Ids.abilities.weaponTestEffect,
         },
@@ -30,19 +31,25 @@ local function applySelfBuff(unit, level)
 end
 
 local function onSpell()
+    dump("weaponTest spell finish")
     local caster = GetTriggerUnit()
+    local owner = GetOwningPlayer(caster)
     local target = GetSpellTargetUnit()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.dummy, "acidbomb", level)
     applySelfBuff(caster, level)
 
-    UnitAddAbility(caster, CONFIG.refs.abilities.effect)
-    UnitAddAbility(target, CONFIG.refs.abilities.effect)
-    SetUnitAbilityLevel(caster, CONFIG.refs.abilities.effect, level)
-    SetUnitAbilityLevel(target, CONFIG.refs.abilities.effect, level)
-
-    memory[caster] = level
-    memory[target] = level
+    Timed.call(0.2, function()
+        UnitAddAbility(caster, CONFIG.refs.abilities.effect)
+        UnitAddAbility(target, CONFIG.refs.abilities.effect)
+        SetUnitAbilityLevel(caster, CONFIG.refs.abilities.effect, level)
+        SetUnitAbilityLevel(target, CONFIG.refs.abilities.effect, level)
+        memory[caster] = level
+        memory[target] = level
+        dump("weaponTest has buff caster", UnitHasBuffBJ(caster, CONFIG.refs.buffs.main))
+        dump("weaponTest has buff target", UnitHasBuffBJ(target, CONFIG.refs.buffs.main))
+    end)
 end
 
 local function onLethalDamage(info)

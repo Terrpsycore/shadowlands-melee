@@ -1,4 +1,6 @@
 --[[
+TODO:
+- prevent dummy corpses
 ]]
 
 local Ids = require("data.ids")

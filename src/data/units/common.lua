@@ -18,6 +18,7 @@ return {
             u:setAnimationCastPoint(0)
             u:setAnimationCastBackswing(0)
             u:setTurnRate(3)
+            u:setCollisionSize(0)
         end,
     },
     dummyAttack = {
@@ -36,7 +37,7 @@ return {
             targetsAllowed = "ground,air,structure,enemy,neutral,vulnerable",
         },
         art = {
-            model = "",
+            -- model = "",
         },
         apply = function(u)
             u:setSpeedBase(0)

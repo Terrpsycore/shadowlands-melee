@@ -143,6 +143,8 @@ return setmetatable({
             a:setSecondaryDamage(level, 0)
             a:setAttackSpeedReduction(level, 0)
             a:setAreaofEffect(level, 0)
+            a:setMissileArt("")
+            a:setMissileSpeed(99999)
         end,
     }),
 }, { __index = F })

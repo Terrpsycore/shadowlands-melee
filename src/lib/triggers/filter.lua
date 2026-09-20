@@ -8,6 +8,7 @@
 ---@field spellId? integer|integer[]
 ---@field order? string
 ---@field delta? number
+---@field priority? number
 ---@field filter? TriggerFilter
 ---@field _spellIds? table<integer, boolean>
 ---@field _sourceTypes? table<integer, boolean>
