@@ -1,6 +1,7 @@
 local Ids = require("data.ids")
 
 local A = require("data.abilityPresets")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     --- BONESMITH ---

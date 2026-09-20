@@ -25,7 +25,9 @@ local memory = {} -- dies after buff fades or not; TODO: save/load
 local function onSpell()
     local target = GetSpellTargetUnit()
 
-    memory[target] = true
+    Timed.call(0, function()
+        memory[target] = true
+    end)
 end
 
 local function onDamage(info)
@@ -47,7 +49,7 @@ end
 local function onTimer(info)
     local flushQueue = {}
     for unit, dies in pairs(memory) do
-        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then -- buff not ready right after effect?
             if dies then
                 Damage.apply(unit, unit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED)
             end

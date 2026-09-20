@@ -1,11 +1,13 @@
 local Ids = require("data.ids")
 
 local A = require("data.abilityPresets")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     surviveWish = A.passiveGeneric({
         name = "Survive Wish",
         buffs = { "surviveWish" },
+        art = { icon = Icons.pasRegenerationAura },
     }),
     surviveWishActive = A.berserkerRage1({
         name = "Survive Wish",
@@ -17,6 +19,7 @@ return {
     }),
     combatExpertise = A.passiveGeneric({
         name = "Combat Expertise",
+        art = { icon = Icons.pasShadeTrueSight },
     }),
     combatExpertiseDamage = A.itemDamageBonus({
         levels = 5,
@@ -28,6 +31,7 @@ return {
     }),
     vanish = A.channelNoTarget({
         name = "Vanish",
+        art = { icon = Icons.ambush },
     }),
     vanishDummy = A.invisibility({
         apply = A.invisibility.apply(function(a)
@@ -36,6 +40,7 @@ return {
     }),
     netAmmo = A.web({
         name = "Net Ammo",
+        art = { icon = Icons.pasVorpalBlades },
     }),
     animateDead = A.raiseDead({
         name = "Animate Dead",
