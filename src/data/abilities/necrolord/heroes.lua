@@ -11,6 +11,7 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
+        art = { icon = Icons.malachiteShortsword },
         hotkey = "Q",
     }),
     moldWeaknessDebuff = A.nonDispellableTargetDebuff({
@@ -33,6 +34,7 @@ return {
         levels = 3,
         buffs = { "serratedSpaulders" },
         manaCost = 50,
+        art = { icon = Icons.theBlackArrowOnOff },
         hotkey = "W",
     }),
     serratedSpauldersThorns = A.nonDispellableTargetDebuff({
@@ -43,6 +45,7 @@ return {
     ammunitionControl = A.passiveGeneric({ -- onTrain/onRevive dummy
         name = "Ammunition Control",
         levels = 3,
+        art = { icon = Icons.pasPillage },
         hotkey = "E",
     }),
     ammunitionControlBuff = A.nonDispellableSelfBuffTimed({
@@ -73,6 +76,7 @@ return {
         levels = 1,
         manaCost = 50,
         buffs = { "forgeboneReveries" },
+        art = { icon = Icons.plaguebearercuirass },
         hotkey = "R",
         apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
             a:setDurationNormal(level, 10)
@@ -86,6 +90,7 @@ return {
         levels = 3,
         manaCost = 50,
         buffs = { "weaponTest" },
+        art = { icon = Icons.orcMeleeUpThree },
         apply = A.nonDispellableTargetDebuff.apply(function(a)
             -- a:setTargetType() -- enemy
         end),
@@ -114,6 +119,7 @@ return {
         apply = A.sentryWard.apply(function(a, level)
             a:setWardUnitType(level, Ids.units.opressiveBanner)
         end),
+        art = { icon = Icons.orcCaptureFlag },
         hotkey = "W",
     }),
     opressiveBannerAura = A.slowAura({ -- negative
@@ -134,6 +140,7 @@ return {
     brutalCombo = A.passiveGeneric({ -- onDamage
         name = "Brutal Combo",
         levels = 3,
+        art = { icon = Icons.pasCommand },
         hotkey = "E",
     }),
     brutalComboCrit = A.criticalStrike({ -- onDamage
@@ -147,6 +154,7 @@ return {
         name = "All on One",
         levels = 1,
         buffs = { "allOnOne" },
+        art = { icon = Icons.warcry },
         hotkey = "R",
     }),
     allOnOneSplash = A.pitLordCleavingAttack({
@@ -156,6 +164,7 @@ return {
     necroticEruption = A.channelArea({ -- timed dummy nova + dummy stomp
         name = "Necrotic Eruption",
         levels = 3,
+        art = { icon = Icons.orbofdeath },
         hotkey = "Q",
     }),
     necroticEruptionDummySlow = A.thunderClap({
@@ -178,6 +187,7 @@ return {
     bindDeathwalker = A.feralSpirit2({
         name = "Bind Deathwalker",
         levels = 3,
+        art = { icon = Icons.shade },
         hotkey = "W",
         apply = A.feralSpirit2.apply(function(a)
             a:setSummonedUnit(1, Ids.units.deathwalker1)
@@ -195,6 +205,7 @@ return {
             a:setCastRange(level, 500)
             a:setUnitType(level, Ids.units.sigilOfDrought)
         end),
+        art = { icon = Icons.glyph },
         hotkey = "E",
     }),
     sigilOfDroughtActivation = A.mineexploding({
@@ -237,6 +248,7 @@ return {
     explodeCorpses = A.channelArea({ -- for corpse - dummy clap - onSpell target delete
         name = "Explode Corpses",
         levels = 1,
+        art = { icon = Icons.corpseExplode },
         hotkey = "R",
     }),
     explodeCorpsesDummy = A.thunderClap({

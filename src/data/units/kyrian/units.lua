@@ -1,4 +1,5 @@
 local UnitIds = require("vendor.assets.UnitIds")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     steward = {
@@ -18,6 +19,7 @@ return {
             "shop",
         },
         mana = { max = 200, initial = 100 },
+        art = { icon = Icons.snowOwl },
     },
     aspirant = {
         parent = UnitIds.headhunter,
@@ -52,6 +54,7 @@ return {
         classification = "Mechanical",
         mana = { max = 200, initial = 100 },
         cost = { lumber = 50 },
+        art = { icon = Icons.armorGolem },
     },
     larion = {
         parent = UnitIds.druidoftheclaw,
@@ -62,6 +65,7 @@ return {
         parent = UnitIds.priest,
         name = "Purity",
         abilities = { "vesperBell", "humility" },
+        art = { icon = Icons.cleric },
     },
     wisdom = {
         parent = UnitIds.sorceress,
@@ -96,10 +100,12 @@ return {
     },
     ascendedPurity = {
         parent = UnitIds.footman,
+        art = { icon = Icons.cleric },
         name = "Praetor",
     },
     ascendedPurityFlying = {
         parent = UnitIds.footman,
+        art = { icon = Icons.cleric },
         name = "Praetor",
     },
     ascendedWisdom = {

@@ -1,4 +1,5 @@
 local UnitIds = require("vendor.assets.UnitIds")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     watcher = {
@@ -21,6 +22,7 @@ return {
         parent = UnitIds.tinker,
         name = "Forgelite",
         heroAbilities = { "overcharge", "reusables", "securityLeak", "piloting" },
+        art = { icon = Icons.owlBear },
     },
     bearer = {
         parent = UnitIds.paladin,

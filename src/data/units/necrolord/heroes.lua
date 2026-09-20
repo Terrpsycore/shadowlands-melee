@@ -1,4 +1,5 @@
 local UnitIds = require("vendor.assets.UnitIds")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     lich = {
@@ -9,11 +10,13 @@ return {
     bonesmith = {
         parent = UnitIds.dreadlord,
         name = "Bonesmith",
+        art = { icon = Icons.skeletonMage },
         heroAbilities = { "moldWeakness", "serratedSpaulders", "ammunitionControl", "forgeboneReveries" },
     },
     gladiatorHero = {
         parent = UnitIds.deathknight,
         name = "Gladiator",
+        art = { icon = Icons.felGuard },
         heroAbilities = { "weaponTest", "opressiveBanner", "brutalCombo", "allOnOne" },
     },
 }

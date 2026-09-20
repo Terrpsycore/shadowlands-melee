@@ -40,10 +40,11 @@ return {
     }),
     netAmmo = A.web({
         name = "Net Ammo",
-        art = { icon = Icons.pasVorpalBlades },
+        art = { icon = Icons.apprehend },
     }),
     animateDead = A.raiseDead({
         name = "Animate Dead",
+        art = { icon = Icons.raiseDeadOn },
     }),
     animateDeadResurrection = A.resurrection({
         apply = A.resurrection.apply(function(a)
@@ -52,9 +53,11 @@ return {
     }),
     maldraciteNullify = A.dispelMagic({
         name = "Maldracite Nullify",
+        art = { icon = Icons.nerubiannecklace },
     }),
     sigilOfBinding = A.itemPlaceGoblinLandMine({
         name = "Sigil of Binding",
+        art = { icon = Icons.antiMagicShell },
         apply = A.itemPlaceGoblinLandMine.apply(function(a)
             a:setCastRange(1, 500)
             a:setUnitType(1, Ids.units.sigilOfBinding)
@@ -95,6 +98,7 @@ return {
     }),
     applyLimb = A.channelTarget({
         name = "Apply Limb",
+        art = { icon = Icons.amuletOftheWild },
         hotkey = "Q",
         apply = A.channelTarget.apply(function(a)
             a:setBaseOrderID(1, "bloodlust")
@@ -103,6 +107,7 @@ return {
     }),
     scissorSoul = A.channelTarget({
         name = "Scissor Soul",
+        art = { icon = Icons.manaFlare },
         hotkey = "W",
         apply = A.channelTarget.apply(function(a)
             a:setBaseOrderID(1, "innerfire")
@@ -121,6 +126,7 @@ return {
     }),
     betterBody = A.channelTarget({
         name = "Better Body",
+        art = { icon = Icons.bloodfury },
         hotkey = "E",
         apply = A.channelTarget.apply(function(a)
             a:setBaseOrderID(1, "thunderbolt")
@@ -136,6 +142,7 @@ return {
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
         buffs = { "healingSlime" },
+        art = { icon = Icons.restorativebalm },
         button = { 0, 2 },
         apply = A.rejuvenation1.apply(function(a)
             -- ? TODO change to autocast heal with spec buff
@@ -151,6 +158,7 @@ return {
         apply = A.curse.apply(function(a)
             a:setChancetoMiss(1, 0)
         end),
+        art = { icon = Icons.plagueCloud },
     }),
     concoctPotionExplosive = A.channelTarget({
         name = "Concoct Explosive Potion",
@@ -260,10 +268,12 @@ return {
     }),
     collectCorpsesSearch = A.channelPoint({
         name = "Cannibalize",
+        art = { icon = Icons.undeadload },
         button = { 0, 2 },
     }),
     collectCorpses = A.cannibalize({
         name = "Collect Corpses",
+        art = { icon = Icons.undeadload },
         button = { 0, 2 },
     }),
     collectCorpsesToggle = A.heal({
@@ -275,15 +285,18 @@ return {
     }),
     dropCorpses = A.channelTarget({
         name = "Drop Corpses",
+        art = { icon = Icons.undeadUnLoad },
     }),
     poisonBite = A.slowPoison({
         name = "Poison Bite",
+        art = { icon = Icons.pasPoisonSting },
         apply = A.slowPoison.apply(function(a)
             a:setStackingType(1, 0)
         end),
     }),
     sporeCloud = A.channelNoTarget({
         name = "Spore Cloud",
+        art = { icon = Icons.orbOfVenom },
     }),
     sporeCloudDummy = A.cloudofFog({
         name = "Spore Cloud",
@@ -302,6 +315,7 @@ return {
     }),
     warBanner = A.sentryWard({
         name = "War Banner",
+        art = { icon = Icons.undeadCaptureFlag },
         apply = A.sentryWard.apply(function(a)
             a:setWardUnitType(1, Ids.units.warBanner)
         end),
@@ -313,6 +327,7 @@ return {
         name = "Deadly Whirlwind",
     }),
     slurp = A.deathPact({
+        art = { icon = Icons.devourMagic },
         name = "Slurp",
     }),
     slurpCorpseDummy = A.deathCoil({

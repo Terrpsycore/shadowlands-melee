@@ -1,5 +1,6 @@
 local UnitIds = require("vendor.assets.UnitIds")
 local UnitArt = require("vendor.assets.generated.UnitArt")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     animate = {
@@ -9,27 +10,32 @@ return {
         art = {
             model = UnitArt[UnitIds.skeletonwarrior].model,
             scale = 0.9,
+            icon = Icons.skeletonWarrior,
         },
     },
     animateWarrior = {
         parent = UnitIds.skeletonwarrior,
         name = "Animate Warrior",
         abilities = { "inventory", "surviveWish", "combatExpertise" },
+        art = { icon = Icons.skeletalOrcGrunt },
     },
     aranakkSpy = {
-        parent = UnitIds.nerubianwarrior,
+        parent = UnitIds.nerubianqueen,
         name = "Aranakk Spy",
         abilities = { "inventory", "vanish" },
+        art = { icon = Icons.nerubianQueen },
     },
     ballista = {
         parent = UnitIds.glaivethrower,
         name = "Ballista",
+        art = { icon = Icons.meatWagon },
         abilities = { "netAmmo" },
     },
     gladiator = {
         parent = UnitIds.grunt,
         name = "Gladiator",
         abilities = { "warBanner" },
+        art = { icon = Icons.felGuard },
         mana = { max = 200, initial = 100 },
     },
     scavenger = {
@@ -45,6 +51,7 @@ return {
     necromancer = {
         parent = UnitIds.necromancer,
         name = "Necromancer",
+        art = { icon = Icons.acolyte },
         abilities = { "animateDead", "maldraciteNullify", "sigilOfBinding" },
     },
     mixologist = {
@@ -53,6 +60,7 @@ return {
         art = {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
+            icon = Icons.apothecary,
         },
         abilities = { "healingSlime", "corrosivePlague", "concoctPotion" },
     },
@@ -62,6 +70,7 @@ return {
         art = {
             model = UnitArt[UnitIds.acolyte].model,
             scale = 1,
+            icon = Icons.cultzealot,
         },
         abilities = { "applyLimb", "scissorSoul", "betterBody" },
     },
@@ -74,6 +83,7 @@ return {
         parent = UnitIds.footman,
         name = "Bonestorm",
         abilities = { "deadlyWhirlwind", "slurp" },
+        art = { icon = Icons.tornado },
         apply = function(u)
             u:setHitPointsRegenerationRate(-5)
         end,
@@ -83,10 +93,12 @@ return {
         parent = UnitIds.sentryward,
         name = "War Banner",
         abilities = { "warBannerAura" },
+        art = { icon = Icons.undeadCaptureFlag },
     },
     opressiveBanner = {
         parent = UnitIds.sentryward,
         name = "Opressive Banner",
+        art = { icon = Icons.orcCaptureFlag },
         abilities = { "opressiveBannerAura" }, -- 1 lvl on spawn, increases with trigger
     },
     sigilOfBinding = {
@@ -102,13 +114,16 @@ return {
     deathwalker1 = {
         parent = UnitIds.waterelemental1,
         name = "Lesser Deathwalker",
+        art = { icon = Icons.shade },
     },
     deathwalker2 = {
         parent = UnitIds.waterelemental2,
         name = "Deathwalker",
+        art = { icon = Icons.shade },
     },
     deathwalker3 = {
         parent = UnitIds.waterelemental3,
         name = "Greater Deathwalker",
+        art = { icon = Icons.shade },
     },
 }
