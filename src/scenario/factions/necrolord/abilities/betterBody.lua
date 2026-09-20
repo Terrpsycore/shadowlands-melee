@@ -18,7 +18,7 @@ local CONFIG = AbilityConfig.compile({
             main = Ids.abilities.betterBody,
             possession = Ids.abilities.betterBodyPossession,
             --
-            applyLimb = Ids.abilities.betterBody,
+            applyLimb = Ids.abilities.applyLimb,
             scissorSoul = Ids.abilities.scissorSoul,
         },
         buffs = {

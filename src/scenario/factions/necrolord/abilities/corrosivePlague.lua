@@ -60,10 +60,10 @@ local function onTimer()
                 ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.spreadRadius * 2, function(x)
                     return not Storage:has(x)
                         and not IsUnitAlly(x, owner)
-                        and UnitHasBuffBJ(unit, CONFIG.refs.buffs.main)
+                        and not UnitHasBuffBJ(x, CONFIG.refs.buffs.main)
                 end))
             do
-                applyDisease(unit)
+                applyDisease(u)
             end
         end
     end)

@@ -38,13 +38,17 @@ local function onTrain()
     local caster
     local maxLevel
     for _, bonesmith in ipairs(bonesmiths) do
-        local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+        local level = GetUnitAbilityLevel(bonesmith, CONFIG.refs.abilities.main)
         if level > 0 and (not maxLevel or level > maxLevel) then
             caster = bonesmith
+            maxLevel = level
         end
     end
+    if caster == nil then
+        return
+    end
 
-    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    local level = maxLevel
     if level > 0 then
         -- visible buff
         UnitAddAbility(target, CONFIG.refs.abilities.selfBuff)
@@ -61,24 +65,20 @@ local function onTrain()
 end
 
 local function onTimer()
-    local flushQueue = {}
-    for i, unit in ipairs(memory) do
+    for i = #memory, 1, -1 do
+        local unit = memory[i]
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.bonusDamage)
             UnitRemoveAbility(unit, CONFIG.refs.abilities.bonusArmor)
-            table.insert(flushQueue, i)
+            table.remove(memory, i)
         end
-    end
-    for _, index in ipairs(flushQueue) do
-        table.remove(memory, index)
     end
 end
 
 return {
     triggers = {
         {
-            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.refs.abilities.main,
+            trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
             action = onTrain,
         },
         {

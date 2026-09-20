@@ -113,7 +113,7 @@ local function onTimer()
         )
     end)
     StorageHealing:each(function(unit)
-        if Unit.isHealthFull() then
+        if Unit.isHealthFull(unit) then
             StorageHealing:drop(unit)
         end
     end)

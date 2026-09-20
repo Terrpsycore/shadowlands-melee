@@ -55,14 +55,14 @@ end
 
 local function onTimer()
     local flushQueue = {}
-    for i, unit in ipairs(memory) do
+    for unit, _ in pairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
-            table.insert(flushQueue, i)
+            table.insert(flushQueue, unit)
         end
     end
-    for _, index in ipairs(flushQueue) do
-        table.remove(memory, index)
+    for _, unit in ipairs(flushQueue) do
+        memory[unit] = nil
     end
 end
 

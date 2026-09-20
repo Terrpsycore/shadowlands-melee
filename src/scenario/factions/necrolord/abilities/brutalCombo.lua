@@ -18,7 +18,7 @@ local CONFIG = AbilityConfig.compile({
 
 local memory = {} -- TODO: save/load
 
-local function onDamage(info)
+local function onAfterDamage(info)
     if not info.isAttack then
         return
     end
@@ -65,9 +65,9 @@ return {
             action = onStartAttack,
         },
         {
-            trigger = "DAMAGE",
+            trigger = "AFTER_DAMAGE",
             filter = { source = CONFIG.refs.units.carrier },
-            action = onDamage,
+            action = onAfterDamage,
         },
     },
     config = CONFIG,

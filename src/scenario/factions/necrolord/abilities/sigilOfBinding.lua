@@ -54,11 +54,11 @@ local function onDeath(info)
         end
     end
 
-    for target, stacks in ipairs(processed) do
+    for target, stacks in pairs(processed) do
         if memory[target] then
-            memory[target] = math.min(memory[target] + stacks, 3)
+            memory[target].stacks = math.min(memory[target].stacks + stacks, 3)
         else
-            memory[target] = stacks
+            memory[target] = { stacks = stacks, debuffApplied = false }
         end
         if not queued[target] then
             table.insert(queue, target)
@@ -69,7 +69,10 @@ end
 
 local function onDummyDisable()
     local target = GetSpellTargetUnit()
-    memory[target].debuffApplied = true
+    local data = memory[target]
+    if data then
+        data.debuffApplied = true
+    end
 end
 
 local function onTimerTrap()
@@ -78,23 +81,21 @@ local function onTimerTrap()
         [2] = CONFIG.refs.abilities.root,
         [3] = CONFIG.refs.abilities.stun,
     }
-    local flush = {} -- targets
-    for i, target in ipairs(queue) do
-        Dummy.applyDummyOrder(queued[target], target, spellData[memory[target]], "channel")
-        table.insert(flush, { index = i, target = target })
-    end
-    for _, targetData in ipairs(flush) do
-        local index = targetData.index
-        local target = targetData.target
+    for i = #queue, 1, -1 do
+        local target = queue[i]
+        local data = memory[target]
+        if data then
+            Dummy.applyDummyOrder(queued[target], target, spellData[data.stacks], "channel")
+        end
         queued[target] = nil
-        table.remove(queue, index)
+        table.remove(queue, i)
     end
 end
 
 local function onTimerFlush()
     local flush = {}
     for unit, data in pairs(memory) do
-        if data.debuffApplied and not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+        if data.debuffApplied and not UnitHasBuffBJ(unit, CONFIG.refs.buffs.debuff) then
             table.insert(flush, unit)
         end
     end

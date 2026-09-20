@@ -40,14 +40,10 @@ local function onAttack()
 end
 
 local function onTimer()
-    local removeQueue = {}
-    for _, unit in pairs(memory) do
+    for unit in pairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.thorns) then
-            table.insert(removeQueue, unit)
+            memory[unit] = nil
         end
-    end
-    for _, unit in ipairs(removeQueue) do
-        memory[unit] = nil
     end
 end
 

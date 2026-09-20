@@ -19,7 +19,7 @@ local CONFIG = AbilityConfig.compile({
             shield = Ids.buffs.opressiveBannerShield,
         },
         units = {
-            banner = { Ids.units.opressiveBanner },
+            banner = Ids.units.opressiveBanner,
         },
     },
     balance = {
@@ -65,13 +65,15 @@ local function onDamage(info)
 
     info.damage = info.damage - blocked
 
-    if blocked == shield then
+    if blocked >= shield then
         memory[info.target] = nil
+    else
+        memory[info.target].shield = shield - blocked
     end
 end
 
-local function onDeath(info)
-    memory[info.target] = nil
+local function onDeath()
+    memory[GetDyingUnit()] = nil
 end
 
 return {

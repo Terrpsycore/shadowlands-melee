@@ -33,7 +33,7 @@ local function onDamage(info)
     local shieldAmount = Storage:get(info.target, "shieldAmount")
     if shieldAmount then
         local soaked = math.min(info.damage, shieldAmount)
-        info.damage = info.damage - shieldAmount
+        info.damage = info.damage - soaked
 
         if soaked == shieldAmount then
             UnitRemoveBuffBJ(CONFIG.refs.buffs.main, info.target)

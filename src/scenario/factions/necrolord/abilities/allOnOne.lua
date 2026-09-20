@@ -53,15 +53,12 @@ local function onDamage(info)
 end
 
 local function onTimer(info)
-    local flushQueue = {}
-    for i, unit in ipairs(memory) do
+    for i = #memory, 1, -1 do
+        local unit = memory[i]
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
-            table.insert(flushQueue, i)
+            table.remove(memory, i)
         end
-    end
-    for _, index in ipairs(flushQueue) do
-        table.remove(memory, index)
     end
 end
 
