@@ -18,6 +18,5 @@ return {
         name = "Gladiator",
         art = { icon = Icons.chaosWarlord },
         heroAbilities = { "weaponTest", "opressiveBanner", "brutalCombo", "allOnOne" },
-        -- abilities = { "brutalComboCrit" },
     },
 }

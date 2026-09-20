@@ -1,4 +1,6 @@
 --[[
+try devotion aura or smth
+
 apply plague buff to target (curse or smth)
 add plague cloud OE ability + -armor to target
 store disased to memory
@@ -32,9 +34,11 @@ local CONFIG = AbilityConfig.compile({
 })
 
 local function applyDisease(unit)
+    dump("applyDisease")
     if GetUnitAbilityLevel(unit, CONFIG.refs.abilities.disease) == 0 then
         UnitAddAbility(unit, CONFIG.refs.abilities.disease)
-        UnitAddAbility(unit, CONFIG.refs.abilities.debuff)
+        local r = UnitAddAbility(unit, CONFIG.refs.abilities.debuff)
+        dump("applyDisease -armor", r)
         Storage:set(unit, "owner", GetPlayerId(GetOwningPlayer(unit)))
     end
 end

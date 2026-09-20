@@ -146,6 +146,14 @@ return {
             a:setCastRange(1, 1000)
         end),
     }),
+    betterBodyPossessionManaBonus = A.itemManaBonus({
+        name = "Better Body",
+        manaCost = 0,
+        apply = A.itemManaBonus.apply(function(a)
+            a:setItemAbility(false)
+            a:setMaxManaGained(1, 1)
+        end),
+    }),
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
         buffs = { "healingSlime" },
@@ -270,6 +278,7 @@ return {
     corrosivePlagueArmorDebuff = A.itemArmorBonus({
         name = "Corrosive Plague",
         apply = A.itemArmorBonus.apply(function(a)
+            a:setItemAbility(false)
             a:setDefenseBonus(1, -2)
         end),
     }),
@@ -336,7 +345,7 @@ return {
             a:setTargetsAllowed(1, "allied,ground,air,organic,nonhero,player")
         end),
     }),
-    deadlyWhirlwind = A.permanentInvisibility({
+    deadlyWhirlwind = A.permanentImmolation({
         name = "Deadly Whirlwind",
     }),
     slurp = A.deathPact({

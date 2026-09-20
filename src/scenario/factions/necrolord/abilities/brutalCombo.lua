@@ -1,4 +1,6 @@
 --[[
+TODO:
+- fade with stale time
 ]]
 
 local Ids = require("data.ids")
@@ -8,17 +10,19 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.brutalCombo,
-            crit = Ids.abilities.brutalComboCrit,
         },
         units = {
             carrier = Ids.units.gladiatorHero,
         },
     },
+    balance = {
+        critModifier = { 1.6, 2, 2.4 },
+    },
 })
 
 local memory = {} -- TODO: save/load
 
-local function onAfterDamage(info)
+local function onPreDamage(info)
     if not info.isAttack then
         return
     end
@@ -29,21 +33,22 @@ local function onAfterDamage(info)
         return
     end
 
-    local owner = GetOwningPlayer(unit)
-
     if memory[unit] == nil then
         memory[unit] = 1 -- attacks before crit
-    elseif memory[unit] > 1 then
+    elseif memory[unit] > 0 then
         memory[unit] = memory[unit] - 1
-    elseif memory[unit] == 1 then
-        memory[unit] = memory[unit] - 1
-        UnitAddAbility(unit, CONFIG.refs.abilities.crit)
-        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit, level)
-        dump("brutal 1 GetUnitAbilityLevel(unit, crit)", GetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit))
     elseif memory[unit] == 0 then
-        dump("brutal 0 GetUnitAbilityLevel(unit, crit)", GetUnitAbilityLevel(unit, CONFIG.refs.abilities.crit))
-        UnitRemoveAbility(unit, CONFIG.refs.abilities.crit)
         memory[unit] = 2
+
+        local before = info.damage
+        info.damage = info.damage * CONFIG.balance.critModifier[level]
+        dump("brutalCombo hit - ", before, "->", info.damage)
+        -- Create the classic red floating text
+        local text = CreateTextTagUnitBJ(string.format("%.0f!", info.damage), info.target, 0, 10, 100, 0, 0, 0)
+        SetTextTagVelocityBJ(text, 64, 90)
+        SetTextTagPermanent(text, false)
+        SetTextTagLifespan(text, 2.0)
+        SetTextTagFadepoint(text, 1.5)
     else
         error("Broken brutalCombo memory value")
     end
@@ -52,9 +57,9 @@ end
 return {
     triggers = {
         {
-            trigger = "AFTER_DAMAGE",
+            trigger = "PRE_DAMAGE",
             filter = { source = CONFIG.refs.units.carrier },
-            action = onAfterDamage,
+            action = onPreDamage,
         },
     },
     config = CONFIG,

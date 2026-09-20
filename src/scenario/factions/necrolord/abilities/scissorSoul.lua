@@ -1,4 +1,6 @@
 --[[
+TODO:
+- add delay
 ]]
 
 local Ids = require("data.ids")

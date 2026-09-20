@@ -10,7 +10,7 @@ if RUN.tests then
     require("tests.init")
 end
 
-Timed.call((RUN.tests and 5) or 2, function()
+Timed.call((RUN.tests and 5) or 0, function()
     require("spawn").run(RUN.spawnPacks)
 end)
 

@@ -11,6 +11,8 @@ local p0, p1 = Player(0), Player(1)
 local skip = {
     aspirantMelee = true,
     memorySpirit = true,
+    warBanner = true,
+    opressiveBanner = true,
 }
 
 local function shouldSpawn(slug, row)

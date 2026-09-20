@@ -1,5 +1,6 @@
 --[[
 TODO:
+- BlzSetUnitMaxMana doesn't work on units which don't have mana initially
 - remove possess ability if order cancelled
 - fix possession cast time lag (prob won't work now because of unit animation)
 - check cast interrupts on stun
@@ -18,8 +19,9 @@ local CONFIG = AbilityConfig.compile({
         abilities = {
             main = Ids.abilities.betterBody,
             possession = Ids.abilities.betterBodyPossession,
+            manaBonus = Ids.abilities.betterBodyPossessionManaBonus,
             --
-            applyLimb = Ids.abilities.applyLimb,
+            applyLimb = Ids.abilities.applyLimb, -- TODO: add abilities with different hotkeys
             scissorSoul = Ids.abilities.scissorSoul,
         },
         buffs = {
@@ -62,6 +64,10 @@ local function onPossession()
     dump("onPossession casterMaxMana", casterMaxMana)
     dump("onPossession targetMaxMana", targetMaxMana)
     if targetMaxMana < casterMaxMana then
+        if targetMaxMana == 0 then
+            local m = UnitAddAbility(target, CONFIG.refs.abilities.manaBonus)
+            dump("onPossession UnitAddAbility", m)
+        end
         SetUnitState(target, UNIT_STATE_MAX_MANA, casterMaxMana)
     end
 

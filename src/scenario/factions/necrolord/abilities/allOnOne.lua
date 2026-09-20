@@ -45,11 +45,13 @@ local function onSpell()
 end
 
 --- @param info damageInfo
-local function onDamage(info)
+local function onPreDamage(info)
     if not info.isAttack then
         return
     end
     info.damageType = DAMAGE_TYPE_ENHANCED
+    -- info.armorType = DEFENSE_TYPE_NONE
+    -- info.defenseType = DEFENSE_TYPE_NONE
 end
 
 local function onTimer(info)
@@ -70,9 +72,9 @@ return {
             action = onSpell,
         },
         {
-            trigger = "DAMAGE",
+            trigger = "PRE_DAMAGE",
             filter = { target = CONFIG.refs.units.carrier },
-            action = onDamage,
+            action = onPreDamage,
         },
         {
             trigger = "TIMER",

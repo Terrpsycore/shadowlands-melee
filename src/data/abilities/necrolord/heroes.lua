@@ -158,14 +158,6 @@ return {
         art = { icon = Icons.pasGnollCommandAura },
         hotkey = "E",
     }),
-    brutalComboCrit = A.criticalStrike({ -- onDamage
-        class = "unit",
-        name = "Brutal Combo",
-        levels = 3,
-        apply = A.criticalStrike.apply(function(a, level)
-            a:setChancetoCriticalStrike(level, 100)
-        end),
-    }),
     allOnOne = A.nonDispellableSelfBuffTimed({ -- triggered taunt + onDamage DAMAGE_TYPE_ENHANCED
         name = "All on One",
         levels = 1,

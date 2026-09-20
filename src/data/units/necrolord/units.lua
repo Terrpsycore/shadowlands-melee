@@ -34,7 +34,7 @@ return {
     gladiator = {
         parent = UnitIds.grunt,
         name = "Gladiator",
-        abilities = { "warBanner", "brutalComboCrit" },
+        abilities = { "warBanner" },
         art = { icon = Icons.felGuard },
         mana = { max = 200, initial = 100 },
     },
