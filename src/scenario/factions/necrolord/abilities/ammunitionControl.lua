@@ -63,7 +63,7 @@ end
 local function onTimer()
     local flushQueue = {}
     for i, unit in ipairs(memory) do
-        if not UnitHasBuffBJ(unit, CONFIG.buffs.main) then
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.bonusDamage)
             UnitRemoveAbility(unit, CONFIG.refs.abilities.bonusArmor)
             table.insert(flushQueue, i)

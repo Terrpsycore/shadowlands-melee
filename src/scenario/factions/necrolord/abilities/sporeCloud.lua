@@ -48,12 +48,15 @@ end
 local function onTimer()
     Storage:each(function(unit)
         local castStatus = Storage:bind(unit)
-        if castStatus and castStatus.beforeNextTick - CONFIG.balance.tickDelta <= 0 then
-            castStatus.ticks = castStatus.ticks - 1
-            castStatus.beforeNextTick = 1
-            spawnCloud(unit)
-            if castStatus.ticks == 0 then
-                Storage:drop(unit)
+        if castStatus then
+            castStatus.beforeNextTick = castStatus.beforeNextTick - CONFIG.balance.tickDelta
+            if castStatus.beforeNextTick <= 0 then
+                castStatus.ticks = castStatus.ticks - 1
+                castStatus.beforeNextTick = 1
+                spawnCloud(unit)
+                if castStatus.ticks == 0 then
+                    Storage:drop(unit)
+                end
             end
         end
     end)

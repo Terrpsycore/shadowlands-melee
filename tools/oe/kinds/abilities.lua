@@ -64,6 +64,10 @@ local fields = {
         end
         a:setButtonPositionNormalX(value[1])
         a:setButtonPositionNormalY(value[2])
+        a:setButtonPositionResearchX(value[1])
+        a:setButtonPositionResearchY(value[2] - 2)
+        a:setButtonPositionTurnOffX(value[1])
+        a:setButtonPositionTurnOffY(value[2])
     end,
     hotkey = function(a, value)
         a:setHotkeyNormal(value)
@@ -96,6 +100,7 @@ local fields = {
         shared.applySubfields(a, value, {
             icon = function(a, v)
                 a:setIconNormal(shared.normalizePath(v))
+                a:setIconResearch(shared.normalizePath(v))
             end,
             iconOff = function(a, v)
                 a:setIconTurnOff(shared.normalizePath(v))
@@ -157,7 +162,16 @@ return {
         return fallback
     end,
     defaults = function(a, data)
-        a:setHeroAbility(data.class == "hero")
+        local isHero = data.class == "hero"
+        a:setHeroAbility(isHero)
+        a:setButtonPositionNormalX(0)
+        a:setButtonPositionNormalY(2)
+        a:setButtonPositionTurnOffX(0)
+        a:setButtonPositionTurnOffY(2)
+        if isHero then
+            a:setButtonPositionResearchX(0)
+            a:setButtonPositionResearchY(0)
+        end
         if data.requirements == nil then
             a:setRequirements("")
         end

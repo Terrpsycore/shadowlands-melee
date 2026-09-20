@@ -25,7 +25,7 @@ local function onSpell()
     local targetX = GetSpellTargetX()
     local targetY = GetSpellTargetY()
 
-    Timed.delay(1.5, function()
+    Timed.call(1.5, function()
         Dummy.applyDummyImmediateOrder(owner, { x = targetX, y = targetY }, CONFIG.refs.abilities.stun, "stomp")
         Dummy.applyDummyImmediateOrder(owner, { x = targetX, y = targetY }, CONFIG.refs.abilities.slow, "thunderclap")
     end)

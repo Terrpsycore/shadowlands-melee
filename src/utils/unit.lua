@@ -1,8 +1,9 @@
+-- TODO
+-- - optimize exclude
+
 local buffTypes = require("data.buffTypes")
 
 local Unit = {}
-
----@alias Point unit|{ x: number, y: number }
 
 ---@param point Point
 ---@return number x
@@ -166,10 +167,12 @@ function Unit.getNearestCorpse(unit, radius)
     return corpse
 end
 
-function Unit.getCorpsesInRadius(unit, radius)
+function Unit.getCorpsesInRadius(point, radius)
+    local x, y = pointXY(point)
+    local exclude = type(point) ~= "table" and point or nil
     local resultsTable = {}
-    forEachInRadius(GetUnitX(unit), GetUnitY(unit), radius, function(u)
-        if IsUnitDeadBJ(u) then
+    forEachInRadius(x, y, radius, function(u)
+        if IsUnitDeadBJ(u) and u ~= exclude then
             table.insert(resultsTable, u)
         end
     end)

@@ -143,7 +143,7 @@ return {
         name = "Corrosive Plague",
         buffs = { "corrosivePlague" },
         button = { 1, 2 },
-        apply = A.acidBomb.apply(function(a)
+        apply = A.curse.apply(function(a)
             a:setChancetoMiss(1, 0)
         end),
     }),

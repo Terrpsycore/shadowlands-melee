@@ -8,5 +8,6 @@ end
 src = src:gsub("\\", "/")
 local root = src:match("^(.*)/objediting/") or "."
 
+---@diagnostic disable-next-line: undefined-field
 os.chdir(root)
 dofile("tools/oe/main.lua")

@@ -10,6 +10,7 @@ from pathlib import Path
 
 class Mode(StrEnum):
     BUILD = "build"
+    UPDATE = "update"
     RUN = "run"
     GO = "go"
     DESIGN = "design"
@@ -62,17 +63,15 @@ def main(mode: Mode, _project_path: str):
     match mode:
         case Mode.BUILD:
             build(project_path)
+        case Mode.UPDATE:
+            build(project_path)
+            copy(project_path)
         case Mode.RUN:
             run(project_path)
         case Mode.GO:
             go(project_path)
         case Mode.DESIGN:
             design(project_path)
-
-
-def edit(project_path: Path):
-    build(project_path)
-    run(project_path)
 
 
 def go(project_path: Path):
@@ -164,12 +163,12 @@ def bake(project_path: Path) -> None:
 
 
 def run(project_path: Path):
-    build_path = project_path / ".build/_warcraft_vscode_test.w3x"
-    map_path = copy(build_path)
+    map_path = copy(project_path)
     run_map(map_path)
 
 
-def copy(map_path: Path) -> Path:
+def copy(project_path: Path) -> Path:
+    map_path = project_path / ".build/_warcraft_vscode_test.w3x"
     map_fn = os.path.split(map_path)[-1]
     destination_path = MAPS_DIR / map_fn
     shutil.copy(map_path, destination_path)

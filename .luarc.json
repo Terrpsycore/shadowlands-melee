@@ -17,6 +17,7 @@
     "ignoreDir": [
       "src/vendor/assets/main-debug.lua",
       "src/vendor/assets/main-release.lua",
+      "map.w3x",
       ".build",
       ".def",
       "tmp"
@@ -25,8 +26,8 @@
   },
   "diagnostics": {
     "disable": [
-      "empty-block",
-            "undefined-field"
+      "empty-block"
+      //"undefined-field"
     ],
     "globals": [
       "Timed",

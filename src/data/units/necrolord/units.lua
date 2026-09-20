@@ -96,7 +96,7 @@ return {
     },
     sigilOfDrought = {
         parent = UnitIds.stasistraptotem,
-        name = "Sigil of Binding",
+        name = "Sigil of Drought",
         abilities = { "sigilOfDroughtActivation" },
     },
     deathwalker1 = {

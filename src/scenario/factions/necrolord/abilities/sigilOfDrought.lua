@@ -73,7 +73,7 @@ local function onActivation()
     local level = GetUnitAbilityLevel(sigil, CONFIG.refs.abilities.activation)
     Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.drain, "channel", level)
 
-    local burnMana = math.min(CONFIG.balance.burnMana, maxMana)
+    local burnMana = math.min(CONFIG.balance.burnMana[level], maxMana)
 
     local drawbackLevel = math.min((burnMana // 50) + 1, 10)
 
@@ -95,7 +95,7 @@ local function onDrain()
     local dummy = Dummy.create(owner, caster, CONFIG.refs.abilities.transfer, data.level)
     IssueTargetOrder(dummy, "channel", data.caster)
 
-    Timed.delay(CONFIG.balance.drawbackDelay, function()
+    Timed.call(CONFIG.balance.drawbackDelay, function()
         Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.regen, "rejuvenation", data.drawbackLevel)
     end)
 end

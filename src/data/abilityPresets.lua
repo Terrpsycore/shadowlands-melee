@@ -59,77 +59,79 @@ return setmetatable({
 
     channelNoTarget = presetFactory(F.channel, {
         options = 1,
-        apply = function(a)
-            a:setDisableOtherAbilities(1, false)
-            a:setFollowThroughTime(1, 0)
-            a:setArtDuration(1, 0)
+        apply = function(a, level)
+            a:setDisableOtherAbilities(level, false)
+            a:setFollowThroughTime(level, 0)
+            a:setArtDuration(level, 0)
         end,
     }),
 
     channelTarget = presetFactory(F.channel, {
         options = 1,
-        apply = function(a)
-            a:setTargetType(1, 1)
-            a:setDisableOtherAbilities(1, false)
-            a:setFollowThroughTime(1, 0)
-            a:setArtDuration(1, 0)
+        apply = function(a, level)
+            a:setTargetType(level, 1)
+            a:setDisableOtherAbilities(level, false)
+            a:setFollowThroughTime(level, 0)
+            a:setArtDuration(level, 0)
         end,
     }),
 
     channelPoint = presetFactory(F.channel, {
         options = 1,
-        apply = function(a)
-            a:setTargetType(1, 2)
-            a:setDisableOtherAbilities(1, false)
-            a:setFollowThroughTime(1, 0)
-            a:setArtDuration(1, 0)
+        apply = function(a, level)
+            a:setTargetType(level, 2)
+            a:setDisableOtherAbilities(level, false)
+            a:setFollowThroughTime(level, 0)
+            a:setArtDuration(level, 0)
         end,
     }),
 
     channelArea = presetFactory(F.channel, {
         options = 3, -- fix missing area circle
-        apply = function(a)
-            a:setTargetType(1, 2)
-            a:setDisableOtherAbilities(1, false)
-            a:setFollowThroughTime(1, 0)
-            a:setArtDuration(1, 0)
+        apply = function(a, level)
+            a:setAreaofEffect(level, 300)
+            a:setCastRange(level, 300)
+            a:setTargetType(level, 2)
+            a:setDisableOtherAbilities(level, false)
+            a:setFollowThroughTime(level, 0)
+            a:setArtDuration(level, 0)
         end,
     }),
 
     immolationToggle = presetFactory(F.immolation, {
-        apply = function(a)
-            a:setDamageperInterval(1, 0)
-            a:setManaDrainedperSecond(1, 0)
-            a:setBufferManaRequired(1, 0)
+        apply = function(a, level)
+            a:setDamageperInterval(level, 0)
+            a:setManaDrainedperSecond(level, 0)
+            a:setBufferManaRequired(level, 0)
         end,
     }),
 
     exhumeBased = presetFactory(F.exhume, {
-        apply = function(a)
-            a:setMaximumNumberofCorpses(1, 0)
-            a:setCooldown(1, 0)
+        apply = function(a, level)
+            a:setMaximumNumberofCorpses(level, 0)
+            a:setCooldown(level, 0)
         end,
     }),
 
     --- Hidden evasion with 0% — passive marker for script triggers, no gameplay effect.
     passiveGeneric = presetFactory(F.evasion, {
-        apply = function(a)
-            a:setChancetoEvade(1, 0)
+        apply = function(a, level)
+            a:setChancetoEvade(level, 0)
         end,
     }),
     passiveAura = presetFactory(F.slowAura, {
-        apply = function(a)
-            a:setMovementSpeedFactor(1, 0)
-            a:setAttackSpeedFactor(1, 0)
-            a:setAreaofEffect(1, 1)
-            a:setTargetsAllowed(1, "self")
+        apply = function(a, level)
+            a:setMovementSpeedFactor(level, 0)
+            a:setAttackSpeedFactor(level, 0)
+            a:setAreaofEffect(level, 1)
+            a:setTargetsAllowed(level, "self")
         end,
     }),
     nonDispellableSelfBuffTimed = presetFactory(F.berserkerRage1, {
-        apply = function(a)
-            a:setAttackSpeedIncrease(1, 0)
-            a:setMovementSpeedIncrease(1, 0)
-            a:setDamageTakenIncrease(1, 0)
+        apply = function(a, level)
+            a:setAttackSpeedIncrease(level, 0)
+            a:setMovementSpeedIncrease(level, 0)
+            a:setDamageTakenIncrease(level, 0)
         end,
     }),
     nonDispellableTargetDebuff = presetFactory(F.acidBomb, {

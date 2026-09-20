@@ -46,9 +46,9 @@ end
 
 local function onTimer(info)
     local flushQueue = {}
-    for i, unit in pairs(memory) do
-        if not UnitHasBuffBJ(unit, CONFIG.buffs.main) then
-            if memory[info.source] == true then
+    for unit, dies in pairs(memory) do
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+            if dies then
                 Damage.apply(unit, unit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED)
             end
             table.insert(flushQueue, unit)

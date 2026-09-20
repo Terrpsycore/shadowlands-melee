@@ -12,6 +12,7 @@ local function padFourCC(id)
     return id .. string.rep("\0", 4 - #id)
 end
 
+---@diagnostic disable: duplicate-set-field, inject-field
 if ObjectWriter and ObjectWriter.writeDefinition and not ObjectWriter._padFourCCPatched then
     local writeDefinition = ObjectWriter.writeDefinition
 
@@ -35,6 +36,7 @@ if ObjectWriter and ObjectWriter.writeDefinition and not ObjectWriter._padFourCC
 
     ObjectWriter._padFourCCPatched = true
 end
+---@diagnostic enable: duplicate-set-field, inject-field
 
 require("lib.objediting.inventory")
 

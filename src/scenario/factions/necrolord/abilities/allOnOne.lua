@@ -33,7 +33,7 @@ local function onSpell()
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
 
-    UnitAddAbility(caster, CONFIG.refs.effect)
+    UnitAddAbility(caster, CONFIG.refs.abilities.effect)
     table.insert(memory, caster)
 
     local targets = Unit.getUnitsInRadius(caster, CONFIG.balance.radius, function(u)
@@ -55,7 +55,7 @@ end
 local function onTimer(info)
     local flushQueue = {}
     for i, unit in ipairs(memory) do
-        if not UnitHasBuffBJ(unit, CONFIG.buffs.main) then
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
             table.insert(flushQueue, i)
         end

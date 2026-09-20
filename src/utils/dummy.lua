@@ -2,7 +2,6 @@ local Ids = require("data.ids")
 
 local Dummy = {}
 
----@alias Point unit|{ x: number, y: number }
 ---@alias Order string|integer
 
 ---@param at Point
