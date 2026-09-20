@@ -29,30 +29,33 @@ local CONFIG = AbilityConfig.compile({
 })
 
 local memory = {} -- todo: save/load
+local spawnQueue = {}
 
 local function onSpell()
-    -- note: can be rewritten to "onSpawn" trigger
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
-    local targetX = GetSpellTargetX()
-    local targetY = GetSpellTargetY()
-
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
+    spawnQueue[owner] = { level = level }
+end
 
-    local targets = Unit.getUnitsInRadius({ x = targetX, y = targetY }, 50, function(u)
-        return GetOwningPlayer(u) == owner and GetUnitTypeId(u) == CONFIG.refs.units.banner
-    end)
-
-    for _, target in ipairs(targets) do
-        UnitAddAbility(target, CONFIG.refs.abilities.aura)
-        UnitAddAbility(target, CONFIG.refs.abilities.shield)
-        SetUnitAbilityLevel(target, CONFIG.refs.abilities.aura, level)
-        SetUnitAbilityLevel(target, CONFIG.refs.abilities.shield, level)
-
-        memory[target] = {
-            shield = CONFIG.balance.shieldCapacity[level],
-        }
+local function onSpawn()
+    local banner = GetEnteringUnit()
+    local owner = GetOwningPlayer(banner)
+    local data = spawnQueue[owner]
+    spawnQueue[owner] = nil
+    if not data then
+        return
     end
+
+    local level = data.level
+    UnitAddAbility(banner, CONFIG.refs.abilities.aura)
+    UnitAddAbility(banner, CONFIG.refs.abilities.shield)
+    SetUnitAbilityLevel(banner, CONFIG.refs.abilities.aura, level)
+    SetUnitAbilityLevel(banner, CONFIG.refs.abilities.shield, level)
+
+    memory[banner] = {
+        shield = CONFIG.balance.shieldCapacity[level],
+    }
 end
 
 local function onDamage(info)
@@ -82,6 +85,11 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.refs.abilities.main,
             action = onSpell,
+        },
+        {
+            trigger = "CREATE",
+            filter = { target = CONFIG.refs.units.banner },
+            action = onSpawn,
         },
         {
             trigger = "DAMAGE",

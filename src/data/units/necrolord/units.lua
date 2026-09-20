@@ -74,6 +74,11 @@ return {
         },
         abilities = { "applyLimb", "scissorSoul", "betterBody" },
     },
+    frayedwing = {
+        parent = UnitIds.gargoyle,
+        name = "Frayedwing",
+        abilities = { "poisonBite" },
+    },
     necroray = {
         parent = UnitIds.nagacoutl,
         name = "Necroray",

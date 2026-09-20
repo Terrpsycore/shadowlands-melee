@@ -122,9 +122,9 @@ local packs = {
 
         CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))
 
-        CreateUnit(p1, FourCC(Ids.units.footman), -1000.4, y + 1000, f)
+        CreateUnit(p1, FourCC(Ids.units.footman), -1500.4, y + 1000, f)
 
-        CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1000, f)
+        CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
     end,
 }
 

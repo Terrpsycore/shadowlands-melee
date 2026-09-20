@@ -68,20 +68,19 @@ return {
     }),
     sigilOfBindingActivation = A.mineexploding({
         name = "Sigil of Binding",
-        apply = A.mineexploding.apply(function(a) end),
+        apply = A.mineexploding.apply(function(a, level)
+            a:setActivationDelay(level, 1)
+        end),
     }),
     sigilOfBindingSlow = A.slow({
         name = "Sigil of Binding",
         buffs = { "sigilOfBinding" },
-        apply = A.slow.apply(function(a)
-            a:setOrderStringActivate("channel")
-        end),
+        apply = A.slow.apply(function(a) end),
     }),
     sigilOfBindingRoot = A.entanglingRoots({
         buffs = { "sigilOfBinding" },
         name = "Sigil of Binding",
         apply = A.entanglingRoots.apply(function(a)
-            a:setOrderStringActivate("channel")
             a:setDamageperSecond(1, 0)
             a:setDurationNormal(1, 8)
             a:setDurationHero(1, 8)
@@ -92,9 +91,8 @@ return {
         name = "Sigil of Binding",
         buffs = { "sigilOfBinding" },
         apply = A.stormBolt.apply(function(a)
-            a:setOrderStringActivate("channel")
             a:setDamage(1, 0)
-            a:setDurationNormal(1, 180)
+            a:setDurationNormal(1, 3)
             a:setDurationHero(1, 3)
             a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
         end),
@@ -117,6 +115,10 @@ return {
             a:setOrderStringUseTurnOn("innerfire")
         end),
     }),
+    scissorSoulDummy = A.nonDispellableTargetDebuff({
+        buffs = { "scissorSoul" },
+        apply = A.nonDispellableTargetDebuff.apply(function(a) end),
+    }),
     scissorSoulManaBurn = A.feedback({
         name = "Scissor Soul",
         apply = A.feedback.apply(function(a)
@@ -138,8 +140,10 @@ return {
     }),
     betterBodyPossession = A.possession({
         name = "Better Body",
+        manaCost = 0,
         apply = A.possession.apply(function(a)
             a:setCastingTime(1, 0)
+            a:setCastRange(1, 1000)
         end),
     }),
     healingSlime = A.rejuvenation1({
@@ -325,12 +329,19 @@ return {
     }),
     warBannerAura = A.enduranceAura({
         name = "War Banner",
+        apply = A.enduranceAura.apply(function(a)
+            a:setMovementSpeedIncrease(1, 0.10)
+            a:setAttackSpeedIncrease(1, 0.10)
+            a:setAreaofEffect(1, 600)
+            a:setTargetsAllowed(1, "allied,ground,air,organic,nonhero,player")
+        end),
     }),
     deadlyWhirlwind = A.permanentInvisibility({
         name = "Deadly Whirlwind",
     }),
     slurp = A.deathPact({
         art = { icon = Icons.devourMagic },
+        manaCost = 0,
         name = "Slurp",
     }),
     slurpCorpseDummy = A.deathCoil({

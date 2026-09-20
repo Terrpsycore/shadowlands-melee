@@ -103,7 +103,7 @@ local function onDrain()
     IssueTargetOrder(dummy, "drain", data.caster)
 
     Timed.call(CONFIG.balance.drawbackDelay, function()
-        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.regen, "rejuvenation", data.drawbackLevel)
+        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.regen, "rejuvination", data.drawbackLevel)
     end)
 end
 

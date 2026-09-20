@@ -12,6 +12,7 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.scissorSoul,
+            dummy = Ids.abilities.scissorSoulDummy,
             burn = Ids.abilities.scissorSoulManaBurn,
         },
         buffs = {
@@ -28,11 +29,12 @@ local CONFIG = AbilityConfig.compile({
 })
 local DECAY_PER_TICK = CONFIG.balance.decaySpeed * CONFIG.balance.tickDelta
 
-local function onSpellFinish()
+local function onSpell()
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
     local target = GetSpellTargetUnit()
 
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.dummy, "acidbomb")
     Dummy.applyDummyAttack(owner, target, CONFIG.refs.abilities.burn)
 end
 
@@ -65,9 +67,9 @@ end
 return {
     triggers = {
         {
-            trigger = "EVENT_PLAYER_UNIT_SPELL_FINISH",
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.refs.abilities.main,
-            action = onSpellFinish,
+            action = onSpell,
         },
         {
             trigger = "AFTER_DAMAGE",

@@ -1,5 +1,6 @@
 --[[
 TODO:
+- remove possess ability if order cancelled
 - fix possession cast time lag (prob won't work now because of unit animation)
 - check cast interrupts on stun
 - save to "POSSESSED" storage (kyrian loyalty)
@@ -33,14 +34,22 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
-local function onSpellFinish()
+local memory = {} -- TODO: save/load
+
+local function onSpellCast()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
+    memory[caster] = target
+end
 
-    Unit.face(caster, target)
+local function onSpellFinish()
+    local caster = GetTriggerUnit()
+    local target = memory[caster]
+
+    -- Unit.face(caster, target)
     UnitAddAbility(caster, CONFIG.refs.abilities.possession)
-    IssueTargetOrder(caster, "possession", target)
-    UnitRemoveAbility(caster, CONFIG.refs.abilities.possession) -- TODO: hide active ability, remove on cast or after short delay
+    local pos = IssueTargetOrder(caster, "possession", target)
+    -- UnitRemoveAbility(caster, CONFIG.refs.abilities.possession) -- TODO: hide active ability, remove on cast or after short delay
 end
 
 local function onPossession()
@@ -50,6 +59,8 @@ local function onPossession()
     local casterMaxMana = GetUnitState(caster, UNIT_STATE_MAX_MANA)
     local targetMaxMana = GetUnitState(target, UNIT_STATE_MAX_MANA)
 
+    dump("onPossession casterMaxMana", casterMaxMana)
+    dump("onPossession targetMaxMana", targetMaxMana)
     if targetMaxMana < casterMaxMana then
         SetUnitState(target, UNIT_STATE_MAX_MANA, casterMaxMana)
     end
@@ -64,6 +75,11 @@ end
 
 return {
     triggers = {
+        {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.refs.abilities.main,
+            action = onSpellCast,
+        },
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_FINISH",
             spellId = CONFIG.refs.abilities.main,

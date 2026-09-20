@@ -140,8 +140,10 @@ return {
         levels = 3,
         buffs = { "opressiveBanner" },
         apply = A.slowAura.apply(function(a, level)
+            a:setAreaofEffect(1, 600)
             a:setMovementSpeedFactor(level, 0.1 * level)
             a:setAttackSpeedFactor(level, 0.1 * level)
+            a:setTargetsAllowed(level, "enemy,ground,air,organic,player")
         end),
     }),
     opressiveBannerShield = A.nonDispellableSelfBuffTimed({ -- negative
@@ -220,6 +222,7 @@ return {
     droughtSigil = A.itemPlaceGoblinLandMine({
         name = "Drought Sigil",
         levels = 3,
+        manaCost = 100,
         apply = A.itemPlaceGoblinLandMine.apply(function(a, level)
             a:setCastRange(level, 500)
             a:setUnitType(level, Ids.units.sigilOfDrought)
@@ -244,6 +247,7 @@ return {
             a:setManaPointsDrained(level, 200 * level)
             a:setOrderStringActivate("channel")
             a:setOrderStringUseTurnOn("channel")
+            a:setCastRange(level, 9999)
         end),
     }),
     sigilOfDroughtTransferMana = A.siphonMana({
@@ -256,6 +260,7 @@ return {
             a:setManaTransferredPerSecond(level, 100 * level)
             a:setOrderStringActivate("channel")
             a:setOrderStringUseTurnOn("channel")
+            a:setCastRange(level, 9999)
         end),
     }),
     sigilOfDroughtDrawback = A.rejuvenation1({
@@ -266,6 +271,8 @@ return {
             a:setHitPointsGained(level, 50 * level)
             a:setDurationHero(level, 10)
             a:setDurationNormal(level, 10)
+            a:setCastRange(level, 9999)
+            a:setTargetsAllowed(level, "allied,enemy,ground,air,organic,player")
         end),
     }),
     explodeCorpses = A.channelArea({ -- for corpse - dummy clap - onSpell target delete

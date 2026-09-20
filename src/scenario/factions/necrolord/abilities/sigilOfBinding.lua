@@ -53,7 +53,6 @@ local function onSpawn()
 
     Unit.applyTimedLife(sigil, CONFIG.balance.duration)
     -- SetUnitAbilityLevel(sigil, CONFIG.refs.abilities.activation, data.level)
-    memory[sigil] = data.caster
 end
 
 local function onDeath(info)
@@ -102,15 +101,16 @@ end
 
 local function onTimersigil()
     local spellData = {
-        [1] = CONFIG.refs.abilities.slow,
-        [2] = CONFIG.refs.abilities.root,
-        [3] = CONFIG.refs.abilities.stun,
+        [1] = { id = CONFIG.refs.abilities.slow, order = "slow" },
+        [2] = { id = CONFIG.refs.abilities.root, order = "entanglingroots" },
+        [3] = { id = CONFIG.refs.abilities.stun, order = "thunderbolt" },
     }
     for i = #queue, 1, -1 do
         local target = queue[i]
         local data = memory[target]
         if data then
-            Dummy.applyDummyOrder(queued[target], target, spellData[data.stacks], "channel")
+            local spell = spellData[data.stacks]
+            Dummy.applyDummyOrder(queued[target], target, spell.id, spell.order)
         end
         queued[target] = nil
         table.remove(queue, i)
