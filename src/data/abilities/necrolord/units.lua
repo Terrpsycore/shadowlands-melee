@@ -47,10 +47,10 @@ return {
         art = { icon = Icons.raiseDeadOn },
         hotkey = "Q",
     }),
-    animateDeadResurrection = A.resurrection({
-        apply = A.resurrection.apply(function(a)
-            a:setNumberofCorpsesRaised(1, 1)
-        end),
+    animateDeadGreater = A.raiseDead({
+        name = "Animate Dead",
+        art = { icon = Icons.raiseDeadOn }, -- TODO: special icon
+        hotkey = "Q",
     }),
     maldraciteNullify = A.dispelMagic({
         name = "Maldracite Nullify",
@@ -66,6 +66,15 @@ return {
         end),
         hotkey = "E",
     }),
+    sigilOfBindingGreater = A.itemPlaceGoblinLandMine({
+        name = "Sigil of Binding",
+        art = { icon = Icons.antiMagicShell }, -- TODO: special icon
+        apply = A.itemPlaceGoblinLandMine.apply(function(a)
+            a:setCastRange(1, 500)
+            a:setUnitType(1, Ids.units.sigilOfBinding)
+        end),
+        hotkey = "E",
+    }),
     sigilOfBindingActivation = A.mineexploding({
         name = "Sigil of Binding",
         apply = A.mineexploding.apply(function(a, level)
@@ -75,26 +84,29 @@ return {
     sigilOfBindingSlow = A.slow({
         name = "Sigil of Binding",
         buffs = { "sigilOfBinding" },
-        apply = A.slow.apply(function(a) end),
+        apply = A.slow.apply(function(a)
+            a:setDurationNormal(1, 10)
+            a:setDurationHero(1, 5)
+        end),
     }),
-    sigilOfBindingRoot = A.entanglingRoots({
-        buffs = { "sigilOfBinding" },
+    sigilOfBindingRoot = A.curse({
+        buffs = { "sigilOfBindingRoot" },
         name = "Sigil of Binding",
-        apply = A.entanglingRoots.apply(function(a)
-            a:setDamageperSecond(1, 0)
+        apply = A.curse.apply(function(a)
             a:setDurationNormal(1, 8)
-            a:setDurationHero(1, 8)
-            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+            a:setDurationHero(1, 3)
+            a:setChancetoMiss(1, 0)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,hero,player")
         end),
     }),
     sigilOfBindingStun = A.stormBolt({
         name = "Sigil of Binding",
-        buffs = { "sigilOfBinding" },
+        buffs = { "sigilOfBindingStun" },
         apply = A.stormBolt.apply(function(a)
             a:setDamage(1, 0)
-            a:setDurationNormal(1, 3)
-            a:setDurationHero(1, 3)
-            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,player")
+            a:setDurationNormal(1, 5)
+            a:setDurationHero(1, 2)
+            a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,hero,player")
         end),
     }),
     applyLimb = A.channelTarget({

@@ -1,5 +1,9 @@
 --[[
-
+TODO:
+- adjust buff duration (should be always same for every stack)
+- root shouldn't forbid attacking (write triggered because native roots are not dispellable)
+- epicenter mech -> replace with dispell-empowered version
+- provoke anti-air dmg+stun event
 ]]
 
 local Ids = require("data.ids")
@@ -11,8 +15,8 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.sigilOfBinding,
+            empowered = Ids.abilities.sigilOfBindingGreater,
             slow = Ids.abilities.sigilOfBindingSlow,
-            root = Ids.abilities.sigilOfBindingRoot,
             stun = Ids.abilities.sigilOfBindingStun,
         },
         buffs = {
@@ -82,7 +86,7 @@ local function onDeath(info)
         if memory[target] then
             memory[target].stacks = math.min(memory[target].stacks + stacks, 3)
         else
-            memory[target] = { stacks = stacks, debuffApplied = false }
+            memory[target] = { stacks = stacks, debuffApplied = false, propWindow = GetUnitPropWindow(target) }
         end
         if not queued[target] then
             table.insert(queue, target)
@@ -99,18 +103,25 @@ local function onDummyDisable()
     end
 end
 
-local function onTimersigil()
-    local spellData = {
-        [1] = { id = CONFIG.refs.abilities.slow, order = "slow" },
-        [2] = { id = CONFIG.refs.abilities.root, order = "entanglingroots" },
-        [3] = { id = CONFIG.refs.abilities.stun, order = "thunderbolt" },
-    }
+local function onTimerSigil()
     for i = #queue, 1, -1 do
         local target = queue[i]
         local data = memory[target]
         if data then
-            local spell = spellData[data.stacks]
-            Dummy.applyDummyOrder(queued[target], target, spell.id, spell.order)
+            local r, g, b = 0, 255, 0
+            local text = CreateTextTagUnitBJ(string.format("%.0f!", data.stacks), target, 0, 10, r, g, b, 0)
+            SetTextTagVelocityBJ(text, 64, 90)
+            SetTextTagPermanent(text, false)
+            SetTextTagLifespan(text, 2.0)
+            SetTextTagFadepoint(text, 1.5)
+
+            Dummy.applyDummyOrder(queued[target], target, CONFIG.refs.abilities.slow, "slow")
+            if data.stacks == 2 then
+                SetUnitPropWindow(target, 0)
+            end
+            if data.stacks == 3 then
+                Dummy.applyDummyOrder(queued[target], target, CONFIG.refs.abilities.stun, "thunderbolt")
+            end
         end
         queued[target] = nil
         table.remove(queue, i)
@@ -125,6 +136,7 @@ local function onTimerFlush()
         end
     end
     for _, unit in ipairs(flush) do
+        SetUnitPropWindow(unit, memory[unit].propWindow)
         memory[unit] = nil
     end
 end
@@ -154,7 +166,7 @@ return {
         {
             trigger = "TIMER",
             delta = 0.15,
-            action = onTimersigil,
+            action = onTimerSigil,
         },
         {
             trigger = "TIMER",

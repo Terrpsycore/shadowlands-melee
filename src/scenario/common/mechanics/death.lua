@@ -20,6 +20,9 @@ local CONFIG = AbilityConfig.compile({
         units = {
             carrier = Ids.units.colossus, -- CHANGE carrier
         },
+        buffs = {
+            exclude = Ids.buffs.forgeboneReveries,
+        },
     },
     balance = {
         manacost = 5,
@@ -47,11 +50,13 @@ local function shouldUseFakeDeath(target)
 end
 
 --- @param info damageInfo
-local function onAfterDamage(info)
+local function onLethalDamage(info)
     local target = info.target
-    if GetUnitState(target, UNIT_STATE_LIFE) > 0.5 then
+
+    if UnitHasBuffBJ(target, CONFIG.refs.buffs.exclude) then
         return
     end
+
     if not shouldUseFakeDeath(target) then
         return
     end
@@ -61,7 +66,7 @@ local function onAfterDamage(info)
     local leavesCorpse = Slugs.unit(unitTypeId) and Units.leavesCorpse(unitTypeId) or true
 
     SetUnitInvulnerable(target, true)
-    -- ShowUnitHide(target)
+    ShowUnitHide(target)
     SetUnitUseFood(target, false)
     SetUnitState(target, UNIT_STATE_LIFE, 1)
     Damage.life = 1
@@ -91,9 +96,9 @@ end
 return {
     triggers = {
         {
-            trigger = "AFTER_DAMAGE",
+            trigger = "LETHAL_DAMAGE",
             priority = -1000,
-            action = onAfterDamage,
+            action = onLethalDamage,
         },
     },
     export = {

@@ -17,6 +17,7 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.animateDead,
+            empowered = Ids.abilities.animateDeadGreater,
         },
     },
     balance = {

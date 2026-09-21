@@ -215,7 +215,15 @@ return {
     },
     sigilOfBinding = {
         parent = BuffIds.curse,
-        name = "Sigil of Binding",
+        name = "Sigil of Binding (slow)",
+    },
+    sigilOfBindingRoot = {
+        parent = BuffIds.entanglingRoots,
+        name = "Sigil of Binding (root)",
+    },
+    sigilOfBindingStun = {
+        parent = BuffIds.stunned,
+        name = "Sigil of Binding (stun)",
     },
     moldWeaknessAim = {
         parent = BuffIds.trueshotAura,

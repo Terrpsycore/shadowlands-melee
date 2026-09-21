@@ -58,8 +58,8 @@ local function finishFakeDeath(unit, px, py)
         for _, corpse in ipairs(Unit.getCorpsesInRadius({ x = px, y = py }, 48)) do
             local info = DeathStorage:bind(corpse)
             if info and info.unit == unit then
-                UnitSuspendDecay(corpse, true)
-                DeathStorage:set(corpse, "reviveAfter", 0)
+                -- UnitSuspendDecay(corpse, true)
+                -- DeathStorage:set(corpse, "reviveAfter", 0)
                 return
             end
         end
@@ -77,7 +77,7 @@ local function spawnCorpseCluster(player, slugs, centerX, centerY)
             local py = centerY + CORPSE_CLUSTER_RADIUS * math.sin(rad)
             local unit = CreateUnit(player, FourCC(id), px, py, GetRandomReal(0, 360))
             Damage.apply(unit, unit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED)
-            finishFakeDeath(unit, px, py)
+            -- finishFakeDeath(unit, px, py)
         end
     end
 end
