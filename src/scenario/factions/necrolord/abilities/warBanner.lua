@@ -1,5 +1,6 @@
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
+local Unit = require("utils.unit")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -13,29 +14,19 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
-local spawnQueue = {}
-
 local function onSpell()
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
+
+    local x = GetSpellTargetX()
+    local y = GetSpellTargetY()
+
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
-    spawnQueue[owner] = { level = level }
-end
 
-local function onSpawn()
-    local banner = GetEnteringUnit()
-    local owner = GetOwningPlayer(banner)
-    local data = spawnQueue[owner]
-    spawnQueue[owner] = nil
-    if not data then
-        return
-    end
-
-    local level = data.level
-    if GetUnitAbilityLevel(banner, CONFIG.refs.abilities.aura) < 1 then
-        UnitAddAbility(banner, CONFIG.refs.abilities.aura)
-    end
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local banner = CreateUnit(owner, CONFIG.refs.units.banner, x, y, 270)
     SetUnitAbilityLevel(banner, CONFIG.refs.abilities.aura, level)
+    Unit.applyTimedLife(banner, 30)
 end
 
 return {
@@ -44,11 +35,6 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.refs.abilities.main,
             action = onSpell,
-        },
-        {
-            trigger = "CREATE",
-            filter = { target = CONFIG.refs.units.banner },
-            action = onSpawn,
         },
     },
     config = CONFIG,

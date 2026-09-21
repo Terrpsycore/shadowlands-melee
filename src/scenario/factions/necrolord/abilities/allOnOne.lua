@@ -49,9 +49,10 @@ local function onPreDamage(info)
     if not info.isAttack then
         return
     end
-    info.damageType = DAMAGE_TYPE_ENHANCED
-    -- info.armorType = DEFENSE_TYPE_NONE
-    -- info.defenseType = DEFENSE_TYPE_NONE
+    if UnitHasBuffBJ(info.target, CONFIG.refs.buffs.main) then
+        info.damageType = DAMAGE_TYPE_ENHANCED
+        info.defenseType = GetHandleId(DEFENSE_TYPE_NONE)
+    end
 end
 
 local function onTimer(info)

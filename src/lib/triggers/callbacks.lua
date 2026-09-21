@@ -138,18 +138,6 @@ T.onSpellFinish = function(triggers)
     end)
 end
 
-T.onPreDamage = function(triggers)
-    Damage.register("Pre", function(info)
-        Filter.run(triggers, info, true)
-    end, 1.0)
-end
-
-T.onDamage = function(triggers)
-    Damage.register("On", function(info)
-        Filter.run(triggers, info, true)
-    end, 1.0)
-end
-
 local function registerFilteredDamageTriggers(phase, triggers)
     for _, trigger in ipairs(triggers) do
         Damage.register(phase, function(info)
@@ -160,14 +148,20 @@ local function registerFilteredDamageTriggers(phase, triggers)
     end
 end
 
+T.onPreDamage = function(triggers)
+    registerFilteredDamageTriggers("Pre", triggers)
+end
+
+T.onDamage = function(triggers)
+    registerFilteredDamageTriggers("On", triggers)
+end
+
 T.onLethalDamage = function(triggers)
     registerFilteredDamageTriggers("Lethal", triggers)
 end
 
 T.afterDamage = function(triggers)
-    Damage.register("After", function(info)
-        Filter.run(triggers, info, true)
-    end, 1.0)
+    registerFilteredDamageTriggers("After", triggers)
 end
 
 T.onAnyOrder = function(triggers)

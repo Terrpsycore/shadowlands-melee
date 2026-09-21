@@ -1,3 +1,5 @@
+-- TODO:
+-- - cyclic scavenge until different order (-2 hp before to enable it)
 -- - create corpse on drop
 -- - preserve corpse lifetime if not in body banks
 -- - ? different storage model (now corpse is PK and it recreates)

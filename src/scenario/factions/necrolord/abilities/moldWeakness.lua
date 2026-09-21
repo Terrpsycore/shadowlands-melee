@@ -1,4 +1,6 @@
 --[[
+TODO:
+- grey floating text with decreased damage
 ]]
 
 local Ids = require("data.ids")
@@ -11,7 +13,6 @@ local CONFIG = AbilityConfig.compile({
         abilities = {
             main = Ids.abilities.moldWeakness,
             debuff = Ids.abilities.moldWeaknessDebuff,
-            effect = Ids.abilities.moldWeaknessPassiveDebuff,
         },
         buffs = {
             aim = Ids.buffs.moldWeaknessAim,
@@ -19,7 +20,8 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
-        flushDelta = 0.2,
+        damageDecrease = { 0.3, 0.6, 1 },
+        flushDelta = 1,
         duration = 8,
     },
 })
@@ -42,10 +44,7 @@ local function onDummySpell()
     local level = GetUnitAbilityLevel(caster, spell)
     memory[target] = level
 
-    UnitAddAbility(target, CONFIG.refs.abilities.effect)
-    SetUnitAbilityLevel(target, CONFIG.refs.abilities.effect, level)
-
-    debuffed[target] = true
+    debuffed[target] = level
 end
 
 local function onDamage(info)
@@ -60,13 +59,16 @@ local function onDamage(info)
         Dummy.applyDummyOrder(owner, info.target, CONFIG.refs.abilities.debuff, "acidbomb", level)
         memory[info.target] = nil
     end
+    if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.debuff) then
+        local decrease = CONFIG.balance.damageDecrease[debuffed[info.source]]
+        info.damage = info.damage - (info.damage * decrease)
+    end
 end
 
 local function onTimer()
     local flushQueue = {}
     for unit, _ in pairs(debuffed) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.debuff) then
-            UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
             table.insert(flushQueue, unit)
         end
     end

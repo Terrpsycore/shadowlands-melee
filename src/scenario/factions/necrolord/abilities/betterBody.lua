@@ -68,7 +68,7 @@ local function onPossession()
             local m = UnitAddAbility(target, CONFIG.refs.abilities.manaBonus)
             dump("onPossession UnitAddAbility", m)
         end
-        SetUnitState(target, UNIT_STATE_MAX_MANA, casterMaxMana)
+        BlzSetUnitMaxMana(target, casterMaxMana)
     end
 
     local abilities = { CONFIG.refs.abilities.applyLimb, CONFIG.refs.abilities.scissorSoul, CONFIG.refs.abilities.main }

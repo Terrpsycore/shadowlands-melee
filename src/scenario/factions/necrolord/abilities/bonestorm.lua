@@ -1,4 +1,7 @@
 --[[
+TODO:
+- different heal amount on dummy slurp basing on corpse maxhp
+- maybe pulse with AoE effect if ate to more than max hp
 ]]
 
 local Ids = require("data.ids")

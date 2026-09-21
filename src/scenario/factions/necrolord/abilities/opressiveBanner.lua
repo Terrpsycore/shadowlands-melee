@@ -34,25 +34,18 @@ local spawnQueue = {}
 local function onSpell()
     local caster = GetTriggerUnit()
     local owner = GetOwningPlayer(caster)
+
+    local x = GetSpellTargetX()
+    local y = GetSpellTargetY()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
-    spawnQueue[owner] = { level = level }
-end
 
-local function onSpawn()
-    local banner = GetEnteringUnit()
-    local owner = GetOwningPlayer(banner)
-    local data = spawnQueue[owner]
-    spawnQueue[owner] = nil
-    if not data then
-        return
-    end
-
-    local level = data.level
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local banner = CreateUnit(owner, CONFIG.refs.units.banner, x, y, 270)
+    Unit.applyTimedLife(banner, 60)
     UnitAddAbility(banner, CONFIG.refs.abilities.aura)
     UnitAddAbility(banner, CONFIG.refs.abilities.shield)
     SetUnitAbilityLevel(banner, CONFIG.refs.abilities.aura, level)
     SetUnitAbilityLevel(banner, CONFIG.refs.abilities.shield, level)
-
     memory[banner] = {
         shield = CONFIG.balance.shieldCapacity[level],
     }
@@ -85,11 +78,6 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
             spellId = CONFIG.refs.abilities.main,
             action = onSpell,
-        },
-        {
-            trigger = "CREATE",
-            filter = { target = CONFIG.refs.units.banner },
-            action = onSpawn,
         },
         {
             trigger = "DAMAGE",

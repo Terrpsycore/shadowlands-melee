@@ -85,23 +85,25 @@ return {
         abilities = { "sporeCloud" },
     },
     bonestorm = {
-        parent = UnitIds.footman,
+        parent = UnitIds.ghoul,
         name = "Bonestorm",
         abilities = { "deadlyWhirlwind", "slurp" },
         art = { icon = Icons.tornado },
         apply = function(u)
             u:setHitPointsRegenerationRate(-5)
+            u:setHitPointsRegenerationType("always")
+            -- u:setTargetedAs("undead")
         end,
     },
     --
     warBanner = {
-        parent = UnitIds.sentryward,
+        parent = UnitIds.stasistraptotem,
         name = "War Banner",
         abilities = { "warBannerAura" },
         art = { icon = Icons.undeadCaptureFlag },
     },
     opressiveBanner = {
-        parent = UnitIds.sentryward,
+        parent = UnitIds.stasistraptotem,
         name = "Opressive Banner",
         art = { icon = Icons.orcCaptureFlag },
         abilities = { "opressiveBannerAura" }, -- 1 lvl on spawn, increases with trigger

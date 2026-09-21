@@ -189,6 +189,10 @@ return {
         parent = BuffIds.disease,
         name = "Corrosive Plague",
     },
+    corrosivePlagueArmorDebuff = {
+        parent = BuffIds.corruption,
+        name = "Corrosive Plague",
+    },
     concoctedHealingRejuv = {
         parent = BuffIds.rejuvenationItem,
         name = "Concocted Healing",

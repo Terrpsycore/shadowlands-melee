@@ -272,14 +272,15 @@ return {
         buffs = { "corrosivePlague" },
         apply = A.auraPlagueAbomination.apply(function(a)
             a:setAreaofEffect(1, 64)
-            a:setTargetsAllowed(1, "allied,organic,player")
+            a:setTargetsAllowed(1, "allied,organic,player,self")
         end),
     }),
-    corrosivePlagueArmorDebuff = A.itemArmorBonus({
+    corrosivePlagueArmorDebuff = A.devotionAura({
         name = "Corrosive Plague",
-        apply = A.itemArmorBonus.apply(function(a)
-            a:setItemAbility(false)
-            a:setDefenseBonus(1, -2)
+        buffs = { "corrosivePlagueArmorDebuff" },
+        apply = A.devotionAura.apply(function(a)
+            a:setArmorBonus(1, -2)
+            a:setAreaofEffect(1, 1)
         end),
     }),
     collectCorpsesSearch = A.channelPoint({
@@ -329,12 +330,10 @@ return {
             a:setAreaofEffect(1, 200)
         end),
     }),
-    warBanner = A.sentryWard({
+    warBanner = A.channelPoint({
         name = "War Banner",
         art = { icon = Icons.undeadCaptureFlag },
-        apply = A.sentryWard.apply(function(a)
-            a:setWardUnitType(1, Ids.units.warBanner)
-        end),
+        apply = A.channelPoint.apply(function(a) end),
     }),
     warBannerAura = A.enduranceAura({
         name = "War Banner",
@@ -355,6 +354,8 @@ return {
     }),
     slurpCorpseDummy = A.deathCoil({
         name = "Slurp",
-        apply = A.deathCoil.apply(function(a) end),
+        apply = A.deathCoil.apply(function(a, level)
+            a:setTargetsAllowed(level, "allied,organic,player")
+        end),
     }),
 }

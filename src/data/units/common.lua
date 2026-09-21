@@ -37,7 +37,7 @@ return {
             targetsAllowed = "ground,air,structure,enemy,neutral,vulnerable",
         },
         art = {
-            -- model = "",
+            --  model = "",
         },
         apply = function(u)
             u:setSpeedBase(0)

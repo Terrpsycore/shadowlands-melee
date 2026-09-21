@@ -20,15 +20,6 @@ return {
         levels = 3,
         apply = A.nonDispellableTargetDebuff.apply(function(a, level) end),
     }),
-    moldWeaknessPassiveDebuff = A.auraCommandCreep({
-        name = "Mold Weakness",
-        buffs = {},
-        levels = 3,
-        apply = A.auraCommandCreep.apply(function(a, level)
-            a:setAreaofEffect(level, 0)
-            a:setAttackDamageIncrease(level, -0.33 * level)
-        end),
-    }),
     serratedSpaulders = A.innerFire({
         name = "Serrated Spaulders",
         levels = 3,
@@ -125,25 +116,23 @@ return {
             a:setAttackBonus(level, 10 * level)
         end),
     }),
-    opressiveBanner = A.sentryWard({ -- ? add invul; timed remove invul
+    opressiveBanner = A.channelPoint({ -- ? add invul; timed remove invul
         name = "Opressive Banner",
         levels = 3,
         manaCost = 100,
-        apply = A.sentryWard.apply(function(a, level)
-            a:setWardUnitType(level, Ids.units.opressiveBanner)
-        end),
+        apply = A.channelPoint.apply(function(a, level) end),
         art = { icon = Icons.orcCaptureFlag },
         hotkey = "W",
     }),
-    opressiveBannerAura = A.slowAura({ -- negative
+    opressiveBannerAura = A.enduranceAura({ -- negative
         name = "Opressive Banner",
         levels = 3,
         buffs = { "opressiveBanner" },
-        apply = A.slowAura.apply(function(a, level)
-            a:setAreaofEffect(1, 600)
-            a:setMovementSpeedFactor(level, 0.1 * level)
-            a:setAttackSpeedFactor(level, 0.1 * level)
-            a:setTargetsAllowed(level, "enemy,ground,air,organic,player")
+        apply = A.enduranceAura.apply(function(a, level)
+            a:setMovementSpeedIncrease(level, level * -0.10)
+            a:setAttackSpeedIncrease(level, level * -0.10)
+            a:setAreaofEffect(level, 600)
+            a:setTargetsAllowed(level, "enemy,ground,air,organic,mechanical")
         end),
     }),
     opressiveBannerShield = A.nonDispellableSelfBuffTimed({ -- negative

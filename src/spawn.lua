@@ -124,9 +124,15 @@ local packs = {
 
         CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))
 
-        CreateUnit(p1, FourCC(Ids.units.footman), -1500.4, y + 1000, f)
+        local footman = CreateUnit(p1, FourCC(Ids.units.footman), -1500.4, y + 1000, f)
+        BlzSetUnitMaxMana(footman, 300)
 
         CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
+        CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
+        -- CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
+        local p = CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
+        SetUnitState(p, UNIT_STATE_MAX_MANA, 1)
+        BlzSetUnitMaxMana(p, 0)
     end,
 }
 

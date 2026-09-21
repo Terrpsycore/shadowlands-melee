@@ -61,7 +61,7 @@ local function onAfterDamage(info)
     local leavesCorpse = Slugs.unit(unitTypeId) and Units.leavesCorpse(unitTypeId) or true
 
     SetUnitInvulnerable(target, true)
-    ShowUnitHide(target)
+    -- ShowUnitHide(target)
     SetUnitUseFood(target, false)
     SetUnitState(target, UNIT_STATE_LIFE, 1)
     Damage.life = 1
