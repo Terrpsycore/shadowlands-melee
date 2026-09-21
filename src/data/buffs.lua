@@ -247,4 +247,6 @@ return {
     opressiveBannerShield = { parent = BuffIds.invulnerable, name = "Opressive Banner" },
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },
     allOnOne = { parent = BuffIds.berserk, name = "All on One" },
+    harvestAccelerationSlow = { parent = BuffIds.slow, name = "Harvest Acceleration (slow)" },
+    soldiersOath = { parent = BuffIds.bloodlust, name = "Soldier's Oath" },
 }

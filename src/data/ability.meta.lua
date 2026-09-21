@@ -10,6 +10,8 @@
 ---@field channelNoTarget AbilityFactoryChannel
 ---@field channelPoint AbilityFactoryChannel
 ---@field channelTarget AbilityFactoryChannel
+---@field dispellableTargetBuff AbilityFactoryInnerFire
+---@field dispellableTargetDebuff AbilityFactoryCurse
 ---@field exhumeBased AbilityFactoryExhume
 ---@field immolationToggle AbilityFactoryImmolation
 ---@field nonDispellableSelfBuffTimed AbilityFactoryBerserkerRage1

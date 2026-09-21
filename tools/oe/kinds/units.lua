@@ -185,6 +185,7 @@ return {
         }
     end,
     defaults = function(u)
+        -- TODO: set race
         -- u:setNormalAbilities("")
     end,
     applyFields = applyFields,

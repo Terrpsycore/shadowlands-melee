@@ -147,4 +147,15 @@ return setmetatable({
             a:setMissileSpeed(99999)
         end,
     }),
+    dispellableTargetBuff = presetFactory(F.innerFire, {
+        apply = function(a, level)
+            a:setDefenseIncrease(level, 0)
+            a:setDamageIncrease(level, 0)
+        end,
+    }),
+    dispellableTargetDebuff = presetFactory(F.curse, {
+        apply = function(a, level)
+            a:setChancetoMiss(level, 0)
+        end,
+    }),
 }, { __index = F })
