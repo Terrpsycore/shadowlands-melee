@@ -8,12 +8,14 @@
 ---@field abilities table<string, string>
 ---@field items table<string, string>
 ---@field buffs table<string, string>
+---@field upgrades table<string, string>
 
 ---@class DomainSlugs
 ---@field units string[]
 ---@field abilities string[]
 ---@field items string[]
 ---@field buffs string[]
+---@field upgrades string[]
 
 local GENERATED_DIR = "src/data/generated"
 local winPath = GENERATED_DIR:gsub("/", "\\")
@@ -48,6 +50,13 @@ local SOURCES = {
             return "B"
         end,
     },
+    {
+        domain = "upgrades",
+        db = require("data.upgrades"),
+        prefixOf = function()
+            return "R"
+        end,
+    },
 }
 
 local OUT_PATH = "src/data/generated/ids.lua"
@@ -59,6 +68,7 @@ local SLUG_ALIAS_BY_DOMAIN = {
     units = "UnitSlug",
     buffs = "BuffSlug",
     items = "ItemSlug",
+    upgrades = "UpgradeSlug",
 }
 
 ---@class Generator

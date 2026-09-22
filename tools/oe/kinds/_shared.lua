@@ -1,5 +1,6 @@
 local Ids = require("data.generated.ids")
 local AbilityIds = require("vendor.assets.AbilityIds")
+local UpgradeIds = require("vendor.assets.UpgradeIds")
 
 local M = {}
 
@@ -7,6 +8,14 @@ function M.resolveAbilityId(slug)
     local id = Ids.abilities[slug] or AbilityIds[slug]
     if not id then
         error("unknown ability '" .. slug .. "'")
+    end
+    return id
+end
+
+function M.resolveUpgradeId(slug)
+    local id = Ids.upgrades[slug] or UpgradeIds[slug]
+    if not id then
+        error("unknown upgrade '" .. slug .. "'")
     end
     return id
 end

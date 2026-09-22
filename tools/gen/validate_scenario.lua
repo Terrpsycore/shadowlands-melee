@@ -8,7 +8,7 @@ package.loaded["data.generated.ids"] = nil
 local generated = dofile(root .. "/src/data/generated/ids.lua")
 local registry = require("scenario.generated.abilities_registry")
 
-local ID_DOMAINS = { abilities = true, buffs = true, units = true, items = true }
+local ID_DOMAINS = { abilities = true, buffs = true, units = true, items = true, upgrades = true }
 
 local function readFile(path)
     local f, err = io.open(path, "r")
