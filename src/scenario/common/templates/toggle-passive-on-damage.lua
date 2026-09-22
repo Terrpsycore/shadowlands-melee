@@ -6,7 +6,7 @@
     - data/abilities: {slug} (A.exhumeBased — hidden CD holder)
     - data/abilities: {slug}Toggle (A.immolationToggle)
     - data/abilities: {slug}Buff or {slug}Pulse (dummy effect, optional)
-    - data/buffs.lua (if buff applied)
+    - data/buffs/ (if buff applied)
     - data/units: add "{slug}Toggle" to carrier.abilities
     - lua tools/bake.lua
 

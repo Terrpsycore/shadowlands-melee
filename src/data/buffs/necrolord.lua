@@ -1,94 +1,6 @@
 local BuffIds = require("vendor.assets.BuffIds")
 
 return {
-    soulbind = {
-        parent = BuffIds.innerFire,
-        name = "Soulbind",
-    },
-    defenceProtocol = {
-        parent = BuffIds.bloodlust,
-        name = "Defence Protocol",
-    },
-    huntedAnimal = {
-        parent = BuffIds.bloodlust,
-        name = "Hunted Animal",
-    },
-    spiritLink = {
-        parent = BuffIds.spiritLink,
-        name = "Spirit Link",
-    },
-    dedication = {
-        parent = BuffIds.innerFire,
-        name = "Dedication",
-    },
-    judgingGazeEvent = {
-        parent = BuffIds.coldArrowsInfo,
-        name = "Dedication",
-    },
-    memoryPeer = {
-        parent = BuffIds.slowPoisonNonStacking,
-        name = "Memory Peer",
-    },
-    oneMoreChance = {
-        parent = BuffIds.innerFire,
-        name = "One More Chance",
-    },
-    lastStand = {
-        parent = BuffIds.devotionAura,
-        name = "Last Stand",
-    },
-    deepMeditation = {
-        parent = BuffIds.rejuvenationItem,
-        name = "Deep Meditation",
-    },
-    deepMeditationStun = {
-        parent = BuffIds.stunned,
-        name = "Deep Meditation",
-    },
-    overchargeDamage = {
-        parent = BuffIds.innerFire,
-        name = "Overcharge",
-    },
-    overchargeSpeed = {
-        parent = BuffIds.bloodlust,
-        name = "Overcharge",
-    },
-    scanReveal = {
-        parent = BuffIds.faerieFire,
-        name = "Scan Reveal",
-    },
-    scanBuffSpeed = {
-        parent = BuffIds.bloodlust,
-        name = "Scan",
-    },
-    scanBuffDamage = {
-        parent = BuffIds.innerFire,
-        name = "Scan",
-    },
-    bastionSpearBonusDamage = {
-        parent = BuffIds.slow,
-        name = "Bastion Spear",
-    },
-    bastionSpearSlow = {
-        parent = BuffIds.shadowStrike,
-        name = "Bastion Spear",
-    },
-    securityLeakRepair = {
-        parent = BuffIds.liquidFire,
-        name = "Security Leak",
-    },
-    securityLeakAttack = {
-        parent = BuffIds.cloud,
-        name = "Security Leak",
-    },
-    securityLeakProduction = {
-        parent = BuffIds.freezingBreath,
-        name = "Security Leak",
-    },
-    counterattackCall = {
-        parent = BuffIds.innerFire,
-        name = "Counterattack Call",
-    },
     surviveWish = {
         parent = BuffIds.berserk,
         name = "Survive Wish",
@@ -247,15 +159,4 @@ return {
     opressiveBannerShield = { parent = BuffIds.invulnerable, name = "Opressive Banner" },
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },
     allOnOne = { parent = BuffIds.berserk, name = "All on One" },
-    harvestAccelerationSlow = { parent = BuffIds.slow, name = "Harvest Acceleration (slow)" },
-    infuseWeapon = { parent = BuffIds.bloodlust, name = "Infuse Weapon" },
-    castigate = { parent = BuffIds.howlofTerror, name = "Castigate" },
-    condemnWrath = { parent = BuffIds.curse, name = "Condemn Wrath" },
-    devourSinsVulnerability = { parent = BuffIds.curse, name = "Devour Sins" },
-    stampede = { parent = BuffIds.windWalk, name = "Stampede" },
-    fearsomePresence = { parent = BuffIds.curse, name = "Fearsome Presence" },
-    secondBreathCry = { parent = BuffIds.howlofTerror, name = "Second Breath" },
-    provoke = { parent = BuffIds.curse, name = "Provoke" },
-    contain = { parent = BuffIds.aerialShackles, name = "Contain" },
-    soldiersOath = { parent = BuffIds.bloodlust, name = "Soldier's Oath" },
 }

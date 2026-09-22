@@ -1,6 +1,7 @@
 local reserved = {
     parent = true,
     apply = true,
+    faction = true,
 }
 
 local fields = {

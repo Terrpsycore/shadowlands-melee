@@ -4,7 +4,7 @@
 
   DATA CHECKLIST:
     - data/abilities: {slug} (visible cast, applies buff — e.g. A.spiritLink)
-    - data/buffs.lua: {slug} buff
+    - data/buffs/: {slug} buff
     - data/units: add "{slug}" to carrier.abilities
     - lua tools/bake.lua
 

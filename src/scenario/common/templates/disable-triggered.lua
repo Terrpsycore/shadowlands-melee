@@ -5,7 +5,7 @@
   DATA CHECKLIST:
     - data/abilities: {slug} (passive marker, e.g. A.evasion with 0%)
     - data/abilities: {slug}Buff (dummy applier, name="")
-    - data/buffs.lua: {slug} buff
+    - data/buffs/: {slug} buff
     - data/units: add "{slug}" to carrier.abilities
     - lua tools/bake.lua
 

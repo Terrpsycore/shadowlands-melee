@@ -5,7 +5,7 @@
   DATA CHECKLIST:
     - data/abilities: {slug} (visible cast)
     - data/abilities: {slug}*Dummy / *Buff (hidden appliers)
-    - data/buffs.lua: effect buffs
+    - data/buffs/: effect buffs
     - scenario/storage/{slug}.lua — per-target state
     - data/units: add "{slug}" to carrier.abilities
     - lua tools/bake.lua

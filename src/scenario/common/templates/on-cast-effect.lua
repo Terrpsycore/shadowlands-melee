@@ -5,7 +5,7 @@
   DATA CHECKLIST:
     - data/abilities: {slug} (e.g. A.channelArea, A.channelPoint)
     - optional hidden abilities for dummy debuffs
-    - data/buffs.lua for debuff slugs
+    - data/buffs/ for debuff slugs
     - data/units: add "{slug}" to carrier.abilities
     - lua tools/bake.lua
 
