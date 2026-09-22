@@ -248,5 +248,13 @@ return {
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },
     allOnOne = { parent = BuffIds.berserk, name = "All on One" },
     harvestAccelerationSlow = { parent = BuffIds.slow, name = "Harvest Acceleration (slow)" },
+    infuseWeapon = { parent = BuffIds.bloodlust, name = "Infuse Weapon" },
+    castigate = { parent = BuffIds.howlofTerror, name = "Castigate" },
+    condemnWrath = { parent = BuffIds.curse, name = "Condemn Wrath" },
+    stampede = { parent = BuffIds.windWalk, name = "Stampede" },
+    fearsomePresence = { parent = BuffIds.curse, name = "Fearsome Presence" },
+    secondBreathCry = { parent = BuffIds.howlofTerror, name = "Second Breath" },
+    provoke = { parent = BuffIds.curse, name = "Provoke" },
+    contain = { parent = BuffIds.aerialShackles, name = "Contain" },
     soldiersOath = { parent = BuffIds.bloodlust, name = "Soldier's Oath" },
 }

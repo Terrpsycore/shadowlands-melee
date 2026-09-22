@@ -3,18 +3,25 @@ local Ids = require("data.ids")
 local A = require("data.abilityPresets")
 
 return {
-    motivation = A.nonDispellableSelfBuffTimed({
-        name = "Motivation",
-    }),
+    -- motivation = A.nonDispellableSelfBuffTimed({
+    --     name = "Motivation",
+    --     buffs = { "motivation" },
+    -- }),
     duel = A.passiveGeneric({
         name = "Duel",
+        -- ? buffs for UI
     }),
-    -- riposte
+    -- riposte = A.channelNoTarget({
+    --     name = "Riposte",
+    --     buffs = { "riposte" },
+    -- }),
     dreadTrack = A.passiveGeneric({
         name = "Dread Track",
+        -- ? buffs for UI
     }),
     hopebreakerThrill = A.passiveGeneric({
         name = "Hopebreaker Thrill",
+        -- ? buffs for UI
     }),
     breakTheRanks = A.passiveGeneric({ -- TODO: has to be set up in upgrade (OE unit attack types)
         name = "Break the Ranks",
@@ -24,6 +31,7 @@ return {
     }),
     fearsomePresence = A.slowPoison({
         name = "Fearsome Presence",
+        buffs = { "fearsomePresence" },
         apply = A.slowPoison.apply(function(a)
             a:setStackingType(1, 0)
             a:setDamagePerSecond(1, 0)
@@ -31,9 +39,12 @@ return {
     }),
     provoke = A.channelTarget({
         name = "Provoke",
+        buffs = { "provoke" },
     }),
+    -- TODO: courier invis
     stampede = A.windWalk({
         name = "Stampede",
+        buffs = { "stampede" },
         apply = A.windWalk.apply(function(a)
             a:setManaCost(1, 0)
             a:setTransitionTime(1, -1)
@@ -42,8 +53,9 @@ return {
     }),
     infuseWeapon = A.bloodlust1({
         name = "Infuse Weapon",
+        buffs = { "infuseWeapon" },
     }),
-    harvestAcceleration = A.bloodlust1({
+    harvestAcceleration = A.channelTarget({
         name = "Harvest Acceleration",
     }),
     feast = A.channelTarget({
@@ -60,12 +72,20 @@ return {
     }),
     condemnWrath = A.dispellableTargetDebuff({
         name = "Condemn Wrath",
+        buffs = { "condemnWrath" },
     }),
     devourSins = A.devourMagic({ -- TBD
         name = "Devour Sins",
     }),
     contain = A.aerialShackles({
         name = "Contain",
+        buffs = { "contain" },
+    }),
+    pullSins = A.channelNoTarget({
+        name = "Pull Sins",
+    }),
+    siphonAnima = A.channelNoTarget({
+        name = "Siphon Anima",
     }),
     --
     harvestAccelerationSlow = A.shadowStrike({
@@ -80,5 +100,14 @@ return {
             a:setDurationHero(1, 3)
             a:setDurationNormal(1, 5)
         end),
+    }),
+    castigateDebuff = A.nonDispellableTargetDebuff({
+        name = "Castigate",
+        buffs = { "castigate" },
+    }),
+    secondBreathCry = A.warStomp({
+        name = "Second Breath",
+        buffs = { "secondBreathCry" },
+        apply = A.warStomp.apply(function(a) end),
     }),
 }

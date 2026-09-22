@@ -4,16 +4,16 @@ return {
     highInquisitor = {
         parent = UnitIds.jaina,
         name = "High Inquisitor",
-        heroAbilities = {},
+        heroAbilities = { "inquisitorMark", "deepInquiry", "condemnPride", "condemnGreed" },
     },
     fencer = {
         parent = UnitIds.blademaster,
         name = "Fencer",
-        heroAbilities = {},
+        heroAbilities = { "freeWalk", "bladeThirst", "carnage", "phaseShift" },
     },
     stonebornHero = {
         parent = UnitIds.mountainking,
         name = "Stoneborn",
-        heroAbilities = {},
+        heroAbilities = { "fissure", "stoneBarrier", "soldiersOath", "crushingStone" },
     },
 }
