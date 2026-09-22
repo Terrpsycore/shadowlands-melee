@@ -1,7 +1,7 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
-    main = {
+    kyrianMain = {
         parent = UnitIds.townhall,
         name = "Main",
         unitsTrained = { "steward" },

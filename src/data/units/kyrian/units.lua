@@ -7,7 +7,7 @@ return {
         name = "Steward",
         abilities = { "humanBuild", "repairHuman", "harvest", "soakAnima", "fuseAnima" },
         structuresBuilt = {
-            "main",
+            "kyrianMain",
             "animaExtractor",
             "trainingGrounds",
             "workshop",
@@ -101,28 +101,28 @@ return {
     ascendedPurity = {
         parent = UnitIds.footman,
         art = { icon = Icons.cleric },
-        name = "Praetor",
+        name = "Ascended Purity",
     },
     ascendedPurityFlying = {
         parent = UnitIds.footman,
         art = { icon = Icons.cleric },
-        name = "Praetor",
+        name = "Ascended Purity",
     },
     ascendedWisdom = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Ascended Wisdom",
     },
     ascendedWisdomFlying = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Ascended Wisdom",
     },
     ascendedLoyalty = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Ascended Loyalty",
     },
     ascendedLoyaltyFlying = {
         parent = UnitIds.footman,
-        name = "Praetor",
+        name = "Ascended Loyalty",
     },
     memorySpirit = {
         parent = UnitIds.ghost,
