@@ -39,6 +39,7 @@ end
 ---@diagnostic enable: duplicate-set-field, inject-field
 
 require("lib.objediting.inventory")
+require("lib.objediting.bases")
 
 local Ids = require("data.generated.ids")
 local create = dofile("tools/oe/create.lua")

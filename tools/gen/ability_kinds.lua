@@ -1,7 +1,9 @@
 local AbilityIds = require("vendor.assets.AbilityIds")
+local AbilityBaseIds = require("data.abilityBaseIds")
 local rowFields = dofile("tools/oe/ability_row_fields.lua")
 
-local srcPath = "src/vendor/assets/objediting/object/AbilityObjEditing.lua"
+local vendorClassSrc = "src/vendor/assets/objediting/object/AbilityObjEditing.lua"
+local localClassGlob = "src/lib/objediting/bases"
 local abilityLuaPath = "src/data/abilityPresets.lua"
 local classesPath = "src/data/generated/ability_classes.lua"
 local factoriesPath = "src/data/generated/ability_factories.lua"
@@ -13,32 +15,79 @@ local function isIdent(name)
     return type(name) == "string" and name:match(identPattern) ~= nil
 end
 
-local src = assert(io.open(srcPath, "r"))
-local text = src:read("*a")
-src:close()
-
-local classesByParent = {}
-for className, parentId in
-    text:gmatch(
-        'function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, "([^"]+)"%)'
-    )
-do
-    local list = classesByParent[parentId]
-    if not list then
-        list = {}
-        classesByParent[parentId] = list
+for key in pairs(AbilityBaseIds) do
+    if AbilityIds[key] then
+        error("abilityBaseIds key overlaps vendor AbilityIds: " .. key)
     end
-    local seen = false
-    for _, existing in ipairs(list) do
-        if existing == className then
-            seen = true
-            break
-        end
-    end
-    if not seen then
-        list[#list + 1] = className
+    if not isIdent(key) then
+        error("abilityBaseIds key is not a Lua identifier: " .. tostring(key))
     end
 end
+
+local constructorPattern =
+    'function (AbilityDefinition[%w]+):constructor%(id%)%s+self%.def = createDefinition%(DefinitionType%.Ability, id, "([^"]+)"%)'
+
+local function parseConstructors(text)
+    local classesByParent = {}
+    for className, parentId in text:gmatch(constructorPattern) do
+        local list = classesByParent[parentId]
+        if not list then
+            list = {}
+            classesByParent[parentId] = list
+        end
+        local seen = false
+        for _, existing in ipairs(list) do
+            if existing == className then
+                seen = true
+                break
+            end
+        end
+        if not seen then
+            list[#list + 1] = className
+        end
+    end
+    return classesByParent
+end
+
+local function readFile(path)
+    local file = assert(io.open(path, "r"))
+    local text = file:read("*a")
+    file:close()
+    return text
+end
+
+local function mergeClassesByParent(into, from)
+    for parentId, list in pairs(from) do
+        local target = into[parentId]
+        if not target then
+            into[parentId] = {}
+            target = into[parentId]
+        end
+        for _, className in ipairs(list) do
+            local seen = false
+            for _, existing in ipairs(target) do
+                if existing == className then
+                    seen = true
+                    break
+                end
+            end
+            if not seen then
+                target[#target + 1] = className
+            end
+        end
+    end
+end
+
+local classesByParent = parseConstructors(readFile(vendorClassSrc))
+
+local localDir = assert(io.popen('dir /b "' .. localClassGlob:gsub("/", "\\") .. '" 2>nul'))
+for name in localDir:lines() do
+    if name:match("%.lua$") and name ~= "init.lua" then
+        local path = localClassGlob .. "/" .. name
+        mergeClassesByParent(classesByParent, parseConstructors(readFile(path)))
+    end
+end
+localDir:close()
 
 local classByParent = {}
 for parentId, list in pairs(classesByParent) do
@@ -47,19 +96,33 @@ for parentId, list in pairs(classesByParent) do
 end
 
 if next(classByParent) == nil then
-    error("no ability constructors parsed from " .. srcPath)
+    error("no ability constructors parsed from vendor or local bases")
 end
 
 local keysByParent = {}
-for key, parentId in pairs(AbilityIds) do
-    if type(parentId) == "string" then
-        local keys = keysByParent[parentId]
-        if not keys then
-            keys = {}
-            keysByParent[parentId] = keys
-        end
-        keys[#keys + 1] = key
+local keySource = {}
+
+local function addKey(key, parentId, source)
+    if type(parentId) ~= "string" then
+        return
     end
+    if keySource[key] and keySource[key] ~= source then
+        error(string.format("ability id key %q defined in both vendor and local tables", key))
+    end
+    keySource[key] = source
+    local keys = keysByParent[parentId]
+    if not keys then
+        keys = {}
+        keysByParent[parentId] = keys
+    end
+    keys[#keys + 1] = key
+end
+
+for key, parentId in pairs(AbilityIds) do
+    addKey(key, parentId, "vendor")
+end
+for key, parentId in pairs(AbilityBaseIds) do
+    addKey(key, parentId, "local")
 end
 
 local parentIds = {}
@@ -80,6 +143,7 @@ for _, parentId in ipairs(parentIds) do
             factoryRows[#factoryRows + 1] = {
                 key = key,
                 className = classByParent[parentId],
+                source = keySource[key],
             }
         end
     end
@@ -109,9 +173,7 @@ local function rowInputClassName(key)
 end
 
 local function parseAbilityPresets(path)
-    local file = assert(io.open(path, "r"))
-    local text = file:read("*a")
-    file:close()
+    local text = readFile(path)
 
     local presets = {}
     for presetName, baseKey in text:gmatch("(%w+) = presetFactory%(F%.(%w+),") do
@@ -131,8 +193,16 @@ local function parseAbilityPresets(path)
     return presets
 end
 
+local function parentAccessor(row)
+    if row.source == "local" then
+        return ("AbilityBaseIds.%s"):format(row.key)
+    end
+    return ("AbilityIds.%s"):format(row.key)
+end
+
 local factoriesFile = assert(io.open(factoriesPath, "w"))
-factoriesFile:write('local AbilityIds = require("vendor.assets.AbilityIds")\n\n')
+factoriesFile:write('local AbilityIds = require("vendor.assets.AbilityIds")\n')
+factoriesFile:write('local AbilityBaseIds = require("data.abilityBaseIds")\n\n')
 factoriesFile:write("---@class AbilityRowInput\n")
 for _, field in ipairs(rowFields) do
     local name, fieldType, optional = field[1], field[2], field.optional
@@ -190,7 +260,7 @@ for _, row in ipairs(factoryRows) do
     factoriesFile:write(("---@overload fun(data?: %s): AbilityRow\n\n"):format(rowInputClass))
     factoriesFile:write(("---@type %s\n"):format(factoryClass))
     factoriesFile:write(("A.%s = setmetatable({\n"):format(row.key))
-    factoriesFile:write(("    parent = AbilityIds.%s,\n"):format(row.key))
+    factoriesFile:write(("    parent = %s,\n"):format(parentAccessor(row)))
     factoriesFile:write("    apply = identity,\n")
     factoriesFile:write("}, callMt)\n\n")
 end

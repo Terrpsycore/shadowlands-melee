@@ -101,6 +101,10 @@ return {
             a:setDurationNormal(1, 5)
         end),
     }),
+    devourSinsVulnerability = A.forsakenPaladinAura({
+        name = "Devour Sins",
+        buffs = { "devourSinsVulnerability" },
+    }),
     castigateDebuff = A.nonDispellableTargetDebuff({
         name = "Castigate",
         buffs = { "castigate" },

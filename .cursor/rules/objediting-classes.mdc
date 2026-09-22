@@ -13,5 +13,5 @@ alwaysApply: false
 Чеклист:
 
 - В файле класса: `---@class Name: Super` и `---@field def Definition` (если это object-definition).
-- В `src/lib/objediting/.meta.lua`: тот же `---@class` и стаб `Name:new(...)` с `@return Name`.
-- Не писать runtime `function Name:new` — перебьёт `object:new`. Стаб только в `---@meta`.
+- Стаб `Name:new(...)` генерится в `src/lib/objediting/.meta.lua` через `tools/gen/objediting_meta.lua` (bake) из `---@class` в файле класса.
+- Не писать runtime `function Name:new` — перебьёт `object:new`. Не править `.meta.lua` вручную.

@@ -75,9 +75,10 @@ for _, mod in ipairs(registry) do
 end
 
 local AbilityIds = require("vendor.assets.AbilityIds")
+local AbilityBaseIds = require("data.abilityBaseIds")
 
 local function assertAbilitySlug(slug, context)
-    if generated.abilities[slug] or AbilityIds[slug] then
+    if generated.abilities[slug] or AbilityIds[slug] or AbilityBaseIds[slug] then
         return
     end
     error(string.format("%s: unknown ability %q", context, slug))
