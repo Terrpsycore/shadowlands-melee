@@ -251,6 +251,7 @@ return {
     }),
     watcherFly = A.stormCrowForm({
         name = "Ascend/Descend",
+        button = { 1, 1 },
         apply = A.stormCrowForm.apply(function(a)
             a:setMorphingFlags(1, 1) -- uninterruptable
             a:setManaCost(1, 0)

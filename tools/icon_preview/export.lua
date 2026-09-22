@@ -208,6 +208,18 @@ local PREVIEW_HIDDEN = {
     inventory = true,
 }
 
+local DEFAULT_UNIT_ORDERS = {
+    { order = "move", name = "Move", x = 0, y = 0, iconKey = "move" },
+    { order = "stop", name = "Stop", x = 1, y = 0, iconKey = "stop" },
+    { order = "holdPosition", name = "Hold Position", x = 2, y = 0, iconKey = "holdPosition" },
+    { order = "attack", name = "Attack", x = 3, y = 0, iconKey = "attack" },
+    { order = "patrol", name = "Patrol", x = 0, y = 1, iconKey = "patrol" },
+}
+
+local DEFAULT_HERO_ORDERS = {
+    { order = "selectSkill", name = "Learn Skill", x = 3, y = 1, iconKey = "skillz" },
+}
+
 local function hasDisplayIcon(ability)
     return ability.iconKey ~= nil and ability.iconSource ~= "missing"
 end
@@ -221,63 +233,93 @@ local function allocateDisplaySlot(occupied, x, y)
     return dx, y, dx ~= x
 end
 
-local function buildAbilityGroups(row, abilityIndex, slug, warnings)
-    local groups = {}
-    if row.abilities and #row.abilities > 0 then
-        groups[#groups + 1] = { kind = "unit", slugs = row.abilities }
-    end
-    if row.heroAbilities and #row.heroAbilities > 0 then
-        groups[#groups + 1] = { kind = "hero", slugs = row.heroAbilities }
-    end
+local function buildCommandCard(row, unitClass, abilityIndex, slug, warnings)
+    local slots = {}
+    local occupied = {}
 
-    local builtGroups = {}
-
-    for _, group in ipairs(groups) do
-        local slots = {}
-        local occupied = {}
-
-        for _, abilitySlug in ipairs(group.slugs) do
-            local ability = abilityIndex[abilitySlug]
-            if not ability then
-                warnings[#warnings + 1] = {
-                    kind = "missingAbility",
-                    unit = slug,
-                    ability = abilitySlug,
-                    message = ("unit '%s' references unknown ability '%s'"):format(slug, abilitySlug),
-                }
-            elseif not PREVIEW_HIDDEN[abilitySlug] and hasDisplayIcon(ability) then
-                local declaredX, declaredY = ability.button[1], ability.button[2]
-                local x, y, shifted = allocateDisplaySlot(occupied, declaredX, declaredY)
-
-                slots[#slots + 1] = {
-                    ability = abilitySlug,
-                    name = ability.name,
-                    declaredButton = { declaredX, declaredY },
-                    x = x,
-                    y = y,
-                    shifted = shifted,
-                    iconPath = ability.iconPath,
-                    iconKey = ability.iconKey,
-                    iconExpr = ability.iconExpr,
-                    iconSource = ability.iconSource,
-                }
-            end
+    if unitClass ~= "building" then
+        for _, order in ipairs(DEFAULT_UNIT_ORDERS) do
+            occupied[slotKey(order.x, order.y)] = true
+            slots[#slots + 1] = {
+                kind = "order",
+                order = order.order,
+                name = order.name,
+                x = order.x,
+                y = order.y,
+                iconKey = order.iconKey,
+                iconExpr = "Icons." .. order.iconKey,
+            }
         end
-
-        table.sort(slots, function(a, b)
-            if a.y == b.y then
-                return a.x < b.x
-            end
-            return a.y < b.y
-        end)
-
-        builtGroups[#builtGroups + 1] = {
-            kind = group.kind,
-            slots = slots,
-        }
     end
 
-    return builtGroups
+    if unitClass == "hero" then
+        for _, order in ipairs(DEFAULT_HERO_ORDERS) do
+            occupied[slotKey(order.x, order.y)] = true
+            slots[#slots + 1] = {
+                kind = "order",
+                order = order.order,
+                name = order.name,
+                x = order.x,
+                y = order.y,
+                iconKey = order.iconKey,
+                iconExpr = "Icons." .. order.iconKey,
+            }
+        end
+    end
+
+    local slugs = {}
+    if row.abilities then
+        for _, abilitySlug in ipairs(row.abilities) do
+            slugs[#slugs + 1] = abilitySlug
+        end
+    end
+    if row.heroAbilities then
+        for _, abilitySlug in ipairs(row.heroAbilities) do
+            slugs[#slugs + 1] = abilitySlug
+        end
+    end
+
+    for _, abilitySlug in ipairs(slugs) do
+        local ability = abilityIndex[abilitySlug]
+        if not ability then
+            warnings[#warnings + 1] = {
+                kind = "missingAbility",
+                unit = slug,
+                ability = abilitySlug,
+                message = ("unit '%s' references unknown ability '%s'"):format(slug, abilitySlug),
+            }
+        elseif not PREVIEW_HIDDEN[abilitySlug] and hasDisplayIcon(ability) then
+            local declaredX, declaredY = ability.button[1], ability.button[2]
+            local x, y, shifted = allocateDisplaySlot(occupied, declaredX, declaredY)
+
+            slots[#slots + 1] = {
+                kind = "ability",
+                ability = abilitySlug,
+                name = ability.name,
+                declaredButton = { declaredX, declaredY },
+                x = x,
+                y = y,
+                shifted = shifted,
+                iconPath = ability.iconPath,
+                iconKey = ability.iconKey,
+                iconExpr = ability.iconExpr,
+                iconSource = ability.iconSource,
+            }
+        end
+    end
+
+    table.sort(slots, function(a, b)
+        if a.y == b.y then
+            return a.x < b.x
+        end
+        return a.y < b.y
+    end)
+
+    if #slots == 0 then
+        return {}
+    end
+
+    return { { kind = "command", slots = slots } }
 end
 
 local function buildUnitCard(slug, row, abilityIndex, unitParentIcons, icons, pathToKey, warnings)
@@ -298,7 +340,7 @@ local function buildUnitCard(slug, row, abilityIndex, unitParentIcons, icons, pa
         iconKey = iconKey,
         iconExpr = iconExpr,
         iconSource = iconSource,
-        groups = buildAbilityGroups(row, abilityIndex, slug, warnings),
+        groups = buildCommandCard(row, row.class, abilityIndex, slug, warnings),
     }
 
     return card

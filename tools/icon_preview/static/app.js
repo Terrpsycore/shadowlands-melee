@@ -449,55 +449,56 @@ function buildGridSlots(group) {
 }
 
 function renderCommandCardHtml(unit) {
-  if (!unit.groups || unit.groups.length === 0) {
+  const group = unit.groups?.[0];
+  if (!group || group.slots.length === 0) {
     return '<div class="detail-empty">No abilities</div>';
   }
 
   const highlightParent = els.showParentOnly.checked;
-  let html = '<div class="command-card-section">';
+  const grid = buildGridSlots(group);
+  let html = '<div class="command-card-section"><div class="command-grid">';
 
-  for (const group of unit.groups) {
-    if (group.slots.length === 0) {
-      continue;
-    }
-
-    const grid = buildGridSlots(group);
-    html += `<div class="group-title">${escapeHtml(group.kind)} abilities</div><div class="command-grid">`;
-
-    for (let y = 0; y < 3; y += 1) {
-      for (let x = 0; x < 4; x += 1) {
-        const slot = grid[y][x];
-        if (!slot) {
-          html += `<div class="slot empty"></div>`;
-          continue;
-        }
-
-        const classes = ["slot"];
-        if (
-          selectedUnitSlug === unit.slug
-          && selectedAbilitySlug === slot.ability
-        ) {
-          classes.push("selected");
-        }
-        if (highlightParent && slot.iconSource === "parent") {
-          classes.push("parent-only");
-        }
-
-        const img = slot.iconKey
-          ? `<img src="${thumbUrl(slot.iconKey)}" alt="">`
-          : "";
-        html += `
-          <button type="button" class="${classes.join(" ")}" data-ability="${escapeHtml(slot.ability)}" title="${escapeHtml(slot.ability)} — dblclick: Pick icon">
-            ${img}
-          </button>
-        `;
+  for (let y = 0; y < 3; y += 1) {
+    for (let x = 0; x < 4; x += 1) {
+      const slot = grid[y][x];
+      if (!slot) {
+        html += `<div class="slot empty"></div>`;
+        continue;
       }
-    }
 
-    html += "</div>";
+      const img = slot.iconKey
+        ? `<img src="${thumbUrl(slot.iconKey)}" alt="">`
+        : "";
+
+      if (slot.kind === "order") {
+        html += `
+          <div class="slot order" title="${escapeHtml(slot.name)}">
+            ${img}
+          </div>
+        `;
+        continue;
+      }
+
+      const classes = ["slot"];
+      if (
+        selectedUnitSlug === unit.slug
+        && selectedAbilitySlug === slot.ability
+      ) {
+        classes.push("selected");
+      }
+      if (highlightParent && slot.iconSource === "parent") {
+        classes.push("parent-only");
+      }
+
+      html += `
+        <button type="button" class="${classes.join(" ")}" data-ability="${escapeHtml(slot.ability)}" title="${escapeHtml(slot.ability)} — dblclick: Pick icon">
+          ${img}
+        </button>
+      `;
+    }
   }
 
-  html += "</div>";
+  html += "</div></div>";
   return html;
 }
 
@@ -644,7 +645,7 @@ function renderUnitDetail(unit, pickedIcon) {
     });
   });
 
-  els.unitDetail.querySelectorAll(".slot:not(.empty)").forEach((button) => {
+  els.unitDetail.querySelectorAll(".slot:not(.empty):not(.order)").forEach((button) => {
     button.addEventListener("click", () => {
       selectedAbilitySlug = button.dataset.ability;
       renderUnitDetail(unit, selectedIconKey ? findIcon(selectedIconKey) : null);

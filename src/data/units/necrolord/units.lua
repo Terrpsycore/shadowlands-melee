@@ -41,7 +41,7 @@ return {
     scavenger = {
         parent = UnitIds.ghoul,
         name = "Scavenger",
-        abilities = { "inventory", "collectCorpses", "dropCorpses", "exhume" },
+        abilities = { "inventory", "collectCorpses", "dropCorpses", "scavengerExhume" },
     },
     construct = {
         parent = UnitIds.abomination,

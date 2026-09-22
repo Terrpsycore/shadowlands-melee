@@ -316,6 +316,9 @@ return {
         name = "Drop Corpses",
         art = { icon = Icons.undeadUnLoad },
     }),
+    scavengerExhume = A.exhume({
+        name = "Exhume",
+    }),
     poisonBite = A.slowPoison({
         name = "Poison Bite",
         art = { icon = Icons.pasPoisonSting },
