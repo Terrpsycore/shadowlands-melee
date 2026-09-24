@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 class Mode(StrEnum):
+    ASSETS = "assets"
     BUILD = "build"
     UPDATE = "update"
     RUN = "run"
@@ -19,6 +20,11 @@ class Mode(StrEnum):
 parser = argparse.ArgumentParser(description="...")
 parser.add_argument("mode", choices=list(Mode), type=Mode)
 parser.add_argument("path", type=str)
+parser.add_argument(
+    "--imports",
+    action="store_true",
+    help="sync referenced custom icons into imports/ (build and go only)",
+)
 args = parser.parse_args()
 
 USER_DIR = "C:/Users/nornil"
@@ -57,25 +63,27 @@ def print_error(message: str) -> None:
 enable_ansi_colors()
 
 
-def main(mode: Mode, _project_path: str):
+def main(mode: Mode, _project_path: str, *, sync_imports: bool = False):
     project_path = Path(_project_path).resolve()
 
     match mode:
+        case Mode.ASSETS:
+            bake_assets(project_path)
         case Mode.BUILD:
-            build(project_path)
+            build(project_path, sync_imports=sync_imports)
         case Mode.UPDATE:
             build(project_path)
             copy(project_path)
         case Mode.RUN:
             run(project_path)
         case Mode.GO:
-            go(project_path)
+            go(project_path, sync_imports=sync_imports)
         case Mode.DESIGN:
             design(project_path)
 
 
-def go(project_path: Path):
-    build(project_path)
+def go(project_path: Path, *, sync_imports: bool = False):
+    build(project_path, sync_imports=sync_imports)
     run(project_path)
 
 
@@ -123,14 +131,16 @@ def run_wc3(args: list[str | Path]) -> None:
         sys.exit(result.returncode)
 
 
-def build(project_path: Path):
+def build(project_path: Path, *, sync_imports: bool = False):
     bake(project_path)
+    if sync_imports:
+        run_lua_script(project_path, "tools/bake_imports.lua")
     run_wc3([BUILDER_EXE, "build", project_path])
 
 
-def bake(project_path: Path) -> None:
+def run_lua_script(project_path: Path, script: str) -> None:
     result = subprocess.run(
-        [str(LUA), "tools/bake.lua"],
+        [str(LUA), script],
         cwd=project_path,
         capture_output=True,
         text=True,
@@ -160,6 +170,14 @@ def bake(project_path: Path) -> None:
             print_error(line)
 
     sys.exit(result.returncode)
+
+
+def bake(project_path: Path) -> None:
+    run_lua_script(project_path, "tools/bake.lua")
+
+
+def bake_assets(project_path: Path) -> None:
+    run_lua_script(project_path, "tools/bake_assets.lua")
 
 
 def run(project_path: Path):
@@ -204,4 +222,4 @@ def run_map(map_path: Path):
     )
 
 
-main(args.mode, args.path)
+main(args.mode, args.path, sync_imports=args.imports)

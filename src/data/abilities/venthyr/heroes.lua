@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Icons = require("vendor.assets.generated.Icons")
 
 local A = require("data.abilityPresets")
 
@@ -9,6 +10,7 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
+        art = { icon = Icons.glovesofultimatevampirism },
         hotkey = "Q",
     }),
     bladeThirst = A.channelNoTarget({
@@ -16,12 +18,14 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 1, 2 },
+        art = { icon = Icons.potionOfVampirism },
         hotkey = "W",
     }),
     carnage = A.passiveGeneric({
         name = "Carnage",
         levels = 3,
         button = { 2, 2 },
+        art = { icon = Icons.pasBloodthirst },
         hotkey = "E",
     }),
     phaseShift = A.channelNoTarget({
@@ -29,6 +33,7 @@ return {
         levels = 1,
         manaCost = 100,
         button = { 3, 2 },
+        art = { icon = Icons.blink },
         hotkey = "R",
     }),
     ---
@@ -37,6 +42,7 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
+        art = { icon = Icons.earthquake },
         hotkey = "Q",
     }),
     stoneBarrier = A.nonDispellableSelfBuffTimed({
@@ -45,12 +51,14 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 1, 2 },
+        art = { icon = Icons.shoulderBash },
         hotkey = "W",
     }),
     soldiersOath = A.passiveGeneric({
         name = "Soldier's Oath",
         levels = 3,
         button = { 2, 2 },
+        art = { icon = Icons.pasHandofjustice },
         hotkey = "E",
     }),
     crushingStone = A.nonDispellableSelfBuffTimed({
@@ -58,6 +66,7 @@ return {
         levels = 1,
         manaCost = 100,
         button = { 3, 2 },
+        art = { icon = Icons.improvedcreaturecarapace },
         hotkey = "R",
     }),
     ---
@@ -66,6 +75,7 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 0, 2 },
+        art = { icon = Icons.signetofblood },
         hotkey = "Q",
     }),
     deepInquiry = A.channelTarget({
@@ -73,12 +83,14 @@ return {
         levels = 3,
         manaCost = 100,
         button = { 1, 2 },
+        art = { icon = Icons.lavaSpawn },
         hotkey = "W",
     }),
     condemnPride = A.dispellableTargetDebuff({ -- undispellable on 3rd level?
         name = "Condemn Pride",
         levels = 3,
         button = { 2, 2 },
+        art = { icon = Icons.giftofpride },
         hotkey = "E",
     }),
     condemnGreed = A.nonDispellableTargetDebuff({
@@ -86,6 +98,7 @@ return {
         levels = 1,
         manaCost = 100,
         button = { 3, 2 },
+        art = { icon = Icons.giftofgreed },
         hotkey = "R",
     }),
     ---

@@ -1,5 +1,7 @@
 --- Shared path helpers for icon preview (standalone, no asset_catalogs coupling).
 
+local iconKeys = dofile("tools/gen/icon_keys.lua")
+
 local M = {}
 
 local function trim(s)
@@ -251,6 +253,50 @@ function M.loadIconsCatalog()
     return icons, pathToKey
 end
 
+function M.loadCustomIconIndex()
+    local index = {}
+    local ok, loaded = pcall(require, "vendor.assets.generated.custom_icon_index")
+    if ok and type(loaded) == "table" then
+        for key, row in pairs(loaded) do
+            if type(row) == "table" and type(row.path) == "string" and type(row.file) == "string" then
+                local entry = {
+                    path = M.normalizeSlashes(row.path),
+                    file = row.file:gsub("\\", "/"):gsub("^/", ""),
+                    category = row.category,
+                    displayKey = row.displayKey,
+                }
+                if type(row.companions) == "table" then
+                    entry.companions = {}
+                    for _, companion in ipairs(row.companions) do
+                        if type(companion.path) == "string" and type(companion.file) == "string" then
+                            entry.companions[#entry.companions + 1] = {
+                                path = M.normalizeSlashes(companion.path),
+                                file = companion.file:gsub("\\", "/"):gsub("^/", ""),
+                            }
+                        end
+                    end
+                end
+                index[key] = entry
+            end
+        end
+    end
+    return index
+end
+
+function M.displayKey(key)
+    return iconKeys.displayKey(key)
+end
+
+function M.isDisIcon(key, iconPath)
+    return iconKeys.isDisIcon(key, iconPath)
+end
+
+function M.resolveCustomRoot(repoRoot)
+    repoRoot = repoRoot or dofile("tools/_path.lua").repoRoot()
+    local customPaths = dofile("tools/gen/custom_paths.lua")
+    return M.normalizeSlashes(customPaths.resolveCustomRoot(repoRoot))
+end
+
 function M.mergeIcons(primary, secondary)
     local merged = {}
     for k, v in pairs(secondary) do
@@ -270,16 +316,25 @@ function M.iconFolder(path)
     return "CommandButtons"
 end
 
-function M.buildIconRegistry(assetsRoot)
+function M.buildIconRegistry(assetsRoot, customIndex, opts)
+    opts = opts or {}
+    customIndex = customIndex or M.loadCustomIconIndex()
     local catalogIcons, catalogPathToKey = M.loadIconsCatalog()
-    local diskIcons = M.scanIconsFromDisk(assetsRoot)
+    local diskIcons = {}
+    if opts.includeDiskScan ~= false then
+        diskIcons = M.scanIconsFromDisk(assetsRoot)
+    end
 
     local icons = {}
     local pathToKey = {}
+    local customKeys = {}
 
     for key, path in pairs(catalogIcons) do
         icons[key] = path
         pathToKey[M.normalizePathKey(path)] = key
+        if customIndex[key] then
+            customKeys[key] = true
+        end
     end
 
     for key, path in pairs(diskIcons) do
@@ -290,7 +345,7 @@ function M.buildIconRegistry(assetsRoot)
         end
     end
 
-    return icons, pathToKey
+    return icons, pathToKey, customKeys, customIndex
 end
 
 function M.resolveIconKey(path, pathToKey)

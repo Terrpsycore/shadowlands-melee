@@ -35,6 +35,7 @@ return function(assigned, db)
         rows[#rows + 1] = {
             id = id,
             slug = slug,
+            faction = data.faction,
             corpse = UnitDeath.leavesCorpse(data),
             revive = UnitDeath.canRevive(data),
         }
@@ -47,14 +48,26 @@ return function(assigned, db)
     local f = assert(io.open(outPath, "w"))
     f:write("return {\n")
     for _, row in ipairs(rows) do
-        f:write(
-            ("    %s = { slug = %q, corpse = %s, revive = %s },\n"):format(
-                row.id,
-                row.slug,
-                tostring(row.corpse),
-                tostring(row.revive)
+        if row.faction then
+            f:write(
+                ("    %s = { slug = %q, faction = %q, corpse = %s, revive = %s },\n"):format(
+                    row.id,
+                    row.slug,
+                    row.faction,
+                    tostring(row.corpse),
+                    tostring(row.revive)
+                )
             )
-        )
+        else
+            f:write(
+                ("    %s = { slug = %q, corpse = %s, revive = %s },\n"):format(
+                    row.id,
+                    row.slug,
+                    tostring(row.corpse),
+                    tostring(row.revive)
+                )
+            )
+        end
     end
     f:write("}\n")
     f:close()

@@ -540,40 +540,55 @@ local function writeUnitArt(name, entries)
     out:close()
 end
 
+local customIcons = dofile("tools/gen/custom_icons.lua")
+
 local function generate()
-    local unitSkin = collectUnitSkin()
-    local unitFunc = collectUnitFunc()
-    local abilitySkin = collectAbilitySkin()
+    local customIconPaths, customIndex = customIcons.load()
 
-    local modelCatalog = collectMetadataModels(unitSkin)
-    scanModelsInto(modelCatalog)
+    local icons = customIconPaths
+    local acceptedCustom = customIconPaths
+    local models, missiles, unitArt, unitArtBySlug
 
-    local iconCatalog = collectMetadataIcons(unitSkin, abilitySkin)
-    scanIconsInto(iconCatalog)
+    if assetsAvailable() then
+        local unitSkin = collectUnitSkin()
+        local unitFunc = collectUnitFunc()
+        local abilitySkin = collectAbilitySkin()
 
-    local models = catalogToTable(modelCatalog)
-    local icons = catalogToTable(iconCatalog)
-    local missiles = collectMissiles(unitFunc, abilitySkin)
-    local unitArt = buildUnitArt(unitSkin, unitFunc)
-    local unitArtBySlug = buildUnitArtBySlug(unitArt)
+        local modelCatalog = collectMetadataModels(unitSkin)
+        scanModelsInto(modelCatalog)
 
-    writeCatalog("Models", "Models", models)
+        local iconCatalog = collectMetadataIcons(unitSkin, abilitySkin)
+        scanIconsInto(iconCatalog)
+
+        models = catalogToTable(modelCatalog)
+        icons, acceptedCustom = customIcons.mergeIntoVanilla(catalogToTable(iconCatalog), customIconPaths)
+        missiles = collectMissiles(unitFunc, abilitySkin)
+        unitArt = buildUnitArt(unitSkin, unitFunc)
+        unitArtBySlug = buildUnitArtBySlug(unitArt)
+
+        writeCatalog("Models", "Models", models)
+        writeCatalog("Missiles", "Missiles", missiles)
+        writeUnitArt("UnitArt", unitArt)
+        writeUnitArt("UnitArtBySlug", unitArtBySlug)
+    else
+        print("skip vanilla asset catalogs: WC3_ASSETS not found at " .. ASSETS_ROOT)
+        models = {}
+        missiles = {}
+        unitArt = {}
+        unitArtBySlug = {}
+    end
+
+    customIcons.writeIndex(customIcons.filterIndex(customIndex, acceptedCustom))
     writeCatalog("Icons", "Icons", icons)
-    writeCatalog("Missiles", "Missiles", missiles)
-    writeUnitArt("UnitArt", unitArt)
-    writeUnitArt("UnitArtBySlug", unitArtBySlug)
 
     print(("Generated asset catalogs in %s"):format(OUT_DIR))
-    print(("  Models: %d"):format(countKeys(models)))
-    print(("  Icons: %d"):format(countKeys(icons)))
-    print(("  Missiles: %d"):format(countKeys(missiles)))
-    print(("  UnitArt: %d"):format(countKeys(unitArt)))
-    print(("  UnitArtBySlug: %d"):format(countKeys(unitArtBySlug)))
-end
-
-if not assetsAvailable() then
-    print("skip gen_asset_catalogs: WC3_ASSETS not found at " .. ASSETS_ROOT)
-    return
+    print(("  Icons: %d (%d custom)"):format(countKeys(icons), countKeys(acceptedCustom)))
+    if assetsAvailable() then
+        print(("  Models: %d"):format(countKeys(models)))
+        print(("  Missiles: %d"):format(countKeys(missiles)))
+        print(("  UnitArt: %d"):format(countKeys(unitArt)))
+        print(("  UnitArtBySlug: %d"):format(countKeys(unitArtBySlug)))
+    end
 end
 
 generate()

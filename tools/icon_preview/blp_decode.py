@@ -15,7 +15,9 @@ PALETTE_OFFSET = 156
 PALETTE_SIZE = 256 * 4
 
 
-def _read_blp1_header(data: bytes) -> tuple[int, int, int, int, tuple[int, ...], tuple[int, ...]]:
+def _read_blp1_header(
+    data: bytes,
+) -> tuple[int, int, int, int, tuple[int, ...], tuple[int, ...]]:
     if len(data) < BLP1_HEADER_SIZE or data[:4] != b"BLP1":
         raise ValueError("not a BLP1 file")
 
@@ -27,7 +29,9 @@ def _read_blp1_header(data: bytes) -> tuple[int, int, int, int, tuple[int, ...],
     return content, alpha_bits, width, height, offsets, sizes
 
 
-def _palette_alpha(data: bytes, alpha_bits: int, offset: int, width: int, height: int, index: int) -> int:
+def _palette_alpha(
+    data: bytes, alpha_bits: int, offset: int, width: int, height: int, index: int
+) -> int:
     pixel_count = width * height
     alpha_offset = offset + pixel_count
 
@@ -56,7 +60,9 @@ def _decode_blp1_palette(data: bytes) -> tuple[int, int, bytes]:
 
     rgba = bytearray(width * height * 4)
     for index, palette_index in enumerate(indices):
-        blue, green, red, _palette_alpha_byte = struct.unpack_from("4B", palette, palette_index * 4)
+        blue, green, red, _palette_alpha_byte = struct.unpack_from(
+            "4B", palette, palette_index * 4
+        )
         alpha = _palette_alpha(data, alpha_bits, offset, width, height, index)
         out = index * 4
         rgba[out : out + 4] = bytes((red, green, blue, alpha))
@@ -80,8 +86,13 @@ def _extract_blp1_jpeg(data: bytes) -> bytes:
 
 
 def _write_png_from_pil_image(dest: Path, image) -> None:
+    from PIL import Image
+
     if image.mode != "RGBA":
         image = image.convert("RGBA")
+    # WC3 BLP1 JPEG mips decode as BGR; PNG expects RGB.
+    r, g, b, a = image.split()
+    image = Image.merge("RGBA", (b, g, r, a))
     write_png(dest, image.width, image.height, image.tobytes())
 
 

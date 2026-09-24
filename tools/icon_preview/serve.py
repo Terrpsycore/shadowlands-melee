@@ -19,12 +19,18 @@ REPO_ROOT = ROOT.parents[1]
 CACHE_DIR = ROOT / ".cache"
 STATIC_DIR = ROOT / "static"
 DEFAULT_PORT = 8000
-WATCH_PATHS = (
-    REPO_ROOT / "src" / "data",
-    REPO_ROOT / "src" / "vendor" / "assets" / "generated",
+
+DATA_WATCH_ROOT = REPO_ROOT / "src" / "data"
+ICONS_WATCH_FILES = (
+    REPO_ROOT / "src" / "vendor" / "assets" / "generated" / "Icons.lua",
+    REPO_ROOT / "src" / "vendor" / "assets" / "generated" / "custom_icon_index.lua",
 )
+
 WATCH_DEBOUNCE_SEC = 0.5
 WATCH_POLL_SEC = 1.0
+ICONS_STABLE_SEC = 0.5
+
+NO_CACHE_PATHS = frozenset({"/icons.json", "/units.json", "/icons.stamp", "/units.stamp"})
 
 
 class PreviewHandler(http.server.SimpleHTTPRequestHandler):
@@ -39,15 +45,21 @@ class PreviewHandler(http.server.SimpleHTTPRequestHandler):
             return str(STATIC_DIR / clean.removeprefix("/static/"))
         if clean.startswith("/.cache/"):
             return str(CACHE_DIR / clean.removeprefix("/.cache/"))
-        if clean == "/manifest.json":
-            return str(CACHE_DIR / "manifest.json")
+        if clean == "/icons.json":
+            return str(CACHE_DIR / "icons.json")
+        if clean == "/units.json":
+            return str(CACHE_DIR / "units.json")
+        if clean == "/icons.stamp":
+            return str(CACHE_DIR / "icons.stamp")
+        if clean == "/units.stamp":
+            return str(CACHE_DIR / "units.stamp")
         resolved = (ROOT / clean.lstrip("/")).resolve()
         if ROOT.resolve() not in resolved.parents and resolved != ROOT.resolve():
             return str(STATIC_DIR / "index.html")
         return str(resolved)
 
     def end_headers(self) -> None:
-        if self.path.split("?", 1)[0] in ("/manifest.json",):
+        if self.path.split("?", 1)[0] in NO_CACHE_PATHS:
             self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
@@ -59,14 +71,21 @@ class ReusableTCPServer(socketserver.TCPServer):
     allow_reuse_address = True
 
 
-def snapshot_mtimes() -> dict[str, float]:
+def snapshot_data_mtimes() -> dict[str, float]:
     seen: dict[str, float] = {}
-    for root in WATCH_PATHS:
-        if not root.is_dir():
-            continue
-        for path in root.rglob("*"):
-            if path.is_file():
-                seen[str(path)] = path.stat().st_mtime
+    if not DATA_WATCH_ROOT.is_dir():
+        return seen
+    for path in DATA_WATCH_ROOT.rglob("*"):
+        if path.is_file():
+            seen[str(path)] = path.stat().st_mtime
+    return seen
+
+
+def snapshot_icons_mtimes() -> dict[str, float]:
+    seen: dict[str, float] = {}
+    for path in ICONS_WATCH_FILES:
+        if path.is_file():
+            seen[str(path)] = path.stat().st_mtime
     return seen
 
 
@@ -74,32 +93,84 @@ def resolve_lua() -> str:
     return os.environ.get("LUA", "C:/Programs/Lua/lua55.exe")
 
 
-def run_pipeline() -> None:
+def icons_catalog_stable() -> bool:
+    first = snapshot_icons_mtimes()
+    time.sleep(ICONS_STABLE_SEC)
+    second = snapshot_icons_mtimes()
+    return first == second
+
+
+def run_units_pipeline() -> None:
     lua = resolve_lua()
-    print("[icon-preview] rebuilding manifest…")
-    subprocess.run([lua, "tools/icon_preview/export.lua"], cwd=REPO_ROOT, check=True)
-    subprocess.run([sys.executable, "tools/icon_preview/build_cache.py"], cwd=REPO_ROOT, check=True)
-    print("[icon-preview] rebuild done")
+    print("[icon-preview] rebuilding units.json…")
+    subprocess.run(
+        [lua, "tools/icon_preview/export.lua", "--units"],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    print("[icon-preview] units rebuild done")
+
+
+def run_icons_pipeline() -> bool:
+    if not icons_catalog_stable():
+        print("[icon-preview] icon catalog still changing, deferring…")
+        return False
+
+    lua = resolve_lua()
+    print("[icon-preview] rebuilding icons.json + thumbs…")
+    subprocess.run(
+        [lua, "tools/icon_preview/export.lua", "--icons"],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    subprocess.run(
+        [sys.executable, "tools/icon_preview/build_cache.py"],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    print("[icon-preview] icons rebuild done")
+    return True
 
 
 def watch_loop(stop_event: threading.Event) -> None:
-    last_snapshot = snapshot_mtimes()
-    pending = False
-    changed_at = 0.0
+    last_data = snapshot_data_mtimes()
+    last_icons = snapshot_icons_mtimes()
+    data_pending = False
+    icons_pending = False
+    data_changed_at = 0.0
+    icons_changed_at = 0.0
 
     while not stop_event.is_set():
-        current = snapshot_mtimes()
-        if current != last_snapshot:
-            last_snapshot = current
-            pending = True
-            changed_at = time.monotonic()
+        current_data = snapshot_data_mtimes()
+        if current_data != last_data:
+            last_data = current_data
+            data_pending = True
+            data_changed_at = time.monotonic()
 
-        if pending and (time.monotonic() - changed_at) >= WATCH_DEBOUNCE_SEC:
-            pending = False
+        current_icons = snapshot_icons_mtimes()
+        if current_icons != last_icons:
+            last_icons = current_icons
+            icons_pending = True
+            icons_changed_at = time.monotonic()
+
+        now = time.monotonic()
+
+        if data_pending and (now - data_changed_at) >= WATCH_DEBOUNCE_SEC:
+            data_pending = False
             try:
-                run_pipeline()
+                run_units_pipeline()
             except subprocess.CalledProcessError as err:
-                print(f"[icon-preview] rebuild failed: {err}", file=sys.stderr)
+                print(f"[icon-preview] units rebuild failed: {err}", file=sys.stderr)
+
+        if icons_pending and (now - icons_changed_at) >= WATCH_DEBOUNCE_SEC:
+            try:
+                if run_icons_pipeline():
+                    icons_pending = False
+                else:
+                    icons_changed_at = time.monotonic()
+            except subprocess.CalledProcessError as err:
+                icons_pending = False
+                print(f"[icon-preview] icons rebuild failed: {err}", file=sys.stderr)
 
         stop_event.wait(WATCH_POLL_SEC)
 
@@ -115,18 +186,28 @@ def main() -> None:
     parser.add_argument(
         "--watch",
         action="store_true",
-        help="re-export manifest when src/data or generated assets change",
+        help="re-export icons.json / units.json when data or icon catalog changes",
     )
     args = parser.parse_args()
 
-    if not (CACHE_DIR / "manifest.json").is_file():
-        raise SystemExit("missing .cache/manifest.json — run export.lua first")
+    missing = [
+        name
+        for name, path in (
+            ("icons.json", CACHE_DIR / "icons.json"),
+            ("units.json", CACHE_DIR / "units.json"),
+        )
+        if not path.is_file()
+    ]
+    if missing:
+        raise SystemExit(
+            f"missing .cache/{', '.join(missing)} — run: lua tools/icon_preview/export.lua"
+        )
 
     stop_event = threading.Event()
     if args.watch:
         watcher = threading.Thread(target=watch_loop, args=(stop_event,), daemon=True)
         watcher.start()
-        print("[icon-preview] watching src/data and src/vendor/assets/generated")
+        print("[icon-preview] watching src/data and icon catalog (Icons.lua, custom_icon_index.lua)")
 
     try:
         with ReusableTCPServer(("127.0.0.1", args.port), PreviewHandler) as httpd:

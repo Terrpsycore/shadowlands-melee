@@ -1,21 +1,23 @@
---- Export icon catalog + unit command cards to tools/icon_preview/.cache/manifest.json
---- Usage: lua tools/icon_preview/export.lua
+--- Export icon catalog and unit command cards to tools/icon_preview/.cache/
+--- Usage:
+---   lua tools/icon_preview/export.lua           # icons.json + units.json
+---   lua tools/icon_preview/export.lua --icons   # icons.json only
+---   lua tools/icon_preview/export.lua --units   # units.json only
 
 local pathMod = dofile("tools/_path.lua")
 local root = pathMod.setup()
 local assets = dofile("tools/icon_preview/assets.lua")
+local common = dofile("tools/icon_preview/export_common.lua")
 
 local OUT_DIR = root .. "/tools/icon_preview/.cache"
-local MANIFEST_PATH = OUT_DIR .. "/manifest.json"
+local ICONS_PATH = OUT_DIR .. "/icons.json"
+local UNITS_PATH = OUT_DIR .. "/units.json"
 
 local ASSETS_ROOT = assets.resolveAssetsRoot(nil, root)
-
-local function sourceFilePath(modulePath)
-    return root .. "/src/" .. modulePath:gsub("%.", "/") .. ".lua"
-end
+local mode = common.parseMode(arg)
 
 local function loadSlugOrder(modulePath)
-    local path = sourceFilePath(modulePath)
+    local path = common.sourceFilePath(root, modulePath)
     local file = io.open(path, "r")
     if not file then
         return nil, ("unit source not found: %s"):format(path)
@@ -30,78 +32,6 @@ local function loadSlugOrder(modulePath)
     end
     file:close()
     return slugs
-end
-
-local function ensureDir(dir)
-    dir = dir:gsub("/", "\\")
-    os.execute('if not exist "' .. dir .. '" mkdir "' .. dir .. '"')
-end
-
-local function jsonEscape(value)
-    return (value:gsub("\\", "\\\\"):gsub('"', '\\"'):gsub("\n", "\\n"):gsub("\r", "\\r"))
-end
-
-local function jsonString(value)
-    return '"' .. jsonEscape(tostring(value)) .. '"'
-end
-
-local function jsonEncode(value, indent)
-    indent = indent or 0
-    local pad = string.rep("  ", indent)
-    local padInner = string.rep("  ", indent + 1)
-    local t = type(value)
-
-    if t == "nil" then
-        return "null"
-    end
-    if t == "boolean" or t == "number" then
-        return tostring(value)
-    end
-    if t == "string" then
-        return jsonString(value)
-    end
-    if t == "table" then
-        local isArray = true
-        local maxIndex = 0
-        for k in pairs(value) do
-            if type(k) ~= "number" then
-                isArray = false
-                break
-            end
-            if k > maxIndex then
-                maxIndex = k
-            end
-        end
-        if isArray and maxIndex == #value then
-            local parts = {}
-            for i = 1, #value do
-                parts[#parts + 1] = padInner .. jsonEncode(value[i], indent + 1)
-            end
-            if #parts == 0 then
-                return "[]"
-            end
-            return "[\n" .. table.concat(parts, ",\n") .. "\n" .. pad .. "]"
-        end
-
-        local keys = {}
-        for k in pairs(value) do
-            keys[#keys + 1] = k
-        end
-        table.sort(keys, function(a, b)
-            return tostring(a) < tostring(b)
-        end)
-
-        local parts = {}
-        for _, k in ipairs(keys) do
-            parts[#parts + 1] = padInner .. jsonString(tostring(k)) .. ": " .. jsonEncode(value[k], indent + 1)
-        end
-        if #parts == 0 then
-            return "{}"
-        end
-        return "{\n" .. table.concat(parts, ",\n") .. "\n" .. pad .. "}"
-    end
-
-    error("unsupported json type: " .. t)
 end
 
 local function resolveArtValue(value, icons, pathToKey)
@@ -137,15 +67,38 @@ local function loadData()
     return Abilities, Units
 end
 
-local function buildIconList(icons, pathToKey)
+local function buildIconList(icons, pathToKey, customKeys, customIndex)
     local list = {}
     for key, iconPath in pairs(icons) do
-        list[#list + 1] = {
+        if assets.isDisIcon(key, iconPath) then
+            goto continue
+        end
+
+        local isCustom = customKeys[key] == true
+        local customRow = isCustom and customIndex[key] or nil
+        local folder
+        if isCustom and customRow and customRow.category then
+            folder = customRow.category
+        elseif isCustom then
+            folder = "Custom"
+        else
+            folder = assets.iconFolder(iconPath)
+        end
+
+        local row = {
             key = key,
             path = iconPath,
-            folder = assets.iconFolder(iconPath),
+            folder = folder,
+            displayKey = (customRow and customRow.displayKey) or assets.displayKey(key),
+            source = isCustom and "custom" or "vanilla",
             iconExpr = assets.pathToIconsExpr(iconPath, pathToKey) or ("Icons." .. key),
         }
+        if isCustom and customRow then
+            row.file = customRow.file
+        end
+        list[#list + 1] = row
+
+        ::continue::
     end
     table.sort(list, function(a, b)
         return a.key < b.key
@@ -153,46 +106,87 @@ local function buildIconList(icons, pathToKey)
     return list
 end
 
-local function buildAbilityIndex(Abilities, icons, pathToKey, parentIcons)
+local function buildAbilityEntry(slug, row, icons, pathToKey, parentIcons)
+    local iconPath, iconKey, iconExpr, iconSource = nil, nil, nil, "missing"
+    local iconOffPath, iconOffKey = nil, nil
+    local iconResearchPath, iconResearchKey = nil, nil
+
+    if row.art then
+        iconPath, iconKey, iconExpr = resolveArtValue(row.art.icon, icons, pathToKey)
+        if iconPath then
+            iconSource = "explicit"
+        end
+        iconOffPath, iconOffKey = resolveArtValue(row.art.iconOff, icons, pathToKey)
+        iconResearchPath, iconResearchKey = resolveArtValue(row.art.iconResearch, icons, pathToKey)
+    end
+
+    if not iconPath and row.parent and parentIcons[row.parent] then
+        iconPath = parentIcons[row.parent]
+        iconKey = assets.resolveIconKey(iconPath, pathToKey)
+        iconExpr = assets.pathToIconsExpr(iconPath, pathToKey)
+        iconSource = "parent"
+    end
+
+    local bx, by = defaultButton(row)
+    return {
+        slug = slug,
+        name = row.name or slug,
+        parent = row.parent,
+        class = row.class,
+        button = { bx, by },
+        iconPath = iconPath,
+        iconKey = iconKey,
+        iconExpr = iconExpr,
+        iconSource = iconSource,
+        iconOffPath = iconOffPath,
+        iconOffKey = iconOffKey,
+        iconResearchPath = iconResearchPath,
+        iconResearchKey = iconResearchKey,
+    }
+end
+
+local function collectReferencedAbilitySlugs(Units)
+    local slugs = {}
+    local seen = {}
+
+    local function add(slug)
+        if slug and not seen[slug] then
+            seen[slug] = true
+            slugs[#slugs + 1] = slug
+        end
+    end
+
+    for _, row in pairs(Units) do
+        if row.abilities then
+            for _, abilitySlug in ipairs(row.abilities) do
+                add(abilitySlug)
+            end
+        end
+        if row.heroAbilities then
+            for _, abilitySlug in ipairs(row.heroAbilities) do
+                add(abilitySlug)
+            end
+        end
+    end
+
+    return slugs
+end
+
+local function buildAbilityIndex(Abilities, icons, pathToKey, parentIcons, onlySlugs)
     local index = {}
 
-    for slug, row in pairs(Abilities) do
-        local iconPath, iconKey, iconExpr, iconSource = nil, nil, nil, "missing"
-        local iconOffPath, iconOffKey = nil, nil
-        local iconResearchPath, iconResearchKey = nil, nil
-
-        if row.art then
-            iconPath, iconKey, iconExpr = resolveArtValue(row.art.icon, icons, pathToKey)
-            if iconPath then
-                iconSource = "explicit"
+    if onlySlugs then
+        for _, slug in ipairs(onlySlugs) do
+            local row = Abilities[slug]
+            if row then
+                index[slug] = buildAbilityEntry(slug, row, icons, pathToKey, parentIcons)
             end
-            iconOffPath, iconOffKey = resolveArtValue(row.art.iconOff, icons, pathToKey)
-            iconResearchPath, iconResearchKey = resolveArtValue(row.art.iconResearch, icons, pathToKey)
         end
+        return index
+    end
 
-        if not iconPath and row.parent and parentIcons[row.parent] then
-            iconPath = parentIcons[row.parent]
-            iconKey = assets.resolveIconKey(iconPath, pathToKey)
-            iconExpr = assets.pathToIconsExpr(iconPath, pathToKey)
-            iconSource = "parent"
-        end
-
-        local bx, by = defaultButton(row)
-        index[slug] = {
-            slug = slug,
-            name = row.name or slug,
-            parent = row.parent,
-            class = row.class,
-            button = { bx, by },
-            iconPath = iconPath,
-            iconKey = iconKey,
-            iconExpr = iconExpr,
-            iconSource = iconSource,
-            iconOffPath = iconOffPath,
-            iconOffKey = iconOffKey,
-            iconResearchPath = iconResearchPath,
-            iconResearchKey = iconResearchKey,
-        }
+    for slug, row in pairs(Abilities) do
+        index[slug] = buildAbilityEntry(slug, row, icons, pathToKey, parentIcons)
     end
 
     return index
@@ -330,7 +324,7 @@ local function buildUnitCard(slug, row, abilityIndex, unitParentIcons, icons, pa
         pathToKey
     )
 
-    local card = {
+    return {
         slug = slug,
         name = row.name or slug,
         faction = row.faction,
@@ -342,8 +336,6 @@ local function buildUnitCard(slug, row, abilityIndex, unitParentIcons, icons, pa
         iconSource = iconSource,
         groups = buildCommandCard(row, row.class, abilityIndex, slug, warnings),
     }
-
-    return card
 end
 
 local function buildUnitCards(Units, abilityIndex, unitParentIcons, icons, pathToKey)
@@ -393,15 +385,76 @@ local function buildUnitCards(Units, abilityIndex, unitParentIcons, icons, pathT
     return cards, warnings
 end
 
-local function main()
+local function assertAssetsRoot()
     local metadataPath = ASSETS_ROOT .. "\\units\\abilityskin.txt"
     local metadata = io.open(metadataPath, "r")
     if not metadata then
         error("WC3_ASSETS not found or incomplete (missing abilityskin.txt): " .. ASSETS_ROOT)
     end
     metadata:close()
+end
 
-    local icons, pathToKey = assets.buildIconRegistry(ASSETS_ROOT)
+local function loadIconRegistry()
+    assertAssetsRoot()
+    return assets.buildIconRegistry(ASSETS_ROOT)
+end
+
+local function loadIconLookupFromIconsJson()
+    local file = io.open(ICONS_PATH, "r")
+    if not file then
+        return nil
+    end
+
+    local content = file:read("*a")
+    file:close()
+
+    local icons = {}
+    local pathToKey = {}
+    for key, path in content:gmatch('"key"%s*:%s*"([^"]+)"[^}]*"path"%s*:%s*"([^"]+)"') do
+        path = path:gsub("\\\\", "\\")
+        icons[key] = path
+        pathToKey[assets.normalizePathKey(path)] = key
+    end
+
+    if next(icons) == nil then
+        return nil
+    end
+
+    return icons, pathToKey
+end
+
+local function loadIconLookupForUnits()
+    assertAssetsRoot()
+
+    local icons, pathToKey = loadIconLookupFromIconsJson()
+    if icons then
+        return icons, pathToKey
+    end
+
+    return assets.buildIconRegistry(ASSETS_ROOT, nil, { includeDiskScan = false })
+end
+
+local function exportIcons()
+    local icons, pathToKey, customKeys, customIndex = loadIconRegistry()
+    local customRoot = assets.resolveCustomRoot(root)
+    local iconList = buildIconList(icons, pathToKey, customKeys, customIndex)
+    local generatedAt = common.utcTimestamp()
+
+    common.ensureDir(OUT_DIR)
+    common.writeJson(ICONS_PATH, {
+        generatedAt = generatedAt,
+        assetsRoot = ASSETS_ROOT,
+        customRoot = customRoot,
+        icons = iconList,
+    })
+    common.writeStamp(ICONS_PATH, generatedAt)
+
+    print(("icon preview icons: %s"):format(ICONS_PATH))
+    print(("  icons: %d"):format(#iconList))
+end
+
+local function exportUnits()
+    local icons, pathToKey = loadIconLookupForUnits()
 
     local parentIcons, parentErr = assets.collectAbilityParentIcons(ASSETS_ROOT)
     if parentErr then
@@ -414,36 +467,30 @@ local function main()
     end
 
     local Abilities, Units = loadData()
-    local abilityIndex = buildAbilityIndex(Abilities, icons, pathToKey, parentIcons)
-    local iconList = buildIconList(icons, pathToKey)
+    local referencedSlugs = collectReferencedAbilitySlugs(Units)
+    local abilityIndex = buildAbilityIndex(Abilities, icons, pathToKey, parentIcons, referencedSlugs)
     local unitCards, warnings = buildUnitCards(Units, abilityIndex, unitParentIcons, icons, pathToKey)
+    local generatedAt = common.utcTimestamp()
 
-    local manifest = {
-        generatedAt = os.date("!%Y-%m-%dT%H:%M:%SZ"),
-        assetsRoot = ASSETS_ROOT,
-        icons = iconList,
-        abilities = abilityIndex,
+    common.ensureDir(OUT_DIR)
+    common.writeJson(UNITS_PATH, {
+        generatedAt = generatedAt,
         units = unitCards,
         warnings = warnings,
-    }
+    })
+    common.writeStamp(UNITS_PATH, generatedAt)
 
-    ensureDir(OUT_DIR)
-    local out = assert(io.open(MANIFEST_PATH, "w"))
-    out:write(jsonEncode(manifest))
-    out:write("\n")
-    out:close()
-
-    print(("icon preview manifest: %s"):format(MANIFEST_PATH))
-    print(("  icons: %d"):format(#iconList))
-    print(("  abilities: %d"):format((function(t)
-        local n = 0
-        for _ in pairs(t) do
-            n = n + 1
-        end
-        return n
-    end)(abilityIndex)))
+    print(("icon preview units: %s"):format(UNITS_PATH))
+    print(("  abilities (resolved): %d"):format(#referencedSlugs))
     print(("  units: %d"):format(#unitCards))
     print(("  warnings: %d"):format(#warnings))
 end
 
-main()
+if mode == "icons" then
+    exportIcons()
+elseif mode == "units" then
+    exportUnits()
+else
+    exportIcons()
+    exportUnits()
+end

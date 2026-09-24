@@ -103,6 +103,9 @@ local packs = {
     necrolord = function()
         spawnFaction("necrolord")
     end,
+    venthyr = function()
+        spawnFaction("venthyr")
+    end,
     corpses = function()
         spawnCorpseCluster(p1, kyrianCorpses, x - 180, y)
         spawnCorpseCluster(p1, necrolordCorpses, x + 180, y)

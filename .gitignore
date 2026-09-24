@@ -8,3 +8,9 @@ docs/design
 
 generated/
 __pycache__
+
+.cache/
+
+.cursor/plans
+
+imports/

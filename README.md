@@ -12,7 +12,11 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 ## Bake
 
-Перед сборкой `build/wc3.py` запускает `tools/bake.lua`, который генерит IDs/slugs/meta и реестры способностей/тестов (`*/generated/`). Папки `*/generated/` в `.gitignore` — после clone нужен bake.
+Папки `*/generated/` в `.gitignore` — после clone нужна codegen.
+
+- **`wc3 assets .`** — scan `WC3_ASSETS` / `WC3_CUSTOM` → `Icons.lua`, Models, `imports/` (редко: новые custom-иконки или обновление dump)
+- **`wc3 build .`** — `tools/bake.lua` (IDs, реестры, validate) + сборка карты; требует уже сгенерированный `Icons.lua`
+- **`wc3 build . --imports`** / **`wc3 go . --imports`** — то же + sync referenced custom → `imports/` (после назначения custom-иконок в data)
 
 ## Тесты
 
@@ -29,7 +33,7 @@ In-game автотесты в `src/tests/` (`factions/`, `mechanics/`, `data/`).
 
 Шаблоны objediting runtime (`main-debug.lua`, `main-release.lua`) исключены через `workspace.ignoreDir` в `.luarc.json`.
 
-Trade-off'ы и отложенные баги: [docs/adr/0001-luals-zero-warnings-trade-offs.md](docs/adr/0001-luals-zero-warnings-trade-offs.md), [docs/known-issues.md](docs/known-issues.md).
+Trade-off'ы и отложенные баги: [docs/adr/0001-luals-zero-warnings-trade-offs.md](docs/adr/0001-luals-zero-warnings-trade-offs.md), [docs/adr/0002-custom-assets-imports-vs-game-folder-dev.md](docs/adr/0002-custom-assets-imports-vs-game-folder-dev.md), [docs/known-issues.md](docs/known-issues.md).
 
 ## Ссылки
 

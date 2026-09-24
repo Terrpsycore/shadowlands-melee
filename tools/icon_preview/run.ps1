@@ -36,8 +36,12 @@ $LUA = if ($env:LUA) { $env:LUA } else { "C:/Programs/Lua/lua55.exe" }
 
 Set-Location $repoRoot
 $env:WC3_ASSETS = $AssetsRoot
+if (-not $env:WC3_CUSTOM) {
+    $env:WC3_CUSTOM = Join-Path (Split-Path $repoRoot -Parent) "wc3-custom"
+}
 
 Write-Host "WC3_ASSETS=$AssetsRoot"
+Write-Host "WC3_CUSTOM=$($env:WC3_CUSTOM)"
 Write-Host "ICON_PREVIEW_PORT=$Port"
 
 $iconsPath = Join-Path $repoRoot "src/vendor/assets/generated/Icons.lua"
@@ -46,7 +50,7 @@ if (-not (Test-Path $iconsPath)) {
     & $LUA tools/gen/asset_catalogs.lua
 }
 
-Write-Host "Exporting manifest..."
+Write-Host "Exporting icons.json + units.json..."
 & $LUA tools/icon_preview/export.lua
 
 Write-Host "Building thumbnails..."

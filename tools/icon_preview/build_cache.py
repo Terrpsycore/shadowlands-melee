@@ -1,4 +1,4 @@
-"""Build PNG thumbnails for icon preview manifest."""
+"""Build PNG thumbnails for icon preview icons.json."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from env import apply_dotenv
 
 ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = ROOT / "tools" / "icon_preview" / ".cache"
-MANIFEST_PATH = CACHE_DIR / "manifest.json"
+ICONS_PATH = CACHE_DIR / "icons.json"
 THUMBS_DIR = CACHE_DIR / "thumbs"
 PLACEHOLDER_NAME = "_missing.png"
 
@@ -23,6 +23,14 @@ PLACEHOLDER_NAME = "_missing.png"
 def resolve_assets_root(raw: str | None) -> Path:
     apply_dotenv()
     value = raw or os.environ.get("WC3_ASSETS") or "../wc3-assets"
+    return Path(value).resolve()
+
+
+def resolve_custom_root(raw: str | None) -> Path | None:
+    apply_dotenv()
+    value = raw or os.environ.get("WC3_CUSTOM")
+    if not value:
+        return None
     return Path(value).resolve()
 
 
@@ -94,7 +102,9 @@ def write_placeholder(path: Path) -> None:
 
     width, height = 64, 64
     rgba = bytes([48, 48, 56, 255]) * (width * height)
-    raw = b"".join(b"\x00" + rgba[i : i + width * 4] for i in range(0, len(rgba), width * 4))
+    raw = b"".join(
+        b"\x00" + rgba[i : i + width * 4] for i in range(0, len(rgba), width * 4)
+    )
 
     def chunk(tag: bytes, data: bytes) -> bytes:
         return (
@@ -161,12 +171,16 @@ def mark_icon_unavailable(icon: dict, reason: str) -> None:
 
 
 def main() -> int:
-    if not MANIFEST_PATH.is_file():
-        print(f"missing manifest: {MANIFEST_PATH}\nrun: lua tools/icon_preview/export.lua", file=sys.stderr)
+    if not ICONS_PATH.is_file():
+        print(
+            f"missing icons manifest: {ICONS_PATH}\nrun: lua tools/icon_preview/export.lua --icons",
+            file=sys.stderr,
+        )
         return 1
 
-    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    assets_root = resolve_assets_root(manifest.get("assetsRoot"))
+    icons_manifest = json.loads(ICONS_PATH.read_text(encoding="utf-8"))
+    assets_root = resolve_assets_root(icons_manifest.get("assetsRoot"))
+    custom_root = resolve_custom_root(icons_manifest.get("customRoot"))
     if not assets_root.is_dir():
         print(f"WC3_ASSETS not found: {assets_root}", file=sys.stderr)
         return 1
@@ -189,13 +203,21 @@ def main() -> int:
     reused = 0
     missing = 0
 
-    for icon in manifest.get("icons", []):
+    for icon in icons_manifest.get("icons", []):
         key = icon["key"]
         editor_path = icon["path"]
         thumb = THUMBS_DIR / f"{key}.png"
         icon["thumb"] = f"thumbs/{key}.png"
 
-        source = find_source_file(assets_root, editor_path)
+        source = None
+        if icon.get("source") == "custom":
+            file_rel = icon.get("file")
+            if custom_root and file_rel:
+                candidate = custom_root / Path(str(file_rel).replace("\\", "/"))
+                if candidate.is_file():
+                    source = candidate
+        else:
+            source = find_source_file(assets_root, editor_path)
         if not source:
             shutil.copy2(placeholder, thumb)
             (THUMBS_DIR / f"{key}.missing").write_text("source", encoding="utf-8")
@@ -224,7 +246,10 @@ def main() -> int:
         mark_icon_unavailable(icon, "convert")
         missing += 1
 
-    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    ICONS_PATH.write_text(
+        json.dumps(icons_manifest, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
 
     print(f"icon preview cache: {THUMBS_DIR}")
     print(f"  converted: {converted}")

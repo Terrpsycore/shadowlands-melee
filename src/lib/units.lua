@@ -1,5 +1,4 @@
 local Slugs = require("lib.slugs")
-local UnitData = require("data.units")
 local raw = require("data.generated.unit_meta")
 
 local byCode = {}
@@ -23,12 +22,8 @@ end
 ---@param unitTypeId integer
 ---@return string|nil
 local function faction(unitTypeId)
-    local unitSlug = slug(unitTypeId)
-    if not unitSlug then
-        return nil
-    end
-    local row = UnitData[unitSlug]
-    return row and row.faction or nil
+    local meta = get(unitTypeId)
+    return meta and meta.faction or nil
 end
 
 return {
