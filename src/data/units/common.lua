@@ -1,6 +1,15 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
+    soul = {
+        parent = UnitIds.banshee,
+        name = "Soul",
+        corpse = false,
+        revive = false,
+        apply = function(u)
+            u:setAttacksEnabled(0)
+        end,
+    },
     dummy = {
         parent = UnitIds.footman,
         name = "Dummy",

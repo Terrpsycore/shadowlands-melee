@@ -5,6 +5,15 @@ local A = require("data.abilityPresets")
 return {
     -- UI
     -- Forsworn hero
+    forswornHeroFly = A.stormCrowForm({
+        name = "Ascend/Descend",
+        apply = A.stormCrowForm.apply(function(a)
+            a:setMorphingFlags(1, 1) -- uninterruptable
+            a:setManaCost(1, 0)
+            a:setNormalFormUnit(1, Ids.units.forswornHero)
+            a:setAlternateFormUnit(1, Ids.units.forswornHeroFlying)
+        end),
+    }),
     harpoon = A.stormBolt({ -- root/unroot with trigger
         name = "Harpoon",
         buffs = { "harpoon" },
