@@ -1,3 +1,8 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
-return {}
+return {
+    --
+    hunterTrap = {
+        parent = UnitIds.goblinlandmine,
+    },
+}

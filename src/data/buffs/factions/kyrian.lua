@@ -89,4 +89,8 @@ return {
         parent = BuffIds.innerFire,
         name = "Counterattack Call",
     },
+    magicBarrierOverload = {
+        parent = BuffIds.curse,
+        name = "Magic Barrier",
+    },
 }

@@ -145,4 +145,8 @@ return {
         name = "Soul Rend",
         levels = 15,
     }),
+    soulRendHeal = A.healCreepHigh({
+        name = "Soul Rend",
+        levels = 1, -- ?
+    }),
 }
