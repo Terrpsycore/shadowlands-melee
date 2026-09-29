@@ -1,33 +1,12 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
+    -- Basic --
     kyrianMain = {
         parent = UnitIds.townhall,
         name = "Main",
         unitsTrained = { "steward" },
-    },
-    animaExtractor = {
-        parent = UnitIds.goldmine,
-        name = "Anima Extractor",
-    },
-    trainingGrounds = {
-        parent = UnitIds.humanbarracks,
-        name = "Training Grounds",
-        unitsTrained = { "aspirant", "praetor", "larion" },
-    },
-    workshop = {
-        parent = UnitIds.workshop,
-        name = "Workshop",
-        unitsTrained = { "phalynx", "goliath", "colossus" },
-    },
-    templeOfVirtue = {
-        parent = UnitIds.arcanesanctum,
-        name = "Temple of Virtue",
-        unitsTrained = { "purity", "wisdom", "loyalty" },
-    },
-    crestOfAscension = {
-        parent = UnitIds.arcaneobservatory,
-        name = "Crest of Ascension",
+        abilities = { "emergencyGuard1" },
     },
     herosRest = {
         parent = UnitIds.altarofkings,
@@ -35,15 +14,44 @@ return {
         unitsTrained = { "forgelite", "watcher", "bearer" },
         revivesDeadHeros = true,
     },
-    templeWard = {
-        parent = UnitIds.scouttower,
-        name = "Temple Ward",
+    -- Resources --
+    animaExtractor = {
+        parent = UnitIds.goldmine,
+        name = "Anima Extractor",
     },
     animaStorage = {
         parent = UnitIds.moonwell,
         name = "Anima Storage",
+        abilities = { "animaReplenish" },
     },
-    shop = {
+    -- Barracks --
+    trainingGrounds = {
+        parent = UnitIds.humanbarracks,
+        name = "Training Grounds",
+        unitsTrained = { "aspirant", "praetor", "larion" },
+    },
+    templeOfVirtue = {
+        parent = UnitIds.arcanesanctum,
+        name = "Temple of Virtue",
+        unitsTrained = { "purity", "wisdom", "loyalty" },
+    },
+    workshop = {
+        parent = UnitIds.workshop,
+        name = "Workshop",
+        unitsTrained = { "phalynx", "goliath", "colossus" },
+    },
+    -- Tech --
+    crestOfAscension = {
+        parent = UnitIds.arcaneobservatory,
+        name = "Crest of Ascension",
+    },
+    -- Misc --
+    templeWard = {
+        parent = UnitIds.scouttower,
+        name = "Temple Ward",
+        abilities = { "magicBarrierOn" },
+    },
+    kyrianShop = {
         parent = UnitIds.marketplace,
         name = "Shop",
     },

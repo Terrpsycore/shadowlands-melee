@@ -4,10 +4,16 @@ local Icons = require("vendor.assets.generated.Icons")
 local A = require("data.abilityPresets")
 
 return {
-    -- motivation = A.nonDispellableSelfBuffTimed({
-    --     name = "Motivation",
-    --     buffs = { "motivation" },
-    -- }),
+    -- == Units
+    -- Dredger
+    motivation = A.nonDispellableSelfBuffTimed({
+        name = "Motivation",
+        buffs = { "motivation" },
+    }),
+    dredgerDissolve = A.sacrificeAcolyte({
+        name = "Dissolve",
+    }),
+    -- Duelist
     duel = A.passiveGeneric({
         name = "Duel",
         art = { icon = Icons.pasRetaliation },
@@ -18,6 +24,7 @@ return {
     --     name = "Riposte",
     --     buffs = { "riposte" },
     -- }),
+    -- Hopebreaker
     dreadTrack = A.passiveGeneric({
         name = "Dread Track",
         art = { icon = Icons.pasDeathmark },
@@ -28,14 +35,17 @@ return {
         art = { icon = Icons.pasVampiricAura },
         -- ? buffs for UI
     }),
+    -- Stoneborn Defender
     breakTheRanks = A.passiveGeneric({ -- TODO: has to be set up in upgrade (OE unit attack types)
         name = "Break the Ranks",
         art = { icon = Icons.pasShockwave },
     }),
+    -- Gargoyle
     screech = A.shockwave({
         name = "Screech",
         art = { icon = Icons.sentinel },
     }),
+    -- Gargon
     fearsomePresence = A.slowPoison({
         name = "Fearsome Presence",
         buffs = { "fearsomePresence" },
@@ -45,12 +55,14 @@ return {
             a:setDamagePerSecond(1, 0)
         end),
     }),
+    -- Courier
     provoke = A.channelTarget({
         name = "Provoke",
         art = { icon = Icons.reincarnation },
         buffs = { "provoke" },
     }),
     -- TODO: courier invis
+    -- Dredger Brute
     stampede = A.windWalk({
         name = "Stampede",
         buffs = { "stampede" },
@@ -61,6 +73,7 @@ return {
             a:setBackstabDamage(1, 0)
         end),
     }),
+    -- Infuser
     infuseWeapon = A.bloodlust1({
         name = "Infuse Weapon",
         art = { icon = Icons.autocastArcanitemelee },
@@ -74,6 +87,7 @@ return {
         name = "Feast",
         art = { icon = Icons.orbofSlowness },
     }),
+    -- Tormentor
     castigate = A.channelTarget({
         name = "Castigate",
         art = { icon = Icons.autocastSoulburn },
@@ -86,6 +100,7 @@ return {
         name = "Second Breath",
         art = { icon = Icons.incinerate },
     }),
+    -- Inquisitor
     condemnWrath = A.dispellableTargetDebuff({
         name = "Condemn Wrath",
         art = { icon = Icons.autocastQuillspray },
@@ -99,6 +114,7 @@ return {
         name = "Contain",
         buffs = { "contain" },
     }),
+    -- Sinstone Goliath
     pullSins = A.channelNoTarget({
         name = "Pull Sins",
         art = { icon = Icons.scatterrockets },
@@ -107,7 +123,11 @@ return {
         name = "Siphon Anima",
         art = { icon = Icons.drain },
     }),
-    --
+    -- == Dummy
+    -- Dredger
+    motivationHealth = A.itemLifeBonus({
+        name = "Motivation",
+    }),
     harvestAccelerationSlow = A.shadowStrike({
         name = "Harvest Acceleration",
         buffs = { "harvestAccelerationSlow" },

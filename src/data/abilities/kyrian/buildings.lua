@@ -1,12 +1,7 @@
 local A = require("data.abilityPresets")
 
 return {
-    -- Anima Storage
-    animaReplenish = A.replenishManaandLife({
-        name = "Anima Replenish",
-        -- trigger stop on castStart, restore mana with trigger ()
-        -- apply targets mech+building
-    }),
+    -- Main
     emergencyGuard0 = A.exhumeBased({ -- dummy tooltip timer showing stock (different icons)
         name = "Emergency Guard",
         levels = 3,
@@ -22,6 +17,12 @@ return {
     emergencyGuard3 = A.exhumeBased({
         name = "Emergency Guard",
         levels = 3,
+    }),
+    -- Anima Storage
+    animaReplenish = A.replenishManaandLife({
+        name = "Anima Replenish",
+        -- trigger stop on castStart, restore mana with trigger ()
+        -- apply targets mech+building
     }),
     -- Temple Ward
     magicBarrierOn = A.channelNoTarget({

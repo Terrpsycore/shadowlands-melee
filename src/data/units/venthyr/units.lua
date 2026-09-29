@@ -7,12 +7,15 @@ return {
         parent = UnitIds.peon,
         name = "Dredger",
         abilities = {
-            -- "motivation"
+            "motivation",
         },
         art = {
             model = UnitArt[UnitIds.mountaingiant].model,
             scale = 0.3,
             icon = Icons.mountainGiant,
+        },
+        structuresBuilt = {
+            -- "shop",
         },
     },
     duelist = {

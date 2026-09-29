@@ -8,6 +8,27 @@
 ---@return AbilityDefinitionForsakenPaladinAura
 function AbilityDefinitionForsakenPaladinAura:new(id) end
 
+---@class AbilityDefinitionSacrificeAcolyte: AbilityDefinition
+---@field def ObjectDefinition
+
+---@param id string|integer
+---@return AbilityDefinitionSacrificeAcolyte
+function AbilityDefinitionSacrificeAcolyte:new(id) end
+
+---@class AbilityDefinitionSacrificePit: AbilityDefinition
+---@field def ObjectDefinition
+
+---@param id string|integer
+---@return AbilityDefinitionSacrificePit
+function AbilityDefinitionSacrificePit:new(id) end
+
+---@class AbilityDefinitionStandDown: AbilityDefinition
+---@field def ObjectDefinition
+
+---@param id string|integer
+---@return AbilityDefinitionStandDown
+function AbilityDefinitionStandDown:new(id) end
+
 ---@class AbilityInventory: AbilityDefinition
 ---@field def ObjectDefinition
 

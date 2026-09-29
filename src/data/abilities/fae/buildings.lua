@@ -6,7 +6,7 @@ return {
         name = "Extract Heart",
     }),
     calmDreamsAura = A.forsakenPaladinAura({
-        name = "Heal Aura",
+        name = "Healing Aura",
         -- apply heal effectiveness only
     }),
     -- Mushroom Ring

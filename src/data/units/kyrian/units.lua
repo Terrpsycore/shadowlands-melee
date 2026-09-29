@@ -5,7 +5,7 @@ return {
     steward = {
         parent = UnitIds.peasant,
         name = "Steward",
-        abilities = { "humanBuild", "repairHuman", "harvest", "soakAnima", "fuseAnima" },
+        abilities = { "humanBuild", "repairHuman", "harvest", "soakAnima", "fuseAnima", "iNeedHelp" },
         structuresBuilt = {
             "kyrianMain",
             "animaExtractor",
@@ -16,7 +16,7 @@ return {
             "herosRest",
             "templeWard",
             "animaStorage",
-            "shop",
+            "kyrianShop",
         },
         mana = { max = 200, initial = 100 },
         art = { icon = Icons.snowOwl },

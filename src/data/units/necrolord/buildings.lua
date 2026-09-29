@@ -8,7 +8,8 @@ return {
         parent = UnitIds.necropolis,
         name = "Necropoli",
         unitsTrained = { "animate", "aranakkSpy" },
-        abilities = {}, -- TODO: manaregen, manashield, ...
+        abilities = { "necropoliManaShield" }, -- TODO: manaregen triggered
+        -- apply target type mechanical ancient
     },
     necrolordAltar = {
         parent = UnitIds.altarofdarkness,
@@ -20,11 +21,13 @@ return {
     transportConductor = {
         parent = UnitIds.graveyard,
         name = "Transport Conductor",
-        abilities = {}, -- ? TODO: necropoli regen
+        abilities = { "conductorManaRegenAura", "conductorManaRegenAuraAmplify" },
     },
     maldraciteBattery = {
         parent = UnitIds.farm,
         name = "Maldracite Battery",
+        abilities = { "chargeTower" },
+        -- apply 0 mana regen + control it with trigger (regen each 1 sec until freezed amount reached)
     },
     -- Barracks --
     chosenBarracks = {
@@ -36,7 +39,7 @@ return {
         parent = UnitIds.slaughterhouse,
         name = "Body Banks",
         unitsTrained = { "scavenger", "physician", "construct" },
-        abilities = {}, -- TODO: sacrifice
+        abilities = { "bodyBanksInventory", "scavengerHire" },
     },
     ritualBarracks = {
         parent = UnitIds.templeofthedamned,

@@ -7,6 +7,7 @@ return {
         parent = UnitIds.townhall,
         name = "Main",
         unitsTrained = {},
+        abilities = { "castleReserves" },
     },
     venthyrAltar = {
         parent = UnitIds.altarofstorms,
@@ -18,8 +19,13 @@ return {
     muckPool = {
         parent = UnitIds.sacrificialpit,
         name = "Muck Pool",
-        unitsTrained = { "duelist", "hopebreaker" },
-        abilities = {}, -- TODO
+        unitsTrained = { "dredger", "dredgerBrute" }, -- TODO: instant dredgerBrute if 3 dredgers are in cargo
+        abilities = { "muckpoolCargo", "muckpoolDissolve" },
+    },
+    coffin = { -- ? crypt
+        parent = UnitIds.farm,
+        name = "PLACEHOLDER",
+        abilities = { "peacefulRestCargo", "peacefulRest", "peacefulRestEnd" },
     },
     -- Barracks --
     venthyrBarracks = {
@@ -46,7 +52,7 @@ return {
     venthyrTower = {
         parent = UnitIds.sentryTower,
         name = "Focusing Mirror",
-        abilities = {}, -- TODO
+        abilities = { "focusedLight" },
     },
     venthyrShop = {
         parent = UnitIds.arcanesanctum,

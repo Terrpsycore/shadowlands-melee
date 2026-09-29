@@ -4,4 +4,8 @@ return {
     harvest = A.passiveGeneric({
         name = "Harvest",
     }),
+    -- == Items
+    muckpoolCreate = A.buildTinyScoutTower({
+        name = "Create Muckpool",
+    }),
 }

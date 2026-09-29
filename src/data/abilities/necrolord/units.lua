@@ -4,6 +4,9 @@ local A = require("data.abilityPresets")
 local Icons = require("vendor.assets.generated.Icons")
 
 return {
+    scavengerMorph = A.sacrificeAcolyte({
+        name = "Morph to Scavenger",
+    }),
     surviveWish = A.passiveGeneric({
         name = "Survive Wish",
         buffs = { "surviveWish" },

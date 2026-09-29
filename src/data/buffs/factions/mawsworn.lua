@@ -81,4 +81,5 @@ return {
         parent = BuffIds.slowPoisonNonStacking,
         name = "Foul Bite",
     },
+    suppressingAura = { parent = BuffIds.tornadoSlowAura, name = "Suppressing Aura" },
 }

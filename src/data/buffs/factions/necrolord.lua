@@ -159,4 +159,5 @@ return {
     opressiveBannerShield = { parent = BuffIds.invulnerable, name = "Opressive Banner" },
     weaponTest = { parent = BuffIds.innerFire, name = "Weapon Test" },
     allOnOne = { parent = BuffIds.berserk, name = "All on One" },
+    chargeTower = { parent = BuffIds.innerFire, name = "Charged Tower" },
 }

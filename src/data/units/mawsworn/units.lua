@@ -1,13 +1,10 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
-    runesmith = {
+    runesmith = { -- ensure unit can power build but can't start build
         parent = UnitIds.peasant,
         name = "Steward",
         abilities = { "humanBuild", "repairHuman", "stygianShield" },
-        structuresBuilt = {
-            -- "shop",
-        },
     },
     shackler = {
         parent = UnitIds.footman,
@@ -74,5 +71,18 @@ return {
         name = "Domination Chain",
         abilities = { "relink" },
     },
-    ---
+    -- == Special
+    -- == Dummy
+    mawswornCagePossess = {
+        parent = UnitIds.banshee,
+        name = "Possess",
+    },
+    mawswornCageTransmute = {
+        parent = UnitIds.waterelemental1,
+        name = "Possess",
+    },
+    mawswornCageTransform = {
+        parent = UnitIds.shade,
+        name = "Possess",
+    },
 }
