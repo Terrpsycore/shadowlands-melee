@@ -1,5 +1,6 @@
 --[[
 TODO:
+-- - BUG: 10-stack weighted hit applies stun, but doesn't apply exhaust debuff
 - higher WS on single hero at T2/T3
 ]]
 
@@ -27,7 +28,11 @@ local function onDamage(info)
     if not info.isAttack then
         return
     end
-    WS.api.applyWeakenedSoulStack(info.target, 1, GetOwningPlayer(info.source))
+    WS.api.applyWeakenedSoulStack(
+        info.target,
+        10, -- tmp
+        GetOwningPlayer(info.source)
+    )
 end
 
 return {

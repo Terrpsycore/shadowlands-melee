@@ -204,4 +204,21 @@ function Unit.applyTimedFloatingText(unit, label, color)
     SetTextTagFadepoint(text, 1.5)
 end
 
+--- @param unit unit
+--- @return boolean
+function Unit.hasSpaceInInventory(unit)
+    local size = UnitInventorySize(unit)
+    if size <= 0 then
+        return false
+    end
+
+    for i = 0, size - 1 do
+        if UnitItemInSlot(unit, i) == nil then
+            return true
+        end
+    end
+
+    return false
+end
+
 return Unit

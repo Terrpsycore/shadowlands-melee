@@ -1,6 +1,7 @@
 local Ids = require("data.ids")
 local Units = require("data.units")
 local Triggers = require("lib.triggers.callbacks")
+local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 
 local DeathStorage = require("scenario.storage.death")
@@ -41,7 +42,7 @@ local function spawnSlug(player, slug, row)
     Triggers.fireEvent("CREATE", { target = unit })
 
     if row.heroAbilities then
-        SetHeroLevel(unit, 10, false)
+        -- SetHeroLevel(unit, 10, false)
     end
     if slug == "phalynx" then
         require("scenario.storage.phalynx"):add(unit)
@@ -110,6 +111,7 @@ local packs = {
         spawnFaction("venthyr")
     end,
     mawsworn = function()
+        CreateUnit(p0, FourCC(Ids.units.mawswornCage), x, y, f)
         spawnFaction("mawsworn")
     end,
     corpses = function()
@@ -136,7 +138,8 @@ local packs = {
         local footman = CreateUnit(p1, FourCC(Ids.units.footman), -1500.4, y + 1000, f)
         BlzSetUnitMaxMana(footman, 300)
 
-        CreateUnit(p1, FourCC(Ids.units.dummyTank), x, y + 1500, f)
+        local t = CreateUnit(p1, FourCC(Ids.units.dummyTank), x, y + 1500, f)
+        -- Dummy.applyDummyOrder(p0, t, FourCC(Ids.abilities.exhaustionDebuff), "acidbomb")
         CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
         CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
         -- CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)

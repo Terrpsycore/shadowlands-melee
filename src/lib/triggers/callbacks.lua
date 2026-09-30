@@ -192,6 +192,12 @@ T.onPointOrder = function(triggers)
     end)
 end
 
+T.onTrainStart = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_UNIT_TRAIN_START, triggers, function()
+        return { target = GetTrainedUnit() }
+    end)
+end
+
 T.onTrain = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH, triggers, function()
         return { target = GetTrainedUnit() }
@@ -200,6 +206,18 @@ end
 
 T.onSelect = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_SELECTED, triggers, function()
+        return {}
+    end)
+end
+
+T.onPickUpItem = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM, triggers, function()
+        return {}
+    end)
+end
+
+T.onDropItem = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM, triggers, function()
         return {}
     end)
 end
@@ -233,12 +251,15 @@ T.methods = {
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,
     EVENT_PLAYER_UNIT_SPELL_ENDCAST = T.onSpellEndcast,
     EVENT_PLAYER_UNIT_SPELL_FINISH = T.onSpellFinish,
+    EVENT_PLAYER_UNIT_TRAIN_START = T.onTrainStart,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_SUMMON = T.onSummon,
     EVENT_PLAYER_UNIT_ISSUED_ORDER = T.onOrder,
     EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER = T.onPointOrder,
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,
+    EVENT_PLAYER_UNIT_DROP_ITEM = T.onDropItem,
+    EVENT_PLAYER_UNIT_PICKUP_ITEM = T.onPickUpItem,
     PRE_DAMAGE = T.onPreDamage,
     DAMAGE = T.onDamage,
     LETHAL_DAMAGE = T.onLethalDamage,

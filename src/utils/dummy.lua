@@ -56,7 +56,8 @@ end
 
 function Dummy.applyDummyOrder(owner, target, abilityId, order, level)
     local dummy = spawn(owner, target, abilityId, level)
-    issueTarget(dummy, order, target)
+    local s = issueTarget(dummy, order, target)
+    dump("applyDummyOrder", order, s)
     return dummy
 end
 

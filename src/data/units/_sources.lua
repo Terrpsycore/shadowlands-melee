@@ -1,6 +1,6 @@
 --- Unit catalog load order (shared by data.units and icon preview export).
 return {
-    { path = "data.units.common" },
+    { path = "data.units.common", class = "dummy" },
     { faction = "kyrian", class = "hero", path = "data.units.kyrian.heroes" },
     { faction = "kyrian", class = "unit", path = "data.units.kyrian.units" },
     { faction = "kyrian", class = "building", path = "data.units.kyrian.buildings" },

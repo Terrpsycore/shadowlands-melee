@@ -45,4 +45,17 @@ return {
         local itemId = Ids.items[unitSlug .. "Corpse"]
         return itemId and FourCC(itemId) or nil
     end,
+    ---@param unitTypeId integer
+    ---@return integer
+    getGrabItemId = function(unitTypeId)
+        local unitSlug = Slugs.unit(unitTypeId)
+        if not unitSlug then
+            error("Invalid unitTypeId slug for grab")
+        end
+        local itemId = Ids.items[unitSlug .. "Grabbed"]
+        if not itemId then
+            error("Invalid itemId for grab")
+        end
+        return FourCC(itemId)
+    end,
 }

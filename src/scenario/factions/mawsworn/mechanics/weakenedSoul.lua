@@ -123,8 +123,6 @@ local function onApplyWeakenedSoulCast()
     local delta = dummyCastQueue[caster]
     dummyCastQueue[caster] = nil
     updateWeakenedSoulState(target, delta, owner)
-
-    -- RemoveUnit(caster)
 end
 
 local function onApplyExhaustionCast()
@@ -167,7 +165,7 @@ end
 local function onTimer()
     -- == Exhaustion flush
     local exhaustionFlushQueue = {}
-    for _, unit in ipairs(exhausted) do
+    for unit, _ in pairs(exhausted) do
         -- remove effect ability when debuff fades
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.exhaustion) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.exhaustionEffect)
@@ -180,7 +178,7 @@ local function onTimer()
 
     -- == WS flush
     local flushQueue = {}
-    for _, unit in ipairs(memory) do
+    for unit, _ in pairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.dispellMark) then
             UnitRemoveAbility(unit, CONFIG.refs.abilities.ws)
             table.insert(flushQueue, unit)

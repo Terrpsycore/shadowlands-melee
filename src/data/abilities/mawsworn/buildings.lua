@@ -7,6 +7,19 @@ return {
         levels = 3,
         buffs = { "suppressingAura" },
     }),
+    -- Cage
+    mawswornCageInventory = A.inventory({
+        name = "Inventory (Mawsworn Cage)",
+        apply = A.inventory.apply(function(a, level)
+            a:setItemCapacity(level, 1)
+        end),
+    }),
+    mawswornCageTransmute = A.transmute({
+        name = "Transmute",
+        apply = A.transmute.apply(function(a, level)
+            --
+        end),
+    }),
     -- Maw Chain
     relink = A.channelTarget({
         name = "Re-link",

@@ -41,10 +41,13 @@ return {
             a:setDamage(level, 0)
         end),
     }),
-    grabPrisoner = A.channelTarget({
+    mawswornInventory = A.inventory({
         name = "Grab",
+        apply = A.inventory.apply(function(a, level)
+            a:setItemCapacity(level, 3)
+        end),
     }),
-    dropPrisoner = A.channelTarget({
-        name = "Drop",
+    mawswornGrab = A.channelTarget({
+        name = "Grab",
     }),
 }

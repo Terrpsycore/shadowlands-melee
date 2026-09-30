@@ -20,7 +20,8 @@ return {
     -- Resources --
     mawswornCage = {
         parent = UnitIds.farm,
-        -- abilities = {},
+        abilities = { "mawswornCageInventory" },
+        unitsTrained = { "mawswornCagePossess", "mawswornCageTransmute", "mawswornCageTransform" },
     },
     -- Barracks --
     mawswornBarracks = {

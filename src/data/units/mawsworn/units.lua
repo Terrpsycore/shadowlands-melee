@@ -9,27 +9,27 @@ return {
     shackler = {
         parent = UnitIds.footman,
         name = "Shackler",
-        abilities = { "shackle", "disarm" },
+        abilities = { "shackle", "disarm", "mawswornGrab", "mawswornInventory" },
     },
     arbalest = {
         parent = UnitIds.headhunter,
         name = "Arbalest",
-        abilities = { "malignantBolt" },
+        abilities = { "malignantBolt", "mawswornGrab", "mawswornInventory" },
     },
     vanguard = {
         parent = UnitIds.grunt,
         name = "Vanguard",
-        abilities = { "accursedStrength", "disarm" },
+        abilities = { "accursedStrength", "disarm", "mawswornGrab", "mawswornInventory" },
     },
     myrmidonFlying = {
         parent = UnitIds.dragonhawk,
         name = "Myrmidon",
-        abilities = { "fallenArmaments", "myrmidonFly" },
+        abilities = { "fallenArmaments", "myrmidonFly", "mawswornGrab", "mawswornInventory" },
     },
     myrmidon = {
         parent = UnitIds.headhunter,
         name = "Myrmidon",
-        abilities = { "fallenArmaments", "myrmidonFly" },
+        abilities = { "fallenArmaments", "myrmidonFly", "mawswornGrab", "mawswornInventory" },
     },
     soulEater = {
         parent = UnitIds.wolfrider,
@@ -72,17 +72,30 @@ return {
         abilities = { "relink" },
     },
     -- == Special
+    mawswornShade = {
+        parent = UnitIds.shade,
+        name = "Transformed",
+    },
     -- == Dummy
     mawswornCagePossess = {
         parent = UnitIds.banshee,
         name = "Possess",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
     },
     mawswornCageTransmute = {
         parent = UnitIds.waterelemental1,
-        name = "Possess",
+        name = "Transmute",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
     },
     mawswornCageTransform = {
         parent = UnitIds.shade,
-        name = "Possess",
+        name = "Transform",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
     },
 }
