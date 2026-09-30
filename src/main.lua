@@ -1,7 +1,7 @@
 local RUN = {
     tests = false,
     spawn = true,
-    spawnPacks = { "venthyr", "corpses", "enemies" }, -- kyrian | necrolord | corpses | enemies | ...
+    spawnPacks = { "mawsworn", "enemies" }, -- kyrian | necrolord | corpses | enemies | ...
 }
 
 require("lib.init")

@@ -3,15 +3,23 @@ local BuffIds = require("vendor.assets.BuffIds")
 return {
     weakenedSoulAura = {
         parent = BuffIds.tornadoSlowAura,
-        name = "Weakened Soul (aura)",
+        name = "Weakened Soul",
     },
     weakenedSoulDebuff = {
         parent = BuffIds.curse,
-        name = "Weakened Soul (debuff)",
+        name = "Weakened Soul Duration",
     },
     exhaustion = {
-        parent = BuffIds.acidBomb,
+        parent = BuffIds.cripple,
+        name = "Exhaustion Duration",
+    },
+    exhaustionEffect = {
+        parent = BuffIds.tornadoSlowAura,
         name = "Exhaustion",
+    },
+    exhaustionNeutralize = {
+        parent = BuffIds.stunned,
+        name = "Neutralized",
     },
     harpoon = {
         parent = BuffIds.stunned,

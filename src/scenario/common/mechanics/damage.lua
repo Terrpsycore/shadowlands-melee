@@ -16,11 +16,11 @@ local function onAfterDamage(info)
         return
     end
 
-    local text = CreateTextTagUnitBJ(string.format("%.0f!", info.damage), info.target, 0, 10, r, g, b, 0)
-    SetTextTagVelocityBJ(text, 64, 90)
-    SetTextTagPermanent(text, false)
-    SetTextTagLifespan(text, 2.0)
-    SetTextTagFadepoint(text, 1.5)
+    -- local text = CreateTextTagUnitBJ(string.format("%.0f!", info.damage), info.target, 0, 10, r, g, b, 0)
+    -- SetTextTagVelocityBJ(text, 64, 90)
+    -- SetTextTagPermanent(text, false)
+    -- SetTextTagLifespan(text, 2.0)
+    -- SetTextTagFadepoint(text, 1.5)
 end
 
 return {

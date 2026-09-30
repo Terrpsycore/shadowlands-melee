@@ -67,6 +67,15 @@ return {
             u:setAttacksEnabled(0)
         end,
     },
+    dummyTank = {
+        parent = UnitIds.footman,
+        corpse = false,
+        revive = false,
+        apply = function(u)
+            u:setAttacksEnabled(0)
+            u:setHitPointsMaximumBase(5000)
+        end,
+    },
     dummyHero = {
         parent = UnitIds.paladin,
         classification = "Suicidal",

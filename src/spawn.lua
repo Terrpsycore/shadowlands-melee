@@ -103,8 +103,14 @@ local packs = {
     necrolord = function()
         spawnFaction("necrolord")
     end,
+    fae = function()
+        spawnFaction("fae")
+    end,
     venthyr = function()
         spawnFaction("venthyr")
+    end,
+    mawsworn = function()
+        spawnFaction("mawsworn")
     end,
     corpses = function()
         spawnCorpseCluster(p1, kyrianCorpses, x - 180, y)
@@ -130,6 +136,7 @@ local packs = {
         local footman = CreateUnit(p1, FourCC(Ids.units.footman), -1500.4, y + 1000, f)
         BlzSetUnitMaxMana(footman, 300)
 
+        CreateUnit(p1, FourCC(Ids.units.dummyTank), x, y + 1500, f)
         CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
         CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)
         -- CreateUnit(p1, FourCC(Ids.units.priest), x, y + 1500, f)

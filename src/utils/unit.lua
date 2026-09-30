@@ -183,4 +183,25 @@ function Unit.applyTimedLife(unit, duration)
     UnitApplyTimedLife(unit, FourCC("BTLF"), duration)
 end
 
+--- @alias Color "red" | "purple" | "grey"
+
+--- @param unit unit
+--- @param label string
+--- @param color Color
+function Unit.applyTimedFloatingText(unit, label, color)
+    local r, g, b, o
+    if color == "red" then
+        r, g, b, o = 100, 0, 0, 0
+    elseif color == "purple" then
+        r, g, b, o = 100, 0, 100, 0
+    elseif color == "grey" then
+        r, g, b, o = 50, 50, 50, 0
+    end
+    local text = CreateTextTagUnitBJ(label, unit, 0, 10, r, g, b, o)
+    SetTextTagVelocityBJ(text, 64, 90)
+    SetTextTagPermanent(text, false)
+    SetTextTagLifespan(text, 2.0)
+    SetTextTagFadepoint(text, 1.5)
+end
+
 return Unit

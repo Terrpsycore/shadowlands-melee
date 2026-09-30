@@ -1,6 +1,17 @@
 local Slugs = require("lib.slugs")
 local raw = require("data.generated.unit_meta")
 
+---@type table<Faction, Faction>
+local FACTIONS = {
+    kyrian = "kyrian",
+    necrolord = "necrolord",
+    fae = "fae",
+    venthyr = "venthyr",
+    mawsworn = "mawsworn",
+}
+
+--- @alias Faction "kyrian" | "necrolord" | "fae" | "venthyr" | "mawsworn"
+
 local byCode = {}
 for code, meta in pairs(raw) do
     byCode[FourCC(code)] = meta
@@ -20,7 +31,7 @@ local function slug(unitTypeId)
 end
 
 ---@param unitTypeId integer
----@return string|nil
+---@return Faction|nil
 local function faction(unitTypeId)
     local meta = get(unitTypeId)
     return meta and meta.faction or nil
@@ -45,4 +56,5 @@ return {
         local meta = get(unitTypeId)
         return meta ~= nil and meta.revive
     end,
+    FACTIONS = FACTIONS,
 }

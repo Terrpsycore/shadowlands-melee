@@ -84,8 +84,16 @@ local profiles = {
         },
         factionSources = {
             {
+                dirPattern = "src/scenario/factions/{faction}/mechanics",
+                prefixPattern = "scenario.factions.{faction}.mechanics.",
+            },
+            {
                 dirPattern = "src/scenario/factions/{faction}/abilities",
                 prefixPattern = "scenario.factions.{faction}.abilities.",
+            },
+            {
+                dirPattern = "src/scenario/factions/{faction}/abilities/common",
+                prefixPattern = "scenario.factions.{faction}.abilities.common.",
             },
         },
     },
