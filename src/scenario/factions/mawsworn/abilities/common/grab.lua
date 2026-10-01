@@ -41,7 +41,7 @@ local grabQueue = {}
 
 --- @param item item
 local function flushGrabber(item)
-    if grabbers[memory[item]] and memory[item].holder then
+    if memory[item].holder and grabbers[memory[item].holder] then
         grabbers[memory[item].holder] = nil
     end
 end

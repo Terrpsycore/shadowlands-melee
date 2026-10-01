@@ -1,13 +1,10 @@
 --[[
 -- TODO
--- - BUG: caged unit releases at grabber position instead of cage position
--- - give experience for possession/transform (charm?transmute?dummy kill?) -- evade onDeath bugs somehow
--- - - most likely - by using dummy Charm on copied unit & removing it (charmed unit loses upgrades/skills)
--- - - make sure that Charm doesn't provoke DEATH event
--- - ? heal possessed unit to full
--- - smart move on command flag after possess/transform
--- -
--- - onTimer test
+-- - check that cage actions flush grabbed data
+-- - make sure that dummyExtractKillXP doesn't provoke DEATH event
+-- - VISUALS:
+-- - - change train buttons to skill buttons - enable/disable on trigger
+-- - - use hidden train actions
 ]]
 
 local Ids = require("data.ids")
@@ -48,11 +45,6 @@ local trainActions = {
     [CONFIG.refs.units.transform] = "transform",
 }
 
---- @alias CharmData {action:TrainAction,caged:unit,cagedData:{item:item,data:GrabMemory}}
-
---- @type table<unit, CharmData>
-local charmQueue = {}
-
 --- @param building unit
 --- @return {item:item,data:GrabMemory}|nil
 local function getCagedData(building)
@@ -69,15 +61,16 @@ local function getCagedData(building)
     return { item = item, data = itemData }
 end
 
---- Beware bugs in onDeath&onDamage events (death-triggered skills too should be handled (suicide))
+--- Beware bugs in onDeath&onDamage events (corpse-creating, death-triggered skills too should be handled (suicide))
 --- @param cage unit
 --- @param target unit
 local function dummyExtractKillXP(cage, target)
     local dummy = Dummy.create(GetOwningPlayer(cage), cage)
     local copiedUnit = Unit.copy(target)
+    UnitAddType(copiedUnit, UNIT_TYPE_SAPPER)
     Damage.apply(dummy, copiedUnit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_DIVINE)
-    RemoveUnit(dummy)
     RemoveUnit(copiedUnit)
+    RemoveUnit(dummy)
 end
 
 local function onTrainStart()
@@ -111,24 +104,34 @@ local function onTrainFinish()
     end
 
     local unit = cagedData.data.unit
+    dump("onTrainFinish action", action)
     SetUnitX(unit, GetUnitX(building))
     SetUnitY(unit, GetUnitY(building))
-    dump("onTrainFinish action", action)
+
+    local rally = GetUnitRallyPoint(building)
+
     if action == "possess" then
         dummyExtractKillXP(building, unit)
         SetUnitOwner(unit, owner, true)
         SetUnitState(unit, UNIT_STATE_LIFE, GetUnitState(unit, UNIT_STATE_MAX_LIFE))
         SetUnitState(unit, UNIT_STATE_MANA, GetUnitState(unit, UNIT_STATE_MAX_MANA))
         Grab.api.onDropItem(cagedData.item)
+        SetUnitPosition(unit, GetUnitX(building), GetUnitY(building))
     elseif action == "transmute" then
         Grab.api.onDropItem(cagedData.item)
+        SetUnitPosition(unit, GetUnitX(building), GetUnitY(building))
         Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.transmute, "transmute")
     elseif action == "transform" then
         dummyExtractKillXP(building, unit)
         SetUnitOwner(unit, owner, true)
         ---@diagnostic disable-next-line: param-type-mismatch -- TODO: remove
-        ReplaceUnitBJ(unit, CONFIG.refs.units.shade, bj_UNIT_STATE_METHOD_DEFAULTS)
+        unit = ReplaceUnitBJ(unit, CONFIG.refs.units.shade, bj_UNIT_STATE_METHOD_DEFAULTS)
         Grab.api.onDropItem(cagedData.item)
+        SetUnitPosition(unit, GetUnitX(building), GetUnitY(building))
+    end
+
+    if action ~= "transmute" then
+        IssuePointOrder(unit, "move", GetLocationX(rally), GetLocationY(rally))
     end
     dump("onTrainFinish() end")
 end
