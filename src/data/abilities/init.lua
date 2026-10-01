@@ -22,6 +22,7 @@ local sources = {
     { class = "unit", path = "data.abilities.venthyr.units" },
     { class = "unit", path = "data.abilities.mawsworn.buildings" },
     { class = "unit", path = "data.abilities.mawsworn.common" },
+    { class = "item", path = "data.abilities.mawsworn.items" },
     { class = "hero", path = "data.abilities.mawsworn.heroes" },
     { class = "unit", path = "data.abilities.mawsworn.units" },
 }

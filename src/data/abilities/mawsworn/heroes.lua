@@ -61,10 +61,15 @@ return {
     }),
     eatSoul = A.channelPoint({
         name = "Eat Soul",
-        manaCost = 100,
+        manaCost = 0,
         levels = 3,
         button = { 2, 2 },
         hotkey = "E",
+        apply = A.channelPoint.apply(function(a, level)
+            a:setBaseOrderID(level, "shadowstrike")
+            a:setOrderStringUseTurnOn("shadowstrike")
+            a:setOrderStringActivate("shadowstrike")
+        end),
     }),
     gorgoa = A.channelArea({
         name = "Gorgoa",
@@ -115,6 +120,14 @@ return {
         levels = 3,
     }),
     -- Mage hero
+    eatSoulRegenTimed = A.rejuvenation({
+        name = "Eat Soul",
+        levels = 3,
+        apply = A.rejuvenation.apply(function(a, level)
+            a:setAllowWhenFull(level, 3)
+            a:setManaPointsGained(level, level * 50)
+        end),
+    }),
     twistedPainDamage = A.immolation({
         name = "Twisted Pain",
         manaCost = 0,

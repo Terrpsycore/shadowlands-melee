@@ -2,6 +2,7 @@ local buffTypes = require("data.buffTypes")
 local registry = require("scenario.generated.abilities_registry")
 
 _G.dump = require("utils.logger")
+_G.Generic = require("utils.generic")
 
 local abilities = {}
 for _, mod in ipairs(registry) do

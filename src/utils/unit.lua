@@ -157,22 +157,34 @@ function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
     end)
 end
 
-function Unit.getNearestCorpse(unit, radius)
+function Unit.getNearestUnit(point, radius, filter)
+    local x, y = pointXY(point)
+    local unit
+    forEachInRadius(x, y, radius, function(u)
+        if (filter and filter(u)) or not filter then
+            unit = u
+        end
+    end)
+    return unit
+end
+
+function Unit.getNearestCorpse(point, radius, filter)
+    local x, y = pointXY(point)
     local corpse
-    forEachInRadius(GetUnitX(unit), GetUnitY(unit), radius, function(u)
-        if not corpse and IsUnitDeadBJ(u) then
+    forEachInRadius(x, y, radius, function(u)
+        if not corpse and IsUnitDeadBJ(u) and ((filter and filter(u)) or not filter) then
             corpse = u
         end
     end)
     return corpse
 end
 
-function Unit.getCorpsesInRadius(point, radius)
+function Unit.getCorpsesInRadius(point, radius, filter)
     local x, y = pointXY(point)
     local exclude = type(point) ~= "table" and point or nil
     local resultsTable = {}
     forEachInRadius(x, y, radius, function(u)
-        if IsUnitDeadBJ(u) and u ~= exclude then
+        if IsUnitDeadBJ(u) and u ~= exclude and ((filter and filter(u)) or not filter) then
             table.insert(resultsTable, u)
         end
     end)
@@ -219,6 +231,37 @@ function Unit.hasSpaceInInventory(unit)
     end
 
     return false
+end
+
+--- @alias slot {index: integer, item: item}
+
+--- @param unit unit
+--- @param filter function|nil
+--- @param backwards boolean|nil
+--- @return slot|nil
+function Unit.findItem(unit, filter, backwards)
+    local size = UnitInventorySize(unit)
+    if size <= 0 then
+        return nil
+    end
+
+    if not backwards then
+        for i = 0, size - 1 do
+            local item = UnitItemInSlot(unit, i)
+            if item ~= nil and ((filter and filter(item)) or not item) then
+                return { index = i, item = item }
+            end
+        end
+    else
+        for i = size - 1, 0, -1 do
+            local item = UnitItemInSlot(unit, i)
+            if item ~= nil and ((filter and filter(item)) or not item) then
+                return { index = i, item = item }
+            end
+        end
+    end
+
+    return nil
 end
 
 --- @param unit unit

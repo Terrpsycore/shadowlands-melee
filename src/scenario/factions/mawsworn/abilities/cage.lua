@@ -2,6 +2,8 @@
 -- TODO
 -- - check that cage actions flush grabbed data
 -- - make sure that dummyExtractKillXP doesn't provoke DEATH event
+-- - ? add some maximum cage storage time
+-- - ? prevent possess/transform on supply block
 -- - VISUALS:
 -- - - change train buttons to skill buttons - enable/disable on trigger
 -- - - use hidden train actions
@@ -9,7 +11,6 @@
 
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
-local ItemMeta = require("lib.items")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 

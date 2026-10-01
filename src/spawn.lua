@@ -112,6 +112,7 @@ local packs = {
     end,
     mawsworn = function()
         CreateUnit(p0, FourCC(Ids.units.mawswornCage), x, y, f)
+        CreateItem(FourCC(Ids.items.soulkeeper0), x, y)
         spawnFaction("mawsworn")
     end,
     corpses = function()

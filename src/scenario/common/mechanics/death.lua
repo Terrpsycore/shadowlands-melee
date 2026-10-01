@@ -1,7 +1,9 @@
 --[[
 TODO:
 - fire onDeath even on fake death ? most likely yes
-- clean stale corpses data & hidden source units
+- ! clean stale corpses data & hidden source units
+- DOCS:
+- - ADR for peon classification
 ]]
 
 local Ids = require("data.ids")
@@ -13,13 +15,8 @@ local Storage = require("scenario.storage.death")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
-        abilities = {
-            main = Ids.abilities.animaBarrage, -- CHANGE slug (effect ability)
-            toggle = Ids.abilities.animaBarrageToggle,
-        },
-        units = {
-            carrier = Ids.units.colossus, -- CHANGE carrier
-        },
+        abilities = {},
+        units = {},
         buffs = {
             exclude = Ids.buffs.forgeboneReveries,
         },
@@ -87,6 +84,7 @@ local function onLethalDamage(info)
         KillUnit(storageUnit) -- CAUTION: onDeath triggers
     end
 
+    Storage:set(storageUnit, "soulAvailable", true)
     Storage:set(storageUnit, "originalOwner", GetPlayerId(owner))
     Storage:set(storageUnit, "unit", target)
     Storage:set(storageUnit, "isPeon", isPeon)

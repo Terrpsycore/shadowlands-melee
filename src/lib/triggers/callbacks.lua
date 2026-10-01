@@ -222,6 +222,12 @@ T.onDropItem = function(triggers)
     end)
 end
 
+T.onPawnItem = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM, triggers, function()
+        return {}
+    end)
+end
+
 T.onCreate = function(triggers)
     local trig = CreateTrigger()
     TriggerRegisterEnterRectSimple(trig, GetWorldBounds())
@@ -259,6 +265,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER = T.onPointOrder,
     EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER = T.onTargetOrder,
     EVENT_PLAYER_UNIT_DROP_ITEM = T.onDropItem,
+    EVENT_PLAYER_UNIT_PAWN_ITEM = T.onPawnItem,
     EVENT_PLAYER_UNIT_PICKUP_ITEM = T.onPickUpItem,
     PRE_DAMAGE = T.onPreDamage,
     DAMAGE = T.onDamage,
@@ -270,6 +277,7 @@ T.methods = {
     ROOT = T.onRoot,
     CREATE = T.onCreate,
     REVIVE = T.onCustomEvent,
+    SOUL_USE = T.onCustomEvent,
 }
 
 return T

@@ -9,6 +9,7 @@ return {
     dummyHeroItem = {
         parent = ItemIds.ringProtection1,
     },
+    -- Necrolords
     explosivePotion = {
         parent = ItemIds.potionInvisibility,
         name = "Explosive Potion",
@@ -32,5 +33,30 @@ return {
             icon = Icons.potionpurple,
         },
         abilities = { "concoctedFrenzyActive" },
+    },
+    -- Mawsworn
+    soulkeeper0 = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulkeeper (0/3)",
+        art = { icon = Icons["3m1"] },
+        abilities = { "soulkeeper" },
+    },
+    soulkeeper1 = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulkeeper (1/3)",
+        art = { icon = Icons["3m1"] },
+        abilities = { "soulkeeper" },
+    },
+    soulkeeper2 = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulkeeper (2/3)",
+        art = { icon = Icons["3m2"] },
+        abilities = { "soulkeeper" },
+    },
+    soulkeeper3 = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulkeeper (3/3)",
+        art = { icon = Icons["3m3"] },
+        abilities = { "soulkeeper" },
     },
 }

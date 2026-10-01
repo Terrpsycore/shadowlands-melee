@@ -19,20 +19,17 @@ local Filter = {}
 
 local function assertFourCC(value, trigger, field)
     if type(value) == "string" then
-        error(string.format(
-            'trigger "%s" %s: expected FourCC id, got string %q — wrap with FourCC(...)',
-            trigger,
-            field,
-            value
-        ))
+        error(
+            string.format(
+                'trigger "%s" %s: expected FourCC id, got string %q — wrap with FourCC(...)',
+                trigger,
+                field,
+                value
+            )
+        )
     end
     if type(value) ~= "number" then
-        error(string.format(
-            'trigger "%s" %s: expected FourCC id (number), got %s',
-            trigger,
-            field,
-            type(value)
-        ))
+        error(string.format('trigger "%s" %s: expected FourCC id (number), got %s', trigger, field, type(value)))
     end
     return value
 end
@@ -93,7 +90,7 @@ function Filter.compileTrigger(entry)
 end
 
 ---@param triggers TriggerDefinition[]
----@param ctx? { source?: unit, target?: unit, spellId?: integer, orderId?: integer }
+---@param ctx? { source?: unit, target?: unit, item?: item, spellId?: integer, orderId?: integer }
 ---@param passCtx? boolean
 function Filter.run(triggers, ctx, passCtx)
     ctx = ctx or {}

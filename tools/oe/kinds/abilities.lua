@@ -163,7 +163,9 @@ return {
     end,
     defaults = function(a, data)
         local isHero = data.class == "hero"
+        local isItem = data.class == "item"
         a:setHeroAbility(isHero)
+        a:setItemAbility(isItem)
         a:setButtonPositionNormalX(0)
         a:setButtonPositionNormalY(2)
         a:setButtonPositionTurnOffX(0)

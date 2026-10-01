@@ -3,22 +3,22 @@
 
 local function resolveId(value, path)
     if value == nil then
-        error(string.format('%s: nil id — use Ids.<domain>.<slug>', path))
+        error(string.format("%s: nil id — use Ids.<domain>.<slug>", path))
     end
     if type(value) ~= "string" then
-        error(string.format('%s: expected id string from Ids.*, got %s', path, type(value)))
+        error(string.format("%s: expected id string from Ids.*, got %s", path, type(value)))
     end
     return FourCC(value)
 end
 
 local function resolveScalarRef(value, path)
     if type(value) == "table" then
-        error(string.format('%s: expected scalar id, got array', path))
+        error(string.format("%s: expected scalar id, got array", path))
     end
     return resolveId(value, path)
 end
 
-local function resolveUnitRef(value, path)
+local function resolveFlexRef(value, path)
     if type(value) == "table" then
         local resolved = {}
         for i, id in ipairs(value) do
@@ -64,8 +64,8 @@ function M.compile(spec)
     local refs = {
         abilities = resolveRefsDomain(spec.refs.abilities, "refs.abilities", resolveScalarRef),
         buffs = resolveRefsDomain(spec.refs.buffs, "refs.buffs", resolveScalarRef),
-        units = resolveRefsDomain(spec.refs.units, "refs.units", resolveUnitRef),
-        items = resolveRefsDomain(spec.refs.items, "refs.items", resolveScalarRef),
+        units = resolveRefsDomain(spec.refs.units, "refs.units", resolveFlexRef),
+        items = resolveRefsDomain(spec.refs.items, "refs.items", resolveFlexRef),
     }
 
     return {

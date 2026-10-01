@@ -4,9 +4,7 @@ local A = require("data.abilityPresets")
 local Icons = require("vendor.assets.generated.Icons")
 
 return {
-    scavengerMorph = A.sacrificeAcolyte({
-        name = "Morph to Scavenger",
-    }),
+    -- == Units
     surviveWish = A.passiveGeneric({
         name = "Survive Wish",
         buffs = { "surviveWish" },
@@ -20,6 +18,11 @@ return {
             a:setDamageTakenIncrease(1, 0)
         end),
     }),
+    -- Animate
+    scavengerMorph = A.sacrificeAcolyte({
+        name = "Morph to Scavenger",
+    }),
+    -- Animate Warrior
     combatExpertise = A.passiveGeneric({
         name = "Combat Expertise",
         art = { icon = Icons.pasShadeTrueSight },
@@ -32,6 +35,7 @@ return {
             end
         end),
     }),
+    -- Aranakk Spy
     vanish = A.channelNoTarget({
         name = "Vanish",
         art = { icon = Icons.ambush },
@@ -41,10 +45,12 @@ return {
             a:setTransitionTimeseconds(1, 2)
         end),
     }),
+    -- Ballista
     netAmmo = A.web({
         name = "Net Ammo",
         art = { icon = Icons.apprehend },
     }),
+    -- Necromancer
     animateDead = A.raiseDead({
         name = "Animate Dead",
         art = { icon = Icons.raiseDeadOn },
@@ -112,6 +118,7 @@ return {
             a:setTargetsAllowed(1, "allied,enemy,ground,organic,nonhero,hero,player")
         end),
     }),
+    -- Physician
     applyLimb = A.channelTarget({
         name = "Apply Limb",
         art = { icon = Icons.amuletOftheWild },
@@ -169,6 +176,7 @@ return {
             a:setMaxManaGained(1, 1)
         end),
     }),
+    -- Mixologist
     healingSlime = A.rejuvenation1({
         name = "Healing Slime",
         buffs = { "healingSlime" },
@@ -298,6 +306,7 @@ return {
             a:setAreaofEffect(1, 1)
         end),
     }),
+    -- Scavenger
     collectCorpsesSearch = A.channelPoint({
         name = "Cannibalize",
         art = { icon = Icons.undeadload },
@@ -322,6 +331,7 @@ return {
     scavengerExhume = A.exhume({
         name = "Exhume",
     }),
+    -- Frayedwing
     poisonBite = A.slowPoison({
         name = "Poison Bite",
         art = { icon = Icons.pasPoisonSting },
@@ -329,6 +339,7 @@ return {
             a:setStackingType(1, 0)
         end),
     }),
+    -- Necroray
     sporeCloud = A.channelNoTarget({
         name = "Spore Cloud",
         art = { icon = Icons.orbOfVenom },
@@ -348,6 +359,7 @@ return {
             a:setAreaofEffect(1, 200)
         end),
     }),
+    -- Gladiator
     warBanner = A.channelPoint({
         name = "War Banner",
         art = { icon = Icons.undeadCaptureFlag },
@@ -362,6 +374,7 @@ return {
             a:setTargetsAllowed(1, "allied,ground,air,organic,nonhero,player")
         end),
     }),
+    -- Bonestorm
     deadlyWhirlwind = A.permanentImmolation({
         name = "Deadly Whirlwind",
     }),
