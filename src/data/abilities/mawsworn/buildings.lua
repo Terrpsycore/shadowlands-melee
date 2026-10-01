@@ -14,14 +14,15 @@ return {
             a:setItemCapacity(level, 1)
         end),
     }),
+    -- Maw Chain
+    relink = A.channelTarget({
+        name = "Re-link",
+    }),
+    -- == Dummy
     mawswornCageTransmute = A.transmute({
         name = "Transmute",
         apply = A.transmute.apply(function(a, level)
             --
         end),
-    }),
-    -- Maw Chain
-    relink = A.channelTarget({
-        name = "Re-link",
     }),
 }

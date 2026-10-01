@@ -16,9 +16,11 @@ local function spawn(owner, at, abilityId, level, unitId)
     local x, y = pointXY(at)
     local dummy = CreateUnit(owner, unitId or FourCC(Ids.units.dummy), x, y, 270)
     UnitApplyTimedLife(dummy, FourCC("BTLF"), 10)
-    UnitAddAbility(dummy, abilityId)
-    if level then
-        SetUnitAbilityLevel(dummy, abilityId, level)
+    if abilityId then
+        UnitAddAbility(dummy, abilityId)
+        if level then
+            SetUnitAbilityLevel(dummy, abilityId, level)
+        end
     end
     SetUnitInvulnerable(dummy, true)
     SetUnitPathing(dummy, false)

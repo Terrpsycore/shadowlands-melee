@@ -221,4 +221,10 @@ function Unit.hasSpaceInInventory(unit)
     return false
 end
 
+--- @param unit unit
+--- @return unit
+function Unit.copy(unit)
+    return CreateUnit(GetOwningPlayer(unit), GetUnitTypeId(unit), GetUnitX(unit), GetUnitY(unit), 0)
+end
+
 return Unit

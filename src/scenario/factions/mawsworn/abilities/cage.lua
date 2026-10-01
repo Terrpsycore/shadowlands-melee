@@ -48,6 +48,11 @@ local trainActions = {
     [CONFIG.refs.units.transform] = "transform",
 }
 
+--- @alias CharmData {action:TrainAction,caged:unit,cagedData:{item:item,data:GrabMemory}}
+
+--- @type table<unit, CharmData>
+local charmQueue = {}
+
 --- @param building unit
 --- @return {item:item,data:GrabMemory}|nil
 local function getCagedData(building)
@@ -62,6 +67,17 @@ local function getCagedData(building)
     end
 
     return { item = item, data = itemData }
+end
+
+--- Beware bugs in onDeath&onDamage events (death-triggered skills too should be handled (suicide))
+--- @param cage unit
+--- @param target unit
+local function dummyExtractKillXP(cage, target)
+    local dummy = Dummy.create(GetOwningPlayer(cage), cage)
+    local copiedUnit = Unit.copy(target)
+    Damage.apply(dummy, copiedUnit, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_DIVINE)
+    RemoveUnit(dummy)
+    RemoveUnit(copiedUnit)
 end
 
 local function onTrainStart()
@@ -99,16 +115,17 @@ local function onTrainFinish()
     SetUnitY(unit, GetUnitY(building))
     dump("onTrainFinish action", action)
     if action == "possess" then
-        SetUnitOwner(unit, owner, true) -- ? replace with Charm ability to give exp
+        dummyExtractKillXP(building, unit)
+        SetUnitOwner(unit, owner, true)
         SetUnitState(unit, UNIT_STATE_LIFE, GetUnitState(unit, UNIT_STATE_MAX_LIFE))
         SetUnitState(unit, UNIT_STATE_MANA, GetUnitState(unit, UNIT_STATE_MAX_MANA))
         Grab.api.onDropItem(cagedData.item)
     elseif action == "transmute" then
         Grab.api.onDropItem(cagedData.item)
-        local s = Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.transmute, "transmute") -- TODO: check order
-        dump("onTrainFinish transmute", s)
+        Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.transmute, "transmute")
     elseif action == "transform" then
-        SetUnitOwner(unit, owner, true) -- ? replace with Charm ability to give exp
+        dummyExtractKillXP(building, unit)
+        SetUnitOwner(unit, owner, true)
         ---@diagnostic disable-next-line: param-type-mismatch -- TODO: remove
         ReplaceUnitBJ(unit, CONFIG.refs.units.shade, bj_UNIT_STATE_METHOD_DEFAULTS)
         Grab.api.onDropItem(cagedData.item)

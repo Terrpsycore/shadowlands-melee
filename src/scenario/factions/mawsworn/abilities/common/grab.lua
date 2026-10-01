@@ -1,5 +1,6 @@
 --[[
 -- TODO
+-- - !!! check distance - prevent grab if target has moved far away
 -- - BUG: grabber doesn't flush
 -- - process 1.33/1.5 WS stacks per hit
 -- - debuff kidnapper for dmg/speed
