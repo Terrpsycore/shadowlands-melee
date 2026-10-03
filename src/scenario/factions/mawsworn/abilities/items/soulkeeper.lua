@@ -1,5 +1,10 @@
 --[[
+--- Soulkeeper item + Soul item drops
+
+-- BUG: put soulkeeper in cage -> soulkeeper cooldown resets
+
 -- TODO
+-- - onDropSoul to emptiness - remove it
 -- - test pickup/drop to receivers and non-receivers
 -- - refactor to use Generic
 
@@ -52,6 +57,23 @@ local byLevelReversed = {
     [byLevel[3]] = 3,
 }
 
+local function isReceiver(unit)
+    return Generic.contains(CONFIG.refs.units.receiver, GetUnitTypeId(unit))
+end
+
+--- @param item item
+--- @return boolean
+local function isOnGround(item)
+    return not IsItemOwned(item)
+end
+
+--- @param item item
+local function clearOrphanSoul(item)
+    if Souls.api.holder.isOrphan(item) then
+        Souls.api.use("orphan", item)
+    end
+end
+
 --- @param unit unit Unit who receives item
 --- @param oldItem item
 --- @param slot integer
@@ -60,32 +82,85 @@ local function updateSoulkeeper(unit, oldItem, slot)
     RemoveItem(oldItem)
     UnitAddItemToSlotById(unit, itemId, slot)
 
-    Souls.api.remap("item", oldItem, UnitItemInSlot(unit, slot))
+    local newItem = UnitItemInSlot(unit, slot)
+    Souls.api.remap("item", oldItem, newItem)
+    Souls.api.holder.update(unit, newItem, true)
+end
+
+--- @param unit unit
+--- @param item item
+local function onPickUpSoul(unit, item)
+    clearOrphanSoul(item)
+
+    if isReceiver(unit) then
+        return
+    end
+
+    local soulkeepersHeld = Souls.api.holder.getItems(unit)
+    if not soulkeepersHeld then
+        UnitDropItemPoint(unit, item, GetUnitX(unit), GetUnitY(unit))
+        return
+    end
+
+    local soulkeeperSlot = Unit.findItem(unit, function(s)
+        return Souls.api.count("item", s) <= CONFIG.balance.maxCapacity
+    end)
+    if not soulkeeperSlot then
+        UnitDropItemPoint(unit, item, GetUnitX(unit), GetUnitY(unit))
+        return
+    end
+
+    RemoveItem(item)
+    Souls.api.store("item", soulkeeperSlot.item)
+
+    updateSoulkeeper(unit, soulkeeperSlot.item, soulkeeperSlot.index)
+end
+
+--- @param item item
+local function onDropSoul(item)
+    Timed.call(0.00, function()
+        if IsItemOwned(item) then
+            return
+        end
+        Souls.api.store("orphan", item)
+        Timed.call(1, function() -- TODO: optimize, remove recursive lambda
+            if Souls.api.holder.isOrphan(item) and isOnGround(item) then
+                Souls.api.use("orphan", item)
+            end
+        end)
+    end)
 end
 
 local function onPickUpItem()
     local item = GetManipulatedItem()
+    local unit = GetTriggerUnit()
+    if GetItemTypeId(item) == CONFIG.refs.items.soul then
+        onPickUpSoul(unit, item)
+    end
     if not byLevelReversed[GetItemTypeId(item)] then
         return
     end
-    local unit = GetTriggerUnit()
     Souls.api.holder.update(unit, item, true)
 end
 
 local function onDropItem()
-    -- Game crash lololol
+    -- Game crash? Lololol
     local item = GetManipulatedItem()
+    if GetItemTypeId(item) == CONFIG.refs.items.soul then
+        onDropSoul(item)
+        return
+    end
     if not byLevelReversed[GetItemTypeId(item)] then
         return
     end
-    local unit = GetTriggerUnit()
+    local dropper = GetTriggerUnit()
+    local returnTo = dropper
 
-    local holder = Souls.api.holder.get(item)
     Timed.call(0.00, function()
         local receiver = Souls.api.holder.get(item)
-        dump("onDropItem", holder, receiver)
-        if Generic.contains(CONFIG.refs.units.receiver, GetUnitTypeId(receiver)) then
-            UnitAddItem(holder, item)
+        dump("onDropItem", returnTo, receiver)
+        if isReceiver(receiver) then
+            UnitAddItem(returnTo, item)
 
             local capacity = Souls.api.count("item", item)
             local receiverSlots = Unit.countFreeSlots(receiver)
@@ -99,7 +174,9 @@ local function onDropItem()
                 UnitAddItemById(receiver, CONFIG.refs.items.soul)
             end
         else
-            Souls.api.holder.update(unit, item, false)
+            if Souls.api.holder.get(item) == dropper then
+                Souls.api.holder.update(dropper, item, false)
+            end
         end
     end)
 end
@@ -107,6 +184,10 @@ end
 --- Sell item to shop
 local function onPawnItem()
     local item = GetManipulatedItem()
+    -- if GetItemTypeId(item) == CONFIG.refs.items.soul then
+    --     clearOrphanSoul(item)
+    --     return
+    -- end
     if not byLevelReversed[GetItemTypeId(item)] then
         return
     end
@@ -133,7 +214,7 @@ local function onActivate()
         return
     end
 
-    local q = Souls.api.find(caster, 400, { "corpse" })
+    local q = Souls.api.find(caster, 400, { "orphan", "corpse" })
     if q then
         local success = Souls.api.use(q.holderType, q.holder)
         if success then

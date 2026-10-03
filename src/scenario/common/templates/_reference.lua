@@ -75,8 +75,8 @@ local function onAttacked() end
 -- API: GetDyingUnit(), GetKillingUnit()
 local function onDeath() end
 
--- TRAIN_FINISH: unit trained from building. filter.target = trained unit type.
--- API: GetTrainedUnit()
+-- TRAIN_FINISH: unit trained from building. filter.source = building, filter.target = trained unit type.
+-- API: GetTriggerUnit(), GetTrainedUnit()
 local function onTrainFinish() end
 
 -- SUMMON: unit summoned. filter.target = summoned unit type.

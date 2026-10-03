@@ -4,6 +4,7 @@ item holder type = Soulkeeper only
 ?? any special storage for plain "soul" items?
 
 -- TODO
+-- - ADR (orphan~corpse, item, unit)
 -- - on "soul" item drop/pickup without soulkeeper -> ... destroy with effect
 -- - on "soul" item pickup with soulkeeper -> updateSoulkeeper or drop if full
 -- - on "soulkeeper" drop/pickup to cage/forge -> create "soul" item, return "soulkeeper" back
@@ -40,6 +41,9 @@ local unitHolders = {} -- TODO: save/load
 --- @type table<item,integer>
 local itemHolders = {}
 
+--- @type table<item,{x: number, y: number}>
+local orphanItemHolders = {}
+
 --- @type table<item,unit>
 local itemToUnit = {}
 --- @type table<unit,item[]>
@@ -52,19 +56,29 @@ local function getItemHolder(item)
 end
 
 --- @param unit unit
+--- @return item[]
+local function getItemsHeld(unit)
+    return unitToItems[unit]
+end
+
+--- @param item item
+--- @return boolean
+local function hasOrphanStatus(item)
+    return orphanItemHolders[item] ~= nil
+end
+
+--- @param unit unit
 --- @param item item
 --- @param status boolean
 local function updateItemHolder(unit, item, status)
     local previousHolder = itemToUnit[item]
 
-    if status then -- after this fix 2nd drop doesn't crash, but ignores logic and puts soulkeeper in cage inventory
+    if status then
         itemToUnit[item] = unit
     else
         itemToUnit[item] = nil
     end
     dump("updateItemHolder", unit, item, status, "previousHolder=", previousHolder)
-    -- BUG: give soulkeeper to Cage twice. on second time cage will be both item and previousHolder
-    -- crash with unitToItems[previousHolder]==nil (while itemToUnit[item] is not nil for some reason)
 
     if previousHolder then
         local previousHolderItems = Generic.filter(unitToItems[previousHolder], function(i)
@@ -85,7 +99,7 @@ local function updateItemHolder(unit, item, status)
     end
 end
 
---- @alias soulSource "corpse"|"unit"|"item"
+--- @alias soulSource "orphan"|"corpse"|"unit"|"item"
 
 --- @param point {x:number,y:number}
 --- @param radius integer
@@ -94,13 +108,26 @@ end
 local function findSoul(point, radius, sources)
     -- TODO: optimized search grouping - 1 cycle instead of 2-3
     if not sources then
-        sources = { "corpse", "item", "unit" }
+        sources = { "orphan", "corpse", "item", "unit" }
     end
 
     local holder
     local holderType
     for _, source in ipairs(sources) do
-        if source == "corpse" then
+        if source == "orphan" then
+            local nearestOrphan --- @type item|nil
+            local nearestOrphanD --- @type number|nil
+            for item, orphanPoint in pairs(orphanItemHolders) do
+                local d = Generic.distance(point, orphanPoint)
+                if not nearestOrphan or d < nearestOrphanD then
+                    nearestOrphan = item
+                    nearestOrphanD = d
+                end
+            end
+            if nearestOrphan then
+                holder = nearestOrphan
+            end
+        elseif source == "corpse" then
             holder = Unit.getNearestCorpse(point, radius, function(x)
                 return Storage:has(x) and Storage:get(x, "soulAvailable") -- remove :has - safe?
             end)
@@ -157,7 +184,12 @@ local function useSoul(holderType, holder, amount)
         amount = 1
     end
     dump("useSoul", holderType, holder, amount)
-    if holderType == "corpse" and amount == 1 then
+    if holderType == "orphan" and orphanItemHolders[holder] and amount == 1 then
+        orphanItemHolders[holder] = nil
+        ---@diagnostic disable-next-line: param-type-mismatch
+        RemoveItem(holder)
+        return true
+    elseif holderType == "corpse" and amount == 1 then
         Storage:set(holder, "soulAvailable", false)
         return true
     elseif holderType == "unit" and unitHolders[holder] and unitHolders[holder] >= amount then
@@ -172,11 +204,15 @@ local function useSoul(holderType, holder, amount)
     return false
 end
 
---- @param holderType "unit"|"item"
+--- @param holderType "orphan"|"unit"|"item"
 --- @param holder unit|item
 --- @return boolean
 local function storeSoul(holderType, holder)
-    if holderType == "unit" then
+    if holderType == "orphan" then
+        ---@diagnostic disable-next-line: param-type-mismatch
+        orphanItemHolders[holder] = { x = GetItemX(holder), y = GetItemY(holder) }
+        return true
+    elseif holderType == "unit" then
         unitHolders[holder] = unitHolders[holder] or 0
         unitHolders[holder] = unitHolders[holder] + 1
         return true
@@ -216,6 +252,8 @@ return {
         remap = remapStorage,
         holder = {
             get = getItemHolder,
+            getItems = getItemsHeld,
+            isOrphan = hasOrphanStatus,
             update = updateItemHolder,
         },
     },

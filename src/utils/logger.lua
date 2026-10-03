@@ -21,6 +21,11 @@ local function formatValue(v, depth)
             return GetItemName(v)
             -- return GetItemName(v) .. "[" .. tostring(v) .. "]"
         end
+        local isAbility = pcall(GetSpellAbilityId, v)
+        if isAbility then
+            return GetAbilityName(v)
+            -- return GetItemName(v) .. "[" .. tostring(v) .. "]"
+        end
     end
     return tostring(v) -- юниты/игроки с именами из name cache
 end

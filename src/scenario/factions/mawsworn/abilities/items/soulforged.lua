@@ -38,7 +38,8 @@ local function onCloakActivate()
     local target = GetSpellTargetUnit()
     local owner = GetOwningPlayer(caster)
 
-    KillUnit(target) -- ally
+    -- ? turn off soul
+    Damage.apply(caster, target, 99999, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_DIVINE)
 
     Dummy.applyDummyOrder(owner, caster, CONFIG.refs.abilities.cloakInvis, "invisibility")
 end

@@ -142,10 +142,12 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_START",
+            filter = { source = CONFIG.refs.units.main },
             action = onTrainStart,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
+            filter = { source = CONFIG.refs.units.main },
             action = onTrainFinish,
         },
     },

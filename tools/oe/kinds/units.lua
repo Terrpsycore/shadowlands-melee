@@ -58,6 +58,13 @@ local fields = {
     name = function(u, value)
         u:setName(value)
     end,
+    button = function(u, value)
+        if value[1] == nil or value[2] == nil then
+            error("button requires { x, y }")
+        end
+        u:setButtonPositionX(value[1])
+        u:setButtonPositionY(value[2])
+    end,
     abilities = function(u, slugs)
         local parts = {}
         for _, slug in ipairs(slugs) do

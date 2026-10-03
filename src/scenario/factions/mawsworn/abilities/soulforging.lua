@@ -1,9 +1,9 @@
 --[[
 -- TODO
+-- - show special "disabled" abilities with dummy required upgrades when not enough souls
+-- - shop select target ability
+
 -- - hide forge train buttons
--- - on soul drop -> ...
--- - TEST
--- - TRAIN triggers filters (optimize, refactor)
 ]]
 
 local Ids = require("data.ids")
@@ -36,8 +36,10 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
+local forgeAbilities = Generic.toArray(CONFIG.refs.abilities)
+
 local abilitiesMap = Generic.reverseTable(CONFIG.refs.abilities)
--- local trainMap = Generic.reverseTable(CONFIG.refs.units)
+local trainMap = Generic.reverseTable(CONFIG.refs.units)
 
 --- @param forge unit
 --- @return item[]
@@ -48,14 +50,15 @@ local function getSouls(forge)
 end
 
 local function onSpell()
-    dump("mawcaster onspell")
+    dump("soulforging onSpell")
     local building = GetTriggerUnit()
     local ability = GetSpellAbility()
 
     local abilitySlug = abilitiesMap[BlzGetAbilityId(ability)]
     local trainOrder = CONFIG.refs.units[abilitySlug]
     ---@diagnostic disable-next-line: param-type-mismatch -- TODO: remove
-    IssueImmediateOrderById(building, trainOrder)
+    local r = IssueImmediateOrderById(building, trainOrder)
+    dump("soulforging onSpell result", r)
 end
 
 local function onTrainStart()
@@ -75,7 +78,9 @@ local function onTrainFinish()
     local owner = GetOwningPlayer(building)
     local trained = GetTrainedUnit()
 
-    local itemTypeId = CONFIG.refs.items[GetUnitTypeId(trained)]
+    local trainSlug = trainMap[GetUnitTypeId(trained)]
+    local itemTypeId = CONFIG.refs.items[trainSlug]
+
     RemoveUnit(trained)
 
     local souls = getSouls(building)
@@ -98,19 +103,17 @@ return {
     triggers = {
         {
             trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = {
-                CONFIG.refs.abilities.forgeCloak,
-                CONFIG.refs.abilities.forgeGauntlets,
-                CONFIG.refs.abilities.forgeSpikedArmor,
-            },
+            spellId = forgeAbilities,
             action = onSpell,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_START",
+            filter = { source = CONFIG.refs.units.main },
             action = onTrainStart,
         },
         {
             trigger = "EVENT_PLAYER_UNIT_TRAIN_FINISH",
+            filter = { source = CONFIG.refs.units.main },
             action = onTrainFinish,
         },
     },

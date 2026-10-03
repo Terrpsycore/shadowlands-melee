@@ -80,6 +80,7 @@ return {
     -- Soulforges
     soulforgeCloak = {
         parent = UnitIds.shade,
+        button = { -1, -1 },
         name = "Forge Cloak",
         apply = function(u)
             u:setBuildTime(5)
@@ -88,6 +89,7 @@ return {
     soulforgeGauntlets = {
         parent = UnitIds.shade,
         name = "Forge Gauntlets",
+        button = { -1, -1 },
         apply = function(u)
             u:setBuildTime(5)
         end,
@@ -95,6 +97,7 @@ return {
     soulforgeSpikedArmor = {
         parent = UnitIds.shade,
         name = "Forge Spiked Armor",
+        button = { -1, -1 },
         apply = function(u)
             u:setBuildTime(5)
         end,

@@ -33,16 +33,31 @@ return {
         name = "Forge Cloak",
         button = { 0, 0 },
         hotkey = "Q",
+        apply = A.spellBook.apply(function(a, level)
+            a:setBaseOrderID(level, "shadowstrike")
+            a:setOrderStringUseTurnOn("shadowstrike")
+            a:setOrderStringActivate("shadowstrike")
+        end),
     }),
     soulforgeForgeGauntlets = A.channelNoTarget({
         name = "Forge Gauntlets",
         button = { 1, 0 },
         hotkey = "W",
+        apply = A.spellBook.apply(function(a, level)
+            a:setBaseOrderID(level, "innerfire")
+            a:setOrderStringUseTurnOn("innerfire")
+            a:setOrderStringActivate("innerfire")
+        end),
     }),
     soulforgeForgeSpikedArmor = A.channelNoTarget({
         name = "Forge Spiked Armor",
         button = { 2, 0 },
         hotkey = "E",
+        apply = A.spellBook.apply(function(a, level)
+            a:setBaseOrderID(level, "thunderclap")
+            a:setOrderStringUseTurnOn("thunderclap")
+            a:setOrderStringActivate("thunderclap")
+        end),
     }),
     -- Cage
     mawswornCageInventory = A.inventory({

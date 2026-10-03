@@ -194,13 +194,13 @@ end
 
 T.onTrainStart = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_TRAIN_START, triggers, function()
-        return { target = GetTrainedUnit() }
+        return { source = GetTriggerUnit() }
     end)
 end
 
 T.onTrain = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH, triggers, function()
-        return { target = GetTrainedUnit() }
+        return { source = GetTriggerUnit(), target = GetTrainedUnit() }
     end)
 end
 
