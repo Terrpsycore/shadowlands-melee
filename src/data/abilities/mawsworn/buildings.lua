@@ -1,5 +1,6 @@
 local A = require("data.abilityPresets")
 local Ids = require("data.ids")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     -- Main
@@ -69,6 +70,7 @@ return {
     -- Maw Chain
     relink = A.channelTarget({
         name = "Re-link",
+        art = { icon = Icons.autocastAbominationshook },
     }),
     -- == Dummy
     mawswornCageTransmute = A.transmute({

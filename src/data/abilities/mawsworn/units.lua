@@ -15,10 +15,11 @@ return {
     disarm = A.nonDispellableTargetDebuff({
         name = "Disarm",
         buffs = { "disarm" },
-        art = { icon = Icons.advancedunholystrength },
+        art = { icon = Icons.autocastAbominationshook },
     }),
     shackle = A.channelTarget({
         name = "Shackle",
+        art = { icon = Icons.slow },
         apply = A.channelTarget.apply(function(a, level)
             a:setFollowThroughTime(level, 10) -- max duration
             a:setArtDuration(level, 10)
@@ -26,16 +27,20 @@ return {
     }),
     malignantBolt = A.poisonArrows({
         name = "Malignant Bolt",
+        art = { icon = Icons.autocastTheblackarrow },
     }),
     accursedStrength = A.channelNoTarget({
         name = "Accursed Strength",
+        art = { icon = Icons.advancedunholystrength },
     }),
     -- Myrmidon
     fallenArmaments = A.passiveGeneric({
         name = "Fallen Armaments",
+        art = { icon = Icons.pasSwordsmanship },
     }),
     myrmidonFly = A.stormCrowForm({
         name = "Ascend/Descend",
+        button = { 1, 2 },
         apply = A.stormCrowForm.apply(function(a)
             a:setMorphingFlags(1, 1) -- uninterruptable
             a:setManaCost(1, 0)
@@ -46,16 +51,20 @@ return {
     -- Soul Eater
     soulFeast = A.channelPoint({ -- must lock soul from other soul-using abilities
         name = "Soul Feast",
+        art = { icon = Icons.cannibalize },
     }),
     weaknessHunger = A.passiveGeneric({ -- onDamage
         name = "Weakness Hunger",
+        art = { icon = Icons.pasAuraofdarkness },
     }),
     foulBite = A.slowPoison({ -- 0 OE effects, triggered onDamage
         name = "Foul Bite",
         buffs = { "foulBite" },
         -- apply non stacking
+        art = { icon = Icons.pasPoisonsting },
     }),
     soulEaterFly = A.stormCrowForm({
+        button = { 1, 2 },
         name = "Ascend/Descend",
         apply = A.stormCrowForm.apply(function(a)
             a:setMorphingFlags(1, 1) -- uninterruptable
@@ -67,41 +76,52 @@ return {
     -- Soulseeker
     glare = A.channelTarget({
         name = "Glare",
+        art = { icon = Icons.edricsEye },
     }),
     sneakPeek = A.channelPoint({
         name = "Sneak Peek",
+        art = { icon = Icons.blink },
     }),
     -- Fire caster
     blazingPurge = A.channelTarget({
         name = "Blazing Purge",
+        art = { icon = Icons.purge },
     }),
     infusion = A.channelTarget({
         name = "Infusion",
+        art = { icon = Icons.markOfFire },
     }),
     burnResidue = A.channelArea({
         name = "Burn Residue",
+        art = { icon = Icons.wallOfFire },
     }),
     -- Frost caster
     freezeBlood = A.dispellableTargetDebuff({ -- ? use negative FP aura? (nah it will block all healing, not only regen)
         name = "Freeze Blood",
+        art = { icon = Icons.autocastBreathoffrost },
     }),
     vessel = A.channelArea({
         name = "Vessel",
+        art = { icon = Icons.doom },
     }),
     calcify = A.channelTarget({
         name = "Calcify",
+        art = { icon = Icons.icecolddiamond },
     }),
     -- Dom caster
     fallenMorale = A.channelTarget({
         name = "Fallen Morale",
+        art = { icon = Icons.darkSummoning },
     }),
     forcedRestitution = A.replenishLife({
         name = "Forced Restitution",
         buffs = { "forcedRestitution" },
         -- apply duration
+        art = { icon = Icons.autocastSkeletallongevity },
     }),
     betrayalSeed = A.channelTarget({
         name = "Betrayal Seed",
+        art = { icon = Icons.thunderlizardegg },
     }),
     -- Charred Behemoth
     threateningRoar = A.pitLordHowlofTerror({ -- check conflicts with same parent abilities
@@ -112,6 +132,7 @@ return {
     overwhelming = A.pitLordCleavingAttack({ -- turn on/off onAttack
         name = "Overwhelming",
         -- apply
+        art = { icon = Icons.pasAvataroflight },
     }),
     -- == Dummy & Effects & etc. == --
     stygianShieldBuff = A.nonDispellableTargetDebuff({

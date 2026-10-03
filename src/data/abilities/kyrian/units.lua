@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Icons = require("vendor.assets.generated.Icons")
 
 local A = require("data.abilityPresets")
 
@@ -222,6 +223,7 @@ return {
             a:setFollowThroughTime(1, 0)
             a:setArtDuration(1, 0)
         end),
+        art = { icon = Icons.clarityofMind },
     }),
     deepMeditationStunDummy = A.stormBolt({
         name = "Deep Meditation",

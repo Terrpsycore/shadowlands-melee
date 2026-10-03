@@ -1,4 +1,5 @@
 local A = require("data.abilityPresets")
+local Icons = require("vendor.assets.generated.Icons")
 
 return {
     mawswornInventory = A.inventory({
@@ -9,6 +10,8 @@ return {
     }),
     mawswornGrab = A.channelTarget({
         name = "Grab",
+        button = { 1, 1 },
+        art = { icon = Icons.pickupitem },
     }),
     weakenedSoulEffect = A.slowAura({
         name = "Weakened Soul",
