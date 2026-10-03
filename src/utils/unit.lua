@@ -219,18 +219,43 @@ end
 --- @param unit unit
 --- @return boolean
 function Unit.hasSpaceInInventory(unit)
+    local freeSlotIndex = Unit.findFreeSlot(unit)
+    return freeSlotIndex ~= nil
+end
+
+--- @param unit unit
+--- @return integer
+function Unit.findFreeSlot(unit)
     local size = UnitInventorySize(unit)
     if size <= 0 then
-        return false
+        return 0
     end
 
     for i = 0, size - 1 do
         if UnitItemInSlot(unit, i) == nil then
-            return true
+            return i
         end
     end
 
-    return false
+    return 0
+end
+
+--- @param unit unit
+--- @return integer
+function Unit.countFreeSlots(unit)
+    local size = UnitInventorySize(unit)
+    if size <= 0 then
+        return 0
+    end
+
+    local total = 0
+    for i = 0, size - 1 do
+        if UnitItemInSlot(unit, i) == nil then
+            total = total + 1
+        end
+    end
+
+    return total
 end
 
 --- @alias slot {index: integer, item: item}
@@ -262,6 +287,37 @@ function Unit.findItem(unit, filter, backwards)
     end
 
     return nil
+end
+
+--- @param unit unit
+--- @param filter function|nil
+--- @param backwards boolean|nil
+--- @return item[]
+function Unit.findItems(unit, filter, backwards)
+    local size = UnitInventorySize(unit)
+    if size <= 0 then
+        return {}
+    end
+
+    local result = {}
+
+    if not backwards then
+        for i = 0, size - 1 do
+            local item = UnitItemInSlot(unit, i)
+            if item ~= nil and ((filter and filter(item)) or not item) then
+                table.insert(result, item)
+            end
+        end
+    else
+        for i = size - 1, 0, -1 do
+            local item = UnitItemInSlot(unit, i)
+            if item ~= nil and ((filter and filter(item)) or not item) then
+                table.insert(result, item)
+            end
+        end
+    end
+
+    return result
 end
 
 --- @param unit unit

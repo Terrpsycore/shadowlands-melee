@@ -1,6 +1,10 @@
 --[[
 -- TODO
--- - test onSoulUse
+-- - test pickup/drop to receivers and non-receivers
+-- - refactor to use Generic
+
+
+-- - unify capacity storage (only souls.lua)
 -- - probably best to add onSoulUse/onSoulkeeperUse -> fireEvent -> everything sorted
 -- - ??? !!! circular imports? souls.api from item. would be fine to trigger item.replace from souls.lua
 -- - separate file needed probably
@@ -23,8 +27,11 @@ local CONFIG = AbilityConfig.compile({
         buffs = {},
         items = {
             main = { Ids.items.soulkeeper0, Ids.items.soulkeeper1, Ids.items.soulkeeper2, Ids.items.soulkeeper3 },
+            soul = Ids.items.soul,
         },
-        units = {},
+        units = {
+            receiver = { Ids.units.mawswornCage, Ids.units.mawswornMechBarracks },
+        },
     },
     balance = {
         cooldown = 2,
@@ -45,6 +52,17 @@ local byLevelReversed = {
     [byLevel[3]] = 3,
 }
 
+--- @param unit unit Unit who receives item
+--- @param oldItem item
+--- @param slot integer
+local function updateSoulkeeper(unit, oldItem, slot)
+    local itemId = byLevel[Souls.api.count("item", oldItem)]
+    RemoveItem(oldItem)
+    UnitAddItemToSlotById(unit, itemId, slot)
+
+    Souls.api.remap("item", oldItem, UnitItemInSlot(unit, slot))
+end
+
 local function onPickUpItem()
     local item = GetManipulatedItem()
     if not byLevelReversed[GetItemTypeId(item)] then
@@ -55,24 +73,51 @@ local function onPickUpItem()
 end
 
 local function onDropItem()
+    -- Game crash lololol
     local item = GetManipulatedItem()
     if not byLevelReversed[GetItemTypeId(item)] then
         return
     end
     local unit = GetTriggerUnit()
-    Souls.api.holder.update(unit, item, false)
+
+    local holder = Souls.api.holder.get(item)
+    Timed.call(0.00, function()
+        local receiver = Souls.api.holder.get(item)
+        dump("onDropItem", holder, receiver)
+        if Generic.contains(CONFIG.refs.units.receiver, GetUnitTypeId(receiver)) then
+            UnitAddItem(holder, item)
+
+            local capacity = Souls.api.count("item", item)
+            local receiverSlots = Unit.countFreeSlots(receiver)
+            local amount = math.min(capacity, receiverSlots)
+            if amount == 0 then
+                dump("Trying to pass 0 souls")
+                return
+            end
+            Souls.api.use("item", item, amount)
+            for i = 1, amount do
+                UnitAddItemById(receiver, CONFIG.refs.items.soul)
+            end
+        else
+            Souls.api.holder.update(unit, item, false)
+        end
+    end)
 end
 
+--- Sell item to shop
 local function onPawnItem()
     local item = GetManipulatedItem()
     if not byLevelReversed[GetItemTypeId(item)] then
         return
     end
     local unit = GetSellingUnit()
-    Souls.api.holder.update(unit, item, false)
+    local receiver = GetBuyingUnit()
+    dump("onPawnItem event", unit, receiver)
+    -- Souls.api.holder.update(unit, item, false)
 end
 
 local function onActivate()
+    -- TODO: ? multiple soulkeepers on 1 hero
     local caster = GetTriggerUnit()
     local slot = Unit.findItem(caster, function(i)
         return byLevelReversed[GetItemTypeId(i)] ~= nil
@@ -82,7 +127,7 @@ local function onActivate()
         dump("Soulkeeper item not found")
         return
     end
-    local currentCapacity = byLevelReversed[GetItemTypeId(slot.item)]
+    local currentCapacity = Souls.api.count("item", slot.item)
     if currentCapacity >= CONFIG.balance.maxCapacity then
         dump("Soulkeeper has max capacity")
         return
@@ -94,11 +139,8 @@ local function onActivate()
         if success then
             Souls.api.store("item", slot.item)
 
-            local nextItemId = byLevel[currentCapacity + 1]
-            RemoveItem(slot.item)
-            UnitAddItemToSlotById(caster, nextItemId, slot.index)
+            updateSoulkeeper(caster, slot.item, slot.index)
 
-            Souls.api.remap("item", slot.item, UnitItemInSlot(caster, slot.index))
             BlzStartUnitAbilityCooldown(caster, CONFIG.refs.abilities.main, CONFIG.balance.cooldown)
         else
             dump('Fail on Souls.api.use("corpse", q)')
@@ -125,18 +167,10 @@ local function onSoulUse(info)
         dump("Soulkeeper slot not found")
         return
     end
-    local currentCapacity = byLevelReversed[GetItemTypeId(slot.item)]
-    if currentCapacity == 0 then
-        dump("Invalid USE_SOUL event (usage of item with 0 capacity)")
-        return
-    end
     local currentCooldown = BlzGetUnitAbilityCooldownRemaining(unit, CONFIG.refs.abilities.main)
 
-    local nextItemId = byLevel[currentCapacity - 1]
-    RemoveItem(slot.item)
-    UnitAddItemToSlotById(unit, nextItemId, slot.index)
+    updateSoulkeeper(unit, slot.item, slot.index)
 
-    Souls.api.remap("item", slot.item, UnitItemInSlot(unit, slot.index))
     BlzSetUnitAbilityCooldown(unit, CONFIG.refs.abilities.main, 1, currentCooldown)
 end
 

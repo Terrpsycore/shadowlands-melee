@@ -10,6 +10,18 @@ local function formatValue(v, depth)
     if type(v) == "table" then
         return table.tostring(v, depth) -- DebugUtils: name cache + вложенность
     end
+    if type(v) == "userdata" then
+        local isUnit = pcall(GetUnitTypeId, v)
+        if isUnit then
+            return GetUnitName(v)
+            -- return GetUnitName(v) .. "[" .. tostring(v) .. "]"
+        end
+        local isItem = pcall(GetItemTypeId, v)
+        if isItem then
+            return GetItemName(v)
+            -- return GetItemName(v) .. "[" .. tostring(v) .. "]"
+        end
+    end
     return tostring(v) -- юниты/игроки с именами из name cache
 end
 

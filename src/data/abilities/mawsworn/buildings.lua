@@ -1,4 +1,5 @@
 local A = require("data.abilityPresets")
+local Ids = require("data.ids")
 
 return {
     -- Main
@@ -6,6 +7,42 @@ return {
         name = "Suppressing Aura",
         levels = 3,
         buffs = { "suppressingAura" },
+    }),
+    -- Soulforge
+    soulforgeInventory = A.inventory({
+        name = "Inventory (Mawsworn Cage)",
+        apply = A.inventory.apply(function(a, level)
+            a:setItemCapacity(level, 6)
+        end),
+    }),
+    soulforgeCraft = A.spellBook({
+        name = "Inventory (Mawsworn Cage)",
+        apply = A.spellBook.apply(function(a, level)
+            a:setSpellList(
+                level,
+                table.concat({
+                    Ids.abilities.soulforgeForgeCloak,
+                    Ids.abilities.soulforgeForgeGauntlets,
+                    Ids.abilities.soulforgeForgeSpikedArmor,
+                }, ",")
+            )
+        end),
+        hotkey = "C",
+    }),
+    soulforgeForgeCloak = A.channelNoTarget({
+        name = "Forge Cloak",
+        button = { 0, 0 },
+        hotkey = "Q",
+    }),
+    soulforgeForgeGauntlets = A.channelNoTarget({
+        name = "Forge Gauntlets",
+        button = { 1, 0 },
+        hotkey = "W",
+    }),
+    soulforgeForgeSpikedArmor = A.channelNoTarget({
+        name = "Forge Spiked Armor",
+        button = { 2, 0 },
+        hotkey = "E",
     }),
     -- Cage
     mawswornCageInventory = A.inventory({

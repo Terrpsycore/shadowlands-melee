@@ -35,6 +35,11 @@ return {
         abilities = { "concoctedFrenzyActive" },
     },
     -- Mawsworn
+    soul = {
+        parent = ItemIds.moonKey,
+        name = "Soul",
+        -- apply type "not-unique"
+    },
     soulkeeper0 = {
         parent = ItemIds.kelenDaggerEscape,
         name = "Soulkeeper (0/3)",
@@ -58,5 +63,24 @@ return {
         name = "Soulkeeper (3/3)",
         art = { icon = Icons["3m3"] },
         abilities = { "soulkeeper" },
+    },
+    ---
+    soulforgedCloak = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulfourged Cloak",
+        -- art = { icon = Icons["3m3"] },
+        abilities = { "soulforgedCloak" },
+    },
+    soulforgedGauntlets = {
+        parent = ItemIds.moonKey,
+        name = "Soulfourged Gauntlets",
+        -- art = { icon = Icons["3m3"] },
+        abilities = {},
+    },
+    soulforgedSpikedArmor = {
+        parent = ItemIds.kelenDaggerEscape,
+        name = "Soulfourged Spiked Armor",
+        -- art = { icon = Icons["3m3"] },
+        abilities = { "soulforgedSpikedArmor", "soulforgedSpikedArmorNegativeRegen" },
     },
 }

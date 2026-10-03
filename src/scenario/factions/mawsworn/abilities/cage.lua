@@ -1,12 +1,13 @@
 --[[
 -- TODO
+-- - "SOUL" item transmute
+-- - - use hidden train actions
 -- - check that cage actions flush grabbed data
 -- - make sure that dummyExtractKillXP doesn't provoke DEATH event
 -- - ? add some maximum cage storage time
 -- - ? prevent possess/transform on supply block
 -- - VISUALS:
 -- - - change train buttons to skill buttons - enable/disable on trigger
--- - - use hidden train actions
 ]]
 
 local Ids = require("data.ids")

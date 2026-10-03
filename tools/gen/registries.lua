@@ -95,6 +95,10 @@ local profiles = {
                 dirPattern = "src/scenario/factions/{faction}/abilities/common",
                 prefixPattern = "scenario.factions.{faction}.abilities.common.",
             },
+            {
+                dirPattern = "src/scenario/factions/{faction}/abilities/items",
+                prefixPattern = "scenario.factions.{faction}.abilities.items.",
+            },
         },
     },
     {

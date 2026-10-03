@@ -37,7 +37,18 @@ return {
     mawswornMechBarracks = {
         parent = UnitIds.crypt,
         name = "PLACEHOLDER",
-        unitsTrained = { "mawChain", "soulSeeker", "charredBehemoth" },
+        unitsTrained = {
+            "mawChain",
+            "soulSeeker",
+            "charredBehemoth",
+            "soulforgeCloak",
+            "soulforgeGauntlets",
+            "soulforgeSpikedArmor",
+        },
+        abilities = { "soulforgeInventory", "soulforgeCraft" },
+        apply = function(u)
+            u:setResearchesAvailable("")
+        end,
     },
     mawswornMageBarracks = {
         parent = UnitIds.crypt,

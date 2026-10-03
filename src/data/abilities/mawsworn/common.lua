@@ -1,6 +1,15 @@
 local A = require("data.abilityPresets")
 
 return {
+    mawswornInventory = A.inventory({
+        name = "Grab",
+        apply = A.inventory.apply(function(a, level)
+            a:setItemCapacity(level, 3)
+        end),
+    }),
+    mawswornGrab = A.channelTarget({
+        name = "Grab",
+    }),
     weakenedSoulEffect = A.slowAura({
         name = "Weakened Soul",
         levels = 10,
@@ -40,14 +49,5 @@ return {
             a:setDurationHero(level, 2)
             a:setDamage(level, 0)
         end),
-    }),
-    mawswornInventory = A.inventory({
-        name = "Grab",
-        apply = A.inventory.apply(function(a, level)
-            a:setItemCapacity(level, 3)
-        end),
-    }),
-    mawswornGrab = A.channelTarget({
-        name = "Grab",
     }),
 }

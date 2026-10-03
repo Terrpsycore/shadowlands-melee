@@ -111,7 +111,8 @@ local packs = {
         spawnFaction("venthyr")
     end,
     mawsworn = function()
-        CreateUnit(p0, FourCC(Ids.units.mawswornCage), x, y, f)
+        CreateUnit(p0, FourCC(Ids.units.mawswornCage), x - 50, y - 50, f)
+        CreateUnit(p0, FourCC(Ids.units.mawswornMechBarracks), x + 200, y + 200, f)
         CreateItem(FourCC(Ids.items.soulkeeper0), x, y)
         spawnFaction("mawsworn")
     end,
@@ -131,7 +132,11 @@ local packs = {
         local e = CreateUnit(p1, FourCC(Ids.units.aspirant), x, y, f)
         BlzSetUnitMaxHP(e, 1)
 
-        local g = CreateUnit(p0, FourCC(Ids.units.abomination), x, y, f)
+        local g = CreateUnit(p0, FourCC(Ids.units.footman), x, y, f)
+        SetUnitState(g, UNIT_STATE_LIFE, 1)
+        local g = CreateUnit(p0, FourCC(Ids.units.footman), x, y, f)
+        SetUnitState(g, UNIT_STATE_LIFE, 1)
+        local g = CreateUnit(p0, FourCC(Ids.units.footman), x, y, f)
         SetUnitState(g, UNIT_STATE_LIFE, 1)
 
         CreateItemLoc(FourCC(Ids.items.dummyHeroItem), Location(200, -100))

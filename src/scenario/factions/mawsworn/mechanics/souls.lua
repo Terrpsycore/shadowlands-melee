@@ -1,7 +1,15 @@
 --[[
 item holder type = Soulkeeper only
 
+?? any special storage for plain "soul" items?
+
 -- TODO
+-- - on "soul" item drop/pickup without soulkeeper -> ... destroy with effect
+-- - on "soul" item pickup with soulkeeper -> updateSoulkeeper or drop if full
+-- - on "soulkeeper" drop/pickup to cage/forge -> create "soul" item, return "soulkeeper" back
+-- - ?? separate method for inventory souls (cage, soulforge)
+-- - UI effect on corpse with drained soul
+-- - drained corpse decay timer
 -- - put soul in cage
 -- - search() in items and units
 -- - unit sells item -> nullify holder
@@ -49,7 +57,14 @@ end
 local function updateItemHolder(unit, item, status)
     local previousHolder = itemToUnit[item]
 
-    itemToUnit[item] = unit
+    if status then -- after this fix 2nd drop doesn't crash, but ignores logic and puts soulkeeper in cage inventory
+        itemToUnit[item] = unit
+    else
+        itemToUnit[item] = nil
+    end
+    dump("updateItemHolder", unit, item, status, "previousHolder=", previousHolder)
+    -- BUG: give soulkeeper to Cage twice. on second time cage will be both item and previousHolder
+    -- crash with unitToItems[previousHolder]==nil (while itemToUnit[item] is not nil for some reason)
 
     if previousHolder then
         local previousHolderItems = Generic.filter(unitToItems[previousHolder], function(i)
@@ -119,19 +134,37 @@ local function findSoul(point, radius, sources)
     end
 end
 
+--- Soft count, returns 0 on not found.
+--- @param holderType "unit"|"item"
+--- @param holder unit|item
+--- @return integer
+local function countSouls(holderType, holder)
+    dump("countSoul", holderType, holder)
+    if holderType == "unit" and unitHolders[holder] then
+        return unitHolders[holder]
+    elseif holderType == "item" and itemHolders[holder] then
+        return itemHolders[holder]
+    end
+    return 0
+end
+
 --- @param holderType soulSource
 --- @param holder unit|item
+--- @param amount integer|nil
 --- @return boolean
-local function useSoul(holderType, holder)
-    dump("useSoul", holderType, holder)
-    if holderType == "corpse" then
+local function useSoul(holderType, holder, amount)
+    if not amount then
+        amount = 1
+    end
+    dump("useSoul", holderType, holder, amount)
+    if holderType == "corpse" and amount == 1 then
         Storage:set(holder, "soulAvailable", false)
         return true
-    elseif holderType == "unit" and unitHolders[holder] then
-        unitHolders[holder] = unitHolders[holder] - 1
+    elseif holderType == "unit" and unitHolders[holder] and unitHolders[holder] >= amount then
+        unitHolders[holder] = unitHolders[holder] - amount
         return true
-    elseif holderType == "item" and itemHolders[holder] then
-        itemHolders[holder] = itemHolders[holder] - 1
+    elseif holderType == "item" and itemHolders[holder] and itemHolders[holder] >= amount then
+        itemHolders[holder] = itemHolders[holder] - amount
         Triggers.fireEvent("SOUL_USE", { item = holder })
         dump("fireEvent SOUL_USE")
         return true
@@ -176,6 +209,7 @@ return {
     triggers = {},
     config = CONFIG,
     api = {
+        count = countSouls,
         find = findSoul,
         use = useSoul,
         store = storeSoul,

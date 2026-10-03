@@ -77,6 +77,29 @@ return {
         name = "Transformed",
     },
     -- == Dummy
+    -- Soulforges
+    soulforgeCloak = {
+        parent = UnitIds.shade,
+        name = "Forge Cloak",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
+    },
+    soulforgeGauntlets = {
+        parent = UnitIds.shade,
+        name = "Forge Gauntlets",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
+    },
+    soulforgeSpikedArmor = {
+        parent = UnitIds.shade,
+        name = "Forge Spiked Armor",
+        apply = function(u)
+            u:setBuildTime(5)
+        end,
+    },
+    -- Cage
     mawswornCagePossess = {
         parent = UnitIds.banshee,
         name = "Possess",
