@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Icons = require("vendor.assets.generated.Icons")
 
 local A = require("data.abilityPresets")
 
@@ -8,14 +9,20 @@ return {
     stygianShield = A.nonDispellableTargetDebuff({
         name = "Stygian Shield",
         buffs = { "stygianShieldCooldown" },
+        art = { icon = Icons.lightningShield },
     }),
     -- Mawguards
     disarm = A.nonDispellableTargetDebuff({
         name = "Disarm",
         buffs = { "disarm" },
+        art = { icon = Icons.advancedunholystrength },
     }),
     shackle = A.channelTarget({
         name = "Shackle",
+        apply = A.channelTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 10) -- max duration
+            a:setArtDuration(level, 10)
+        end),
     }),
     malignantBolt = A.poisonArrows({
         name = "Malignant Bolt",
@@ -110,6 +117,10 @@ return {
     stygianShieldBuff = A.nonDispellableTargetDebuff({
         name = "stygianShield",
         buffs = { "stygianShield" },
+    }),
+    disarmDebuff = A.nonDispellableTargetDebuff({
+        name = "Disarm",
+        buffs = { "disarm" },
     }),
     shackleSlow = A.slow({
         name = "Shackle",

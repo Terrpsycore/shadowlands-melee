@@ -65,11 +65,7 @@ return {
         levels = 3,
         button = { 2, 2 },
         hotkey = "E",
-        apply = A.channelPoint.apply(function(a, level)
-            a:setBaseOrderID(level, "shadowstrike")
-            a:setOrderStringUseTurnOn("shadowstrike")
-            a:setOrderStringActivate("shadowstrike")
-        end),
+        order = "shadowstrike",
     }),
     gorgoa = A.channelArea({
         name = "Gorgoa",

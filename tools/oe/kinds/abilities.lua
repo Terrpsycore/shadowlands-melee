@@ -110,6 +110,13 @@ local fields = {
             end,
         }, "art")
     end,
+    order = function(a, value, data)
+        for level in eachLevel(data) do
+            a:setBaseOrderID(level, value)
+        end
+        a:setOrderStringUseTurnOn(value)
+        a:setOrderStringActivate(value)
+    end,
 }
 
 local function applyFields(a, data, slug)

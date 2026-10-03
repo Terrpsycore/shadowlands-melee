@@ -39,6 +39,7 @@ return {
         parent = ItemIds.moonKey,
         name = "Soul",
         -- apply type "not-unique"
+        art = { icon = Icons.cagedsoul },
     },
     soulkeeper0 = {
         parent = ItemIds.kelenDaggerEscape,

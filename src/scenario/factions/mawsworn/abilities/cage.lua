@@ -1,7 +1,7 @@
 --[[
 -- TODO
--- - "SOUL" item transmute
--- - - use hidden train actions
+-- - ! "SOUL" item transmute
+-- - ! use hidden train actions
 -- - check that cage actions flush grabbed data
 -- - make sure that dummyExtractKillXP doesn't provoke DEATH event
 -- - ? add some maximum cage storage time
