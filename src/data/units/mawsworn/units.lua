@@ -3,23 +3,27 @@ local UnitIds = require("vendor.assets.UnitIds")
 return {
     runesmith = { -- ensure unit can power build but can't start build
         parent = UnitIds.peasant,
-        name = "Steward",
+        name = "Runesmith",
         abilities = { "humanBuild", "repairHuman", "stygianShield" },
+        mana = { max = 200, initial = 100 },
     },
     shackler = {
         parent = UnitIds.footman,
         name = "Shackler",
         abilities = { "shackle", "disarm", "mawswornGrab", "mawswornInventory" },
+        mana = { max = 200, initial = 100 },
     },
     arbalest = {
         parent = UnitIds.headhunter,
         name = "Arbalest",
         abilities = { "malignantBolt", "mawswornGrab", "mawswornInventory" },
+        mana = { max = 200, initial = 100 },
     },
     vanguard = {
         parent = UnitIds.grunt,
         name = "Vanguard",
         abilities = { "accursedStrength", "disarm", "mawswornGrab", "mawswornInventory" },
+        mana = { max = 200, initial = 100 },
     },
     myrmidonFlying = {
         parent = UnitIds.dragonhawk,

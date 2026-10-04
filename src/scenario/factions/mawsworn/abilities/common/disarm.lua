@@ -39,10 +39,12 @@ local function onAfterDamage(info)
     local owner = GetOwningPlayer(info.source)
 
     Timed.call(0.00, function()
+        dump("disarm onAfterDamage timer")
         if UnitHasBuffBJ(info.target, CONFIG.refs.buffs.init) then
+            dump("disarm onAfterDamage UnitRemoveBuffBJ")
             UnitRemoveBuffBJ(CONFIG.refs.buffs.init, info.target)
             UnitAddAbility(info.target, CONFIG.refs.abilities.effect)
-            Dummy.applyDummyOrder(owner, info.target, CONFIG.refs.abilities.effect, "acidbomb")
+            Dummy.applyDummyOrder(owner, info.target, CONFIG.refs.abilities.debuff, "acidbomb")
             Timed.call(0.1, function()
                 if not Generic.contains(memory, info.target) then
                     table.insert(memory, info.target)

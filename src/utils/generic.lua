@@ -57,6 +57,19 @@ function Generic.toSet(t)
     return set
 end
 
+--- @param t table
+--- @param value any
+--- @result boolean
+function Generic.removeValue(t, value)
+    for i, v in ipairs(t) do
+        if v == value then
+            table.remove(t, i)
+            return true
+        end
+    end
+    return false
+end
+
 --- @param a {x:number,y:number}
 --- @param b {x:number,y:number}
 function Generic.distance(a, b)

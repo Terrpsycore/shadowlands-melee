@@ -152,6 +152,10 @@ return {
     shackleSlow = A.slow({
         name = "Shackle",
         buffs = { "shackle" },
+        apply = A.slow.apply(function(a, level)
+            a:setDurationHero(level, 1.5)
+            a:setDurationNormal(level, 1.5)
+        end),
     }),
     accursedStrengthDamage = A.auraCommandCreep({
         name = "Accursed Strength",
