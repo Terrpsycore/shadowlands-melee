@@ -92,12 +92,24 @@ local profiles = {
                 prefixPattern = "scenario.factions.{faction}.abilities.",
             },
             {
+                dirPattern = "src/scenario/factions/{faction}/abilities/buildings",
+                prefixPattern = "scenario.factions.{faction}.abilities.buildings.",
+            },
+            {
                 dirPattern = "src/scenario/factions/{faction}/abilities/common",
                 prefixPattern = "scenario.factions.{faction}.abilities.common.",
             },
             {
+                dirPattern = "src/scenario/factions/{faction}/abilities/heroes",
+                prefixPattern = "scenario.factions.{faction}.abilities.heroes.",
+            },
+            {
                 dirPattern = "src/scenario/factions/{faction}/abilities/items",
                 prefixPattern = "scenario.factions.{faction}.abilities.items.",
+            },
+            {
+                dirPattern = "src/scenario/factions/{faction}/abilities/units",
+                prefixPattern = "scenario.factions.{faction}.abilities.units.",
             },
         },
     },

@@ -12,9 +12,13 @@ return {
         art = { icon = Icons.lightningShield },
     }),
     -- Mawguards
-    disarm = A.nonDispellableTargetDebuff({
+    disarm = A.seaWitchFrostArrows({
         name = "Disarm",
-        buffs = { "disarm" },
+        buffs = { "disarmInit" },
+        apply = A.seaWitchFrostArrows.apply(function(a, level)
+            a:setMovementSpeedFactor(level, 0)
+            a:setAttackSpeedFactor(level, 0)
+        end),
         art = { icon = Icons.autocastAbominationshook },
     }),
     shackle = A.channelTarget({
@@ -27,6 +31,7 @@ return {
     }),
     malignantBolt = A.poisonArrows({
         name = "Malignant Bolt",
+        buffs = { "malignantBoltInit" },
         art = { icon = Icons.autocastTheblackarrow },
     }),
     accursedStrength = A.channelNoTarget({
@@ -139,9 +144,10 @@ return {
         name = "stygianShield",
         buffs = { "stygianShield" },
     }),
-    disarmDebuff = A.nonDispellableTargetDebuff({
+    disarmDummy = A.nonDispellableTargetDebuff({
         name = "Disarm",
         buffs = { "disarm" },
+        art = { icon = Icons.autocastAbominationshook },
     }),
     shackleSlow = A.slow({
         name = "Shackle",

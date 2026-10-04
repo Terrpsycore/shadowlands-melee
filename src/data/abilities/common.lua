@@ -15,6 +15,12 @@ return {
         end),
     }),
     dummyEnsnare = A.ensnare({}),
+    disableAttackEffect = A.cargoHold({
+        name = "Disable Attack Effect",
+        apply = A.cargoHold.apply(function(a, level)
+            a:setCargoCapacity(level, 0)
+        end),
+    }),
     reincarnationCheck = A.defend({}),
     trueSight = A.trueSight1({
         name = "",

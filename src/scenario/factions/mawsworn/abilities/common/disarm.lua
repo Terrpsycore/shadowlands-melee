@@ -1,5 +1,6 @@
 --[[
-DRAFT
+TODO:
+-- ? diminishing
 ]]
 
 local Ids = require("data.ids")
@@ -10,13 +11,16 @@ local Unit = require("utils.unit")
 local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
-            main = Ids.abilities.shackle,
+            main = Ids.abilities.disarm,
+            debuff = Ids.abilities.disarmDummy,
+            effect = Ids.abilities.disableAttackEffect,
         },
         buffs = {
-            -- debuff = Ids.buffs.bastionSpearSlow, -- optional
+            init = Ids.buffs.disarmInit,
+            main = Ids.buffs.disarm,
         },
         units = {
-            -- source = { Ids.units.ascendedWarrior }, -- optional DAMAGE filter
+            carrier = { Ids.units.shackler, Ids.units.vanguard },
         },
     },
     balance = {
@@ -24,32 +28,56 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
+--- @type unit[]
 local memory = {} -- TODO: save/load
 
-local function onSpell()
-    local caster = GetTriggerUnit()
-    local owner = GetOwningPlayer(caster)
-    local target = GetSpellTargetUnit()
+--- @param info damageInfo
+local function onAfterDamage(info)
+    if not info.isAttack then
+        return
+    end
+    local owner = GetOwningPlayer(info.source)
 
-    -- dummy 1-px range silence with OE disarm
+    Timed.call(0.00, function()
+        if UnitHasBuffBJ(info.target, CONFIG.refs.buffs.init) then
+            UnitRemoveBuffBJ(CONFIG.refs.buffs.init, info.target)
+            UnitAddAbility(info.target, CONFIG.refs.abilities.effect)
+            Dummy.applyDummyOrder(owner, info.target, CONFIG.refs.abilities.effect, "acidbomb")
+            Timed.call(0.1, function()
+                if not Generic.contains(memory, info.target) then
+                    table.insert(memory, info.target)
+                end
+            end)
+        end
+    end)
+
     -- ? visuals
 
     return
 end
 
+local function onTimer()
+    for i = #memory, 1, -1 do
+        local unit = memory[i]
+        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+            UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
+            table.remove(memory, i)
+        end
+    end
+end
+
 return {
     triggers = {
         {
-            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
-            spellId = CONFIG.refs.abilities.main,
-            action = onSpell,
+            trigger = "AFTER_DAMAGE",
+            filter = { source = CONFIG.refs.units.carrier },
+            action = onAfterDamage,
         },
-        -- uncomment if DAMAGE hook needed:
-        -- {
-        --     trigger = "DAMAGE",
-        --     filter = { source = CONFIG.refs.units.source },
-        --     action = onDamage,
-        -- },
+        {
+            trigger = "TIMER",
+            delta = 0.25,
+            action = onTimer,
+        },
     },
     config = CONFIG,
 }

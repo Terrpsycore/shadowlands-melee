@@ -45,9 +45,21 @@ return {
         parent = BuffIds.acidBomb,
         name = "Stygian Shield",
     },
+    disarmInit = {
+        parent = BuffIds.acidBomb,
+        name = "Disarm",
+    },
     disarm = {
         parent = BuffIds.acidBomb,
         name = "Disarm",
+    },
+    malignantBoltInit = {
+        parent = BuffIds.poisonInfo,
+        name = "Malignant Bolt",
+    },
+    malignantBolt = {
+        parent = BuffIds.acidBomb,
+        name = "Malignant Bolt",
     },
     forcedRestitution = {
         parent = BuffIds.replenish,
