@@ -51,7 +51,9 @@ local function onSpell()
         charges = maxDuration, -- int
     }
     if not shackles[target] then
-        shackles[target].shacklers = {}
+        shackles[target] = {
+            shacklers = {},
+        }
     end
     table.insert(shackles[target].shacklers, caster)
 

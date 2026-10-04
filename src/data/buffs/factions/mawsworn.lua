@@ -46,7 +46,7 @@ return {
         name = "Stygian Shield",
     },
     disarmInit = {
-        parent = BuffIds.acidBomb,
+        parent = BuffIds.coldArrowsInfo,
         name = "Disarm",
     },
     disarm = {
@@ -63,6 +63,10 @@ return {
     },
     accursedStrength = {
         parent = BuffIds.berserk,
+        name = "Accursed Strength",
+    },
+    accursedStrengthDamage = {
+        parent = BuffIds.commandAura,
         name = "Accursed Strength",
     },
     forcedRestitution = {

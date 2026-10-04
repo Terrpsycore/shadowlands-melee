@@ -10,6 +10,9 @@ return {
         name = "Stygian Shield",
         buffs = { "stygianShieldCooldown" },
         art = { icon = Icons.lightningShield },
+        apply = A.nonDispellableTargetDebuff.apply(function(a, level)
+            a:setTargetsAllowed(level, "structure,player")
+        end),
     }),
     -- Mawguards
     disarm = A.seaWitchFrostArrows({
@@ -28,6 +31,7 @@ return {
             a:setFollowThroughTime(level, 10) -- max duration
             a:setArtDuration(level, 10)
         end),
+        order = "shadowstrike",
     }),
     malignantBolt = A.poisonArrows({
         name = "Malignant Bolt",
@@ -38,6 +42,11 @@ return {
         name = "Accursed Strength",
         buffs = { "accursedStrength" },
         art = { icon = Icons.advancedunholystrength },
+        apply = A.nonDispellableSelfBuffTimed.apply(function(a, level)
+            a:setDurationNormal(level, 2)
+            a:setDurationHero(level, 2)
+            -- TODO: casttime
+        end),
     }),
     -- Myrmidon
     fallenArmaments = A.passiveGeneric({
@@ -144,6 +153,9 @@ return {
     stygianShieldBuff = A.nonDispellableTargetDebuff({
         name = "stygianShield",
         buffs = { "stygianShield" },
+        apply = A.nonDispellableTargetDebuff.apply(function(a, level)
+            a:setTargetsAllowed(level, "player")
+        end),
     }),
     disarmDummy = A.nonDispellableTargetDebuff({
         name = "Disarm",
@@ -160,7 +172,10 @@ return {
     }),
     accursedStrengthDamage = A.auraCommandCreep({
         name = "Accursed Strength",
-        buffs = {},
+        buffs = { "accursedStrengthDamage" }, -- ?
+        apply = A.auraCommandCreep.apply(function(a, level)
+            a:setAreaofEffect(level, 0)
+        end),
     }),
     accursedStrengthSplash = A.pitLordCleavingAttack({
         name = "Accursed Strength",

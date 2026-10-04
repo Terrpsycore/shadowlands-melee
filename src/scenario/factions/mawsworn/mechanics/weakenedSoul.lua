@@ -48,10 +48,16 @@ local exhausted = {} -- TODO: save/load
 local dummyCastQueue = {} -- TODO: save/load
 
 --- @param unit unit
+--- @return integer
+local function getCurrentWsLevel(unit)
+    return GetUnitAbilityLevel(unit, CONFIG.refs.abilities.ws)
+end
+
+--- @param unit unit
 --- @param stacksDelta integer
 --- @param player player | nil Owner of debuff (required only for positive <stacksDelta> values)
 local function updateWeakenedSoulState(unit, stacksDelta, player)
-    local stacksBefore = GetUnitAbilityLevel(unit, CONFIG.refs.abilities.ws) -- ? save in memory
+    local stacksBefore = getCurrentWsLevel(unit) -- ? save in memory
     local stacks = math.max(0, math.min(10, stacksBefore + stacksDelta))
 
     if stacks == 0 then
@@ -218,5 +224,6 @@ return {
     config = CONFIG,
     api = {
         applyWeakenedSoulStack = applyWeakenedSoulStack,
+        get = getCurrentWsLevel,
     },
 }

@@ -1,11 +1,18 @@
 local Generic = {}
 
 ---@param at Point
-local function pointXY(at)
+---@param class "unit"|"item"|nil
+function Generic.pointXY(at, class)
     if type(at) == "table" then
         return at.x, at.y
     end
-    return GetUnitX(at), GetUnitY(at)
+    if class == "item" then
+        ---@diagnostic disable-next-line: param-type-mismatch
+        return GetItemX(at), GetItemY(at)
+    else
+        ---@diagnostic disable-next-line: param-type-mismatch
+        return GetUnitX(at), GetUnitY(at)
+    end
 end
 
 function Generic.filter(t, predicate)
@@ -73,8 +80,8 @@ end
 --- @param a {x:number,y:number}
 --- @param b {x:number,y:number}
 function Generic.distance(a, b)
-    local aX, aY = pointXY(a)
-    local bX, bY = pointXY(b)
+    local aX, aY = Generic.pointXY(a)
+    local bX, bY = Generic.pointXY(b)
     local dX = math.abs(aX - bX)
     local dY = math.abs(aY - bY)
     return math.sqrt(dX ^ 2 + dY ^ 2)

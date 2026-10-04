@@ -170,7 +170,7 @@ T.onAnyOrder = function(triggers)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
     TriggerAddAction(trig, function()
-        Filter.run(triggers, {})
+        Filter.run(triggers, { source = GetTriggerUnit() })
     end)
 end
 

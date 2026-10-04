@@ -17,6 +17,7 @@ local CONFIG = AbilityConfig.compile({
         },
         buffs = {
             main = Ids.buffs.accursedStrength,
+            damage = Ids.buffs.accursedStrengthDamage,
         },
         units = {
             carrier = { Ids.units.vanguard },
@@ -39,14 +40,20 @@ local function onSpell()
     table.insert(memory, caster)
 end
 
+local function removeEffect(unit)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.effectDamage)
+    UnitRemoveAbility(unit, CONFIG.refs.abilities.effectSplash)
+
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.damage, unit)
+end
+
 --- @param info damageInfo
 local function onAfterDamage(info)
     if not info.isAttack then
         return
     end
     if GetUnitAbilityLevel(info.source, CONFIG.refs.abilities.effectDamage) > 0 then
-        UnitRemoveAbility(info.source, CONFIG.refs.abilities.effectDamage)
-        UnitRemoveAbility(info.source, CONFIG.refs.abilities.effectSplash)
+        removeEffect(info.source)
     end
 end
 
@@ -54,6 +61,7 @@ local function onTimer()
     local flushQueue = {}
     for _, unit in ipairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+            removeEffect(unit)
             table.insert(flushQueue, unit)
         end
     end

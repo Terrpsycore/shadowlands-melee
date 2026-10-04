@@ -5,16 +5,6 @@ local buffTypes = require("data.buffTypes")
 
 local Unit = {}
 
----@param point Point
----@return number x
----@return number y
-local function pointXY(point)
-    if type(point) == "table" then
-        return point.x, point.y
-    end
-    return GetUnitX(point), GetUnitY(point)
-end
-
 local function forEachInRadius(x, y, radius, fn)
     local tempGroup = CreateGroup()
     GroupEnumUnitsInRange(tempGroup, x, y, radius, nil)
@@ -114,7 +104,7 @@ end
 ---@param radius number
 ---@param filter? fun(u: unit): boolean
 function Unit.getClosestUnit(point, radius, filter)
-    local x, y = pointXY(point)
+    local x, y = Generic.pointXY(point)
     local exclude = type(point) ~= "table" and point or nil
     forEachInRadius(x, y, radius, function(u)
         if UnitAlive(u) and u ~= exclude and (not filter or filter(u)) then
@@ -127,7 +117,7 @@ end
 ---@param radius number
 ---@param filter? fun(u: unit): boolean
 function Unit.getUnitsInRadius(point, radius, filter)
-    local x, y = pointXY(point)
+    local x, y = Generic.pointXY(point)
     local exclude = type(point) ~= "table" and point or nil
     local resultsTable = {}
     forEachInRadius(x, y, radius, function(u)
@@ -156,7 +146,7 @@ function Unit.getAllyUnitsOfTypeInRadius(unit, targetTypeId, radius)
 end
 
 function Unit.getNearestUnit(point, radius, filter)
-    local x, y = pointXY(point)
+    local x, y = Generic.pointXY(point)
     local unit
     forEachInRadius(x, y, radius, function(u)
         if (filter and filter(u)) or not filter then
@@ -167,7 +157,7 @@ function Unit.getNearestUnit(point, radius, filter)
 end
 
 function Unit.getNearestCorpse(point, radius, filter)
-    local x, y = pointXY(point)
+    local x, y = Generic.pointXY(point)
     local corpse
     forEachInRadius(x, y, radius, function(u)
         if not corpse and IsUnitDeadBJ(u) and ((filter and filter(u)) or not filter) then
@@ -178,7 +168,7 @@ function Unit.getNearestCorpse(point, radius, filter)
 end
 
 function Unit.getCorpsesInRadius(point, radius, filter)
-    local x, y = pointXY(point)
+    local x, y = Generic.pointXY(point)
     local exclude = type(point) ~= "table" and point or nil
     local resultsTable = {}
     forEachInRadius(x, y, radius, function(u)

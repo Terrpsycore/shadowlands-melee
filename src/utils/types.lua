@@ -1,3 +1,3 @@
 ---@meta
 
----@alias Point unit|{ x: number, y: number }
+---@alias Point unit|item|{ x: number, y: number }

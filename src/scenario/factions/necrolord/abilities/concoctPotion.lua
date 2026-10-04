@@ -83,12 +83,8 @@ local function onConcoct()
     local target = GetSpellTargetUnit()
     local spellId = GetSpellAbilityId()
 
-    local position = Unit.getPosition(target)
-
     local itemId = CONCOCT_TABLE[spellId]
-    local item = CreateItem(itemId, position.x, position.y)
-
-    UnitAddItem(target, item)
+    UnitAddItemById(target, itemId)
 end
 
 local function onLethalDamage(info)
