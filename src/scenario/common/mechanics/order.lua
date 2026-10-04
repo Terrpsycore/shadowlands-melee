@@ -6,7 +6,7 @@ local CONFIG = AbilityConfig.compile({
 })
 
 local function onAnyOrder()
-    dump("order", OrderId2String(GetIssuedOrderId()))
+    dump("order", GetOrderedUnit(), OrderId2String(GetIssuedOrderId()))
 end
 
 local function onSpellEffect()

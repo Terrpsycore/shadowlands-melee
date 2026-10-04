@@ -69,6 +69,18 @@ return {
         parent = BuffIds.commandAura,
         name = "Accursed Strength",
     },
+    glare = {
+        parent = BuffIds.faerieFire,
+        name = "Glare",
+    },
+    glareReveal = {
+        parent = BuffIds.dustofAppearance,
+        name = "Piercing Gaze",
+    },
+    piercingGazeReveal = {
+        parent = BuffIds.dustofAppearance,
+        name = "Piercing Gaze",
+    },
     forcedRestitution = {
         parent = BuffIds.replenish,
         name = "Forced Restitution",

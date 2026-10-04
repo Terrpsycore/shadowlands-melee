@@ -1,3 +1,4 @@
+local UnitArt = require("vendor.assets.generated.UnitArt")
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
@@ -48,7 +49,10 @@ return {
     soulSeeker = {
         parent = UnitIds.trollbatrider,
         name = "Soul Seeker",
-        abilities = { "glare", "sneakPeek" },
+        abilities = { "glare", "piercingGaze" },
+        art = {
+            model = UnitArt[UnitIds.sentryward].model,
+        },
     },
     mawcasterFire = {
         parent = UnitIds.war2warlock,

@@ -4,16 +4,8 @@ local Dummy = {}
 
 ---@alias Order string|integer
 
----@param at Point
-local function pointXY(at)
-    if type(at) == "table" then
-        return at.x, at.y
-    end
-    return GetUnitX(at), GetUnitY(at)
-end
-
 local function spawn(owner, at, abilityId, level, unitId)
-    local x, y = pointXY(at)
+    local x, y = Generic.pointXY(at)
     local dummy = CreateUnit(owner, unitId or FourCC(Ids.units.dummy), x, y, 270)
     UnitApplyTimedLife(dummy, FourCC("BTLF"), 10)
     if abilityId then
@@ -28,7 +20,7 @@ local function spawn(owner, at, abilityId, level, unitId)
     return dummy
 end
 
-local function issueImmediate(dummy, order)
+function Dummy.issueImmediate(dummy, order)
     if type(order) == "number" then
         IssueImmediateOrderById(dummy, order)
     else
@@ -36,7 +28,7 @@ local function issueImmediate(dummy, order)
     end
 end
 
-local function issueTarget(dummy, order, target)
+function Dummy.issueTarget(dummy, order, target)
     if type(order) == "number" then
         IssueTargetOrderById(dummy, order, target)
     else
@@ -44,7 +36,7 @@ local function issueTarget(dummy, order, target)
     end
 end
 
-local function issuePoint(dummy, order, x, y)
+function Dummy.issuePoint(dummy, order, x, y)
     if type(order) == "number" then
         IssuePointOrderById(dummy, order, x, y)
     else
@@ -58,27 +50,27 @@ end
 
 function Dummy.applyDummyOrder(owner, target, abilityId, order, level)
     local dummy = spawn(owner, target, abilityId, level)
-    local s = issueTarget(dummy, order, target)
+    local s = Dummy.issueTarget(dummy, order, target)
     dump("applyDummyOrder", order, s)
     return dummy
 end
 
 function Dummy.applyDummyPointOrder(owner, at, abilityId, order, level)
-    local x, y = pointXY(at)
+    local x, y = Generic.pointXY(at)
     local dummy = spawn(owner, at, abilityId, level)
-    issuePoint(dummy, order, x, y)
+    Dummy.issuePoint(dummy, order, x, y)
     return dummy
 end
 
 function Dummy.applyDummyAttack(owner, target, abilityId, level)
     local dummy = spawn(owner, target, abilityId, level, FourCC(Ids.units.dummyAttack))
-    issueTarget(dummy, "attack", target)
+    Dummy.issueTarget(dummy, "attack", target)
     return dummy
 end
 
 function Dummy.applyDummyImmediateOrder(owner, at, abilityId, order, level)
     local dummy = spawn(owner, at, abilityId, level)
-    issueImmediate(dummy, order)
+    Dummy.issueImmediate(dummy, order)
     return dummy
 end
 

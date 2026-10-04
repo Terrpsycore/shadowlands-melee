@@ -77,6 +77,12 @@ return {
         buffs = { "foulBite" },
         -- apply non stacking
         art = { icon = Icons.pasPoisonsting },
+        apply = A.slowPoison.apply(function(a, level)
+            a:setDamagePerSecond(level, 0)
+            a:setAttackSpeedFactor(level, 0)
+            a:setMovementSpeedFactor(level, 0)
+            a:setStackingType(level, 0)
+        end),
     }),
     soulEaterFly = A.stormCrowForm({
         button = { 1, 2 },
@@ -92,10 +98,25 @@ return {
     glare = A.channelTarget({
         name = "Glare",
         art = { icon = Icons.edricsEye },
+        order = "shadowstrike",
+        apply = A.channelTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 30) -- max duration
+            a:setArtDuration(level, 30)
+        end),
     }),
-    sneakPeek = A.channelPoint({
-        name = "Sneak Peek",
+    piercingGaze = A.channelPoint({
+        name = "Piercing Gaze",
         art = { icon = Icons.blink },
+    }),
+    glareGreater = A.channelTarget({
+        name = "Glare",
+        art = { icon = Icons.edricsEye },
+        order = "innerfire",
+        apply = A.channelTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 30) -- max duration
+            a:setArtDuration(level, 30)
+            a:setCastRange(level, 3000)
+        end),
     }),
     -- Fire caster
     blazingPurge = A.channelTarget({
@@ -187,6 +208,32 @@ return {
     }),
     soulFeastEat = A.channelNoTarget({ -- ? cannibalize + dummy corpse instead
         name = "Soul Feast",
+    }),
+    glareDebuff = A.nonDispellableTargetDebuff({
+        name = "Glare",
+        buffs = { "glare" },
+        apply = A.nonDispellableTargetDebuff.apply(function(a, level)
+            a:setDurationHero(level, 30)
+            a:setDurationNormal(level, 30)
+        end),
+    }),
+    glareVision = A.dustofAppearance({
+        name = "Glare",
+        buffs = { "glareReveal" },
+        apply = A.nonDispellableTargetDebuff.apply(function(a, level)
+            a:setCastRange(level, 1)
+            a:setDurationHero(level, 30)
+            a:setDurationNormal(level, 30)
+        end),
+    }),
+    piercingGazeDummyVision = A.dustofAppearance({
+        name = "piercingGazeDummyVision",
+        buffs = { "piercingGazeReveal" },
+        apply = A.dustofAppearance.apply(function(a, level)
+            a:setCastRange(level, 100)
+            a:setDurationHero(level, 3)
+            a:setDurationNormal(level, 3)
+        end),
     }),
     blazingPurgeMorph = A.bearForm({ -- tmp morph to unit with different attack type (instant + effect)
         name = "Blazing Purge",

@@ -47,6 +47,10 @@ local memory = {} -- TODO: save/load
 local exhausted = {} -- TODO: save/load
 local dummyCastQueue = {} -- TODO: save/load
 
+--- @alias ModifierTag "glare"
+--- @type table<unit, table<ModifierTag, {modifier: integer, cooldown: integer, availableAt: number}>>
+local modifiers = {} -- TODO: save/load
+
 --- @param unit unit
 --- @return integer
 local function getCurrentWsLevel(unit)
@@ -107,11 +111,21 @@ local function updateWeakenedSoulState(unit, stacksDelta, player)
 end
 
 --- Add or substract <stacksDelta> stacks of WS, refresh buff duration on add
+--- Apply modifiers
 --- @param unit unit
 --- @param stacksDelta integer
 --- @param player player|nil Owner of debuff (required only for positive <stacksDelta> values)
 local function applyWeakenedSoulStack(unit, stacksDelta, player)
     if stacksDelta > 0 then
+        local mods = modifiers[unit] or {}
+        for tag, mod in pairs(mods) do
+            local now = GetElapsedGameTime()
+            if now > mod.availableAt then
+                stacksDelta = stacksDelta + mod.modifier
+                modifiers[unit][tag].availableAt = now + mod.cooldown
+            end
+        end
+
         local dummy = Dummy.create(player, unit, CONFIG.refs.abilities.main)
         dummyCastQueue[dummy] = stacksDelta
         IssueTargetOrder(dummy, "curse", unit)
@@ -195,6 +209,24 @@ local function onTimer()
     end
 end
 
+--- modifiers
+
+local function addModifier(target, tag, value, cooldown)
+    if not modifiers[target][tag] then
+        modifiers[target][tag] =
+            { modifier = math.max(0, value), cooldown = cooldown, availableAt = GetElapsedGameTime() }
+    end
+end
+
+local function removeModifier(target, tag)
+    if modifiers[target] and modifiers[target][tag] then
+        modifiers[target][tag] = nil
+    end
+    if not #pairs(modifiers[target]) then
+        modifiers[target] = nil
+    end
+end
+
 return {
     triggers = {
         {
@@ -225,5 +257,9 @@ return {
     api = {
         applyWeakenedSoulStack = applyWeakenedSoulStack,
         get = getCurrentWsLevel,
+        modifiers = {
+            add = addModifier,
+            remove = removeModifier,
+        },
     },
 }

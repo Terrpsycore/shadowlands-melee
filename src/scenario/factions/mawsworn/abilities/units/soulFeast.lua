@@ -90,9 +90,9 @@ local function onCannibalizeFinish()
     local owner = GetOwningPlayer(unit)
 
     for _, target in
-        Unit.getUnitsInRadius(unit, CONFIG.balance.radius, function(t)
+        ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.radius, function(t)
             return not IsUnitAlly(t, owner)
-        end)
+        end))
     do
         WS.api.applyWeakenedSoulStack(target, 1, owner)
     end

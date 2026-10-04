@@ -1,15 +1,6 @@
 local UnitIds = require("vendor.assets.UnitIds")
 
 return {
-    soul = {
-        parent = UnitIds.banshee,
-        name = "Soul",
-        corpse = false,
-        revive = false,
-        apply = function(u)
-            u:setAttacksEnabled(0)
-        end,
-    },
     dummy = {
         parent = UnitIds.footman,
         name = "Dummy",
@@ -26,6 +17,40 @@ return {
             u:setAttacksEnabled(0)
             u:setAnimationCastPoint(0)
             u:setAnimationCastBackswing(0)
+            u:setTurnRate(3)
+            u:setCollisionSize(0)
+        end,
+    },
+    dummyVision = {
+        parent = UnitIds.footman,
+        name = "DummyVision",
+        art = {
+            model = "",
+        },
+        abilities = { "locust" },
+        classification = "Suicidal",
+        corpse = false,
+        revive = false,
+        apply = function(u)
+            u:setAttacksEnabled(0)
+            u:setTurnRate(3)
+            u:setCollisionSize(0)
+        end,
+    },
+    dummyVisionShort = {
+        parent = UnitIds.footman,
+        name = "DummyVision",
+        art = {
+            model = "",
+        },
+        abilities = { "locust" },
+        classification = "Suicidal",
+        corpse = false,
+        revive = false,
+        apply = function(u)
+            u:setAttacksEnabled(0)
+            u:setSightRadiusDay(100)
+            u:setSightRadiusNight(100)
             u:setTurnRate(3)
             u:setCollisionSize(0)
         end,
