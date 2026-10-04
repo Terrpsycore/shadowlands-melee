@@ -61,6 +61,10 @@ return {
         parent = BuffIds.acidBomb,
         name = "Malignant Bolt",
     },
+    accursedStrength = {
+        parent = BuffIds.berserk,
+        name = "Accursed Strength",
+    },
     forcedRestitution = {
         parent = BuffIds.replenish,
         name = "Forced Restitution",

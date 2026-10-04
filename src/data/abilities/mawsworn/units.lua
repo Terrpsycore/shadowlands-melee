@@ -34,8 +34,9 @@ return {
         buffs = { "malignantBoltInit" },
         art = { icon = Icons.autocastTheblackarrow },
     }),
-    accursedStrength = A.channelNoTarget({
+    accursedStrength = A.nonDispellableSelfBuffTimed({
         name = "Accursed Strength",
+        buffs = { "accursedStrength" },
         art = { icon = Icons.advancedunholystrength },
     }),
     -- Myrmidon

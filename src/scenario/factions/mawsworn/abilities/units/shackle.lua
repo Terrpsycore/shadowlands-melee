@@ -16,21 +16,15 @@ local CONFIG = AbilityConfig.compile({
             main = Ids.abilities.shackle,
             slow = Ids.abilities.shackleSlow,
         },
-        buffs = {
-            -- debuff = Ids.buffs.bastionSpearSlow, -- optional
-        },
-        units = {
-            -- source = { Ids.units.ascendedWarrior }, -- optional DAMAGE filter
-        },
+        buffs = {},
+        units = {},
     },
     balance = {
         timerDelta = 0.5,
         shacklePower = 1000, -- (POWER - TARGET_MAX_HP) / 100 = DURATION -- ? upgradable
-        radius = 100,
+        radius = 500, -- TODO: sync with OE
     },
 })
-
-local memory = {} -- TODO: save/load
 
 --- @type table<unit, {shacklers: unit[]}> -- TODO: save/load
 local shackles = {}
@@ -80,18 +74,29 @@ end
 local function onTimer()
     local flushQueue = {}
     for target, data in pairs(shackles) do
-        if #data.shacklers == 0 then
-            flushQueue[target] = true
+        local shackler
+        for _, shacklerQ in data.shacklers do
+            if Unit.distance(shacklerQ, target) > CONFIG.balance.radius then
+                IssueImmediateOrder(shacklerQ, "stop")
+                removeShackle(shacklerQ)
+            else
+                shackler = shacklerQ
+            end
         end
-        local shackler = data.shacklers[0]
-        local owner = GetOwningPlayer(shackler)
-        local shacklerData = shacklers[shackler]
-        WS.api.applyWeakenedSoulStack(target, 1, owner)
-        Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.slow, "slow")
-        shacklerData.charges = shacklerData.charges - 1
-        if shacklerData.charges == 0 then
-            IssueImmediateOrder(shackler, "stop")
-            removeShackle(shackler)
+        if shackler then
+            local owner = GetOwningPlayer(shackler)
+            local shacklerData = shacklers[shackler]
+
+            WS.api.applyWeakenedSoulStack(target, 1, owner)
+            Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.slow, "slow")
+
+            shacklerData.charges = shacklerData.charges - 1
+            if shacklerData.charges == 0 then
+                IssueImmediateOrder(shackler, "stop")
+                removeShackle(shackler)
+            end
+        else
+            flushQueue[target] = true
         end
     end
     for _, v in ipairs(flushQueue) do
