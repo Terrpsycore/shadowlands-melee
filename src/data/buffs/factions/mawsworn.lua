@@ -109,6 +109,10 @@ return {
         parent = BuffIds.innerFire,
         name = "Infusion",
     },
+    infusionEffect = {
+        parent = BuffIds.commandAura,
+        name = "Infusion",
+    },
     burnResidue = {
         parent = BuffIds.howlofTerror,
         name = "Burn Residue",

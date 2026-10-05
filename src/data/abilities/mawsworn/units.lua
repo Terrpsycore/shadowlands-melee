@@ -122,10 +122,17 @@ return {
     blazingPurge = A.channelTarget({
         name = "Blazing Purge",
         art = { icon = Icons.purge },
+        order = "purge",
     }),
     infusion = A.channelTarget({
         name = "Infusion",
         art = { icon = Icons.markOfFire },
+        apply = A.channelTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 5.5)
+            a:setArtDuration(level, 5)
+            a:setCastRange(level, 5.5)
+        end),
+        order = "shadowstrike",
     }),
     burnResidue = A.channelArea({
         name = "Burn Residue",
@@ -259,7 +266,18 @@ return {
     infusionBuff = A.innerFire({ -- ? change to itemDamageBonus/aura mb
         name = "Infusion",
         buffs = { "infusion" },
+    }),
+    infusionUI = A.passiveAura({
+        name = "Infusion",
+        buffs = { "infusionEffect" },
         levels = 5,
+    }),
+    infusionEffect = A.itemDamageBonus({
+        name = "Infusion",
+        levels = 5,
+        apply = A.itemDamageBonus.apply(function(a, level)
+            a:setAttackBonus(level, math.floor(2.5 ^ level))
+        end),
     }),
     burnResidueDummy = A.pitLordHowlofTerror({ -- ? beware if not stacking with related abilities
         name = "Burn Residue",
