@@ -282,12 +282,14 @@ return {
     burnResidueDummy = A.pitLordHowlofTerror({ -- ? beware if not stacking with related abilities
         name = "Burn Residue",
         buffs = { "burnResidue" },
+        apply = A.pitLordHowlofTerror.apply(function(a, level)
+            a:setDamageIncrease(level, 0)
+            a:setDefenseIncrease(level, 2)
+            a:setLifeRegenerationRate(level, 10) -- TODO: check if it kills low hp or it becomes denied
+            a:setDurationHero(level, 5)
+            a:setDurationNormal(level, 10)
+        end),
         -- apply DoT, track buff
-    }),
-    burnResidueArmorDebuff = A.devotionAura({ -- ? replace with itemArmor
-        name = "Burn Residue",
-        buffs = {}, -- possible to not have another buff?
-        -- apply minus armor
     }),
     vesselDispell = A.devourMagic({
         name = "Vessel",
