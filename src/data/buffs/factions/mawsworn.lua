@@ -121,6 +121,10 @@ return {
         parent = BuffIds.coldArrowsInfo,
         name = "Freeze Blood",
     },
+    calcify = {
+        parent = BuffIds.curse,
+        name = "Calcify (disease)",
+    },
     calcifySlow = {
         parent = BuffIds.slow,
         name = "Calcify (slow)",

@@ -148,8 +148,9 @@ return {
         name = "Vessel",
         art = { icon = Icons.doom },
     }),
-    calcify = A.channelTarget({
+    calcify = A.dispellableTargetDebuff({
         name = "Calcify",
+        buffs = { "calcify" },
         art = { icon = Icons.icecolddiamond },
     }),
     -- Dom caster
@@ -303,6 +304,11 @@ return {
     calcifySlow = A.slow({
         name = "Calcify",
         buffs = { "calcifySlow" },
+        levels = 2,
+        apply = A.slow.apply(function(a, level)
+            a:setAttackSpeedFactor(level, level * 0.15)
+            a:setMovementSpeedFactor(level, level * 0.33)
+        end),
     }),
     calcifyStun = A.stormBolt({
         name = "Calcify",
