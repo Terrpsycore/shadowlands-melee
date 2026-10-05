@@ -204,6 +204,12 @@ T.onTrain = function(triggers)
     end)
 end
 
+T.onConstructFinish = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH, triggers, function()
+        return { source = GetTriggerUnit(), target = GetConstructedStructure() }
+    end)
+end
+
 T.onSelect = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_SELECTED, triggers, function()
         return {}
@@ -259,6 +265,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_SPELL_FINISH = T.onSpellFinish,
     EVENT_PLAYER_UNIT_TRAIN_START = T.onTrainStart,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
+    EVENT_PLAYER_UNIT_CONSTRUCT_FINISH = T.onConstructFinish,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_SUMMON = T.onSummon,
     EVENT_PLAYER_UNIT_ISSUED_ORDER = T.onOrder,

@@ -44,6 +44,15 @@ function Generic.contains(t, value)
     return false
 end
 
+function Generic.index(t, value)
+    for i, v in ipairs(t) do
+        if v == value then
+            return i
+        end
+    end
+    return nil
+end
+
 --- @param t table
 --- @result table<integer,any>
 function Generic.toArray(t)
