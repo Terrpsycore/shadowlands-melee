@@ -141,6 +141,7 @@ return {
     -- Frost caster
     freezeBlood = A.dispellableTargetDebuff({ -- ? use negative FP aura? (nah it will block all healing, not only regen)
         name = "Freeze Blood",
+        buffs = { "freezeBlood" },
         art = { icon = Icons.autocastBreathoffrost },
     }),
     vessel = A.channelArea({
@@ -254,7 +255,7 @@ return {
             a:setManaCost(1, 0)
             a:setNormalFormUnit(1, Ids.units.mawcasterFire)
             a:setAlternateFormUnit(1, Ids.units.mawcasterFirePurge)
-            a:setDurationNormal(1, 0)
+            a:setDurationNormal(1, 0.1)
         end),
     }),
     blazingPurgeDispell = A.devourMagic({ -- tmp morph to unit with different attack type (instant + effect)
@@ -286,7 +287,7 @@ return {
         apply = A.pitLordHowlofTerror.apply(function(a, level)
             a:setDamageIncrease(level, 0)
             a:setDefenseIncrease(level, 2)
-            a:setLifeRegenerationRate(level, 10) -- TODO: check if it kills low hp or it becomes denied
+            a:setLifeRegenerationRate(level, -10) -- TODO: check if it kills low hp or it becomes denied
             a:setDurationHero(level, 5)
             a:setDurationNormal(level, 10)
         end),

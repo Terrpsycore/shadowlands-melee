@@ -63,6 +63,7 @@ local function onTimer()
                 UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
                 -- table.insert(flushQueue, unit)
             end
+            data.lastHp = hp
         end
     end
     for _, v in ipairs(flushQueue) do

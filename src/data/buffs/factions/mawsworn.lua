@@ -117,6 +117,10 @@ return {
         parent = BuffIds.howlofTerror,
         name = "Burn Residue",
     },
+    freezeBlood = {
+        parent = BuffIds.coldArrowsInfo,
+        name = "Freeze Blood",
+    },
     calcifySlow = {
         parent = BuffIds.slow,
         name = "Calcify (slow)",

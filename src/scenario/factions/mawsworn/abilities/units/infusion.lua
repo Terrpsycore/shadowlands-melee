@@ -87,7 +87,7 @@ local function onTimer()
     for caster, target in pairs(channels) do
         local owner = GetOwningPlayer(caster)
         local targetData = memory[target]
-        targetData.untilStack = math.max(0, targetData.untilStack - CONFIG.balance.maxStacks)
+        targetData.untilStack = math.max(0, targetData.untilStack - CONFIG.balance.tickRate)
         if targetData.untilStack == 0 then
             targetData.untilStack = CONFIG.balance.stacksDelta
             Dummy.applyPoint(owner, target, CONFIG.refs.abilities.buff, "innerfire")
