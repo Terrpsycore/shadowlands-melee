@@ -161,7 +161,11 @@ return {
     forcedRestitution = A.replenishLife({
         name = "Forced Restitution",
         buffs = { "forcedRestitution" },
-        -- apply duration
+        apply = A.replenishLife.apply(function(a, level)
+            a:setDurationNormal(level, 3)
+            a:setDurationHero(level, 3)
+            a:setCooldown(level, 0)
+        end),
         art = { icon = Icons.autocastSkeletallongevity },
     }),
     betrayalSeed = A.channelTarget({
