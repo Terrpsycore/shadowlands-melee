@@ -92,6 +92,22 @@ return {
             u:setAttacksEnabled(0)
         end,
     },
+    dummyDispellMeter = {
+        parent = UnitIds.footman,
+        classification = "Suicidal",
+        corpse = false,
+        revive = false,
+        --- @param u UnitDefinition
+        apply = function(u)
+            u:setHitPointsMaximumBase(1000)
+            u:setHitPointsRegenerationRate(0)
+            u:setHitPointsRegenerationType("never")
+            u:setManaMaximum(1000)
+            u:setManaInitialAmount(1000)
+            u:setManaRegeneration(0)
+            u:setAttacksEnabled(0)
+        end,
+    },
     dummyTank = {
         parent = UnitIds.footman,
         corpse = false,

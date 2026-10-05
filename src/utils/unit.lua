@@ -58,6 +58,14 @@ function Unit.getCurrentLife(unit)
     return GetUnitState(unit, UNIT_STATE_LIFE)
 end
 
+function Unit.getMaxMana(unit)
+    return GetUnitState(unit, UNIT_STATE_MAX_MANA)
+end
+
+function Unit.getCurrentMana(unit)
+    return GetUnitState(unit, UNIT_STATE_MANA)
+end
+
 function Unit.substractMana(unit, amount)
     local currentMana = GetUnitState(unit, UNIT_STATE_MANA)
     return SetUnitState(unit, UNIT_STATE_MANA, math.max(0, currentMana - amount))
