@@ -80,6 +80,11 @@ return {
         abilities = { "relink" },
     },
     -- == Special
+    mawcasterFirePurge = {
+        parent = UnitIds.chaoswarlock,
+        name = "Fire",
+        abilities = { "blazingPurge", "infusion", "burnResidue" },
+    },
     mawswornShade = {
         parent = UnitIds.shade,
         name = "Transformed",

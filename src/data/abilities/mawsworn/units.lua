@@ -242,9 +242,19 @@ return {
     }),
     blazingPurgeMorph = A.bearForm({ -- tmp morph to unit with different attack type (instant + effect)
         name = "Blazing Purge",
+        apply = A.bearForm.apply(function(a)
+            a:setMorphingFlags(1, 1) -- uninterruptable
+            a:setManaCost(1, 0)
+            a:setNormalFormUnit(1, Ids.units.mawcasterFire)
+            a:setAlternateFormUnit(1, Ids.units.mawcasterFirePurge)
+        end),
     }),
     blazingPurgeDispell = A.devourMagic({ -- tmp morph to unit with different attack type (instant + effect)
         name = "Blazing Purge",
+        apply = A.devourMagic.apply(function(a, level)
+            a:setManaPerUnit(level, 1)
+            a:setManaPerBuff(level, 0)
+        end),
     }),
     infusionBuff = A.innerFire({ -- ? change to itemDamageBonus/aura mb
         name = "Infusion",
