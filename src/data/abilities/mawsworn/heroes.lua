@@ -122,6 +122,13 @@ return {
         buffs = { "promoteLeutinant" },
         levels = 3,
     }),
+    promoteLeutinantHp = A.itemLifeBonus({
+        name = "Promote Leutinant",
+        levels = 3,
+        apply = A.itemLifeBonus.apply(function(a, level)
+            a:setMaxLifeGained(level, 100 * level)
+        end),
+    }),
     superiourCauseDetonate = A.selfDestructClockwerkGoblins({
         name = "Superiour Cause",
         manaCost = 0,

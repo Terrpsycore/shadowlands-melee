@@ -45,7 +45,7 @@ end
 local function onSpell()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
-    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.harpoon)
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
     memory[target] = { owner = GetOwningPlayer(caster), level = level }
 end
