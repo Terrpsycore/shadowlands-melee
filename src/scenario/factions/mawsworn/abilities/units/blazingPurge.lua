@@ -1,5 +1,6 @@
 --[[
 TODO:
+- BUG: morph doesn't work
 - OE data: restored mana
 ]]
 
@@ -46,7 +47,9 @@ local function onSpell()
 
     UnitAddAbility(caster, CONFIG.refs.abilities.morph)
     IssueImmediateOrder(caster, "bearform")
-    UnitRemoveAbility(caster, CONFIG.refs.abilities.morph)
+    Timed.call(1, function()
+        UnitRemoveAbility(caster, CONFIG.refs.abilities.morph)
+    end)
 
     memory[caster] = {
         charges = CONFIG.balance.maxCharges,

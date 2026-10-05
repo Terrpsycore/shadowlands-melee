@@ -1,5 +1,6 @@
 --[[
 TODO:
+- VISUAL BUG: always shows 1 level of aura. effect works correctly
 - upgrade reqs
 ]]
 
@@ -12,7 +13,7 @@ local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
             main = Ids.abilities.fallenArmaments,
-            effect = Ids.abilities.fallenArmaments,
+            effect = Ids.abilities.fallenArmamentsEffect,
         },
         buffs = {
             ui = Ids.buffs.fallenArmaments,
@@ -24,17 +25,21 @@ local CONFIG = AbilityConfig.compile({
     balance = {
         maxStacks = 5,
         flushRate = 0.5,
+        fadeTime = 3,
     },
 })
 
---- @type table<unit, {stacks: integer}>
+--- @type table<unit, {buffApplied: boolean, stacks: integer, fadesAt: number}>
 local memory = {} -- TODO: save/load
 
 local function applyEffect(unit)
     if not memory[unit] then
-        memory[unit].stacks = 1
-        UnitAddAbility(unit, CONFIG.refs.abilities.effect)
-    elseif memory[unit].stacks == CONFIG.balance.maxStacks then
+        memory[unit] = { buffApplied = true, stacks = 1 }
+    end
+
+    memory[unit].fadesAt = GetElapsedGameTime() + CONFIG.balance.fadeTime
+
+    if memory[unit].stacks == CONFIG.balance.maxStacks then
         return
     else
         memory[unit].stacks = math.min(CONFIG.balance.maxStacks, memory[unit].stacks + 1)
@@ -57,6 +62,7 @@ local function onAfterDamage(info)
         return
     end
 
+    UnitAddAbility(info.source, CONFIG.refs.abilities.effect)
     if UnitHasBuffBJ(info.source, CONFIG.refs.buffs.ui) then -- TODO: review, visible pause between battle start and AA speed stacking
         applyEffect(info.source)
     end
@@ -64,7 +70,7 @@ end
 
 local function onTimer()
     for unit, data in pairs(memory) do
-        if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+        if GetElapsedGameTime() > data.fadesAt then
             removeEffect(unit)
         end
     end

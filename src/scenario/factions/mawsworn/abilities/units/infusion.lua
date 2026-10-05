@@ -23,6 +23,7 @@ local CONFIG = AbilityConfig.compile({
         maxStacks = 5,
         damageBase = 3.5, -- 3, 12, 42, 150, 525
         tickRate = 0.25,
+        stacksDelta = 1,
     },
 })
 
@@ -65,7 +66,7 @@ local function onCast()
     channels[caster] = target
     memory[target] = {
         stacks = 0,
-        untilStack = 1,
+        untilStack = CONFIG.balance.stacksDelta,
     }
 
     Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.buff, "innerfire")
@@ -88,7 +89,8 @@ local function onTimer()
         local targetData = memory[target]
         targetData.untilStack = math.max(0, targetData.untilStack - CONFIG.balance.maxStacks)
         if targetData.untilStack == 0 then
-            Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.buff, "innerfire")
+            targetData.untilStack = CONFIG.balance.stacksDelta
+            Dummy.applyPoint(owner, target, CONFIG.refs.abilities.buff, "innerfire")
         end
     end
 end
@@ -118,7 +120,7 @@ return {
             spellId = CONFIG.refs.abilities.main,
             action = onEndCast,
         },
-        { trigger = "TIMER", delta = 0.25, action = onTimer },
+        { trigger = "TIMER", delta = CONFIG.balance.tickRate, action = onTimer },
     },
     config = CONFIG,
 }

@@ -1,3 +1,5 @@
+-- BUG: DoT doesnt seem to work
+
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
@@ -34,7 +36,7 @@ local function onCast()
         return
     end
 
-    local point
+    local x, y
     if soul.holderType == "item" then
         ---@diagnostic disable-next-line: param-type-mismatch -- TODO: remove
         local holderUnit = Souls.api.holder.get(soul.holder)
@@ -42,10 +44,11 @@ local function onCast()
             dump("Invalid item holder")
             return
         end
-        point = Generic.pointXY(holderUnit)
+        x, y = Generic.pointXY(holderUnit)
     else
-        point = Generic.pointXY(soul.holder)
+        x, y = Generic.pointXY(soul.holder)
     end
+    local point = { x = x, y = y }
 
     Dummy.applyDummyImmediateOrder(owner, point, CONFIG.refs.abilities.dummy, "howlofterror")
 end

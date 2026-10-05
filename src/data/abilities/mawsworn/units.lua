@@ -215,7 +215,7 @@ return {
         apply = A.enduranceAura.apply(function(a, level)
             a:setAttackSpeedIncrease(level, 0.1 * level)
             a:setMovementSpeedIncrease(level, 0)
-            a:setAreaofEffect(level, 0) -- ? recheck
+            a:setAreaofEffect(level, 1) -- ? recheck
         end),
     }),
     soulFeastEat = A.channelNoTarget({ -- ? cannibalize + dummy corpse instead
@@ -254,6 +254,7 @@ return {
             a:setManaCost(1, 0)
             a:setNormalFormUnit(1, Ids.units.mawcasterFire)
             a:setAlternateFormUnit(1, Ids.units.mawcasterFirePurge)
+            a:setDurationNormal(1, 0)
         end),
     }),
     blazingPurgeDispell = A.devourMagic({ -- tmp morph to unit with different attack type (instant + effect)
@@ -263,7 +264,7 @@ return {
             a:setManaPerBuff(level, 0)
         end),
     }),
-    infusionBuff = A.innerFire({ -- ? change to itemDamageBonus/aura mb
+    infusionBuff = A.dispellableTargetBuff({ -- ? change to itemDamageBonus/aura mb
         name = "Infusion",
         buffs = { "infusion" },
     }),
