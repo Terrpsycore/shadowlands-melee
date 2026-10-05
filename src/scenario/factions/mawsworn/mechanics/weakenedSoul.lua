@@ -258,7 +258,10 @@ return {
         applyWeakenedSoulStack = applyWeakenedSoulStack,
         get = getCurrentWsLevel,
         has = function(t)
-            return memory[t]
+            return not not memory[t]
+        end,
+        isExhausted = function(u)
+            return not not exhausted[u]
         end,
         modifiers = {
             add = addModifier,
