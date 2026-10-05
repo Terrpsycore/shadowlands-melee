@@ -85,6 +85,12 @@ return {
         name = "Fire",
         abilities = { "blazingPurge", "infusion", "burnResidue" },
     },
+    vessel = {
+        parent = UnitIds.stasistraptotem,
+        name = "War Banner",
+        abilities = { "warBannerAura" },
+        art = { model = UnitArt[UnitIds.shade].model },
+    },
     mawswornShade = {
         parent = UnitIds.shade,
         name = "Transformed",

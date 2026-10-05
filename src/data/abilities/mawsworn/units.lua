@@ -295,6 +295,10 @@ return {
     }),
     vesselDispell = A.devourMagic({
         name = "Vessel",
+        apply = A.devourMagic.apply(function(a, level)
+            a:setManaPerUnit(level, 1)
+            a:setManaPerBuff(level, 0)
+        end),
     }),
     calcifySlow = A.slow({
         name = "Calcify",
