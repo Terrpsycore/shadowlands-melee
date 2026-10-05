@@ -257,6 +257,9 @@ return {
     api = {
         applyWeakenedSoulStack = applyWeakenedSoulStack,
         get = getCurrentWsLevel,
+        has = function(t)
+            return memory[t]
+        end,
         modifiers = {
             add = addModifier,
             remove = removeModifier,
