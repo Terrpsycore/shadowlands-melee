@@ -105,6 +105,14 @@ return {
     }),
     -- Dummies, ...
     -- Forsworn hero
+    harpoonDummy = A.stormBolt({ -- instant. root/unroot with trigger
+        name = "Harpoon",
+        buffs = { "harpoon" },
+        levels = 3,
+        manaCost = 100,
+        button = { 0, 2 },
+        hotkey = "Q",
+    }),
     promoteLeutinantDamageBuff = A.auraCommandCreep({
         name = "Promote Leutinant",
         buffs = { "promoteLeutinant" },
