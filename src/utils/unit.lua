@@ -50,6 +50,14 @@ function Unit.hasInvisibilityBuff(unit)
     return false
 end
 
+function Unit.getMaxLife(unit)
+    return GetUnitState(unit, UNIT_STATE_MAX_LIFE)
+end
+
+function Unit.getCurrentLife(unit)
+    return GetUnitState(unit, UNIT_STATE_LIFE)
+end
+
 function Unit.substractMana(unit, amount)
     local currentMana = GetUnitState(unit, UNIT_STATE_MANA)
     return SetUnitState(unit, UNIT_STATE_MANA, math.max(0, currentMana - amount))
