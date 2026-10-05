@@ -21,16 +21,33 @@ local CONFIG = AbilityConfig.compile({
     },
     balance = {
         radius = 64,
+        rootDuration = 3,
+        flushDelta = 0.5,
     },
 })
 
 --- @type table<unit, {owner: player, level: integer}>
-local memory = {}
+local memory = {} -- harpoon missiled
+--- @type table<unit, {propWindow: number, expiresAt: number}>
+local rooted = {}
+
+local function applyEffect(unit)
+    rooted[unit] =
+        { propWindow = GetUnitPropWindow(unit), expiresAt = GetElapsedGameTime() + CONFIG.balance.rootDuration }
+    SetUnitPropWindow(unit, 0)
+end
+
+local function removeEffect(unit)
+    SetUnitPropWindow(unit, rooted[unit].propWindow)
+    rooted[unit] = nil
+end
 
 local function onSpell()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.harpoon)
+
+    memory[target] = { owner = GetOwningPlayer(caster), level = level }
 end
 
 --- @param info damageInfo
@@ -39,14 +56,16 @@ local function onAfterDamage(info)
     local target = info.target
     Timed.call(0.1, function()
         if memory[target] and UnitHasBuffBJ(target, CONFIG.refs.buffs.main) then
+            applyEffect(target)
             for _, unit in
                 ipairs(Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
                     return not IsUnitAlly(u, GetOwningPlayer(source))
                 end))
             do
+                applyEffect(unit)
                 Dummy.applyDummyOrder(
                     GetOwningPlayer(source),
-                    target,
+                    unit,
                     CONFIG.refs.abilities.harpoonDummy,
                     "thunderbolt",
                     memory[target].level
@@ -55,6 +74,14 @@ local function onAfterDamage(info)
             memory[target] = nil
         end
     end)
+end
+
+local function onTimer()
+    for unit, data in pairs(rooted) do
+        if GetElapsedGameTime() > data.expiresAt then
+            removeEffect(unit)
+        end
+    end
 end
 
 return {
@@ -68,6 +95,11 @@ return {
             trigger = "AFTER_DAMAGE",
             filter = { source = CONFIG.refs.units.carrier },
             action = onAfterDamage,
+        },
+        {
+            trigger = "TIMER",
+            delta = CONFIG.balance.flushDelta,
+            action = onTimer,
         },
     },
     config = CONFIG,

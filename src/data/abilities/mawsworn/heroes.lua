@@ -112,6 +112,10 @@ return {
         manaCost = 100,
         button = { 0, 2 },
         hotkey = "Q",
+        apply = A.stormBolt.apply(function(a, level)
+            a:setDurationNormal(level, 0.3)
+            a:setDurationHero(level, 0.3)
+        end),
     }),
     promoteLeutinantDamageBuff = A.auraCommandCreep({
         name = "Promote Leutinant",
