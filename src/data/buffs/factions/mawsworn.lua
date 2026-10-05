@@ -93,6 +93,10 @@ return {
         parent = BuffIds.howlofTerror,
         name = "Threatening Roar",
     },
+    threateningRoarLevel = {
+        parent = BuffIds.howlofTerror,
+        name = "Threatening Roar",
+    },
     shackle = {
         parent = BuffIds.slow,
         name = "Shackle",

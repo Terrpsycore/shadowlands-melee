@@ -276,4 +276,13 @@ return {
         name = "Threatening Roar",
         levels = 3,
     }),
+    threateningRoarLevelUI = A.devotionAura({
+        name = "Threatening Roar",
+        buffs = { "threateningRoarLevel" },
+        levels = 3,
+        apply = A.devotionAura.apply(function(a, level)
+            a:setAreaofEffect(level, 0)
+            a:setArmorBonus(level, 0)
+        end),
+    }),
 }
