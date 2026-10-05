@@ -205,6 +205,11 @@ return {
         name = "Fallen Armaments",
         levels = 5,
         buffs = { "fallenArmaments" },
+        apply = A.enduranceAura.apply(function(a, level)
+            a:setAttackSpeedIncrease(level, 0.1 * level)
+            a:setMovementSpeedIncrease(level, 0)
+            a:setAreaofEffect(level, 0) -- ? recheck
+        end),
     }),
     soulFeastEat = A.channelNoTarget({ -- ? cannibalize + dummy corpse instead
         name = "Soul Feast",

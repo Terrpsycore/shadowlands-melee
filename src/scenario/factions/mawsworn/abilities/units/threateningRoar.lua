@@ -38,10 +38,10 @@ local function applyEffect(unit)
         memory[unit].stacks = 1
         UnitAddAbility(unit, CONFIG.refs.abilities.effect)
         UnitAddAbility(unit, CONFIG.refs.abilities.ui)
-    elseif memory[unit].stacks == 3 then
+    elseif memory[unit].stacks == CONFIG.balance.maxStacks then
         return
     else
-        memory[unit].stacks = math.min(3, memory[unit].stacks + 1)
+        memory[unit].stacks = math.min(CONFIG.balance.maxStacks, memory[unit].stacks + 1)
         SetUnitAbilityLevel(unit, CONFIG.refs.abilities.effect, memory[unit].stacks)
         SetUnitAbilityLevel(unit, CONFIG.refs.abilities.ui, memory[unit].stacks)
     end
