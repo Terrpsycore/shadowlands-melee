@@ -57,7 +57,25 @@ alwaysApply: false
 
 - **Data row:** декларативные атрибуты — список в `tools/oe/ability_row_fields.lua` (type hints → `tools/gen/ability_kinds.lua`), runtime handlers → `tools/oe/kinds/abilities.lua`. Новое поле: добавить в оба файла, затем `lua tools/bake.lua`. `requirements` по умолчанию `""` (defaults). `manaCost`: число → все уровни; `{ 100, 150, 200 }` → по уровням. `button = { 0, 2 }` (x, y). `art`: raw WC3-пути (как `units.art.icon`), slashes нормализуются при bake — `icon` → кнопка, `iconOff` → toggle off, `iconResearch` → learn; `""` сбрасывает наследованную иконку.
 
-- **Пресеты** (`data/abilityPresets.lua`): `A.channelNoTarget`, `A.channelTarget`, `A.channelPoint`, `A.channelArea`, `A.immolationToggle`, `A.exhumeBased` — merge row-атрибутов (вызов перезаписывает пресет) + chain apply: сначала preset apply, затем apply способности (может перезаписать setter'ы пресета). В `data/abilities` не использовать `A.channel(` напрямую.
+- **Пресеты** (`src/data/abilityPresets.lua`): вызов перезаписывает поля пресета; сначала `apply` пресета, затем `apply` строки. Не использовать `A.channel(` — строка `channel*` ниже. Сырой `A.<factory>` (например `A.bloodlust`) — только если в таблице нет подходящей строки и нужен vanilla-эффект как есть.
+
+| Хочу | Пресет | База | Заметка |
+|---|---|---|---|
+| Слоты инвентаря, не боевая кнопка | `A.inventory` | `inventory` | нельзя use, можно drop и get; не presetFactory |
+| Мгновенный актив без цели | `A.channelNoTarget` | `channel` | options=1; не глушит другие способности; follow и art duration = 0 |
+| Мгновенный актив в юнита | `A.channelTarget` | `channel` | targetType=1; не глушит другие способности; follow и art duration = 0 |
+| Мгновенный актив в точку | `A.channelPoint` | `channel` | targetType=2; не глушит другие способности; follow и art duration = 0 |
+| Мгновенный актив по области, с кругом выбора | `A.channelArea` | `channel` | options=3 (круг); AoE и cast range 300; targetType=2 |
+| Переключатель вкл/выкл без урона и слива маны | `A.immolationToggle` | `immolation` | урон за тик, drain и buffer = 0; приказы immolation / unimmolation |
+| Скрытый носитель кулдауна, не кнопка | `A.exhumeBased` | `exhume` | трупы и cd = 0; кулдаун ставит скрипт через BlzStartUnitAbilityCooldown |
+| Пассив-маркер без игрового эффекта | `A.passiveGeneric` | `evasion` | шанс уклонения 0: способность есть на юните, эффекта нет |
+| Пассивная аура только на себя, без замедления | `A.passiveAura` | `slowAura` | факторы скорости 0, область 1, targets self |
+| Бафф на себя с длительностью, диспел не снимает | `A.nonDispellableSelfBuffTimed` | `berserkerRage1` | бонусы скорости и урона 0; приказ berserk |
+| Дебафф на цель, диспел не снимает | `A.nonDispellableTargetDebuff` | `acidBomb` | штрафы 0, снаряд пустой и мгновенный; приказ acidbomb |
+| Бафф на цель, диспел снимает | `A.dispellableTargetBuff` | `innerFire` | броня и урон 0; приказ innerfire |
+| Дебафф на цель, диспел снимает | `A.dispellableTargetDebuff` | `curse` | шанс промаха 0; приказ curse |
+
+- **Helpers:** `docs/helpers.md` — развилка «что взять» и ловушки `utils.unit`; контракт storage — `docs/storage.md`, объявления — `src/scenario/storage/`.
 
 - **`apply` per-level:** `function(a, level)` → bake вызывает apply для каждого уровня из `levels`; `function(a)` → один раз. Работает и в пресетах, и в прямом `A.*({ apply = ... })`.
 

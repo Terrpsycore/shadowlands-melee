@@ -32,7 +32,7 @@ disable-model-invocation: true
 - [ ] Step 2: Скопировать template → factions/<faction>/abilities/<slug>.lua
 - [ ] Step 3: Заменить placeholders в refs / balance; AbilityConfig.compile напрямую в CONFIG
 - [ ] Step 4: Уникальная логика — только в effect / tryActivate / onTick / … (early return, как tier A)
-- [ ] Step 5: Data rows (abilities, buffs, units) + carrier.abilities → lua tools/bake.lua
+- [ ] Step 5: Data rows (abilities, buffs, units) — пресет из таблицы в abilities.mdc; carrier.abilities → lua tools/bake.lua
 - [ ] Step 6: Bake подхватит scenario (gen_ability_registry.lua)
 - [ ] Step 7 (optional): tests/factions/<faction>/<slug>.lua по образцу defenceProtocol / pulseback
 ```
@@ -60,6 +60,7 @@ disable-model-invocation: true
 - Не создавать обёртки и «фреймворки» внутри файла способности.
 - Triggers — только array-формат; filter через `CONFIG.refs.*` после compile.
 - Визуалы/dummy — `utils/dummy.lua`; toggle — паттерн immolation + `MechStorage` из tier-A reference.
+- Перед новым storage или перебором юнитов — `docs/helpers.md` и `docs/storage.md`; не дублировать уже объявленное в `src/scenario/storage/`.
 
 ### Step 5–6 — Bake
 

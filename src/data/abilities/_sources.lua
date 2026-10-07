@@ -1,0 +1,26 @@
+--- Ability catalog load order (shared by data.abilities and tools/gen/status.lua).
+--- `faction` is metadata for tooling only — it is not written into ability rows.
+return {
+    { class = "unit", path = "data.abilities.common" },
+    { faction = "kyrian", class = "unit", path = "data.abilities.kyrian.buildings" },
+    { faction = "kyrian", class = "unit", path = "data.abilities.kyrian.common" },
+    { faction = "kyrian", class = "hero", path = "data.abilities.kyrian.heroes" },
+    { faction = "kyrian", class = "unit", path = "data.abilities.kyrian.units" },
+    { faction = "necrolord", class = "unit", path = "data.abilities.necrolord.buildings" },
+    { faction = "necrolord", class = "unit", path = "data.abilities.necrolord.common" },
+    { faction = "necrolord", class = "hero", path = "data.abilities.necrolord.heroes" },
+    { faction = "necrolord", class = "unit", path = "data.abilities.necrolord.units" },
+    { faction = "fae", class = "unit", path = "data.abilities.fae.buildings" },
+    { faction = "fae", class = "unit", path = "data.abilities.fae.common" },
+    { faction = "fae", class = "hero", path = "data.abilities.fae.heroes" },
+    { faction = "fae", class = "unit", path = "data.abilities.fae.units" },
+    { faction = "venthyr", class = "unit", path = "data.abilities.venthyr.buildings" },
+    { faction = "venthyr", class = "unit", path = "data.abilities.venthyr.common" },
+    { faction = "venthyr", class = "hero", path = "data.abilities.venthyr.heroes" },
+    { faction = "venthyr", class = "unit", path = "data.abilities.venthyr.units" },
+    { faction = "mawsworn", class = "unit", path = "data.abilities.mawsworn.buildings" },
+    { faction = "mawsworn", class = "unit", path = "data.abilities.mawsworn.common" },
+    { faction = "mawsworn", class = "item", path = "data.abilities.mawsworn.items" },
+    { faction = "mawsworn", class = "hero", path = "data.abilities.mawsworn.heroes" },
+    { faction = "mawsworn", class = "unit", path = "data.abilities.mawsworn.units" },
+}

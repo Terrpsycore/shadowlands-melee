@@ -4,7 +4,7 @@
 
 ## Слои
 
-- **Data** (`src/data/`) — units, abilities, items, buffs, upgrades. Ключ — slug (`combatExpertise`), не FourCC. Пресеты способностей — `abilityPresets.lua`.
+- **Data** (`src/data/`) — units, abilities, items, buffs, upgrades. Ключ — slug (`combatExpertise`), не FourCC. Пресеты способностей — `abilityPresets.lua`. Форма rows, ID, ошибки bake — [data.md](data.md).
 - **Bake** (`tools/bake.lua` → `tools/gen/*`) — из Data делает `data/generated/` (ids, slug-алиасы, meta), реестры модулей для scenario и tests, валидирует ссылки. `tools/oe/` — пишет object data в карту при build.
 - **Lib** (`src/lib/`) — инфраструктура: `triggers` (события + filter), `storage` (hashtable), `ability/config` (compile refs/balance), `objediting` (свои base-классы для OE).
 - **Scenario** (`src/scenario/`) — runtime способностей: `factions/*/abilities/`, `common/mechanics/`. Состояние — `scenario/storage/*`. Каркасы для копирования — `common/templates/` (в реестр не попадают).
@@ -18,6 +18,7 @@
    - `gen/ids` — slug → `A100`, `B101`… Старые ID сохраняются (читаются из текущего `ids.lua`), новые получают следующий номер, удалённые slug-и вычищаются.
    - `gen/registries` — список модулей `scenario/**` и `tests/**` по каталогам.
    - `gen/validate_scenario` — каждый `Ids.<domain>.<slug>` и `trigger = "..."` в scenario существует; `units.*.abilities` и `abilities.*.buffs` ссылаются на известные slug.
+   - `gen/status` — [`docs/generated/status.md`](generated/status.md): матрица по фракциям (data row → scenario-модуль → тест → TODO). Единственный `generated/`, который в git.
 2. warcraft-vscode `build` — вызывает `objediting/main.lua` → `tools/oe/main.lua` (object data в карту), компилирует Lua в `.build/*.w3x`.
 3. `run` — копия в `Maps/Test`, запуск игры.
 

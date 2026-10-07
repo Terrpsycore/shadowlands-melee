@@ -41,7 +41,3 @@ python build/wc3.py go . --imports
 3. Был ли `--imports` — проверить `imports/ReplaceableTextures/`
 4. Зелёная только disabled — нет `CommandButtonsDisabled/DISBTNxxx` в `wc3-custom`
 5. Всё на месте — это cold-start баг `-loadfile`. «Начать заново» или загрузить из меню покажет правду. Обход для dev: зеркало файлов в `_retail_/ReplaceableTextures/`
-
-## Идея: вынести пути из `wc3.py`
-
-Сейчас после clone правится `wc3.py` и это попадает в diff. Варианты: gitignored `wc3.local.py` с переопределениями, либо env с текущими значениями как default. Не реализовано.

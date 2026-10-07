@@ -7,6 +7,7 @@ map.w3x/
 docs/design
 
 generated/
+!docs/generated/
 __pycache__
 
 .cache/

@@ -1,6 +1,6 @@
 # Storage
 
-Состояние механик поверх WC3-hashtable. Код — `src/lib/storage/`, объявления — `src/scenario/storage/<slug>.lua`.
+Состояние механик поверх WC3-hashtable. Код — `src/lib/storage/`, объявления — `src/scenario/storage/<slug>.lua`. Развилка «что уже есть» (toggle → `mech`, трупы → `corpses`) — [helpers.md](helpers.md).
 
 ## Зачем
 

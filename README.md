@@ -4,19 +4,17 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 ## Стек
 
-- Lua 5.3 — runtime WC3 + standalone для tools/oe
+- Lua 5.3 — runtime WC3; Lua 5.5 standalone — `tools/bake.lua` и `tools/oe` (`build/wc3.py`)
 - [warcraft-vscode](https://marketplace.visualstudio.com/items?itemName=dencer.warcraft-vscode) — сборка карты
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
 - Community libs: Influa, DamageEngine, IngameConsole (`src/vendor/ext/`)
 
+Окружение, команды, первый запуск: [docs/getting-started.md](docs/getting-started.md).
+
 ## Bake
 
-Папки `*/generated/` в `.gitignore` — после clone нужна codegen.
-
-- **`wc3 assets .`** — scan `WC3_ASSETS` / `WC3_CUSTOM` → `Icons.lua`, Models, `imports/` (редко: новые custom-иконки или обновление dump)
-- **`wc3 build .`** — `tools/bake.lua` (IDs, реестры, validate) + сборка карты; требует уже сгенерированный `Icons.lua`
-- **`wc3 build . --imports`** / **`wc3 go . --imports`** — то же + sync referenced custom → `imports/` (после назначения custom-иконок в data)
+Папки `*/generated/` в `.gitignore` — после clone нужны `assets` и bake. Команды `assets` / `build` / `go` / `--imports` — [docs/getting-started.md](docs/getting-started.md).
 
 ## Тесты
 
@@ -32,6 +30,13 @@ In-game автотесты в `src/tests/` (`factions/`, `mechanics/`, `data/`).
 ```
 
 Шаблоны objediting runtime (`main-debug.lua`, `main-release.lua`) исключены через `workspace.ignoreDir` в `.luarc.json`.
+
+Архитектура (слои, bake, runtime, границы): [docs/architecture.md](docs/architecture.md).
+
+Как значения из `data/` попадают в способности без магических чисел: [docs/data-in-scenario.md](docs/data-in-scenario.md).
+Data-слой (rows, ID, пресеты, ошибки bake): [docs/data.md](docs/data.md).
+
+Статус фракций (data → runtime → тесты → TODO, автоген при bake): [docs/generated/status.md](docs/generated/status.md).
 
 Trade-off'ы и отложенные баги: [docs/adr/0001-luals-zero-warnings-trade-offs.md](docs/adr/0001-luals-zero-warnings-trade-offs.md), [docs/adr/0002-custom-assets-imports-vs-game-folder-dev.md](docs/adr/0002-custom-assets-imports-vs-game-folder-dev.md), [docs/known-issues.md](docs/known-issues.md).
 

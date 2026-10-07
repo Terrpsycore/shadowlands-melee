@@ -21,6 +21,7 @@
 | `objediting-classes.mdc` | **Yellow**: `tools/oe/` и `src/lib/objediting/` |
 | `project-profile.mdc` | контекст репозитория (структура, bake, «не трогать») |
 | `project-profile-bootstrap.mdc` | создать `project-profile.mdc`, если его нет |
+| `docs/architecture.md` | слои, bake-пайплайн, runtime-цепочка, границы зависимостей — перед правками в `src/lib/**` или новым модулем |
 
 ## Skills (проект)
 

@@ -9,7 +9,7 @@ alwaysApply: true
 Custom melee-карта Warcraft III в тематике Shadowlands: фракции, юниты, способности и storage-механики. Геймдизайн — в `docs/design/factions/`.
 
 ## Стек
-- Lua 5.3 (runtime WC3 + standalone для tools/oe)
+- Lua 5.3 (runtime WC3); Lua 5.5 standalone — bake и `tools/oe`
 - warcraft-vscode (сборка карты, `warcraft.json`)
 - Python 3 — `build/wc3.py`
 - LuaLS — `.luarc.json`
@@ -38,7 +38,7 @@ Custom melee-карта Warcraft III в тематике Shadowlands: фракц
 
 ## Не трогать без согласования
 - `src/data/generated/*` — только через `lua tools/bake.lua`
-- `src/scenario/generated/*`, `src/tests/generated/*` — через `lua tools/bake.lua`
+- `src/scenario/generated/*`, `src/tests/generated/*`, `docs/generated/*` — через `lua tools/bake.lua`
 - `src/vendor/assets/*` — vanilla ID-референсы и objediting stubs
 - `map.w3x/` — бинарные/редакторские ассеты карты
 - `.build/`, `tmp/`, `dev/` — артефакты сборки
@@ -49,5 +49,6 @@ In-game: `src/tests/init.lua` подключает модули из `tests/gene
 ## Заметки
 - Solo-разработка; правила Cursor в git (`.cursor/rules/`)
 - Триггеры способностей — array-формат (см. `.cursor/rules/abilities.mdc`)
+- Пресеты способностей — таблица в `abilities.mdc`. Хелперы — `docs/helpers.md`
 - Новые objediting-классы — сразу LuaLS-аннотации (см. `.cursor/rules/objediting-classes.mdc`)
 - `docs/design` в `.gitignore` — дизайн-доки только локально
