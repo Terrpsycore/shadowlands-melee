@@ -88,10 +88,11 @@ local function onSummon() end
 local function onSelected() end
 
 -- PRE_DAMAGE: modify damage before applied. info.damage is writable.
--- info: { source, target, damage, ... }
+-- info: { source, target, damage, isAttack, isSpell, ... }
+-- filter.isAttack / filter.isSpell — optional (damage triggers only)
 local function onPreDamage(info) end
 
--- DAMAGE: on damage event. info: { source, target, damage, ... }
+-- DAMAGE: on damage event. info: { source, target, damage, isAttack, isSpell, ... }
 local function onDamage(info) end
 
 -- AFTER_DAMAGE: after damage applied. info: { source, target, damage, ... }
@@ -171,6 +172,7 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SELECTED",
             action = onSelected,
         },
+        -- filter.isAttack / filter.isSpell — optional; omit = any damage (damageInfo)
         {
             trigger = "PRE_DAMAGE",
             filter = { target = CONFIG.refs.units.protected },
@@ -181,12 +183,16 @@ return {
             filter = {
                 source = CONFIG.refs.units.carrier,
                 target = CONFIG.refs.units.protected,
+                isAttack = true,
             },
             action = onDamage,
         },
         {
             trigger = "AFTER_DAMAGE",
-            filter = { source = CONFIG.refs.units.carrier },
+            filter = {
+                source = CONFIG.refs.units.carrier,
+                isAttack = true,
+            },
             action = onAfterDamage,
         },
         {

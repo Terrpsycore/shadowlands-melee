@@ -1,6 +1,8 @@
 ---@class TriggerFilter
 ---@field source? integer|integer[]
 ---@field target? integer|integer[]
+---@field isAttack? boolean
+---@field isSpell? boolean
 
 ---@class TriggerDefinition
 ---@field trigger? string
@@ -55,8 +57,17 @@ local function inSet(set, value)
     return set == nil or set[value] == true
 end
 
+---@param expected? boolean
+---@param actual? boolean
+local function matchOptionalBool(expected, actual)
+    if expected == nil then
+        return true
+    end
+    return actual == expected
+end
+
 ---@param trigger TriggerDefinition
----@param ctx { source?: unit, target?: unit, spellId?: integer, orderId?: integer }
+---@param ctx { source?: unit, target?: unit, spellId?: integer, orderId?: integer, isAttack?: boolean, isSpell?: boolean }
 function Filter.matches(trigger, ctx)
     ctx = ctx or {}
     if not inSet(trigger._spellIds, ctx.spellId) then
@@ -70,6 +81,15 @@ function Filter.matches(trigger, ctx)
     end
     if not inSet(trigger._targetTypes, ctx.target and GetUnitTypeId(ctx.target)) then
         return false
+    end
+    local filter = trigger.filter
+    if filter then
+        if not matchOptionalBool(filter.isAttack, ctx.isAttack) then
+            return false
+        end
+        if not matchOptionalBool(filter.isSpell, ctx.isSpell) then
+            return false
+        end
     end
     return true
 end

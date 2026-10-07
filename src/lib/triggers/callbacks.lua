@@ -1,7 +1,6 @@
 -- TODO:
 -- - use conditions
 -- - accept function instead of handle or {handle} -> pass event if function(handle) is true
--- - onDamage - filter .isSpell
 local Storage = require("lib.storage.storage")
 local Filter = require("lib.triggers.filter")
 
