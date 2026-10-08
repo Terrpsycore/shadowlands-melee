@@ -96,6 +96,11 @@ end
 return {
     triggers = {
         {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.refs.abilities.main,
+            action = onSpell,
+        },
+        {
             trigger = "DAMAGE",
             filter = {
                 source = CONFIG.refs.units.carrier,

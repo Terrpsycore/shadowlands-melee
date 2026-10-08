@@ -31,6 +31,7 @@ return {
     }),
     superiourCause = A.devotionAura({
         name = "Superiour Cause",
+        buffs = { "superiourCause" },
         levels = 3,
         manaCost = 100,
         button = { 2, 2 },
@@ -129,9 +130,22 @@ return {
             a:setMaxLifeGained(level, 100 * level)
         end),
     }),
+    superiourCauseShield = A.nonDispellableTargetDebuff({
+        name = "Superiour Cause",
+        levels = 3,
+        buffs = { "superiourCauseShield" },
+    }),
+    superiourCauseDummy = A.channelNoTarget({
+        name = "Superiour Cause",
+        levels = 3,
+        apply = A.channelNoTarget.apply(function(a, level)
+            a:setDisableOtherAbilities(level, true)
+            a:setFollowThroughTime(level, 2 - ((level - 1) * 0.5))
+            a:setArtDuration(level, 2 - ((level - 1) * 0.5))
+        end),
+    }),
     superiourCauseDetonate = A.selfDestructClockwerkGoblins({
         name = "Superiour Cause",
-        manaCost = 0,
         levels = 3,
     }),
     -- Mage hero
@@ -145,24 +159,20 @@ return {
     }),
     twistedPainDamage = A.immolation({
         name = "Twisted Pain",
-        manaCost = 0,
         levels = 3,
     }),
     opressiveChainsSlow = A.immolation({
         name = "Opressive Chains",
         buffs = { "opressiveChains" },
-        manaCost = 0,
         levels = 3,
     }),
     -- Mourneblade Hero
     deadlyBlowMark = A.nonDispellableTargetDebuff({
         name = "Deadly Blow",
-        manaCost = 0,
         levels = 3,
     }),
     deadlyBlowStun = A.stormBolt({
         name = "Deadly Blow",
-        manaCost = 0,
         levels = 3,
     }),
     wraithWalkSlow = A.slowAura({

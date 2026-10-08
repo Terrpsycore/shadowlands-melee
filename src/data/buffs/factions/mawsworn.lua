@@ -33,6 +33,14 @@ return {
         parent = BuffIds.trueshotAura,
         name = "Promote Leutinant",
     },
+    superiourCause = {
+        parent = BuffIds.devotionAura,
+        name = "Superiour Cause",
+    },
+    superiourCauseShield = {
+        parent = BuffIds.acidBomb,
+        name = "Superiour Cause",
+    },
     opressiveChains = {
         parent = BuffIds.immolation,
         name = "Opressive Chains",
