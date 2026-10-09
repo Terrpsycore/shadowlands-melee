@@ -57,6 +57,14 @@ return setmetatable({
         end,
     }, getmetatable(F.innerFire)),
 
+    phaseWalk = presetFactory(F.windWalk, {
+        apply = function(a)
+            a:setManaCost(1, 0)
+            a:setTransitionTime(1, -1)
+            a:setBackstabDamage(1, 0)
+        end,
+    }),
+
     channelNoTarget = presetFactory(F.channel, {
         options = 1,
         apply = function(a, level)

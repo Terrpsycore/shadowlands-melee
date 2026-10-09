@@ -18,4 +18,5 @@
 ---@field nonDispellableTargetDebuff AbilityFactoryAcidBomb
 ---@field passiveAura AbilityFactorySlowAura
 ---@field passiveGeneric AbilityFactoryEvasion
+---@field phaseWalk AbilityFactoryWindWalk
 ---@field inventory AbilityFactoryInventory

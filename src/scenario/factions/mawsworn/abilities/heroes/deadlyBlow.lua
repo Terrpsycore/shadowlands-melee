@@ -78,20 +78,6 @@ local function onDamage(info)
     end
 end
 
-local function onTimer()
-    for unit, data in pairs(memory) do
-        if Unit.isAlive(data.chain) then
-            local d = Unit.distance(unit, data.chain)
-            if d > CONFIG.balance.radius then
-                Damage.apply(data.chain, unit, CONFIG.balance.breakDamage[data.level], false, false, ATTACK_TYPE_CHAOS)
-            end
-        else
-            UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
-            memory[unit] = nil
-        end
-    end
-end
-
 return {
     triggers = {
         {

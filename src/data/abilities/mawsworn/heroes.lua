@@ -185,6 +185,11 @@ return {
         name = "Deadly Blow",
         levels = 3,
     }),
+    wraithWalkPhase = A.phaseWalk({
+        name = "Wraith Walk",
+        buffs = { "wraithWalk" },
+        levels = 3,
+    }),
     wraithWalkSlow = A.slowAura({
         name = "Wraith Walk",
         levels = 3,
