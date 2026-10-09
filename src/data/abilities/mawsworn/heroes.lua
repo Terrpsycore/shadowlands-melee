@@ -189,10 +189,18 @@ return {
         name = "Wraith Walk",
         buffs = { "wraithWalk" },
         levels = 3,
+        apply = A.phaseWalk.apply(function(a, level)
+            a:setMovementSpeedIncrease(level, 0.2 * level)
+        end),
     }),
     wraithWalkSlow = A.slowAura({
         name = "Wraith Walk",
+        buffs = { "wraithWalkSlow" },
         levels = 3,
+        apply = A.slowAura.apply(function(a, level)
+            a:setMovementSpeedFactor(level, 0.2 * level)
+            a:setAttackSpeedFactor(level, 0)
+        end),
     }),
     soulRendDamage = A.itemDamageBonus({
         name = "Soul Rend",

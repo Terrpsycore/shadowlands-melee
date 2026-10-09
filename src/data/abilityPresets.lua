@@ -58,10 +58,11 @@ return setmetatable({
     }, getmetatable(F.innerFire)),
 
     phaseWalk = presetFactory(F.windWalk, {
-        apply = function(a)
-            a:setManaCost(1, 0)
-            a:setTransitionTime(1, -1)
-            a:setBackstabDamage(1, 0)
+        apply = function(a, level)
+            a:setManaCost(level, 0)
+            a:setTransitionTime(level, -1)
+            a:setBackstabDamage(level, 0)
+            a:setMovementSpeedIncrease(level, 0)
         end,
     }),
 

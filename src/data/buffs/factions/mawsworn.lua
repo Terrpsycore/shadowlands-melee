@@ -53,6 +53,10 @@ return {
         parent = BuffIds.windWalk,
         name = "Wraith Walk",
     },
+    wraithWalkSlow = {
+        parent = BuffIds.tornadoSlowAura,
+        name = "Wraith Walk",
+    },
     stygianShieldCooldown = {
         parent = BuffIds.acidBomb,
         name = "Stygian Shield (cooldown)",
