@@ -1,5 +1,6 @@
 --[[
 TODO:
+-- ! passive DMG effect update
 -- aura buff or info passive to show current soul count
 ]]
 
@@ -31,6 +32,19 @@ local memory = {}
 --- @type table<unit, unit>
 local targetToMourneblade = {}
 
+local function updateDamageEffect(unit)
+    local level = Souls.api.count("unit", unit)
+    if level == 0 then
+        UnitRemoveAbility(unit, CONFIG.refs.abilities.damage)
+    else
+        local currentEffectLevel = GetUnitAbilityLevel(unit, CONFIG.refs.abilities.damage)
+        if currentEffectLevel == 0 then
+            UnitAddAbility(unit, CONFIG.refs.abilities.damage)
+        end
+        SetUnitAbilityLevel(unit, CONFIG.refs.abilities.damage, level)
+    end
+end
+
 local function stopEffect(unit)
     IssueImmediateOrder(unit, "unimmolation")
     memory[unit].toggle = false
@@ -47,14 +61,16 @@ local function applyEffect(unit)
         return
     end
 
+    if now < memory[unit].nextHealAt then
+        return
+    end
+
     if not Souls.api.use("unit", unit, 1) then
         stopEffect(unit)
         return
     end
 
-    if now < memory[unit].nextHealAt then
-        return
-    end
+    updateDamageEffect(unit)
 
     local owner = GetOwningPlayer(unit)
     Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.heal, "heal")
@@ -94,7 +110,11 @@ local function onDeath()
     local unit = GetDyingUnit()
     local source = targetToMourneblade[unit]
     if source and GetElapsedGameTime() < (memory[source].lastHitAt + CONFIG.balance.duration) then
-        -- save soul if not full
+        local level = GetUnitAbilityLevel(source, CONFIG.refs.abilities.main)
+        if Souls.api.count("unit", source) <= CONFIG.balance.maxSouls[level] then
+            Souls.api.store("unit", source)
+        end
+        updateDamageEffect(source)
     end
 end
 
