@@ -27,7 +27,8 @@
   "diagnostics": {
     "disable": [
       "empty-block",
-            "unused-local"
+            "unused-local",
+            "undefined-field"
       //"undefined-field"
     ],
     "globals": [

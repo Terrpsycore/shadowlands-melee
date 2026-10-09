@@ -12,8 +12,6 @@ local AbilityConfig = require("lib.ability.config")
 local Dummy = require("utils.dummy")
 local Unit = require("utils.unit")
 
-local WS = require("scenario.factions.mawsworn.mechanics.weakenedSoul")
-
 local CONFIG = AbilityConfig.compile({
     refs = {
         abilities = {
@@ -112,9 +110,6 @@ return {
         {
             trigger = "DAMAGE",
             priority = -1000, -- later than all
-            filter = {
-                source = CONFIG.refs.units.carrier,
-            },
             action = onDamage,
         },
         {
