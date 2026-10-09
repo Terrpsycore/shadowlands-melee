@@ -178,6 +178,7 @@ return {
     -- Mourneblade Hero
     deadlyBlowMark = A.nonDispellableTargetDebuff({
         name = "Deadly Blow",
+        buffs = { "deadlyBlowMark" },
         levels = 3,
     }),
     deadlyBlowStun = A.stormBolt({

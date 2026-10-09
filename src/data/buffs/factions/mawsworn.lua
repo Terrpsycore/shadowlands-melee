@@ -45,6 +45,10 @@ return {
         parent = BuffIds.immolation,
         name = "Opressive Chains",
     },
+    deadlyBlowMark = {
+        parent = BuffIds.acidBomb,
+        name = "Deadly Blow Mark",
+    },
     stygianShieldCooldown = {
         parent = BuffIds.acidBomb,
         name = "Stygian Shield (cooldown)",
