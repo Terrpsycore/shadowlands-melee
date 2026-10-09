@@ -95,7 +95,22 @@ return {
         parent = UnitIds.shade,
         name = "Transformed",
     },
-    -- == Dummy
+    opressiveChain1 = {
+        parent = UnitIds.stasistraptotem,
+        name = "Opressive Chain",
+        -- apply max hp
+    },
+    opressiveChain2 = {
+        parent = UnitIds.stasistraptotem,
+        name = "Opressive Chain",
+        -- apply max hp
+    },
+    opressiveChain3 = {
+        parent = UnitIds.stasistraptotem,
+        name = "Opressive Chain",
+        -- apply max hp
+    },
+    -- == Dummy Train
     -- Soulforges
     soulforgeCloak = {
         parent = UnitIds.shade,

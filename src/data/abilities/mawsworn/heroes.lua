@@ -161,10 +161,19 @@ return {
         name = "Twisted Pain",
         levels = 3,
     }),
-    opressiveChainsSlow = A.immolation({
+    opressiveChainsSlow = A.shadowStrikeCreep({
         name = "Opressive Chains",
         buffs = { "opressiveChains" },
         levels = 3,
+        apply = A.shadowStrikeCreep.apply(function(a, level)
+            a:setMovementSpeedFactor(level, 0.3 * level)
+            a:setInitialDamage(level, 0)
+            a:setDecayPower(level, 3)
+            a:setDecayingDamage(level, 0)
+            a:setAttackSpeedFactor(level, 0.3 * level)
+            a:setDurationHero(level, 8)
+            a:setDurationNormal(level, 8)
+        end),
     }),
     -- Mourneblade Hero
     deadlyBlowMark = A.nonDispellableTargetDebuff({
