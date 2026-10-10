@@ -120,7 +120,8 @@ end
 
 local function onTimer()
     for mourneblade, data in pairs(memory) do
-        if GetElapsedGameTime() > data.nextHealAt then
+        dump("onTimer", GetElapsedGameTime(), data)
+        if data.nextHealAt and GetElapsedGameTime() > data.nextHealAt then
             applyEffect(mourneblade)
         end
     end

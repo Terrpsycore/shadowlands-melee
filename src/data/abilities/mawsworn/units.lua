@@ -183,6 +183,15 @@ return {
         -- apply
         art = { icon = Icons.pasAvataroflight },
     }),
+    -- Maw Chain
+    mawChainRelink = A.channelPoint({
+        name = "Re-link",
+        art = { icon = Icons.autocastAbominationshook },
+    }),
+    mawChainFallback = A.channelTarget({
+        name = "Fallback",
+        order = "acidbomb",
+    }),
     -- == Dummy & Effects & etc. == --
     stygianShieldBuff = A.nonDispellableTargetDebuff({
         name = "stygianShield",
@@ -335,5 +344,18 @@ return {
             a:setAreaofEffect(level, 0)
             a:setArmorBonus(level, 0)
         end),
+    }),
+    -- Maw Chain
+    mawChainAttack = A.channelPoint({
+        name = "Maw Chain Attack",
+        order = "shadowstrike",
+        apply = A.channelPoint.apply(function(a, level)
+            -- a:set cast time, blocks other spells
+        end),
+    }),
+    mawChainChanneledDamage = A.earthquake({
+        name = "Damage",
+        buffs = { "mawChainQuake" },
+        art = { icon = Icons.autocastAbominationshook },
     }),
 }

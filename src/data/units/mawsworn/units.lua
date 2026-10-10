@@ -75,9 +75,12 @@ return {
         abilities = { "threateningRoar", "overwhelming" },
     },
     mawChain = {
-        parent = UnitIds.circleofpower,
+        parent = UnitIds.demolisher,
         name = "Domination Chain",
-        abilities = { "relink" },
+        abilities = { "mawChainRelink" },
+        attack1 = {
+            targetsAllowed = "structure,debris",
+        },
     },
     -- == Special
     mawcasterFirePurge = {

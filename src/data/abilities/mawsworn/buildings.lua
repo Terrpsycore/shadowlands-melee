@@ -67,11 +67,6 @@ return {
             a:setItemCapacity(level, 1)
         end),
     }),
-    -- Maw Chain
-    relink = A.channelTarget({
-        name = "Re-link",
-        art = { icon = Icons.autocastAbominationshook },
-    }),
     -- == Dummy
     mawswornCageTransmute = A.transmute({
         name = "Transmute",

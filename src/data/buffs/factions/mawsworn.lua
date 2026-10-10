@@ -158,4 +158,5 @@ return {
         name = "Foul Bite",
     },
     suppressingAura = { parent = BuffIds.tornadoSlowAura, name = "Suppressing Aura" },
+    mawChainQuake = { parent = BuffIds.earthquake, name = "Maw Chain" },
 }

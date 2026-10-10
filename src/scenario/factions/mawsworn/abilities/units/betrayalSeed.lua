@@ -67,7 +67,7 @@ return {
         },
         {
             trigger = "TIMER",
-            delay = CONFIG.balance.timedDelta,
+            delta = CONFIG.balance.timedDelta,
             action = onTimer,
         },
     },
