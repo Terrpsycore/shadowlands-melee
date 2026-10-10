@@ -4,7 +4,7 @@ item holder type = Soulkeeper only
 ?? any special storage for plain "soul" items?
 
 -- TODO
--- - ADR (orphan~corpse, item, unit)
+-- - ADR (orphan~corpse, gorgoa, item, unit)
 -- - on "soul" item drop/pickup without soulkeeper -> ... destroy with effect
 -- - on "soul" item pickup with soulkeeper -> updateSoulkeeper or drop if full
 -- - on "soulkeeper" drop/pickup to cage/forge -> create "soul" item, return "soulkeeper" back
@@ -43,6 +43,9 @@ local itemHolders = {}
 
 --- @type table<item,{x: number, y: number}>
 local orphanItemHolders = {}
+
+--- @type table<unit,true>
+local gorgoaUnits = {}
 
 --- @type table<item,unit>
 local itemToUnit = {}
@@ -99,7 +102,7 @@ local function updateItemHolder(unit, item, status)
     end
 end
 
---- @alias soulSource "orphan"|"corpse"|"unit"|"item"
+--- @alias soulSource "orphan"|"gorgoa"|"corpse"|"unit"|"item"
 
 --- @param point {x:number,y:number}
 --- @param radius integer
@@ -108,7 +111,7 @@ end
 local function findSoul(point, radius, sources)
     -- TODO: optimized search grouping - 1 cycle instead of 2-3
     if not sources then
-        sources = { "orphan", "corpse", "item", "unit" }
+        sources = { "orphan", "gorgoa", "corpse", "item", "unit" }
     end
 
     local holder
@@ -121,6 +124,19 @@ local function findSoul(point, radius, sources)
                 local d = Generic.distance(point, orphanPoint)
                 if not nearestOrphan or d < nearestOrphanD then
                     nearestOrphan = item
+                    nearestOrphanD = d
+                end
+            end
+            if nearestOrphan then
+                holder = nearestOrphan
+            end
+        elseif source == "gorgoa" then
+            local nearestOrphan --- @type item|nil
+            local nearestOrphanD --- @type number|nil
+            for unit, _ in pairs(orphanItemHolders) do
+                local d = Generic.distance(point, unit)
+                if not nearestOrphan or d < nearestOrphanD then
+                    nearestOrphan = unit
                     nearestOrphanD = d
                 end
             end
@@ -189,6 +205,11 @@ local function useSoul(holderType, holder, amount)
         ---@diagnostic disable-next-line: param-type-mismatch
         RemoveItem(holder)
         return true
+    elseif holderType == "gorgoa" and gorgoaUnits[holder] and amount == 1 then
+        gorgoaUnits[holder] = nil
+        ---@diagnostic disable-next-line: param-type-mismatch
+        RemoveUnit(holder)
+        return true
     elseif holderType == "corpse" and amount == 1 then
         Storage:set(holder, "soulAvailable", false)
         return true
@@ -204,13 +225,17 @@ local function useSoul(holderType, holder, amount)
     return false
 end
 
---- @param holderType "orphan"|"unit"|"item"
+--- @param holderType "orphan"|"gorgoa"|"unit"|"item"
 --- @param holder unit|item
 --- @return boolean
 local function storeSoul(holderType, holder)
     if holderType == "orphan" then
         ---@diagnostic disable-next-line: param-type-mismatch
         orphanItemHolders[holder] = { x = GetItemX(holder), y = GetItemY(holder) }
+        return true
+    elseif holderType == "gorgoa" then
+        ---@diagnostic disable-next-line: param-type-mismatch
+        gorgoaUnits[holder] = true
         return true
     elseif holderType == "unit" then
         unitHolders[holder] = unitHolders[holder] or 0

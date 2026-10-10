@@ -113,6 +113,12 @@ return {
         name = "Opressive Chain",
         -- apply max hp
     },
+    gorgoaSoul = {
+        parent = UnitIds.owl,
+        name = "Gorgoa Soul",
+        art = { model = UnitArt[UnitIds.shade].model },
+        abilities = { "locust" },
+    },
     -- == Dummy Train
     -- Soulforges
     soulforgeCloak = {
