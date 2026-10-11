@@ -58,14 +58,11 @@ T.onStun = function(_triggers)
     Damage.register("After", function(info)
         local unit = info.target
 
-        if not Disable:get(unit, "stunned") then
-            for _, v in ipairs(T.buffs.stun) do
-                if UnitHasBuffBJ(unit, FourCC(v)) then
-                    T.fireEvent("STUN", info)
-                    Disable:set(unit, "stunned", true)
-                    break
-                end
-            end
+        if not Disable:get(unit, "stunned") and (IsUnitType(unit, UNIT_TYPE_STUNNED)) then
+            T.fireEvent("STUN", info)
+            Disable:set(unit, "stunned", true)
+        elseif Disable:get(unit, "stunned") and not IsUnitType(unit, UNIT_TYPE_STUNNED) then
+            Disable:set(unit, "stunned", false)
         end
 
         if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
@@ -75,18 +72,16 @@ T.onStun = function(_triggers)
 end
 
 T.onRoot = function(_triggers)
-    -- TODO: ? change to UNIT_TYPE_SNARED
     Damage.register("After", function(info)
         local unit = info.target
 
-        if not Disable:get(unit, "rooted") then
-            for _, v in ipairs(T.buffs.root) do
-                if UnitHasBuffBJ(unit, FourCC(v)) then
-                    T.fireEvent("ROOT", info)
-                    Disable:set(unit, "rooted", true)
-                    break
-                end
-            end
+        if not Disable:get(unit, "rooted") and (IsUnitType(unit, UNIT_TYPE_SNARED) or GetUnitPropWindow(unit) == 0) then
+            T.fireEvent("ROOT", info)
+            Disable:set(unit, "rooted", true)
+        elseif
+            Disable:get(unit, "rooted") and not (IsUnitType(unit, UNIT_TYPE_SNARED) or GetUnitPropWindow(unit) == 0)
+        then
+            Disable:set(unit, "rooted", false)
         end
 
         if not Disable:get(unit, "rooted") and not Disable:get(unit, "stunned") then
@@ -175,19 +170,19 @@ end
 
 T.onOrder = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER, triggers, function()
-        return { orderId = GetIssuedOrderId() }
+        return { source = GetTriggerUnit(), orderId = GetIssuedOrderId() }
     end)
 end
 
 T.onTargetOrder = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, triggers, function()
-        return {}
+        return { source = GetTriggerUnit(), orderId = GetIssuedOrderId() }
     end)
 end
 
 T.onPointOrder = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, triggers, function()
-        return {}
+        return { source = GetTriggerUnit(), orderId = GetIssuedOrderId() }
     end)
 end
 

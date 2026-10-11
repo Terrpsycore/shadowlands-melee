@@ -58,6 +58,18 @@ local fields = {
             a:setOptions(level, value)
         end
     end,
+    hidden = function(a, value, data)
+        if value then
+            for level in eachLevel(data) do
+                a:setButtonPositionNormalX(0)
+                a:setButtonPositionNormalY(-11)
+                a:setButtonPositionResearchX(0)
+                a:setButtonPositionResearchY(-11)
+                a:setButtonPositionTurnOffX(0)
+                a:setButtonPositionTurnOffY(-11)
+            end
+        end
+    end,
     button = function(a, value)
         if value[1] == nil or value[2] == nil then
             error("button requires { x, y }")
@@ -111,11 +123,26 @@ local fields = {
         }, "art")
     end,
     order = function(a, value, data)
-        for level in eachLevel(data) do
-            a:setBaseOrderID(level, value)
+        if type(value) == "string" then
+            for level in eachLevel(data) do
+                a:setBaseOrderID(level, value)
+            end
+            a:setOrderStringUseTurnOn(value)
+            a:setOrderStringActivate(value)
+        elseif type(value) == "table" then
+            if not value.on or not value.off then
+                error("Invalid order data field")
+            end
+            if a.setBaseOrderID then
+                for level in eachLevel(data) do
+                    a:setBaseOrderID(level, value.on)
+                end
+            end
+            a:setOrderStringUseTurnOn(value.on)
+            a:setOrderStringActivate(value.on)
+            a:setOrderStringTurnOff(value.off)
+            a:setOrderStringDeactivate(value.off)
         end
-        a:setOrderStringUseTurnOn(value)
-        a:setOrderStringActivate(value)
     end,
 }
 

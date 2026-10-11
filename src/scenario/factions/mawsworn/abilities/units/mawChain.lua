@@ -160,7 +160,7 @@ return {
         },
         {
             trigger = "CREATE",
-            filter = { source = CONFIG.refs.units.carrier },
+            filter = { target = CONFIG.refs.units.carrier },
             action = onCreate,
         },
         {

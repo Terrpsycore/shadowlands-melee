@@ -58,6 +58,12 @@ local fields = {
     name = function(u, value)
         u:setName(value)
     end,
+    hidden = function(u, value, data)
+        if value then
+            u:setButtonPositionX(0)
+            u:setButtonPositionY(-11)
+        end
+    end,
     button = function(u, value)
         if value[1] == nil or value[2] == nil then
             error("button requires { x, y }")

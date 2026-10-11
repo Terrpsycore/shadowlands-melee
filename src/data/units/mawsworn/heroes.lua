@@ -4,13 +4,19 @@ return {
     forswornHero = {
         parent = UnitIds.jaina,
         name = "Forsworn Hero",
-        abilities = { "forswornHeroFly" },
+        abilities = {
+            "forswornHeroFly",
+            "forswornHeroFlyInstant",
+        },
         heroAbilities = { "harpoon", "promoteLeutinant", "superiourCause", "abduct" },
     },
     forswornHeroFlying = {
         parent = UnitIds.jaina,
         name = "Forsworn Hero",
-        abilities = { "forswornHeroFly" },
+        abilities = {
+            "forswornHeroFly",
+            "forswornHeroFlyInstant",
+        },
         heroAbilities = { "harpoon", "promoteLeutinant", "superiourCause", "abduct" },
         apply = function(u)
             u:setMovementType(MovementType.Fly)

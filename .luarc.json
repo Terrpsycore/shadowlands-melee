@@ -28,7 +28,8 @@
     "disable": [
       "empty-block",
             "unused-local",
-            "undefined-field"
+            "undefined-field",
+            "redefined-local"
       //"undefined-field"
     ],
     "globals": [

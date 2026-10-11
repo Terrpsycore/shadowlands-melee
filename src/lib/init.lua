@@ -11,7 +11,7 @@ seterrorhandler(function(msg)
     Debug.original.print(Debug.traceback())
 end)
 
-require("vendor.ext.TotalInitialization")
+-- require("vendor.ext.TotalInitialization")
 
 require("vendor.ext.Timed")
 require("vendor.ext.LinkedList")

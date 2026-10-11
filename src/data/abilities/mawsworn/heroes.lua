@@ -5,9 +5,20 @@ local A = require("data.abilityPresets")
 return {
     -- UI
     -- Forsworn hero
-    forswornHeroFly = A.stormCrowForm({
+    forswornHeroFly = A.channelNoTarget({
         name = "Ascend/Descend",
+        order = "devour",
+    }),
+    forswornHeroFlyInstant = A.stormCrowForm({
+        name = "Ascend/Descend",
+        hidden = true,
         apply = A.stormCrowForm.apply(function(a)
+            a:setCastingTime(1, 0) -- TODO
+            a:setAltitudeAdjustmentDuration(1, 0) -- TODO
+            a:setLandingDelayTime(1, 0) -- TODO
+            a:setDurationHero(1, 0)
+            a:setDurationNormal(1, 0)
+            --
             a:setMorphingFlags(1, 1) -- uninterruptable
             a:setManaCost(1, 0)
             a:setNormalFormUnit(1, Ids.units.forswornHero)
@@ -43,6 +54,9 @@ return {
         manaCost = 100,
         button = { 3, 2 },
         hotkey = "R",
+        apply = A.channelTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 5)
+        end),
     }),
     -- Mage hero
     twistedPain = A.nonDispellableTargetDebuff({
@@ -147,6 +161,9 @@ return {
     superiourCauseDetonate = A.selfDestructClockwerkGoblins({
         name = "Superiour Cause",
         levels = 3,
+    }),
+    abductHeight = A.stormCrowForm({
+        name = "Abduct Height",
     }),
     -- Mage hero
     eatSoulRegenTimed = A.rejuvenation({
