@@ -8,6 +8,7 @@ IngameConsole.createTriggers()
 -- require("vendor.ext.TotalInitialization")
 
 require("vendor.ext.Timed")
+require("lib.wscode_timed_hook").install()
 require("vendor.ext.LinkedList")
 require("vendor.ext.Influa")
 require("vendor.ext.DamageEngine")

@@ -5,49 +5,40 @@ do
     WSCodeConfig = {
         compiler = {
             --Disables the editor and all code alterations. Overwrites all settings below.
-            RELEASE_VERSION = false         --was added to the debugger. This means that if an external function calls a function that is being debugged, the parent function will not continue executing
-            --when the function being debugged is halted. In addition, the complete traceback will be available on an error. This feature slows down code execution, even
+            RELEASE_VERSION = false         --when the function being debugged is halted. In addition, the complete traceback will be available on an error. This feature slows down code execution, even
             --with all WSCode wrappers removed, so set it to false for your release version. WARNING: This option breaks GUI waits.
-, --If enabled, WSCode will wrap coroutines around everything, allowing it to yield from the parent function on a breakpoint insteayd of just the function that
-            WRAP_ALL_LUA_ENTRY_POINTS = false, --If WRAP_ALL_LUA_ENTRY_POINTS is enabled, GUI waits will break unless this option is also enabled. Enabling this will heavily slow down trigger actions.
-            DO_NOT_BREAK_GUI_WAITS = false          -- tokens manually. OnInit.root, OnInit.module, and OnInit.config must be removed if TotalInitialization is removed from the map script. If TotalInitialization
-            --is kept in the map script, it should be placed above WSCode.
-, --Overwrites all OnInit functions with the corresponding WSCode init funtions. The Require function is not supported and must be replaced with @require
-            OVERWRITE_TOTAL_INITIALIZATION = false          --includes GUI triggers, you must create a GUI trigger at the very bottom with the custom script line "end ]===]) do" in it.
-, --Enable to allow the WSCode.Parse function to split GUI triggers into files. May sometimes cause scripts to be parsed incorrectly. To set up a wrap that
-            PARSE_GUI_TRIGGERS = true           --enables you to iterate your map much quicker. However, this option necessitates that the map script is suspended until main is called, even when the map is
-            --launched regularly, which may have side effects. Only works if map script is wrapped by WSCode.Parse function. Recommended to use WSCode initializers when
+, --If enabled, WSCode will wrap coroutines around everything, allowing it to yield from the parent function on a breakpoint insteayd of just the function that --was added to the debugger. This means that if an external function calls a function that is being debugged, the parent function will not continue executing
+            WRAP_ALL_LUA_ENTRY_POINTS = true, --If WRAP_ALL_LUA_ENTRY_POINTS is enabled, GUI waits will break unless this option is also enabled. Enabling this will heavily slow down trigger actions.
+            DO_NOT_BREAK_GUI_WAITS = false          --is kept in the map script, it should be placed above WSCode.
+, --Overwrites all OnInit functions with the corresponding WSCode init funtions. The Require function is not supported and must be replaced with @require -- tokens manually. OnInit.root, OnInit.module, and OnInit.config must be removed if TotalInitialization is removed from the map script. If TotalInitialization
+            OVERWRITE_TOTAL_INITIALIZATION = false, --Enable to allow the WSCode.Parse function to split GUI triggers into files. May sometimes cause scripts to be parsed incorrectly. To set up a wrap that --includes GUI triggers, you must create a GUI trigger at the very bottom with the custom script line "end ]===]) do" in it.
+            PARSE_GUI_TRIGGERS = true           --launched regularly, which may have side effects. Only works if map script is wrapped by WSCode.Parse function. Recommended to use WSCode initializers when
             --using this feature.
-, --Allows you to save the map script with changes made in-game to a file, then restart the map and load the modified map script. This is a powerful feature that
-            ENABLE_QUICK_RESTART = false            -- the map. Requires ENABLE_QUICK_RESTART.
-, --Always load the map script from the preload file in the CustomMapData directory if it exists. The map script should be compiled externally before launching
+, --Allows you to save the map script with changes made in-game to a file, then restart the map and load the modified map script. This is a powerful feature that --enables you to iterate your map much quicker. However, this option necessitates that the map script is suspended until main is called, even when the map is
+            ENABLE_QUICK_RESTART = false, --Always load the map script from the preload file in the CustomMapData directory if it exists. The map script should be compiled externally before launching -- the map. Requires ENABLE_QUICK_RESTART.
             ALWAYS_QUICK_RESTART = false, --Enables debug mode across all parsed files. May drastically increase map loading time and reduce performance. Use with caution!
-            GLOBAL_DEBUG = false            --created and not destroyed at each position in the code, detecting possible memory leaks. To show the report, type -leakreport. -leakreport X will print the
-            --top X contributors to floating handles (default 10). leakreport X-Y will print positions X to Y. The function creating the handle must be listed in
+            GLOBAL_DEBUG = false            --top X contributors to floating handles (default 10). leakreport X-Y will print positions X to Y. The function creating the handle must be listed in
             --editor.CREATOR_DESTRUCTOR_PAIRS.
-, --Tracks the script and linenumber at which each handle is created and displays it in the variable viewer when selecting it. In addition, counts all handles
+, --Tracks the script and linenumber at which each handle is created and displays it in the variable viewer when selecting it. In addition, counts all handles --created and not destroyed at each position in the code, detecting possible memory leaks. To show the report, type -leakreport. -leakreport X will print the
             STORE_HANDLE_ORIGIN = true, --If enabled, the traceback is preserved on TriggerExecute and TriggerEvaluate calls. Causes memory leaks.
             STORE_TRIGGER_TRACEBACK = false, --Automatically pauses a script that was compiled in debug mode if more than this many lines have been executed during one game tick. Set to nil to disable.
-            EXECUTION_LIMIT = 1e7           --necessary to remove WSCode from the map if the WSCode initializers are used. You have access to map optimization and script obfuscation options in the
-            --finalizer section. The MAP_SCRIPT_PREFIX will be added to the beginning of the map script. After exporting the script, you need to do various string
+            EXECUTION_LIMIT = 1e7           --finalizer section. The MAP_SCRIPT_PREFIX will be added to the beginning of the map script. After exporting the script, you need to do various string
             --replacements before it is ready. Remove the preload prefix and suffix, then replace (without quotation marks):
             --'   call Preload( "' -> '', and '" \)\n' -> '\n' (to keep line breaks), or '" \)\n' -> '' (to remove line breaks). Make sure regular expressions are enabled.
             --If you keep line breaks, you now have to do additional replacements:
             --' --- @TODO START OF LONG LINE - CONCATENATE MULTILINES YOURSELF AND REMOVE THIS: ---\n(.*)\n--- @TODO END OF LONG LINE. REMOVE THIS TOO. ---' -> '$1'
             --This will remove all multilines exactly two lines long. To remove all multilines three lines long, you add another (.*)\n in the center, and change the
             --replacement string to '$1$2'. Keep adding lines this way until all multilines are removed.
-, --Writes a transformed map script to the WSCodeMapScript.txt file. This map script can be used to replace all script files in the Trigger Editor. This step is
+, --Writes a transformed map script to the WSCodeMapScript.txt file. This map script can be used to replace all script files in the Trigger Editor. This step is --necessary to remove WSCode from the map if the WSCode initializers are used. You have access to map optimization and script obfuscation options in the
             FINALIZE_MAP_SCRIPT = false,
         },
 
         diagnostics = {
             --Throw a warning when a WSCode.Init function is called outside of the Parse wrapper. This may happen by accident when scripts or folders are moved around.
-            INIT_OUTSIDE_OF_WRAP_WARNING = false            --causes a crash on map initialization. Will not catch crashes occuring in TotalInitialization init functions. Only works if map script is wrapped by
-            --WSCode.Parse function.
-, --If enabled, writes the name of the last file being parsed by WSCode.Parse into the file WSCodeInitDump.txt, so that you gain information about which script
+            INIT_OUTSIDE_OF_WRAP_WARNING = false            --WSCode.Parse function.
+, --If enabled, writes the name of the last file being parsed by WSCode.Parse into the file WSCodeInitDump.txt, so that you gain information about which script --causes a crash on map initialization. Will not catch crashes occuring in TotalInitialization init functions. Only works if map script is wrapped by
             INIT_DUMP = false, --Prints the total initialization time of the map script and the individual contributions of the most expensive libraries.
-            PROFILE_INIT = false            --doing.
-, --Writes the transpiled scripts of files in debug mode into the file WSCodeTranspiled<FileName>.txt, so that you can check what the transpiler is actually
+            PROFILE_INIT = false, --Writes the transpiled scripts of files in debug mode into the file WSCodeTranspiled<FileName>.txt, so that you can check what the transpiler is actually --doing.
             DUMP_TRANSPILED_SCRIPTS = false,
         },
 
@@ -153,8 +144,7 @@ do
                     end
                 end
             end, --This function is called when the back button is clicked while viewing a world object in the variable editor.
-            ON_OBJECT_UNVIEW = function(whichObject) end            --leading to compile errors from seemingly valid code. This list contains all utf8 1-byte characters except the grave accents. Set to nil to disable.
-, --Setting a list of legal characters protects you from messing up your code by accidently pressing the key of a character that cannot be displayed,
+            ON_OBJECT_UNVIEW = function(whichObject) end, --Setting a list of legal characters protects you from messing up your code by accidently pressing the key of a character that cannot be displayed, --leading to compile errors from seemingly valid code. This list contains all utf8 1-byte characters except the grave accents. Set to nil to disable.
             LEGAL_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!$&()[]=?:;,._#*~/{}<>^+-|'\"\\@% 1234567890\t", --If the user presses no key for this long, a new undo step is created.
             MIN_TIME_BETWEEN_UNDO_STEPS = 1.0,
             GET_PARENT = function()

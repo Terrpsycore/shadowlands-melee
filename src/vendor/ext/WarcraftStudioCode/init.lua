@@ -14,5 +14,7 @@ for _, mod in ipairs({
 end
 
 require("lib.wscode_nil_hook_shim")
+require("lib.wscode_error_jump").install()
+require("lib.wscode_require_debug").install()
 
 _G.__wscode_boot = { cfg = rawget(_G, "WSCodeConfig") ~= nil, code = rawget(_G, "WSCode") ~= nil }

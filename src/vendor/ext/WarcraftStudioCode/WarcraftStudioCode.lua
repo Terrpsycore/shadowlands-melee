@@ -5580,6 +5580,16 @@ do
             and (not breakCondition[whichTab] or EvaluateBreakCondition(whichTab, lineNumber))
             and (not breakOnlyHere or breakOnlyHere == whichTab) then
                 if not isyieldable(currentCorot) or generationCounter ~= wsdebug.GenerationCounter[whichTab] then
+                    if debugStateTable[lineNumber] == 2 then
+                        if not isyieldable(currentCorot) then
+                            WSDebug.PrintForUser("|cffff8800WSCode:|r breakpoint skipped (not yieldable) tab "
+                                .. tostring(whichTab) .. " line " .. tostring(lineNumber))
+                        elseif generationCounter ~= wsdebug.GenerationCounter[whichTab] then
+                            WSDebug.PrintForUser("|cffff8800WSCode:|r breakpoint skipped (stale debug gen "
+                                .. tostring(generationCounter) .. " vs " .. tostring(wsdebug.GenerationCounter[whichTab])
+                                .. ") tab " .. tostring(whichTab) .. " line " .. tostring(lineNumber))
+                        end
+                    end
                     doNotCheckStopTable[currentCorot][lineNumber] = true
                     return true
                 end
@@ -5744,7 +5754,9 @@ do
         end
         BlzFrameSetEnable(buttons["Traceback"], false)
 
-        WSDebug.GenerationCounter[whichTab] = WSDebug.GenerationCounter[whichTab] + 1
+        if not settings.compileOnly then
+            WSDebug.GenerationCounter[whichTab] = WSDebug.GenerationCounter[whichTab] + 1
+        end
 
         local tabAndGenStr = whichTab .. "_" .. WSDebug.GenerationCounter[whichTab] .. "_"
 
@@ -6786,13 +6798,14 @@ do
         end
 
         local func, err
+        local loadLabel = settings.chunkName or ("WSCode " .. (tabs.names[whichTab] or whichTab or "Unknown"))
         if diagnostics.PROFILE_INIT and settings.duringInit then
             local time = clock()
-            func, err = load(functionString, ("WSCode " .. (tabs.names[whichTab] or whichTab or "Unknown")), "t")
+            func, err = load(functionString, loadLabel, "t")
             local endTime = clock()
             init.profiler[whichTab] = (init.profiler[whichTab] or 0) + endTime - time
         else
-            func, err = load(functionString, ("WSCode " .. (tabs.names[whichTab] or whichTab or "Unknown")), "t")
+            func, err = load(functionString, loadLabel, "t")
         end
         if not func then
             if err and err:match("too many local variables") then
@@ -6805,6 +6818,10 @@ do
             else
                 return
             end
+        end
+
+        if settings.compileOnly then
+            return func
         end
 
         if settings.cleanHandles then
@@ -11886,6 +11903,63 @@ do
         JumpToLine = function(lineNumber, forceCenter)
             lineNumber = min(lineNumber, highestNonEmptyLine[currentTab][step[currentTab]])
             JumpWindow(lineNumber, false, forceCenter)
+        end,
+
+        ---Stores source into a tab (used by project require → WSCode error jump).
+        ---@param tabName string
+        ---@param functionBody string | string[]
+        StoreCode = StoreCode,
+
+        ---Enable debug UI flags (variable viewer) for require-transpiled scenario tabs.
+        ForceDebugUI = function()
+            flags.debugMode = true
+            flags.unfreezeViewer = true
+            if codeEditorParent and variableViewer.parent then
+                BlzFrameSetVisible(variableViewer.parent, true)
+            end
+        end,
+
+        ---Debug-transpile preload module source for require (returns loadable chunk, does not run).
+        ---@param tabName string WSCode tab name (Debug.beginFile)
+        ---@param source string module source
+        ---@param chunkName? string load chunk name for errors (e.g. @scenario/.../file.lua)
+        ---@return function?
+        ---@return string? err
+        CompileRequireModule = function(tabName, source, chunkName)
+            if compiler.RELEASE_VERSION then
+                return nil, "RELEASE_VERSION"
+            end
+            if type(source) ~= "string" or source == "" then
+                return nil, "empty source"
+            end
+            local lines = WSCode.ConvertStringToLines(source)
+            for i = 1, #lines do
+                lines[i] = lines[i]:gsub("\t", "    "):gsub("\r", "")
+            end
+            StoreCode(tabName, lines)
+            flags.debugMode = true
+            flags.unfreezeViewer = true
+            doNotUpdateVariables[tabName] = false
+            if not existingFiles[tabName] then
+                files[#files + 1] = lines
+                fileNames[#files] = tabName
+                existingFiles[tabName] = #files
+                add[#files] = false
+                debug[#files] = true
+                store[#files] = true
+                transpile[#files] = false
+            end
+            local func = CompileFunction(lines, {
+                tab = tabName,
+                debugMode = true,
+                duringInit = true,
+                compileOnly = true,
+                chunkName = chunkName,
+            })
+            if not func then
+                return nil, "transpile failed"
+            end
+            return func
         end,
 
         ---Automatically adjusts indentation. whichLines can be either the name of a tab or the line array directly that should be adjusted.

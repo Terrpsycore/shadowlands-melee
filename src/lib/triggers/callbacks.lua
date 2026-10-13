@@ -3,6 +3,7 @@
 -- - accept function instead of handle or {handle} -> pass event if function(handle) is true
 local Storage = require("lib.storage.storage")
 local Filter = require("lib.triggers.filter")
+local WscodeYield = require("lib.wscode_yieldable")
 
 local Disable = Storage.unitFields("disable", {
     rooted = "bool",
@@ -23,7 +24,9 @@ T.registerCallback = function(event, callbackOptions)
     Filter.compileTrigger(callbackOptions)
     local original = callbackOptions.action
     callbackOptions.action = function(...)
-        Debug.try(original, ...)
+        WscodeYield.run(function(...)
+            Debug.try(original, ...)
+        end, ...)
     end
     if T.callbacks[event] == nil then
         T.callbacks[event] = {}
@@ -239,7 +242,7 @@ end
 T.onTimer = function(triggers)
     for _, timer in ipairs(triggers) do
         TimerStart(CreateTimer(), timer.delta, true, function()
-            timer.action()
+            WscodeYield.run(timer.action)
         end)
     end
 end

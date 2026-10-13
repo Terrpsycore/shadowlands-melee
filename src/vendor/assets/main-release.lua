@@ -44,12 +44,20 @@ do
         end
     end
 
-    local function compilefile(filename, mode, env, level)
+    local function compilefileRaw(filename, mode, env, level)
         local code = _FILES[filename]
         if not code then
             error(string.format('cannot open %s: No such file or directory', filename), (level or 1) + 1)
         end
         return preload(code, '@' .. filename, mode, env or _G)
+    end
+
+    local function compilefile(filename, mode, env, level)
+        local hook = rawget(_G, "__MAP_COMPILEFILE_HOOK__")
+        if type(hook) == "function" then
+            return hook(filename, mode, env, level, compilefileRaw)
+        end
+        return compilefileRaw(filename, mode, env, level)
     end
 
     %NC_OPEN%
@@ -127,6 +135,8 @@ do
         return _errorhandler
     end
 
+    -- mapPreloadSource: build/war3map_loader_snippet.lua (patch_war3map_loader.py)
+
     -- hook for errorhandler
     do
         local function tryreturn(ok, ...)
@@ -185,28 +195,15 @@ end
 end
 
 %CODE%
+-- Map entry: build/war3map_tail.lua (patch_war3map.py replaces everything from dofile below)
 %C_OPEN%
 dofile('origwar3map.lua')
 local __main = main
-%C_CLOSE%
 function main()
-    xpcall(function()
-        require("vendor.ext.DebugUtils")
-        require("vendor.ext.WarcraftStudioCode.init")
-        _G.__PREINIT = { cfg = rawget(_G, "WSCodeConfig") ~= nil, wscode = rawget(_G, "WSCode") ~= nil }
-        Debug.original.print("PREINIT cfg=", rawget(_G, "WSCodeConfig") ~= nil, "wscode=", rawget(_G, "WSCode") ~= nil)
-        %C_OPEN%
-        __main()
-        %C_CLOSE%
-        dofile('main.lua')
-    end, function(msg)
-        local handler = geterrorhandler()
-        if handler and msg then
-            return handler(msg)
-        end
-    end)
+    __main()
+    dofile('main.lua')
 end
-
+%C_CLOSE%
 %NC_OPEN%
-main()
+--[==[ main() ]==]--
 %NC_CLOSE%

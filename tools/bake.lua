@@ -20,4 +20,5 @@ dofile("tools/gen/ability_kinds.lua")
 dofile("tools/gen/ids.lua")
 dofile("tools/gen/registries.lua")
 dofile("tools/gen/validate_scenario.lua")
+dofile("tools/gen/wscode_tab_index.lua")
 -- dofile("tools/gen/status.lua") -- TMP disabled
