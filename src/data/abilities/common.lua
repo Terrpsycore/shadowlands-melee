@@ -25,4 +25,13 @@ return {
     trueSight = A.trueSight1({
         name = "",
     }),
+    --- Hidden channel slot for FileIO.Load (CustomMapData read); see vendor/ext/FileIO.lua
+    fileioLoad = A.channelNoTarget({
+        name = "",
+        apply = A.channelNoTarget.apply(function(a, level)
+            a:setName("")
+            a:setTooltipNormal(level, "")
+            -- a:setTooltipExtended("")
+        end),
+    }),
 }

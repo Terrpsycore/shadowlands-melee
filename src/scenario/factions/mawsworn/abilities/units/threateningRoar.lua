@@ -35,7 +35,7 @@ local memory = {}
 
 local function applyEffect(unit)
     if not memory[unit] then
-        memory[unit].stacks = 1
+        memory[unit] = { stacks = 1 }
         UnitAddAbility(unit, CONFIG.refs.abilities.effect)
         UnitAddAbility(unit, CONFIG.refs.abilities.ui)
     elseif memory[unit].stacks == CONFIG.balance.maxStacks then

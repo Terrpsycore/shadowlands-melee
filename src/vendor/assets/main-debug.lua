@@ -41,7 +41,15 @@ do
     end
 
     local function compilefile(filename, mode, env, level)
-        local code = _FILES[filename]
+        filename = filename:gsub('[./\\]+', '/')
+        local code
+        local overlay = _G.__HOT_RELOAD_FILES__
+        if overlay then
+            code = overlay[filename]
+        end
+        if not code then
+            code = _FILES[filename]
+        end
         if not code then
             error(string.format('cannot open %s: No such file or directory', filename), (level or 1) + 1)
         end
@@ -115,6 +123,76 @@ do
     function geterrorhandler()
         return _errorhandler
     end
+
+    _G.__HOT_RELOAD__ = true
+    _G.__HOT_RELOAD_FILES__ = _G.__HOT_RELOAD_FILES__ or {}
+
+    local function normalizePath(path)
+        return path:gsub('[./\\]+', '/')
+    end
+
+    function package.setFileSource(filename, source)
+        filename = normalizePath(filename)
+        _FILES[filename] = source
+        _G.__HOT_RELOAD_FILES__[filename] = source
+        _LOADED_FILES[filename] = nil
+    end
+
+    function package.invalidateModule(moduleName)
+        _LOADED_MODULES[moduleName] = nil
+    end
+
+    function package.invalidateByFilePrefix(prefix)
+        prefix = normalizePath(prefix)
+        for filename in pairs(_LOADED_FILES) do
+            local norm = normalizePath(filename)
+            if norm:sub(1, #prefix) == prefix then
+                _LOADED_FILES[filename] = nil
+            end
+        end
+        for moduleName in pairs(_LOADED_MODULES) do
+            local filename = resolvefile(moduleName)
+            if filename then
+                filename = normalizePath(filename)
+                if filename:sub(1, #prefix) == prefix then
+                    _LOADED_MODULES[moduleName] = nil
+                end
+            end
+        end
+        local dotPrefix = prefix:gsub('/', '.')
+        if prefix:sub(-1) == '/' then
+            dotPrefix = prefix:sub(1, -2):gsub('/', '.')
+        end
+        for moduleName in pairs(_LOADED_MODULES) do
+            if moduleName == dotPrefix or moduleName:sub(1, #dotPrefix + 1) == dotPrefix .. '.' then
+                _LOADED_MODULES[moduleName] = nil
+            end
+        end
+    end
+
+    _G.__HOT_RELOAD_API__ = {
+        setFileSource = package.setFileSource,
+        invalidateModule = package.invalidateModule,
+        invalidateByFilePrefix = package.invalidateByFilePrefix,
+    }
+
+    local function mapPreloadSource(filename)
+        filename = filename:gsub('\\', '/')
+        local overlay = _G.__HOT_RELOAD_FILES__
+        if overlay and overlay[filename] then
+            return overlay[filename]
+        end
+        if _FILES[filename] then
+            return _FILES[filename]
+        end
+        local alt = filename:gsub('^scenario/', '')
+        if _FILES['scenario/' .. alt] then
+            return _FILES['scenario/' .. alt]
+        end
+        return nil
+    end
+
+    _G.__MAP_PRELOAD_SOURCE__ = mapPreloadSource
 
     -- hook for errorhandler
     do

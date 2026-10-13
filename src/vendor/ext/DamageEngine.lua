@@ -96,6 +96,11 @@ function bus.register(phase, fn, priority)
     table.insert(list, i, { fn = fn, priority = priority })
 end
 
+function bus.clearListeners()
+    bus.listeners = {}
+    bus.deferred = {}
+end
+
 function bus.run(phase, info)
     bus.queue(function()
         local list = bus.listeners[phase]
@@ -366,6 +371,10 @@ do
             end]])()(func)
         end
         bus.register(name, func, priority)
+    end
+
+    function Damage.clearListeners()
+        bus.clearListeners()
     end
 end
 do

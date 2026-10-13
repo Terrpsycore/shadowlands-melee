@@ -19,6 +19,8 @@
 | `go` | `build` + копия в `Maps/Test` + запуск WC3 |
 | `--imports` | к `build`/`go`: скопировать используемые custom-иконки в `imports/`. Нужен после назначения `Icons.xxx` в `src/data/` |
 | `run` / `update` | только запуск / только build+копия |
+| `watch` | hot-reload watcher (`src/scenario`, `src/utils`) — см. [hot-reload.md](hot-reload.md) |
+| `go --hot-reload` | `go` + watcher в фоне |
 
 ## После clone
 

@@ -3,6 +3,7 @@
 -- - accept function instead of handle or {handle} -> pass event if function(handle) is true
 local Storage = require("lib.storage.storage")
 local Filter = require("lib.triggers.filter")
+local Engine = require("lib.reload.engine")
 
 local Disable = Storage.unitFields("disable", {
     rooted = "bool",
@@ -47,6 +48,7 @@ T.onCustomEvent = function(_triggers) end
 
 local function registerUnitEvent(event, triggers, ctxFn)
     local trig = CreateTrigger()
+    Engine.trackTrigger(trig)
     TriggerRegisterAnyUnitEventBJ(trig, event)
     TriggerAddAction(trig, function()
         Filter.run(triggers, ctxFn())
@@ -160,6 +162,7 @@ end
 
 T.onAnyOrder = function(triggers)
     local trig = CreateTrigger()
+    Engine.trackTrigger(trig)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_ORDER)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     TriggerRegisterAnyUnitEventBJ(trig, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
@@ -230,6 +233,7 @@ end
 
 T.onCreate = function(triggers)
     local trig = CreateTrigger()
+    Engine.trackTrigger(trig)
     TriggerRegisterEnterRectSimple(trig, GetWorldBounds())
     TriggerAddAction(trig, function()
         Filter.run(triggers, { target = GetEnteringUnit() })
@@ -238,7 +242,9 @@ end
 
 T.onTimer = function(triggers)
     for _, timer in ipairs(triggers) do
-        TimerStart(CreateTimer(), timer.delta, true, function()
+        local handle = CreateTimer()
+        Engine.trackTimer(handle)
+        TimerStart(handle, timer.delta, true, function()
             timer.action()
         end)
     end
