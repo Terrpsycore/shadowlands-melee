@@ -1,3 +1,4 @@
+---@beginFile abduct
 --[[
 TODO:
 - resolve conflict with antiair stun

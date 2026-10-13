@@ -1,3 +1,6 @@
+if Debug then
+    Debug.beginFile("threateningRoar")
+end
 -- TODO
 -- - UI aura buff to show debuff level
 -- - adjust radius numbers

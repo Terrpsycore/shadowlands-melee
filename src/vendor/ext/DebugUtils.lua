@@ -873,24 +873,23 @@ do
                data.printErrors_yn
                and not globalWarningExclusions[k]
                and ((not settings.EXCLUDE_BJ_GLOBALS_FROM_NIL_WARNINGS) or string.sub(tostring(k), 1, 3) ~= "bj_")
-            then --prevents intentionally nilled bj-variables from triggering the check within Blizzard.j-functions, like bj_cineFadeFinishTimer.
-               print(
-                  "|cff"
+            then --prevents intentionally nilled bj-variables from triggering the check within Blizzard.j-functions, like bj_cineFinishTimer.
+               -- Avoid Debug.traceback/print hooks here: sync stack walk + print during spell/order natives can hard-freeze WC3.
+               local line = "|cff"
+                  .. settings.colors.nilWarning
+                  .. "Trying to read nil global: "
+                  .. tostring(k)
+                  .. "|r"
+               if settings.SHOW_TRACE_FOR_NIL_WARNINGS then
+                  line = line
+                     .. "\n|cff"
                      .. settings.colors.nilWarning
-                     .. "Trying to read nil global at "
-                     .. Debug.traceback(2, 2)
-                     .. ": "
-                     .. tostring(k)
+                     .. "Traceback (most recent call first):|r\n|cff"
+                     .. settings.colors.nilWarning
+                     .. Debug.traceback(2, 200)
                      .. "|r"
-                     .. (
-                        settings.SHOW_TRACE_FOR_NIL_WARNINGS
-                           and "\n|cff" .. settings.colors.nilWarning .. "Traceback (most recent call first):|r\n|cff" .. settings.colors.nilWarning .. Debug.traceback(
-                              2,
-                              200
-                           ) .. "|r"
-                        or ""
-                     )
-               )
+               end
+               Debug.original.print(line)
             end
             if existingIndex then
                if isTable_yn then

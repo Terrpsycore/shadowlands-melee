@@ -41,8 +41,13 @@ local function withSuppressed(fn)
     end
 end
 
+local function getSuppressDepth()
+    return suppressDepth
+end
+
 return {
     suppress = suppress,
     restore = restore,
     withSuppressed = withSuppressed,
+    getSuppressDepth = getSuppressDepth,
 }

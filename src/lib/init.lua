@@ -3,7 +3,7 @@ require("vendor.ext.DebugUtils")
 require("vendor.ext.IngameConsole")
 IngameConsole.createTriggers()
 
-require("lib.early_error_handler").install()
+-- require("lib.early_error_handler").install()
 
 -- require("vendor.ext.TotalInitialization")
 

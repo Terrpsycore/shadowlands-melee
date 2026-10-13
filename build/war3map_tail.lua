@@ -3,10 +3,17 @@ local __main = main
 
 function main()
     xpcall(function()
+        local bootstrap = require("lib.bootstrap_config")
         require("vendor.ext.DebugUtils")
         require("lib.early_error_handler").install()
-        require("vendor.ext.WarcraftStudioCode.init")
-        _G.__PREINIT = { cfg = rawget(_G, "WSCodeConfig") ~= nil, wscode = rawget(_G, "WSCode") ~= nil }
+        if bootstrap.ENABLE_WSCODE then
+            require("vendor.ext.WarcraftStudioCode.init")
+        end
+        _G.__PREINIT = {
+            cfg = rawget(_G, "WSCodeConfig") ~= nil,
+            wscode = rawget(_G, "WSCode") ~= nil,
+            enableWscode = bootstrap.ENABLE_WSCODE,
+        }
         Debug.original.print("PREINIT cfg=", rawget(_G, "WSCodeConfig") ~= nil, "wscode=", rawget(_G, "WSCode") ~= nil)
         __main()
         dofile('main.lua')
