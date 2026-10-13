@@ -202,30 +202,24 @@ do
          USE_TRY_ON_CONDITION = true, ---Set to true for automatic error handling on boolexpressions created via Condition() or Filter() (essentially applies Debug.try on every trigger condition).
          USE_TRY_ON_TIMERSTART = true, ---Set to true for automatic error handling on TimerStart (applies Debug.try on every timer callback).
          USE_TRY_ON_ENUMFUNCS = true, ---Set to true for automatic error handling on ForGroup, ForForce, EnumItemsInRect and EnumDestructablesInRect (applies Debug.try on every enum callback)
-         USE_TRY_ON_COROUTINES = true        --Ingame Console and -exec
-, ---Set to true for improved stack traces on errors within coroutines (applies Debug.try on coroutine.create and coroutine.wrap). This lets stack traces point to the erroneous function executed within the coroutine (instead of the function creating the coroutine).
-         ALLOW_INGAME_CODE_EXECUTION = true        --Warnings for nil globals
-, ---Set to true to enable IngameConsole and -exec command.
+         USE_TRY_ON_COROUTINES = true, ---Set to true for improved stack traces on errors within coroutines (applies Debug.try on coroutine.create and coroutine.wrap). This lets stack traces point to the erroneous function executed within the coroutine (instead of the function creating the coroutine). --Ingame Console and -exec
+         ALLOW_INGAME_CODE_EXECUTION = true, ---Set to true to enable IngameConsole and -exec command. --Warnings for nil globals
          WARNING_FOR_NIL_GLOBALS = true, ---Set to true to print warnings upon accessing nil-globals (i.e. globals containing no value).
          SHOW_TRACE_FOR_NIL_WARNINGS = false, ---Set to true to include a stack trace into nil-warnings.
          EXCLUDE_BJ_GLOBALS_FROM_NIL_WARNINGS = false, ---Set to true to exclude bj_ variables from nil-warnings.
-         EXCLUDE_INITIALIZED_GLOBALS_FROM_NIL_WARNINGS = true        --Print Caching
-, ---Set to true to disable warnings for initialized globals, (i.e. nil globals that held a value at some point will be treated intentionally nilled and no longer prompt warnings).
+         EXCLUDE_INITIALIZED_GLOBALS_FROM_NIL_WARNINGS = true, ---Set to true to disable warnings for initialized globals, (i.e. nil globals that held a value at some point will be treated intentionally nilled and no longer prompt warnings). --Print Caching
          USE_PRINT_CACHE = true, ---Set to true to let print()-calls during loading screen be cached until the game starts.
-         PRINT_DURATION = nil       --Name Caching
-, ---@type float Adjusts the duration in seconds that values printed by print() last on screen. Set to nil to use default duration (which depends on string length).
+         PRINT_DURATION = nil, ---@type float Adjusts the duration in seconds that values printed by print() last on screen. Set to nil to use default duration (which depends on string length). --Name Caching
          USE_NAME_CACHE = true, ---Set to true to let tostring/print output the string-name of an object instead of its memory location (except for booleans/numbers/strings). E.g. print(CreateUnit) will output "function: CreateUnit" instead of "function: 0063A698".
          AUTO_REGISTER_NEW_NAMES = true, ---Automatically adds new names from global scope (and subtables of _G up to NAME_CACHE_DEPTH) to the name cache by adding metatables with the __newindex metamethod to ALL tables accessible from global scope.
-         NAME_CACHE_DEPTH = 4       --Colors
-, ---Set to 0 to only affect globals. Experimental feature: Set to an integer > 0 to also cache names for subtables of _G (up to the specified depth). Warning: This will alter the __newindex metamethod of subtables of _G (but not break existing functionality).
+         NAME_CACHE_DEPTH = 4, ---Set to 0 to only affect globals. Experimental feature: Set to an integer > 0 to also cache names for subtables of _G (up to the specified depth). Warning: This will alter the __newindex metamethod of subtables of _G (but not break existing functionality). --Colors
          colors = {
             error = "ff5555", ---@type string Color to be applied to error messages
             log = "888888", ---@type string Color to be applied to logged messages through Debug.log().
             nilWarning = "ffffff", ---@type string Color to be applied to nil-warnings.
          },
-      }     --END OF SETTINGS--
-      --START OF CODE--
-,
+      }     --START OF CODE--
+, --END OF SETTINGS--
       data = {
          nameCache = {}, ---@type table<any,string> contains the string names of any object in global scope (random for objects that have multiple names)
          nameCacheMirror = {}, ---@type table<string,any> contains the (name,object)-pairs of all objects in the name cache. Used to prevent name duplicates that might otherwise occur upon reassigning globals.
@@ -237,8 +231,7 @@ do
          globalWarningExclusions = {}, ---@type table<string,boolean> contains global variable names that should be excluded from warnings.
          printErrors_yn = true, ---@type boolean Set to false to disable error messages. Used by Debug.first.
          firstError = nil, ---@type string? contains the first error that was thrown. Used by Debug.first.
-      }     --provide references to the unaltered functions before DebugUtils overrides them.
-,
+      }, --provide references to the unaltered functions before DebugUtils overrides them.
       original = {
          coroutine = { create = coroutine.create, wrap = coroutine.wrap },
          tostring = tostring,

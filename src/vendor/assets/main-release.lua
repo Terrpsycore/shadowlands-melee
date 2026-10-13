@@ -23,11 +23,14 @@ do
     local _LOADED_MODULES = {}
     local _LOADED_FILES = {}
     local _LOADING_FILES = {}
+    local _lastRequireLoadError
 
     local function errorhandler(msg)
+        _lastRequireLoadError = msg
         if _errorhandler and msg then
             return _errorhandler(msg)
         end
+        return msg
     end
 
     local function resolvefile(module)
@@ -87,7 +90,14 @@ do
         local ok, ret = xpcall(f, errorhandler, module, filename)
         _LOADING_FILES[filename] = false
         if not ok then
-            error()
+            local msg = ret
+            if msg == nil or msg == "" then
+                msg = _lastRequireLoadError
+            end
+            if msg == nil or msg == "" then
+                msg = string.format("failed to load module '%s' (%s)", module, filename)
+            end
+            error(msg, 0)
         end
 
         ret = ret or true
@@ -181,6 +191,10 @@ local __main = main
 %C_CLOSE%
 function main()
     xpcall(function()
+        require("vendor.ext.DebugUtils")
+        require("vendor.ext.WarcraftStudioCode.init")
+        _G.__PREINIT = { cfg = rawget(_G, "WSCodeConfig") ~= nil, wscode = rawget(_G, "WSCode") ~= nil }
+        Debug.original.print("PREINIT cfg=", rawget(_G, "WSCodeConfig") ~= nil, "wscode=", rawget(_G, "WSCode") ~= nil)
         %C_OPEN%
         __main()
         %C_CLOSE%

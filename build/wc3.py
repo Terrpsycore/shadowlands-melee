@@ -131,11 +131,30 @@ def run_wc3(args: list[str | Path]) -> None:
         sys.exit(result.returncode)
 
 
+def patch_war3map_tail(project_path: Path) -> None:
+    script = project_path / "build" / "patch_war3map.py"
+    result = subprocess.run(
+        [sys.executable, str(script), str(project_path)],
+        cwd=project_path,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.stdout:
+        print(result.stdout, end="" if result.stdout.endswith("\n") else "\n")
+    if result.stderr:
+        print_error(result.stderr.rstrip("\n"))
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+
+
 def build(project_path: Path, *, sync_imports: bool = False):
     bake(project_path)
     if sync_imports:
         run_lua_script(project_path, "tools/bake_imports.lua")
     run_wc3([BUILDER_EXE, "build", project_path])
+    patch_war3map_tail(project_path)
+    run_wc3([BUILDER_EXE, "pack", project_path])
 
 
 def run_lua_script(project_path: Path, script: str) -> None:

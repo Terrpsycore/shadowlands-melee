@@ -1,15 +1,9 @@
--- require('lib.native')
--- require('lib.base')
--- require('lib.oop')
-
 require("vendor.ext.DebugUtils")
+
 require("vendor.ext.IngameConsole")
 IngameConsole.createTriggers()
 
-seterrorhandler(function(msg)
-    Debug.original.print("ERROR: " .. tostring(msg))
-    Debug.original.print(Debug.traceback())
-end)
+require("lib.early_error_handler").install()
 
 -- require("vendor.ext.TotalInitialization")
 

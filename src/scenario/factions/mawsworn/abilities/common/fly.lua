@@ -50,7 +50,7 @@ local function updateFlyingState(unit, status)
         order = "unravenform"
     end
     local success = IssueImmediateOrder(unit, order)
-    dump("IssueImmediateOrder", status, order, ordersuccess)
+    dump("IssueImmediateOrder", status, ordersuccess)
     if success then
         memory[unit].flying = status
     end

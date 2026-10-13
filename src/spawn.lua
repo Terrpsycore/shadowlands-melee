@@ -39,7 +39,7 @@ local function spawnSlug(player, slug, row)
     end
 
     local unit = CreateUnit(player, FourCC(id), x, y, f)
-    Triggers.fireEvent("CREATE", { target = unit })
+    -- Triggers.fireEvent("CREATE", { target = unit })
 
     if row.heroAbilities then
         -- SetHeroLevel(unit, 10, false)

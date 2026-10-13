@@ -12,6 +12,10 @@ Custom Altered Melee-карта для Warcraft III в тематике World of
 
 Окружение, команды, первый запуск: [docs/getting-started.md](docs/getting-started.md).
 
+## Команды
+
+`-exec if WSCode then WSCode.Initialize() WSCode.Show(true) end`
+
 ## Bake
 
 Папки `*/generated/` в `.gitignore` — после clone нужны `assets` и bake. Команды `assets` / `build` / `go` / `--imports` — [docs/getting-started.md](docs/getting-started.md).
