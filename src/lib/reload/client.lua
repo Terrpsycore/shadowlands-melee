@@ -86,7 +86,9 @@ local function runFileioSelfTest()
     if ok then
         log("FileIO ok (fileioLoad in map)")
     else
+        Client.disabled = true
         log("FileIO self-test failed: " .. tostring(err))
+        log("poller off (fix fileioLoad in object data / Allow Local Files)")
     end
 end
 

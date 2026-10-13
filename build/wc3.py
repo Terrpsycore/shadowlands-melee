@@ -31,11 +31,6 @@ parser.add_argument(
     action="store_true",
     help="with go: start hot_reload_watch.py in background",
 )
-parser.add_argument(
-    "--skip-hot-reload-loader",
-    action="store_true",
-    help="build/go: patch tail only (no loader hooks); map loads, in-game hot reload off",
-)
 args = parser.parse_args()
 
 USER_DIR = "C:/Users/nornil"
@@ -82,7 +77,6 @@ def main(
     *,
     sync_imports: bool = False,
     hot_reload: bool = False,
-    skip_hot_reload_loader: bool = False,
 ):
     project_path = Path(_project_path).resolve()
 
@@ -90,7 +84,7 @@ def main(
         case Mode.ASSETS:
             bake_assets(project_path)
         case Mode.BUILD:
-            build(project_path, sync_imports=sync_imports, skip_hot_reload_loader=skip_hot_reload_loader)
+            build(project_path, sync_imports=sync_imports)
         case Mode.UPDATE:
             build(project_path)
             copy(project_path)
@@ -101,7 +95,6 @@ def main(
                 project_path,
                 sync_imports=sync_imports,
                 hot_reload=hot_reload,
-                skip_hot_reload_loader=skip_hot_reload_loader,
             )
         case Mode.WATCH:
             watch_hot_reload(project_path)
@@ -114,9 +107,8 @@ def go(
     *,
     sync_imports: bool = False,
     hot_reload: bool = False,
-    skip_hot_reload_loader: bool = False,
 ):
-    build(project_path, sync_imports=sync_imports, skip_hot_reload_loader=skip_hot_reload_loader)
+    build(project_path, sync_imports=sync_imports)
     if hot_reload:
         spawn_hot_reload_watcher(project_path)
     run(project_path)
@@ -227,13 +219,11 @@ def run_python(args: list[str | Path]) -> None:
         sys.exit(result.returncode)
 
 
-def build(project_path: Path, *, sync_imports: bool = False, skip_hot_reload_loader: bool = False):
+def build(project_path: Path, *, sync_imports: bool = False):
     bake(project_path)
     if sync_imports:
         run_lua_script(project_path, "tools/bake_imports.lua")
     project_path = project_path.resolve()
-    if skip_hot_reload_loader:
-        print("note: --skip-hot-reload-loader is unused (reload uses load+registry, not war3map patch)")
     clean_stale_wc3_build(project_path)
     run_wc3([BUILDER_EXE, "build", project_path], cwd=project_path)
     verify_w3x_pack(project_path)
@@ -351,5 +341,4 @@ main(
     args.path,
     sync_imports=args.imports,
     hot_reload=args.hot_reload,
-    skip_hot_reload_loader=args.skip_hot_reload_loader,
 )

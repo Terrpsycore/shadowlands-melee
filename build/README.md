@@ -1,11 +1,17 @@
-# Сборка war3map.lua
+# Сборка карты
 
 `python build/wc3.py build` / `go`: один **`wc3 build`** (objediting + compile + pack). Hot reload **не** патчит `war3map.lua`.
 
-In-game reload: [`src/lib/reload/registry.lua`](../src/lib/reload/registry.lua) — `load(..., _ENV)` и замена записи в `scenario.abilities.abilities[]`, затем `Bootstrap.reregister()`.
+`wc3.exe` — cwd = корень проекта (задаёт `wc3.py`).
 
-`wc3.exe` — cwd = корень проекта (`wc3.py`).
+Перед `wc3 build`:
 
-Перед `wc3 build` удаляются `.build/war3map.lua` и старый `.w3x` (чтобы не тащить legacy-патч). Проверка: `.w3x` ≥ ~7050 KiB, в **корне** war3map нет `__HOT_RELOAD__`.
+- удаляются `.build/war3map.lua` и старый `.w3x` (чтобы не тащить legacy-патч);
+- после сборки проверка: `.w3x` ≥ ~7050 KiB;
+- в **корне** сгенерированного war3map нет `_G.__HOT_RELOAD__ = true`.
 
-Архив старых патчей: [`legacy/`](legacy/) — **не запускать** + `wc3 pack`.
+Если verify падает — не запускать `wc3 pack` на ручной `.build/war3map.lua` (~6.95 MB → откат в меню).
+
+In-game reload (dev): [docs/hot-reload.md](../docs/hot-reload.md).
+
+Старый подход (patch loader): [legacy/README.md](legacy/README.md) — **не использовать**.
