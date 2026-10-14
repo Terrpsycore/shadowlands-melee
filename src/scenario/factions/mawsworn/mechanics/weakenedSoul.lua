@@ -212,6 +212,10 @@ end
 --- modifiers
 
 local function addModifier(target, tag, value, cooldown)
+    dump("addModifier MODIFIED")
+    if not modifiers[target] then
+        modifiers[target][tag] = {}
+    end
     if not modifiers[target][tag] then
         modifiers[target][tag] =
             { modifier = math.max(0, value), cooldown = cooldown, availableAt = GetElapsedGameTime() }
@@ -222,7 +226,7 @@ local function removeModifier(target, tag)
     if modifiers[target] and modifiers[target][tag] then
         modifiers[target][tag] = nil
     end
-    if not #pairs(modifiers[target]) then
+    if not Generic.length(modifiers[target]) then
         modifiers[target] = nil
     end
 end

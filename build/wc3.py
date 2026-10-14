@@ -163,45 +163,14 @@ def run_wc3(args: list[str | Path], *, cwd: Path | None = None) -> None:
         sys.exit(result.returncode)
 
 
-def clean_stale_wc3_build(project_path: Path) -> None:
-    """Drop pack inputs that may still carry legacy war3map loader/tail patches."""
-    build_dir = project_path / ".build"
-    for name in (
-        "war3map.lua",
-        "_warcraft_vscode_test.w3x",
-        "w3x-patched.bin",
-        "w3x-plain.bin",
-    ):
-        path = build_dir / name
-        if path.is_file():
-            path.unlink()
-            print(f"clean: removed {path.name}")
+def clean_stale_reload_files(project_path: Path) -> None:
+    project_path = project_path.resolve()
+    tools = project_path / "tools"
+    if str(tools) not in sys.path:
+        sys.path.insert(0, str(tools))
+    from reload_contract import clear_reload_dir_at, custom_map_data_dir, reload_root
 
-
-def verify_w3x_pack(project_path: Path) -> None:
-    w3x = project_path / ".build" / "_warcraft_vscode_test.w3x"
-    if not w3x.is_file():
-        print_error(f"missing {w3x} after wc3 build")
-        sys.exit(1)
-    size = w3x.stat().st_size
-    if size < MIN_W3X_BYTES:
-        print_error(
-            f".w3x too small ({size} bytes) — likely repacked after patch_war3map*.py. "
-            f"Run: python build/wc3.py build . (do not run wc3 pack on patched war3map.lua)"
-        )
-        sys.exit(1)
-    war3map = project_path / ".build" / "war3map.lua"
-    if war3map.is_file():
-        text = war3map.read_text(encoding="utf-8")
-        boundary = "\nP['"
-        root = text[: text.find(boundary)] if boundary in text else text[:5000]
-        if "_G.__HOT_RELOAD__ = true" in root:
-            print_error(
-                "war3map root loader still has legacy hot-reload patch — "
-                "delete .build/war3map.lua and rebuild (reload no longer uses war3map hooks)"
-            )
-            sys.exit(1)
-    print(f"map pack OK ({size // 1024} KiB)")
+    clear_reload_dir_at(reload_root(custom_map_data_dir(Path(USER_DIR))))
 
 
 def run_python(args: list[str | Path]) -> None:
@@ -224,9 +193,7 @@ def build(project_path: Path, *, sync_imports: bool = False):
     if sync_imports:
         run_lua_script(project_path, "tools/bake_imports.lua")
     project_path = project_path.resolve()
-    clean_stale_wc3_build(project_path)
     run_wc3([BUILDER_EXE, "build", project_path], cwd=project_path)
-    verify_w3x_pack(project_path)
 
 
 def run_lua_script(project_path: Path, script: str) -> None:
@@ -273,16 +240,18 @@ def bake_assets(project_path: Path) -> None:
 
 def run(project_path: Path):
     map_path = copy(project_path)
+    clean_stale_reload_files(project_path)
     run_map(map_path)
 
 
 def copy(project_path: Path) -> Path:
     map_path = project_path / ".build/_warcraft_vscode_test.w3x"
-    verify_w3x_pack(project_path)
     map_fn = os.path.split(map_path)[-1]
     destination_path = MAPS_DIR / map_fn
     shutil.copy2(map_path, destination_path)
-    print(f"copied map -> {destination_path} ({destination_path.stat().st_size // 1024} KiB)")
+    print(
+        f"copied map -> {destination_path} ({destination_path.stat().st_size // 1024} KiB)"
+    )
     return destination_path
 
 

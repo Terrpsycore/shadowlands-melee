@@ -33,14 +33,17 @@ local function loadInboxFromRaw(raw)
     return inbox
 end
 
-local function readNextInboxPayload()
+local function peekInboxRaw()
     local path = Contract.inboxPath(Client.nextInbound)
     local raw = FileIO.Load(path)
     if not raw or raw == "" then
         return nil
     end
-    Client.nextInbound = Client.nextInbound + 1
     return raw
+end
+
+local function consumeInbound()
+    Client.nextInbound = Client.nextInbound + 1
 end
 
 local function applyReload(inbox)
@@ -50,12 +53,17 @@ local function applyReload(inbox)
         return false, "empty patches"
     end
 
+    local normalized = {}
     for _, patch in ipairs(patches) do
-        local key = normalizeFileKey(patch.file)
-        local ok, err = Registry.applyPatch(key, patch.source)
-        if not ok then
-            return false, key .. ": " .. tostring(err)
-        end
+        normalized[#normalized + 1] = {
+            file = normalizeFileKey(patch.file),
+            source = patch.source,
+        }
+    end
+
+    local ok, err = Registry.applyPatches(normalized)
+    if not ok then
+        return false, err
     end
 
     Engine.teardown()
@@ -101,7 +109,7 @@ local function pollOnce()
         return
     end
 
-    local raw = readNextInboxPayload()
+    local raw = peekInboxRaw()
     if not raw then
         return
     end
@@ -109,9 +117,11 @@ local function pollOnce()
     local inbox, err = loadInboxFromRaw(raw)
     if not inbox or not inbox.seq then
         log("inbox parse: " .. tostring(err or "expected return { seq, patches }"))
+        consumeInbound()
         return
     end
     if inbox.seq <= Client.lastSeq then
+        consumeInbound()
         return
     end
 
@@ -124,9 +134,9 @@ local function pollOnce()
     if ok then
         Client.lastSeq = inbox.seq
         writeAck(inbox.seq)
+        consumeInbound()
         log("ok seq=" .. tostring(inbox.seq) .. " patches=" .. tostring(#(inbox.patches or {})))
     else
-        Client.lastSeq = inbox.seq
         log("error: " .. tostring(applyErr))
     end
 end

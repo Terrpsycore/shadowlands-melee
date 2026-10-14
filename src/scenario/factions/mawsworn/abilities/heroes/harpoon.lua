@@ -11,9 +11,11 @@ local CONFIG = AbilityConfig.compile({
         abilities = {
             main = Ids.abilities.harpoon,
             dummy = Ids.abilities.harpoonDummy,
+            rootUI = Ids.abilities.harpoonRootUI,
         },
         buffs = {
             main = Ids.buffs.harpoon,
+            root = Ids.buffs.harpoonRoot,
         },
         units = {
             carrier = { Ids.units.forswornHero, Ids.units.forswornHeroFlying },
@@ -39,6 +41,7 @@ end
 
 local function removeEffect(unit)
     SetUnitPropWindow(unit, rooted[unit].propWindow)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.root, unit)
     rooted[unit] = nil
 end
 
@@ -47,7 +50,10 @@ local function onSpell()
     local target = GetSpellTargetUnit()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
-    memory[target] = { owner = GetOwningPlayer(caster), level = level }
+    local owner = GetOwningPlayer(caster)
+
+    memory[target] = { owner = owner, level = level }
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.rootUI, "acidbomb", level)
     dump("harpoon onSpell save memory", memory)
 end
 
@@ -74,6 +80,13 @@ local function onAfterDamage(info)
                     unit,
                     CONFIG.refs.abilities.dummy,
                     "thunderbolt",
+                    memory[target].level
+                )
+                Dummy.applyDummyOrder(
+                    GetOwningPlayer(source),
+                    target,
+                    CONFIG.refs.abilities.rootUI,
+                    "acidbomb",
                     memory[target].level
                 )
             end

@@ -29,9 +29,10 @@ INBOX_EXTENSION = ".pld"
 # One reload flush → one inbox/{seq}.pld; filename seq MUST match payload seq.
 
 
-def custom_map_data_dir() -> Path:
-    user = os.environ.get("USERPROFILE") or os.path.expanduser("~")
-    return Path(user) / "Documents" / "Warcraft III" / "CustomMapData"
+def custom_map_data_dir(user_home: Path | None = None) -> Path:
+    if user_home is None:
+        user_home = Path(os.environ.get("USERPROFILE") or os.path.expanduser("~"))
+    return user_home / "Documents" / "Warcraft III" / "CustomMapData"
 
 
 def reload_root(custom_map_data: Path | None = None) -> Path:
@@ -92,6 +93,26 @@ def write_ack_json(reload_root_dir: Path, seq: int) -> None:
     path.write_text(json.dumps({"seq": seq, "ok": True}), encoding="utf-8")
 
 
+def clear_reload_dir_at(reload_root_dir: Path) -> None:
+    """Remove ack/ping at reload root and all inbox/*.pld. No-op if root missing."""
+    root = reload_root_dir
+    if not root.is_dir():
+        return
+    for name in (ACK_BASENAME, PING_BASENAME):
+        path = root / name
+        if path.is_file():
+            path.unlink()
+    inbox = root / INBOX_SUBDIR
+    if inbox.is_dir():
+        for path in inbox.iterdir():
+            if path.is_file():
+                path.unlink()
+
+
+def clear_reload_dir(custom_map_data: Path | None = None) -> None:
+    clear_reload_dir_at(reload_root(custom_map_data))
+
+
 if __name__ == "__main__":
     payload = build_inbox_lua(2, [("scenario/a.lua", "return {}")])
     assert "seq = 2" in payload
@@ -101,4 +122,12 @@ if __name__ == "__main__":
     root = tmp / RELOAD_DIR_NAME
     write_ack_json(root, 7)
     assert read_ack_seq(root) == 7
+    inbox = root / INBOX_SUBDIR
+    inbox.mkdir(parents=True, exist_ok=True)
+    (inbox / f"1{INBOX_EXTENSION}").write_text("x", encoding="utf-8")
+    (root / PING_BASENAME).write_text("ping", encoding="utf-8")
+    clear_reload_dir(tmp)
+    assert read_ack_seq(root) == 0
+    assert not (inbox / f"1{INBOX_EXTENSION}").exists()
+    assert not (root / PING_BASENAME).exists()
     print("reload_contract: ok")

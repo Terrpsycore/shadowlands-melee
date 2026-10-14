@@ -8,7 +8,7 @@ Dev hot reload: `go` + `watch`, правки в `src/scenario/**` (и части
 flowchart TB
   Watch[hot_reload_watch.py] --> Inbox["CustomMapData/.../inbox/1.pld, 2.pld"]
   Inbox --> Poller["client.lua poller 10 Hz + FileIO.Load"]
-  Poller --> Registry["registry.applyPatch load + _ENV"]
+  Poller --> Registry["registry.applyPatches load + _ENV"]
   Registry --> Teardown["engine.teardown"]
   Teardown --> Rereg["Bootstrap.reregister"]
   Poller --> Ack["ack.json"]
@@ -53,6 +53,17 @@ Inbox: `CustomMapData/shadowlands-melee-reload/inbox/1.pld`, `2.pld`, … — **
 
 Watcher читает `fileioLoad` из `src/data/generated/ids.lua` — перед `watch` нужен bake (`build` / `go`).
 
+### Cold start reload cache
+
+`python build/wc3.py run .` и `go .` очищают reload cache через [`tools/reload_contract.py`](../tools/reload_contract.py) (`USER_DIR` из [`build/wc3.py`](../build/wc3.py) → `CustomMapData/.../shadowlands-melee-reload`). Удаляются `ack.json`, `_ping.pld` и все `inbox/*.pld`. Watcher пишет в тот же каталог (`USERPROFILE`/Documents). После `go --hot-reload` inbox снова с `seq=1`.
+
+Resume по `ack` нужен, если **перезапустили test map в WC3 без `wc3 run/go`** (ack и inbox на диске сохранены).
+
+### Ошибки apply и parse
+
+- **Apply fail** (синтаксис, runtime, `not in abilities_registry`): в логе `[reload] error: …`, `ack` не пишется, тот же `inbox/N.pld` читается снова (~10 Hz) до успешного apply или правки файла.
+- **Parse fail** (битый `.pld`): slot **пропускается** (`nextInbound` +1), иначе poller зациклится на одном файле.
+
 ## Контракт OS ↔ карта
 
 Единый источник имён: [`tools/reload_contract.py`](../tools/reload_contract.py) (Python) и [`src/lib/reload/contract.lua`](../src/lib/reload/contract.lua) (карта). Менять пути только в паре.
@@ -77,7 +88,18 @@ return {
 
 - `file` — ключ относительно `src/`, слэши `/` (как в `abilities_registry`).
 - Карта: игнорировать `inbox.seq <= lastSeq` (dedup).
-- Watcher и карта при старте читают `ack.json`: watcher продолжает нумерацию `seq`, карта — `lastSeq` и `nextInbound = ack.seq + 1` (не перечитывает старые `1.pld`… после рестарта test map).
+- Watcher и карта при старте читают `ack.json`: watcher продолжает нумерацию `seq`, карта — `lastSeq` и `nextInbound = ack.seq + 1` (не перечитывает старые `1.pld`… после рестарта test map без `wc3 run`).
+- На карте `Contract.parseAckSeq` — regex по сырому файлу (в runtime WC3 нет JSON); в Python — `json.loads` + fallback regex.
+
+## Watch vs apply
+
+| Где | Что решает |
+|-----|------------|
+| [`hot_reload_watch.py`](../tools/hot_reload_watch.py) — `WATCH_DIRS`, exclude `scenario/generated/` | какие файлы попадают в payload watcher |
+| [`registry.lua`](../src/lib/reload/registry.lua) — `patchHandlers`, `utilsGlobalSetters` | применится ли patch на карте |
+| [`abilities_registry.lua`](../src/scenario/generated/abilities_registry.lua) (bake) | scenario-модуль есть в live catalog |
+
+Файл может попасть в inbox, но reload на карте отклонит его (`unsupported path`, `not in abilities_registry`, `utils reload not wired`).
 
 ## Что перезагружается
 
@@ -119,6 +141,8 @@ Scenario: файл должен быть в [`abilities_registry.lua`](../src/sc
 | Нет `[reload] ok` после save | Запущен `watch`? Файл в `abilities_registry`? |
 | `FileIO self-test failed` / `poller off` | `fileioLoad` в object data, Allow Local Files, `-allowLocalFiles` в `wc3.py go` |
 | Save есть, reload нет | Старый `seq` (dedup); в логе путь `inbox.txt` — пересобрать карту (`go`) |
+| Повтор `[reload] error` на одном seq | Исправьте Lua в файле; ack не обновится, пока apply не пройдёт |
+| `[reload] inbox parse` | Битый `.pld`; slot пропущен — проверьте watcher / перезапустите `watch` |
 | Карта кидает в меню | `.w3x` &lt; ~7050 KiB или legacy `__HOT_RELOAD__` в корне war3map — см. [build/README.md](../build/README.md) |
 | `not in abilities_registry` | `bake` + `go` |
 

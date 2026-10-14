@@ -49,46 +49,80 @@ function Registry.compileModuleSource(source, moduleName)
     return load(source, "@hotreload:" .. moduleName, "t", _ENV)
 end
 
-local function applyScenarioPatch(moduleName, source)
+---@param moduleName string
+---@param source string
+---@return boolean ok
+---@return table|nil commit { kind = "scenario", idx = number, value = table } | { kind = "utils", setter = function, value = any }
+---@return string|nil err
+local function loadPatchCommit(moduleName, source)
     local idx = Registry.scenarioRegistryIndex(moduleName)
-    if not idx then
-        return false, "not in abilities_registry: " .. moduleName
+    if idx then
+        local loader, loadErr = Registry.compileModuleSource(source, moduleName)
+        if not loader then
+            return false, nil, loadErr or "compile failed"
+        end
+        local ok, result = pcall(loader)
+        if not ok then
+            return false, nil, tostring(result)
+        end
+        if type(result) ~= "table" then
+            return false, nil, "scenario module must return a table"
+        end
+        return true, { kind = "scenario", idx = idx, value = result }
     end
 
-    local loader, loadErr = Registry.compileModuleSource(source, moduleName)
-    if not loader then
-        return false, loadErr or "compile failed"
+    local setter = Registry.utilsGlobalSetters[moduleName]
+    if setter then
+        local loader, loadErr = Registry.compileModuleSource(source, moduleName)
+        if not loader then
+            return false, nil, loadErr or "compile failed"
+        end
+        local ok, result = pcall(loader)
+        if not ok then
+            return false, nil, tostring(result)
+        end
+        return true, { kind = "utils", setter = setter, value = result }
     end
 
-    local ok, result = pcall(loader)
+    if moduleName:match("^scenario%.") then
+        return false, nil, "not in abilities_registry: " .. moduleName
+    end
+    if moduleName:match("^utils%.") then
+        return false, nil, "utils reload not wired for " .. moduleName .. " (add to Registry.utilsGlobalSetters)"
+    end
+    return false, nil, "unsupported module: " .. moduleName
+end
+
+local function commitPatch(entry)
+    if entry.kind == "scenario" then
+        local catalog = require("scenario.abilities")
+        catalog.abilities[entry.idx] = entry.value
+        return
+    end
+    entry.setter(entry.value)
+end
+
+local function applyScenarioPatch(moduleName, source)
+    local ok, commit, err = loadPatchCommit(moduleName, source)
     if not ok then
-        return false, tostring(result)
+        return false, err
     end
-    if type(result) ~= "table" then
-        return false, "scenario module must return a table"
+    if commit.kind ~= "scenario" then
+        return false, "not a scenario module: " .. moduleName
     end
-
-    local catalog = require("scenario.abilities")
-    catalog.abilities[idx] = result
+    commitPatch(commit)
     return true
 end
 
 local function applyUtilsPatch(moduleName, source)
-    local setter = Registry.utilsGlobalSetters[moduleName]
-    if not setter then
-        return false, "utils reload not wired for " .. moduleName .. " (add to Registry.utilsGlobalSetters)"
-    end
-
-    local loader, loadErr = Registry.compileModuleSource(source, moduleName)
-    if not loader then
-        return false, loadErr or "compile failed"
-    end
-
-    local ok, result = pcall(loader)
+    local ok, commit, err = loadPatchCommit(moduleName, source)
     if not ok then
-        return false, tostring(result)
+        return false, err
     end
-    setter(result)
+    if commit.kind ~= "utils" then
+        return false, "not a utils module: " .. moduleName
+    end
+    commitPatch(commit)
     return true
 end
 
@@ -137,6 +171,43 @@ function Registry.applyPatch(fileKey, source)
         end
     end
     return false, "unsupported path: " .. fileKey
+end
+
+--- Validate all patches, then commit (no partial catalog updates on batch failure).
+---@param patches { file: string, source: string }[]
+---@return boolean ok
+---@return string|nil err
+function Registry.applyPatches(patches)
+    local commits = {}
+    for _, patch in ipairs(patches) do
+        local fileKey = patch.file:gsub("\\", "/")
+        local moduleName = Registry.fileKeyToModule(fileKey)
+        if not moduleName then
+            return false, "bad file key: " .. tostring(fileKey)
+        end
+
+        local routed = false
+        for _, route in ipairs(patchHandlers) do
+            if fileKey:sub(1, #route.prefix) == route.prefix then
+                routed = true
+                break
+            end
+        end
+        if not routed then
+            return false, "unsupported path: " .. fileKey
+        end
+
+        local ok, commit, err = loadPatchCommit(moduleName, patch.source)
+        if not ok then
+            return false, fileKey .. ": " .. tostring(err)
+        end
+        commits[#commits + 1] = commit
+    end
+
+    for i = 1, #commits do
+        commitPatch(commits[i])
+    end
+    return true
 end
 
 return Registry

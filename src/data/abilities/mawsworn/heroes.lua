@@ -132,7 +132,7 @@ return {
             a:setDurationHero(level, 0.3)
         end),
     }),
-    harpoonRootUI = A.passiveAura({
+    harpoonRootUI = A.nonDispellableTargetDebuff({
         name = "Harpoon",
         buffs = { "harpoonRoot" },
     }),

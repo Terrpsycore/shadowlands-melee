@@ -25,6 +25,10 @@ return {
         parent = BuffIds.stunned,
         name = "Harpoon",
     },
+    harpoonRoot = {
+        parent = BuffIds.entanglingRoots,
+        name = "Harpoon",
+    },
     twistedPain = {
         parent = BuffIds.acidBomb,
         name = "Twisted Pain",

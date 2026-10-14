@@ -34,7 +34,10 @@ main.lua
   tests.init               если RUN.tests
   spawn.run                dev-спаун
   Storage.initAll()
+  lib.reload.client        если RUN.hotReload — poller FileIO inbox (dev)
 ```
+
+Dev hot reload (scenario/utils без rebuild): [hot-reload.md](hot-reload.md).
 
 Модуль способности возвращает `{ triggers, config, debug }`. Формат — `.cursor/rules/abilities.mdc`, все события с примерами — `scenario/common/templates/_reference.lua`.
 
