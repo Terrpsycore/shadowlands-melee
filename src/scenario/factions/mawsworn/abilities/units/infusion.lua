@@ -90,7 +90,7 @@ local function onTimer()
         targetData.untilStack = math.max(0, targetData.untilStack - CONFIG.balance.tickRate)
         if targetData.untilStack == 0 then
             targetData.untilStack = CONFIG.balance.stacksDelta
-            Dummy.applyPoint(owner, target, CONFIG.refs.abilities.buff, "innerfire")
+            Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.buff, "innerfire")
         end
     end
 end

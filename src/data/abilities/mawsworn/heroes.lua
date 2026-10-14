@@ -88,6 +88,9 @@ return {
         levels = 1,
         button = { 3, 2 },
         hotkey = "R",
+        apply = A.channelArea.apply(function(a, level)
+            a:setFollowThroughTime(level, 10)
+        end),
     }),
     -- Mourneblade Hero
     deadlyBlow = A.channelNoTarget({

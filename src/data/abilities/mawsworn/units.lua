@@ -152,6 +152,7 @@ return {
         name = "Calcify",
         buffs = { "calcify" },
         art = { icon = Icons.icecolddiamond },
+        order = "shadowstrike",
     }),
     -- Dom caster
     fallenMorale = A.channelTarget({
@@ -235,6 +236,10 @@ return {
     }),
     soulFeastEat = A.channelNoTarget({ -- ? cannibalize + dummy corpse instead
         name = "Soul Feast",
+        apply = A.channelNoTarget.apply(function(a, level)
+            a:setFollowThroughTime(level, 10)
+            a:setArtDuration(level, 10)
+        end),
     }),
     glareDebuff = A.nonDispellableTargetDebuff({
         name = "Glare",

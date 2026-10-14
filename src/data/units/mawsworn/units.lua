@@ -63,6 +63,7 @@ return {
         parent = UnitIds.revenantoftheseas,
         name = "Frost",
         abilities = { "freezeBlood", "vessel", "calcify" },
+        mana = { max = 200, initial = 100 },
     },
     mawcasterDomination = {
         parent = UnitIds.acolyte,
@@ -90,8 +91,7 @@ return {
     },
     vessel = {
         parent = UnitIds.stasistraptotem,
-        name = "War Banner",
-        abilities = { "warBannerAura" },
+        name = "Vessel",
         art = { model = UnitArt[UnitIds.shade].model },
     },
     mawswornShade = {

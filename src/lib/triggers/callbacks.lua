@@ -213,6 +213,17 @@ T.onSelect = function(triggers)
     end)
 end
 
+T.onChat = function(triggers)
+    local trig = CreateTrigger()
+    Engine.trackTrigger(trig)
+    for i = 0, bj_MAX_PLAYER_SLOTS - 1 do
+        TriggerRegisterPlayerChatEvent(trig, Player(i), "", false)
+    end
+    TriggerAddAction(trig, function()
+        Filter.run(triggers, {}, true)
+    end)
+end
+
 T.onPickUpItem = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM, triggers, function()
         return {}
@@ -258,6 +269,7 @@ end
 
 T.methods = {
     EVENT_PLAYER_UNIT_SELECTED = T.onSelect,
+    EVENT_PLAYER_CHAT = T.onChat,
     EVENT_PLAYER_UNIT_ATTACKED = T.onAttack,
     EVENT_PLAYER_UNIT_SPELL_CAST = T.onSpellCast,
     EVENT_PLAYER_UNIT_SPELL_EFFECT = T.onSpellEffect,

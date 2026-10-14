@@ -6,6 +6,7 @@
 
 ---@class TriggerDefinition
 ---@field trigger? string
+--- Chat handlers: read GetEventPlayerChatString() and GetTriggerPlayer() in action.
 ---@field action fun(ctx?: any)
 ---@field spellId? integer|integer[]
 ---@field order? string

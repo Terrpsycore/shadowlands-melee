@@ -2,6 +2,7 @@
 -- - check range from caster, not only from dummy
 -- - immunity to "taunt"
 -- - adjust numbers in OE and script
+-- v 2
 
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")

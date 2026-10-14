@@ -212,9 +212,9 @@ end
 --- modifiers
 
 local function addModifier(target, tag, value, cooldown)
-    dump("addModifier MODIFIED")
+    dump("addModifier MODIFIED changed")
     if not modifiers[target] then
-        modifiers[target][tag] = {}
+        modifiers[target] = {}
     end
     if not modifiers[target][tag] then
         modifiers[target][tag] =
