@@ -34,6 +34,8 @@ python build/wc3.py go . --imports
 
 В игре кликнуть splash «нажмите любую клавишу», тесты стартуют сами. Лог: `Documents/Warcraft III/CustomMapData/shadowlands-melee.txt`.
 
+Debug-команды в чате (`game clean`, `dummy 0` / `dummy 1`, …) — [debug-commands.md](debug-commands.md).
+
 ## Иконки зелёные
 
 По порядку, от дешёвого к дорогому. Контекст — [ADR 0002](adr/0002-custom-assets-imports-vs-game-folder-dev.md).

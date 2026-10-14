@@ -20,6 +20,7 @@ local CONFIG = AbilityConfig.compile({
         units = {},
     },
     balance = {
+        duration = 5,
         hits = {
             [1] = 1,
             [2] = 2,
@@ -38,24 +39,31 @@ local CONFIG = AbilityConfig.compile({
     },
 })
 
---- @type table<unit, {level: integer, owner: player, buffApplied: boolean, hits: integer, availableAt: number}> target->hits
+--- @type table<unit, {level: integer, owner: player, buffApplied: boolean, hits: integer, expiresAt: number}> target->hits
 local memory = {} -- TODO: save/load /+/ cleaning
 --- @type table<unit, {level: integer, ticks: integer, tickAt: number}> dummy->ticks
 local voidzones = {}
+
+--- @param unit unit
+local function removeEffect(unit)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)
+    memory[unit] = nil
+end
 
 --- @param info damageInfo
 local function onDamage(info)
     if not memory[info.target] then
         return
     end
-    if GetElapsedGameTime() < memory[info.target] then
-        return
-    end
     if not UnitHasBuffBJ(info.target, CONFIG.refs.buffs.main) then
         return
     end
+    if GetElapsedGameTime() > memory[info.target].expiresAt then
+        removeEffect(info.target)
+        return
+    end
     if memory[info.target].hits == 0 then
-        memory[info.target] = nil
+        removeEffect(info.target)
         return
     end
 
@@ -73,14 +81,14 @@ end
 local function onSpell()
     local caster = GetTriggerUnit()
     local target = GetSpellTargetUnit()
-    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.dummy)
+    local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
     memory[target] = {
         level = level,
         owner = GetOwningPlayer(caster),
         buffApplied = false,
         hits = CONFIG.balance.hits[level],
-        availableAt = GetElapsedGameTime(),
+        expiresAt = GetElapsedGameTime() + CONFIG.balance.duration,
     }
 end
 
@@ -90,11 +98,11 @@ local function onTimer()
     local now = GetElapsedGameTime()
     for dummy, data in pairs(voidzones) do
         for _, unit in
-            Unit.getUnitsInRadius(dummy, CONFIG.balance.radius, function(u)
+            ipairs(Unit.getUnitsInRadius(dummy, CONFIG.balance.radius, function(u)
                 return not IsUnitAlly(u, data.owner)
-            end)
+            end))
         do
-            damage[unit] = { dummies = damage[unit].dummies or {} }
+            damage[unit] = damage[unit] or { dummies = {} }
             table.insert(damage[unit].dummies, dummy)
         end
     end
@@ -108,7 +116,7 @@ local function onTimer()
                 ticked[dummy] = true
                 dummyData.ticks = dummyData.ticks - 1
                 dummyData.tickAt = now + CONFIG.balance.tickDelta
-            elseif now > dummyData.ticksAt then
+            elseif now > dummyData.tickAt then
                 ticked[dummy] = true
                 dummyData.ticks = dummyData.ticks - 1
                 dummyData.tickAt = now + CONFIG.balance.tickDelta

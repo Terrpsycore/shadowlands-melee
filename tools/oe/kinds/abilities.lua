@@ -124,8 +124,10 @@ local fields = {
     end,
     order = function(a, value, data)
         if type(value) == "string" then
-            for level in eachLevel(data) do
-                a:setBaseOrderID(level, value)
+            if a.setBaseOrderID then
+                for level in eachLevel(data) do
+                    a:setBaseOrderID(level, value)
+                end
             end
             a:setOrderStringUseTurnOn(value)
             a:setOrderStringActivate(value)

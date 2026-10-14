@@ -77,7 +77,7 @@ local function onTimer()
     local flushQueue = {}
     for target, data in pairs(shackles) do
         local shackler
-        for _, shacklerQ in data.shacklers do
+        for _, shacklerQ in pairs(data.shacklers) do
             if Unit.distance(shacklerQ, target) > CONFIG.balance.radius then
                 IssueImmediateOrder(shacklerQ, "stop")
                 removeShackle(shacklerQ)

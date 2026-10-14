@@ -43,7 +43,8 @@ alwaysApply: false
 - **Filter:** опциональный блок `filter = { source, target, isAttack, isSpell }`.
   - `source` / `target` — scalar или array **FourCC id** (number); через `CONFIG.refs.units.*` или `FourCC(...)`
   - `filter.source` — инициатор: атакующий (ATTACKED), источник урона (DAMAGE), кастер воскрешения (REVIVE)
-  - `filter.target` — объект: умирающий/призванный/обученный (DEATH/SUMMON/TRAIN), цель урона (DAMAGE), воскрешённый юнит (REVIVE)
+  - `filter.target` — объект: умирающий/призванный/обученный (DEATH/SUMMON/TRAIN), герой, изучивший скилл (HERO_SKILL), цель урона (DAMAGE), воскрешённый юнит (REVIVE)
+  - `spellId` на триггере — для SPELL_* и `EVENT_UNIT_HERO_SKILL` (изученная способность, `GetLearnedSkill`)
   - `isAttack` / `isSpell` — только для `PRE_DAMAGE`, `DAMAGE`, `AFTER_DAMAGE`, `LETHAL_DAMAGE`; поля из `damageInfo` (DamageEngine). Не задано → любой тип урона; `true`/`false` → строгое совпадение
   - все заданные поля → AND; filter отсутствует → любое событие данного типа
 

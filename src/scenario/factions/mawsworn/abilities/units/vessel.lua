@@ -43,9 +43,11 @@ local function onSpell()
         { unit = { mp = 1 } },
         --- @param result dispellMeterResult
         function(result)
-            if result.unit then
+            dump("dispellMeterResult", result)
+            if result.unit and result.unit > 0 then
                 ---@diagnostic disable-next-line: param-type-mismatch
                 local vessel = CreateUnit(owner, CONFIG.refs.units.vessel, x, y, 270)
+                Unit.applyTimedLife(vessel, 10)
                 memory[vessel] = {
                     owner = owner,
                     charges = math.min(10, result.unit),

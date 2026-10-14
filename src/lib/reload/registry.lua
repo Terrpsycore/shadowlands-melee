@@ -68,7 +68,7 @@ local function loadPatchCommit(moduleName, source)
         if type(result) ~= "table" then
             return false, nil, "scenario module must return a table"
         end
-        return true, { kind = "scenario", idx = idx, value = result }
+        return true, { kind = "scenario", module = moduleName, idx = idx, value = result }
     end
 
     local setter = Registry.utilsGlobalSetters[moduleName]
@@ -81,7 +81,7 @@ local function loadPatchCommit(moduleName, source)
         if not ok then
             return false, nil, tostring(result)
         end
-        return true, { kind = "utils", setter = setter, value = result }
+        return true, { kind = "utils", module = moduleName, setter = setter, value = result }
     end
 
     if moduleName:match("^scenario%.") then
@@ -94,6 +94,9 @@ local function loadPatchCommit(moduleName, source)
 end
 
 local function commitPatch(entry)
+    if package.setloaded then
+        package.setloaded(entry.module, entry.value)
+    end
     if entry.kind == "scenario" then
         local catalog = require("scenario.abilities")
         catalog.abilities[entry.idx] = entry.value

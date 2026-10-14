@@ -1,12 +1,19 @@
 local Ids = require("data.ids")
 
-local Dummy = {}
+local Dummy = {
+    default = FourCC(Ids.units.dummy),
+}
+
+---@param unitId integer
+function Dummy.setDefault(unitId)
+    Dummy.default = unitId
+end
 
 ---@alias Order string|integer
 
 local function spawn(owner, at, abilityId, level, unitId)
     local x, y = Generic.pointXY(at)
-    local dummy = CreateUnit(owner, unitId or FourCC(Ids.units.dummy), x, y, 270)
+    local dummy = CreateUnit(owner, unitId or Dummy.default, x, y, 270)
     UnitApplyTimedLife(dummy, FourCC("BTLF"), 10)
     if abilityId then
         UnitAddAbility(dummy, abilityId)

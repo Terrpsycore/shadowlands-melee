@@ -2,6 +2,7 @@ local Ids = require("data.ids")
 local Selection = require("scenario.common.mechanics.selection")
 local Storage = require("lib.storage.storage")
 local Spawn = require("spawn")
+local Dummy = require("utils.dummy")
 
 local function trim(msg)
     return (string.gsub(msg, "^%s*(.-)%s*$", "%1"))
@@ -9,6 +10,15 @@ end
 
 local function say(player, text)
     DisplayTextToPlayer(player, 0, 0, text)
+end
+
+local function withSelectedUnit(player, fn)
+    local unit = Selection.getUnit()
+    if not unit then
+        say(player, "Debug: no unit selected.")
+        return
+    end
+    fn(unit)
 end
 
 local function collectAllUnits()
@@ -41,16 +51,17 @@ local function gameSpawn(player, packName)
         say(player, "Debug: spawn failed — " .. tostring(err))
         return
     end
-    say(player, "Debug: spawned pack \"" .. packName .. "\".")
+    say(player, 'Debug: spawned pack "' .. packName .. '".')
 end
 
 local function resetCooldowns(player, unit)
     local index = 0
     while true do
-        local abilId = BlzGetUnitAbilityByIndex(unit, index)
-        if not abilId or abilId == 0 then
+        local abil = BlzGetUnitAbilityByIndex(unit, index)
+        if not abil then
             break
         end
+        local abilId = BlzGetAbilityId(abil)
         BlzEndUnitAbilityCooldown(unit, abilId)
         index = index + 1
     end
@@ -118,17 +129,11 @@ end
 local function spawnUnitSlug(player, anchor, slug)
     local unitId = Ids.units[slug]
     if not unitId then
-        say(player, "Debug: unknown unit slug \"" .. slug .. "\".")
+        say(player, 'Debug: unknown unit slug "' .. slug .. '".')
         return
     end
-    CreateUnit(
-        GetOwningPlayer(anchor),
-        FourCC(unitId),
-        GetUnitX(anchor),
-        GetUnitY(anchor),
-        GetUnitFacing(anchor)
-    )
-    say(player, "Debug: spawned \"" .. slug .. "\".")
+    CreateUnit(GetOwningPlayer(anchor), FourCC(unitId), GetUnitX(anchor), GetUnitY(anchor), GetUnitFacing(anchor))
+    say(player, 'Debug: spawned "' .. slug .. '".')
 end
 
 local function setUnitOwnerIndex(player, unit, ownerIndex)
@@ -140,140 +145,153 @@ local function setUnitOwnerIndex(player, unit, ownerIndex)
     say(player, "Debug: owner set to player " .. ownerIndex .. ".")
 end
 
+local function resolveAbilityId(token)
+    local slugId = Ids.abilities[token]
+    if slugId then
+        return FourCC(slugId)
+    end
+    if #token == 4 then
+        return FourCC(token)
+    end
+    return nil
+end
+
+local function setDummyDefault(player, mode)
+    if mode == 1 then
+        Dummy.setDefault(FourCC(Ids.units.dummy))
+        say(player, "Debug: dummy default = dummy (visible).")
+    else
+        Dummy.setDefault(FourCC(Ids.units.dummyHidden))
+        say(player, "Debug: dummy default = dummyHidden.")
+    end
+end
+
+local function applyDummyTargetOrder(player, ownerIndex, target, skillToken, order)
+    if ownerIndex < 0 or ownerIndex >= bj_MAX_PLAYER_SLOTS then
+        say(player, "Debug: owner index must be 0-" .. (bj_MAX_PLAYER_SLOTS - 1) .. ".")
+        return
+    end
+    local abilityId = resolveAbilityId(skillToken)
+    if not abilityId then
+        say(player, 'Debug: unknown ability "' .. skillToken .. '" (slug or 4-char rawcode).')
+        return
+    end
+    Dummy.applyDummyOrder(Player(ownerIndex), target, abilityId, order)
+    say(player, 'Debug: cast "' .. order .. '" (owner ' .. ownerIndex .. ").")
+end
+
+---@param player player
+---@param cmd table
+---@param msg string
+---@return boolean handled
+local function runCommand(player, cmd, msg)
+    local captures
+    if cmd.exact then
+        if msg ~= cmd.exact then
+            return false
+        end
+        captures = {}
+    else
+        local cap = { string.match(msg, cmd.pattern) }
+        if cap[1] == nil then
+            return false
+        end
+        captures = cap
+    end
+
+    if cmd.needsUnit then
+        withSelectedUnit(player, function(unit)
+            cmd.run(player, unit, table.unpack(captures))
+        end)
+    else
+        cmd.run(player, table.unpack(captures))
+    end
+    return true
+end
+
+local commands = {
+    { exact = "game clean", run = gameClean },
+    { pattern = "^game spawn (%S+)$", run = gameSpawn },
+    { exact = "cd", needsUnit = true, run = resetCooldowns },
+    {
+        pattern = "^level (%d+)$",
+        needsUnit = true,
+        run = function(player, unit, levelStr)
+            local level = tonumber(levelStr)
+            if not level or level < 1 or level > 10 then
+                say(player, "Debug: level must be 1-10.")
+                return
+            end
+            setHeroLevel(player, unit, level)
+        end,
+    },
+    {
+        pattern = "^hp (%d+%.?%d*)$",
+        needsUnit = true,
+        run = function(player, unit, valueStr)
+            setUnitHp(player, unit, tonumber(valueStr))
+        end,
+    },
+    {
+        pattern = "^mp (%d+%.?%d*)$",
+        needsUnit = true,
+        run = function(player, unit, valueStr)
+            setUnitMp(player, unit, tonumber(valueStr))
+        end,
+    },
+    {
+        pattern = "^maxHp (%d+%.?%d*)$",
+        needsUnit = true,
+        run = function(player, unit, valueStr)
+            setUnitMaxHp(player, unit, tonumber(valueStr))
+        end,
+    },
+    {
+        pattern = "^maxMp (%d+%.?%d*)$",
+        needsUnit = true,
+        run = function(player, unit, valueStr)
+            setUnitMaxMp(player, unit, tonumber(valueStr))
+        end,
+    },
+    { exact = "root", needsUnit = true, run = rootUnit },
+    { exact = "unroot", needsUnit = true, run = unrootUnit },
+    { exact = "remove", needsUnit = true, run = removeSelectedUnit },
+    {
+        pattern = "^spawn (%S+)$",
+        needsUnit = true,
+        run = function(player, unit, slug)
+            spawnUnitSlug(player, unit, slug)
+        end,
+    },
+    {
+        pattern = "^dummy ([01])$",
+        run = function(player, modeStr)
+            setDummyDefault(player, tonumber(modeStr))
+        end,
+    },
+    {
+        pattern = "^cast (%d+) (%S+) (%S+)$",
+        needsUnit = true,
+        run = function(player, unit, ownerStr, skillToken, order)
+            applyDummyTargetOrder(player, tonumber(ownerStr), unit, skillToken, order)
+        end,
+    },
+    {
+        pattern = "^owner (%d+)$",
+        needsUnit = true,
+        run = function(player, unit, ownerStr)
+            setUnitOwnerIndex(player, unit, tonumber(ownerStr))
+        end,
+    },
+}
+
 local function onChat()
     local player = GetTriggerPlayer()
     local msg = trim(GetEventPlayerChatString())
-
-    if msg == "game clean" then
-        gameClean(player)
-        return
-    end
-
-    local packName = string.match(msg, "^game spawn (%S+)$")
-    if packName then
-        gameSpawn(player, packName)
-        return
-    end
-
-    if msg == "cd reset" then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
+    for _, cmd in ipairs(commands) do
+        if runCommand(player, cmd, msg) then
             return
         end
-        resetCooldowns(player, unit)
-        return
-    end
-
-    local levelStr = string.match(msg, "^level (%d+)$")
-    if levelStr then
-        local level = tonumber(levelStr)
-        if not level or level < 1 or level > 10 then
-            say(player, "Debug: level must be 1-10.")
-            return
-        end
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setHeroLevel(player, unit, level)
-        return
-    end
-
-    local hpStr = string.match(msg, "^hp (%d+%.?%d*)$")
-    if hpStr then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setUnitHp(player, unit, tonumber(hpStr))
-        return
-    end
-
-    local mpStr = string.match(msg, "^mp (%d+%.?%d*)$")
-    if mpStr then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setUnitMp(player, unit, tonumber(mpStr))
-        return
-    end
-
-    local maxHpStr = string.match(msg, "^maxHp (%d+%.?%d*)$")
-    if maxHpStr then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setUnitMaxHp(player, unit, tonumber(maxHpStr))
-        return
-    end
-
-    local maxMpStr = string.match(msg, "^maxMp (%d+%.?%d*)$")
-    if maxMpStr then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setUnitMaxMp(player, unit, tonumber(maxMpStr))
-        return
-    end
-
-    if msg == "root" then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        rootUnit(player, unit)
-        return
-    end
-
-    if msg == "unroot" then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        unrootUnit(player, unit)
-        return
-    end
-
-    if msg == "remove" then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        removeSelectedUnit(player, unit)
-        return
-    end
-
-    local unitSlug = string.match(msg, "^spawn (%S+)$")
-    if unitSlug then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        spawnUnitSlug(player, unit, unitSlug)
-        return
-    end
-
-    local ownerStr = string.match(msg, "^owner (%d+)$")
-    if ownerStr then
-        local unit = Selection.getUnit()
-        if not unit then
-            say(player, "Debug: no unit selected.")
-            return
-        end
-        setUnitOwnerIndex(player, unit, tonumber(ownerStr))
     end
 end
 

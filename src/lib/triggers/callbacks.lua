@@ -201,6 +201,12 @@ T.onTrain = function(triggers)
     end)
 end
 
+T.onHeroSkill = function(triggers)
+    registerUnitEvent(EVENT_PLAYER_HERO_SKILL, triggers, function()
+        return { target = GetTriggerUnit(), spellId = GetLearnedSkill() }
+    end)
+end
+
 T.onConstructFinish = function(triggers)
     registerUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH, triggers, function()
         return { source = GetTriggerUnit(), target = GetConstructedStructure() }
@@ -277,6 +283,7 @@ T.methods = {
     EVENT_PLAYER_UNIT_SPELL_FINISH = T.onSpellFinish,
     EVENT_PLAYER_UNIT_TRAIN_START = T.onTrainStart,
     EVENT_PLAYER_UNIT_TRAIN_FINISH = T.onTrain,
+    EVENT_UNIT_HERO_SKILL = T.onHeroSkill,
     EVENT_PLAYER_UNIT_CONSTRUCT_FINISH = T.onConstructFinish,
     EVENT_PLAYER_UNIT_DEATH = T.onDeath,
     EVENT_PLAYER_UNIT_SUMMON = T.onSummon,

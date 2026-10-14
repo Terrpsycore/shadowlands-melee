@@ -19,7 +19,7 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
-        stacksPerHit = 4,
+        stacksPerHit = 1,
     },
 })
 

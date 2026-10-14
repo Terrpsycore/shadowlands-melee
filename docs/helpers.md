@@ -34,7 +34,7 @@
 
 `local Dummy = require("utils.dummy")`
 
-Dummy живёт 10 секунд (`BTLF`), invulnerable, без pathing. Типовые касты — в таблице выше (`applyDummy*`).
+Dummy живёт 10 секунд (`BTLF`), invulnerable, без pathing. Типовые касты — в таблице выше (`applyDummy*`). Дефолтный unit id — `Dummy.default`; в dev переключить в чате: `dummy 1` / `dummy 0` ([debug-commands.md](debug-commands.md)).
 
 ## Storage
 

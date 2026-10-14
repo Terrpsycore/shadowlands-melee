@@ -131,7 +131,8 @@ Scenario: файл должен быть в [`abilities_registry.lua`](../src/sc
 ## Known limitations (v1)
 
 - [`scenario/common/control.lua`](../src/scenario/common/control.lua) — per-unit триггеры не трекаются engine
-- `require`-кэш war3map не сбрасывается; module-level state в ability обнуляется при reload
+- После patch каталог и `require` для **этого** module name синхронизируются (`package.setloaded`); способности с `local X = require(...)` на верхнем уровне всё ещё держат старый `X`, пока их файл не перезагрузят
+- module-level state в перезагруженном файле обнуляется при reload
 - Изменения реестра способностей (`tools/bake.lua`) — `wc3 go`
 
 ## Troubleshooting

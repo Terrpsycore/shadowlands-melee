@@ -18,6 +18,9 @@ local CONFIG = AbilityConfig.compile({
             damage = Ids.abilities.soulRendDamage,
             heal = Ids.abilities.soulRendHeal,
         },
+        units = {
+            carrier = Ids.units.mournebladeHero,
+        },
     },
     balance = {
         duration = 2,
@@ -50,6 +53,7 @@ local function stopEffect(unit)
     memory[unit].toggle = false
 end
 
+--- active toggle
 local function applyEffect(unit)
     local now = GetElapsedGameTime()
 
@@ -61,7 +65,7 @@ local function applyEffect(unit)
         return
     end
 
-    if now < memory[unit].nextHealAt then
+    if memory[unit].nextHealAt and now < memory[unit].nextHealAt then
         return
     end
 
@@ -110,7 +114,8 @@ local function onDeath()
     local unit = GetDyingUnit()
     local source = targetToMourneblade[unit]
     if source and GetElapsedGameTime() < (memory[source].lastHitAt + CONFIG.balance.duration) then
-        local level = GetUnitAbilityLevel(source, CONFIG.refs.abilities.main)
+        local level = GetUnitAbilityLevel(source, CONFIG.refs.abilities.toggle)
+        dump("soulRend onDeath", Souls.api.count("unit", source), CONFIG.balance.maxSouls[level])
         if Souls.api.count("unit", source) <= CONFIG.balance.maxSouls[level] then
             Souls.api.store("unit", source)
         end

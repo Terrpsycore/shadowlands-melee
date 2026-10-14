@@ -35,8 +35,7 @@ local memory = {} -- TODO: save/load /+/ cleaning
 --- @param unit unit
 --- @param level integer
 --- @return unit
-local function applyEffect(unit, level)
-    local owner = GetOwningPlayer(unit)
+local function applyEffect(owner, unit, level)
     local dummy = CreateUnit(owner, CONFIG.refs.units.chain[level], GetUnitX(unit), GetUnitY(unit), 270)
     UnitAddType(dummy, UNIT_TYPE_SUMMONED)
     Unit.applyTimedLife(dummy, CONFIG.balance.duration)
@@ -51,7 +50,7 @@ local function onSpell()
     local target = GetSpellTargetUnit()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
-    applyEffect(target, level)
+    applyEffect(GetOwningPlayer(caster), target, level)
 end
 
 local function onTimer()
@@ -60,6 +59,7 @@ local function onTimer()
             local d = Unit.distance(unit, data.chain)
             if d > CONFIG.balance.radius then
                 Damage.apply(data.chain, unit, CONFIG.balance.breakDamage[data.level], false, false, ATTACK_TYPE_CHAOS)
+                memory[unit] = nil
             end
         else
             UnitRemoveBuffBJ(CONFIG.refs.buffs.main, unit)

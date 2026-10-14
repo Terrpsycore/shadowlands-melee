@@ -98,6 +98,15 @@ do
         return ret
     end
 
+    --- Hot reload: sync bundled require cache with a live module table (see lib.reload.registry).
+    function package.setloaded(name, value)
+        _LOADED_MODULES[name] = value
+        local filename = resolvefile(name)
+        if filename then
+            _LOADED_FILES[filename] = value
+        end
+    end
+
     function loadfile(filename, mode, env)
         return compilefile(filename, mode, env, 2)
     end

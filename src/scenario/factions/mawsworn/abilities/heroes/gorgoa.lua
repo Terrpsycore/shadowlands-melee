@@ -23,16 +23,18 @@ local CONFIG = AbilityConfig.compile({
         wsApplyDelta = 1,
         soulSpawnDelta = 0.5,
         timerDelta = 0.5,
+        soulDuration = 3,
     },
 })
 
 --- @type table<unit, {player: player, facing: number, point: Point, nextWsAt: number, nextSoulAt: number}>
 local memory = {}
 
---- @type table<unit, {x: number, y: number}>
+--- @type table<unit, {x: number, y: number, removeAt: number}>
 local souls = {} -- remove on max distance
 
 local function spawnSoul(caster)
+    -- dump("gorgoa spawnSoul")
     local data = memory[caster]
 
     local f = data.facingRadians
@@ -42,19 +44,27 @@ local function spawnSoul(caster)
     -- Center of far edge: (-cos(f)*s/2, -sin(f)*s/2) relative to hero
     -- Offset along edge: (+sin(f)*rand, -cos(f)*rand)
     local r = GetRandomReal(-s / 2, s / 2)
-    local spawnX = data.x - (math.cos(f) * s / 2) + (math.sin(f) * r)
-    local spawnY = data.y - (math.sin(f) * s / 2) - (math.cos(f) * r)
+    local spawnX = data.point.x - (math.cos(f) * s / 2) + (math.sin(f) * r)
+    local spawnY = data.point.y - (math.sin(f) * s / 2) - (math.cos(f) * r)
 
     -- Spawn unit facing the hero
     ---@diagnostic disable-next-line: param-type-mismatch
     local soul = CreateUnit(data.player, CONFIG.refs.units.soul, spawnX, spawnY, data.facing)
+    Unit.applyTimedLife(soul, CONFIG.balance.soulDuration + 1)
+    souls[soul] = { removeAt = GetElapsedGameTime() + CONFIG.balance.soulDuration }
 
     -- Charge X units in direction of hero's facing
-    local targetX = data.x + (s * 2) * math.cos(f)
-    local targetY = data.y + (s * 2) * math.sin(f)
+    local targetX = data.point.x + (s * 2) * math.cos(f)
+    local targetY = data.point.y + (s * 2) * math.sin(f)
     IssuePointOrder(soul, "move", targetX, targetY)
 
     Souls.api.store("gorgoa", soul)
+end
+
+--- @param soul unit
+local function removeSoul(soul)
+    souls[soul] = nil
+    Souls.api.use("gorgoa", soul)
 end
 
 local function onCastStart()
@@ -68,6 +78,7 @@ local function onCastStart()
     -- local oppositeAngleDeg = facing + 180.0
     -- local oppositeAngleRad = math.rad(oppositeAngleDeg)
 
+    -- dump("gorgoa set memory")
     memory[caster] = {
         player = owner,
         facing = facing,
@@ -81,6 +92,7 @@ local function onCastStart()
 end
 
 local function onCastEnd()
+    -- dump("gorgoa flush memory")
     local caster = GetTriggerUnit()
     memory[caster] = nil
 end
@@ -104,13 +116,11 @@ local function onTimer()
             data.nextSoulAt = GetElapsedGameTime() + CONFIG.balance.soulSpawnDelta
         end
     end
-end
-
-local function onSoulStop()
-    local unit = GetOrderedUnit()
-    Souls.api.use("gorgoa", unit)
-    souls[unit] = nil
-    RemoveUnit(unit)
+    for soul, data in pairs(souls) do
+        if now > data.removeAt then
+            removeSoul(soul)
+        end
+    end
 end
 
 return {
@@ -129,12 +139,6 @@ return {
             trigger = "TIMER",
             delta = CONFIG.balance.timerDelta,
             action = onTimer,
-        },
-        {
-            trigger = "ORDER",
-            order = "stop",
-            filter = { source = CONFIG.refs.units.soul },
-            action = onSoulStop,
         },
     },
     config = CONFIG,

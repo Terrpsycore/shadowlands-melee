@@ -43,6 +43,7 @@ local function onTimer()
     for unit, data in pairs(memory) do
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
             table.insert(flushQueue, unit)
+            dump("freezeBlood timer", unit, "flush")
         else
             local hp = GetUnitState(unit, UNIT_STATE_LIFE)
             local d = hp - data.lastHp
@@ -51,6 +52,7 @@ local function onTimer()
             else
                 data.lastHp = hp
             end
+            dump("freezeBlood timer", unit, "d", d)
         end
     end
     for _, v in ipairs(flushQueue) do

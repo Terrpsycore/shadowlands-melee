@@ -21,6 +21,26 @@ return {
             u:setCollisionSize(0)
         end,
     },
+    dummyHidden = {
+        parent = UnitIds.footman,
+        name = "Dummy",
+        art = {
+            model = "",
+        },
+        abilities = { "locust" },
+        classification = "Suicidal",
+        corpse = false,
+        revive = false,
+        apply = function(u)
+            u:setManaMaximum(1000)
+            u:setManaInitialAmount(1000)
+            u:setAttacksEnabled(0)
+            u:setAnimationCastPoint(0)
+            u:setAnimationCastBackswing(0)
+            u:setTurnRate(3)
+            u:setCollisionSize(0)
+        end,
+    },
     dummyVision = {
         parent = UnitIds.footman,
         name = "DummyVision",
