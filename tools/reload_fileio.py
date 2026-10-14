@@ -77,10 +77,12 @@ def write_luashine_preload_file(target: Path, content: str, load_ability_id: int
 
 
 def write_inbox_for_fileio_load(
-    out_dir: Path, inbox_lua: str, project_root: Path, *, seq: int
+    reload_root_dir: Path, inbox_lua: str, project_root: Path, *, seq: int
 ) -> Path:
     """Write numbered inbox (Preloader caches by path — do not reuse one inbox.pld)."""
+    from reload_contract import inbox_pld_path
+
     load_id = _read_fileio_load_id(project_root)
-    target = out_dir / "inbox" / f"{seq}.pld"
+    target = inbox_pld_path(reload_root_dir, seq)
     write_luashine_preload_file(target, inbox_lua, load_id)
     return target

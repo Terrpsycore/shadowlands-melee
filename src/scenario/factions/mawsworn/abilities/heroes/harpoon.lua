@@ -20,7 +20,7 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
-        radius = 64,
+        radius = 200,
         rootDuration = 3,
         flushDelta = 0.5,
     },
@@ -48,15 +48,21 @@ local function onSpell()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
     memory[target] = { owner = GetOwningPlayer(caster), level = level }
+    dump("harpoon onSpell save memory", memory)
 end
 
 --- @param info damageInfo
 local function onAfterDamage(info)
     local source = info.source
     local target = info.target
+    dump("harpoon onAfterDamage", memory[target], UnitHasBuffBJ(target, CONFIG.refs.buffs.main))
     Timed.call(0.1, function()
         if memory[target] and UnitHasBuffBJ(target, CONFIG.refs.buffs.main) then
             applyEffect(target)
+            local neighbours = Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
+                return not IsUnitAlly(u, GetOwningPlayer(source))
+            end)
+            dump("harpoon Timed.call neighbours", #neighbours)
             for _, unit in
                 ipairs(Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
                     return not IsUnitAlly(u, GetOwningPlayer(source))
@@ -66,7 +72,7 @@ local function onAfterDamage(info)
                 Dummy.applyDummyOrder(
                     GetOwningPlayer(source),
                     unit,
-                    CONFIG.refs.abilities.harpoonDummy,
+                    CONFIG.refs.abilities.dummy,
                     "thunderbolt",
                     memory[target].level
                 )

@@ -1,6 +1,30 @@
 --- Hot reload without war3map loader: compile patches in _ENV and update live registry / globals.
 local Registry = {}
 
+--- Utils modules hot-reloadable via inbox; assign module return value to globals (see docs/hot-reload.md).
+Registry.utilsGlobalSetters = {
+    ["utils.logger"] = function(value)
+        _G.dump = value
+    end,
+    ["utils.generic"] = function(value)
+        _G.Generic = value
+    end,
+}
+
+local scenarioIndexByModule = nil
+
+local function ensureScenarioIndex()
+    if scenarioIndexByModule then
+        return scenarioIndexByModule
+    end
+    scenarioIndexByModule = {}
+    local registry = require("scenario.generated.abilities_registry")
+    for i, mod in ipairs(registry) do
+        scenarioIndexByModule[mod] = i
+    end
+    return scenarioIndexByModule
+end
+
 ---@param fileKey string e.g. scenario/factions/.../fly.lua
 ---@return string|nil moduleName e.g. scenario.factions....fly
 function Registry.fileKeyToModule(fileKey)
@@ -14,13 +38,7 @@ end
 ---@param moduleName string
 ---@return integer|nil
 function Registry.scenarioRegistryIndex(moduleName)
-    local registry = require("scenario.generated.abilities_registry")
-    for i, mod in ipairs(registry) do
-        if mod == moduleName then
-            return i
-        end
-    end
-    return nil
+    return ensureScenarioIndex()[moduleName]
 end
 
 ---@param source string
@@ -31,11 +49,7 @@ function Registry.compileModuleSource(source, moduleName)
     return load(source, "@hotreload:" .. moduleName, "t", _ENV)
 end
 
----@param moduleName string
----@param source string
----@return boolean ok
----@return string|nil err
-function Registry.applyScenarioPatch(moduleName, source)
+local function applyScenarioPatch(moduleName, source)
     local idx = Registry.scenarioRegistryIndex(moduleName)
     if not idx then
         return false, "not in abilities_registry: " .. moduleName
@@ -59,23 +73,10 @@ function Registry.applyScenarioPatch(moduleName, source)
     return true
 end
 
-local utilsGlobalSetters = {
-    ["utils.logger"] = function(value)
-        _G.dump = value
-    end,
-    ["utils.generic"] = function(value)
-        _G.Generic = value
-    end,
-}
-
----@param moduleName string
----@param source string
----@return boolean ok
----@return string|nil err
-function Registry.applyUtilsPatch(moduleName, source)
-    local setter = utilsGlobalSetters[moduleName]
+local function applyUtilsPatch(moduleName, source)
+    local setter = Registry.utilsGlobalSetters[moduleName]
     if not setter then
-        return false, "utils reload not wired for " .. moduleName .. " (add to utilsGlobalSetters if needed)"
+        return false, "utils reload not wired for " .. moduleName .. " (add to Registry.utilsGlobalSetters)"
     end
 
     local loader, loadErr = Registry.compileModuleSource(source, moduleName)
@@ -91,6 +92,34 @@ function Registry.applyUtilsPatch(moduleName, source)
     return true
 end
 
+--- fileKey prefix (under src/) → apply(moduleName, source)
+local patchHandlers = {
+    {
+        prefix = "scenario/",
+        apply = applyScenarioPatch,
+    },
+    {
+        prefix = "utils/",
+        apply = applyUtilsPatch,
+    },
+}
+
+---@param moduleName string
+---@param source string
+---@return boolean ok
+---@return string|nil err
+function Registry.applyScenarioPatch(moduleName, source)
+    return applyScenarioPatch(moduleName, source)
+end
+
+---@param moduleName string
+---@param source string
+---@return boolean ok
+---@return string|nil err
+function Registry.applyUtilsPatch(moduleName, source)
+    return applyUtilsPatch(moduleName, source)
+end
+
 ---@param fileKey string
 ---@param source string
 ---@return boolean ok
@@ -102,11 +131,10 @@ function Registry.applyPatch(fileKey, source)
         return false, "bad file key: " .. tostring(fileKey)
     end
 
-    if fileKey:sub(1, #"scenario/") == "scenario/" then
-        return Registry.applyScenarioPatch(moduleName, source)
-    end
-    if fileKey:sub(1, #"utils/") == "utils/" then
-        return Registry.applyUtilsPatch(moduleName, source)
+    for _, route in ipairs(patchHandlers) do
+        if fileKey:sub(1, #route.prefix) == route.prefix then
+            return route.apply(moduleName, source)
+        end
     end
     return false, "unsupported path: " .. fileKey
 end

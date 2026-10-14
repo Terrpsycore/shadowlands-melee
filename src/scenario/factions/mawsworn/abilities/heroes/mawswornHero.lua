@@ -30,7 +30,7 @@ local function onDamage(info)
     end
     WS.api.applyWeakenedSoulStack(
         info.target,
-        10, -- tmp
+        1, -- tmp
         GetOwningPlayer(info.source)
     )
 end

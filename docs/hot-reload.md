@@ -17,8 +17,8 @@ flowchart TB
 | Слой | Файлы |
 |------|--------|
 | Transport | `src/vendor/ext/FileIO.lua`, data-способность `fileioLoad` |
-| OS → карта | `tools/hot_reload_watch.py`, `tools/reload_fileio.py` |
-| Карта | `src/lib/reload/client.lua` |
+| OS → карта | `tools/hot_reload_watch.py`, `tools/reload_fileio.py`, `tools/reload_contract.py` |
+| Карта | `src/lib/reload/client.lua`, `src/lib/reload/contract.lua` |
 | Применение | `src/lib/reload/registry.lua` |
 | Teardown | `src/lib/reload/engine.lua` |
 | Перерегистрация | `src/lib/triggers/bootstrap.lua` |
@@ -47,21 +47,62 @@ python build/wc3.py watch .
 
 Сохраняете `.lua` в `src/scenario/**` или `src/utils/**`. В игре: `[reload] ok seq=N patches=M`.
 
-Inbox: `Documents/Warcraft III/CustomMapData/shadowlands-melee-reload/inbox/1.pld`, `2.pld`, … — **новый файл на каждый reload** (Preloader кэширует один путь).
+Inbox: `CustomMapData/shadowlands-melee-reload/inbox/1.pld`, `2.pld`, … — **новый файл на каждый reload** (Preloader кэширует один путь).
 
 После `go` через ~1 с: `[reload] FileIO ok` или self-test failed → poller выключен.
 
 Watcher читает `fileioLoad` из `src/data/generated/ids.lua` — перед `watch` нужен bake (`build` / `go`).
 
-Ack (игра): `shadowlands-melee-reload/ack.json` (watcher пока не читает).
+## Контракт OS ↔ карта
+
+Единый источник имён: [`tools/reload_contract.py`](../tools/reload_contract.py) (Python) и [`src/lib/reload/contract.lua`](../src/lib/reload/contract.lua) (карта). Менять пути только в паре.
+
+| Поле | Значение |
+|------|----------|
+| Корень | `CustomMapData/shadowlands-melee-reload/` |
+| Inbox | `inbox/{seq}.pld` — `{seq}` совпадает с `seq` в payload |
+| Ack | `ack.json` — `{"seq":N,"ok":true}` после успешного apply |
+| Ping (self-test) | `_ping.pld` |
+
+Payload внутри каждого `.pld` — Lua-таблица:
+
+```lua
+return {
+  seq = 3,
+  patches = {
+    { file = "scenario/.../ability.lua", source = [[...]] },
+  },
+}
+```
+
+- `file` — ключ относительно `src/`, слэши `/` (как в `abilities_registry`).
+- Карта: игнорировать `inbox.seq <= lastSeq` (dedup).
+- Watcher и карта при старте читают `ack.json`: watcher продолжает нумерацию `seq`, карта — `lastSeq` и `nextInbound = ack.seq + 1` (не перечитывает старые `1.pld`… после рестарта test map).
 
 ## Что перезагружается
 
 | Hot reload | Только `go` (full rebuild) |
 |------------|----------------------------|
-| `src/scenario/**`, `src/utils/logger.lua`, `src/utils/generic.lua` | `src/data/**`, bake / `generated/` |
-| | `src/lib/**`, vendor |
-| | новые файлы не в `abilities_registry` |
+| `src/scenario/**` (слот в `abilities_registry`) | `src/data/**`, bake / `generated/` |
+| Подключённые `src/utils/*.lua` (см. ниже) | `src/lib/**`, vendor |
+| | новый scenario-файл не в реестре |
+
+Маршрутизация patch: [`registry.lua`](../src/lib/reload/registry.lua) — префикс `scenario/` → слот в `scenario.abilities.abilities[i]`; `utils/` → `Registry.utilsGlobalSetters`.
+
+Индекс `moduleName → i` для scenario строится **один раз** при первом reload (кэш по `abilities_registry`), без linear scan на каждый patch.
+
+### Расширение utils reload
+
+Только модули из таблицы `Registry.utilsGlobalSetters` в [`registry.lua`](../src/lib/reload/registry.lua):
+
+| moduleName | Куда попадает return модуля |
+|------------|----------------------------|
+| `utils.logger` | `_G.dump` |
+| `utils.generic` | `_G.Generic` |
+
+Чтобы добавить ещё один utils-файл: запись в `utilsGlobalSetters` (module name + setter на нужный global). Watcher уже следит за всем `src/utils/**`; без setter reload вернёт `utils reload not wired for …`.
+
+Scenario: файл должен быть в [`abilities_registry.lua`](../src/scenario/generated/abilities_registry.lua) (`bake` + `go` для новых путей).
 
 На reload: снимаются WC3-триггеры и TIMER-триггеры движка, очищаются Damage listeners, заново `registerEvents`. Отложенные `Timed.call` внутри способностей **не** отменяются.
 

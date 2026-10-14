@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 import time
 from dataclasses import dataclass, field
@@ -20,22 +19,14 @@ except ImportError:
     FileSystemEvent = object  # type: ignore[misc, assignment]
     Observer = None  # type: ignore[misc, assignment]
 
+from reload_contract import (
+    build_inbox_lua,
+    read_ack_seq,
+    reload_root,
+)
 
-def custom_map_data_dir() -> Path:
-    user = os.environ.get("USERPROFILE") or os.path.expanduser("~")
-    return Path(user) / "Documents" / "Warcraft III" / "CustomMapData"
-
-
-RELOAD_DIR = "shadowlands-melee-reload"
 WATCH_DIRS = ("scenario", "utils")
 DEBOUNCE_MS = 400
-
-
-def lua_long_string(s: str) -> str:
-    delim = ""
-    while f"]{delim}]" in s:
-        delim = delim + "="
-    return f"[{delim}[{s}]{delim}]"
 
 
 def rel_preload_key(project_root: Path, path: Path) -> str | None:
@@ -50,16 +41,6 @@ def rel_preload_key(project_root: Path, path: Path) -> str | None:
     if key.startswith("scenario/generated/"):
         return None
     return key
-
-
-def build_inbox_lua(seq: int, patches: list[tuple[str, str]]) -> str:
-    lines = ["return {", f"  seq = {seq},"]
-    lines.append("  patches = {")
-    for file_key, source in patches:
-        lines.append(f"    {{ file = {lua_long_string(file_key)}, source = {lua_long_string(source)} }},")
-    lines.append("  },")
-    lines.append("}")
-    return "\n".join(lines) + "\n"
 
 
 @dataclass
@@ -80,9 +61,6 @@ class PendingReload:
         self.seq += 1
         patches = sorted(self.files.items())
         payload = build_inbox_lua(self.seq, patches)
-        tools_dir = Path(__file__).resolve().parent
-        if str(tools_dir) not in sys.path:
-            sys.path.insert(0, str(tools_dir))
         from reload_fileio import write_inbox_for_fileio_load
 
         target = write_inbox_for_fileio_load(out_dir, payload, project_root, seq=self.seq)
@@ -122,9 +100,8 @@ class Handler(FileSystemEventHandler):
         self._handle(Path(event.src_path))
 
 
-def poll_loop(project_root: Path, out_dir: Path) -> None:
+def poll_loop(project_root: Path, out_dir: Path, pending: PendingReload) -> None:
     src = project_root / "src"
-    pending = PendingReload()
     mtimes: dict[Path, float] = {}
     baseline = False
 
@@ -165,11 +142,14 @@ def poll_loop(project_root: Path, out_dir: Path) -> None:
 
 
 def watch(project_root: Path) -> int:
-    out_dir = custom_map_data_dir() / RELOAD_DIR
+    out_dir = reload_root()
     out_dir.mkdir(parents=True, exist_ok=True)
+    ack_seq = read_ack_seq(out_dir)
+    pending = PendingReload(seq=ack_seq)
     print(f"[reload] out → {out_dir}")
+    if ack_seq > 0:
+        print(f"[reload] resume from ack seq={ack_seq} (next inbox={ack_seq + 1})")
 
-    pending = PendingReload()
     src = project_root / "src"
 
     if WATCHDOG and Observer is not None:
@@ -191,7 +171,7 @@ def watch(project_root: Path) -> int:
         return 0
 
     try:
-        poll_loop(project_root, out_dir)
+        poll_loop(project_root, out_dir, pending)
     except KeyboardInterrupt:
         return 0
 

@@ -1,10 +1,7 @@
 local Engine = require("lib.reload.engine")
 local Registry = require("lib.reload.registry")
+local Contract = require("lib.reload.contract")
 require("vendor.ext.FileIO")
-
-local RELOAD_FOLDER = "shadowlands-melee-reload"
-local INBOX_DIR = RELOAD_FOLDER .. "\\inbox"
-local ACK = RELOAD_FOLDER .. "\\ack.json"
 
 local Client = {
     lastSeq = 0,
@@ -36,12 +33,8 @@ local function loadInboxFromRaw(raw)
     return inbox
 end
 
-local function inboxPathFor(n)
-    return INBOX_DIR .. "\\" .. tostring(n) .. ".pld"
-end
-
 local function readNextInboxPayload()
-    local path = inboxPathFor(Client.nextInbound)
+    local path = Contract.inboxPath(Client.nextInbound)
     local raw = FileIO.Load(path)
     if not raw or raw == "" then
         return nil
@@ -71,11 +64,21 @@ local function applyReload(inbox)
 end
 
 local function writeAck(seq)
-    FileIO.Save(ACK, string.format('{"seq":%d,"ok":true}', seq))
+    FileIO.Save(Contract.ackPath(), string.format('{"seq":%d,"ok":true}', seq))
+end
+
+local function resumeFromAck()
+    local ackSeq = Contract.parseAckSeq(FileIO.Load(Contract.ackPath()))
+    if ackSeq <= 0 then
+        return
+    end
+    Client.lastSeq = ackSeq
+    Client.nextInbound = ackSeq + 1
+    log("resume ack seq=" .. tostring(ackSeq) .. " next inbox=" .. tostring(Client.nextInbound))
 end
 
 local function runFileioSelfTest()
-    local pingPath = RELOAD_FOLDER .. "\\_ping.pld"
+    local pingPath = Contract.pingPath()
     local ok, err = pcall(function()
         FileIO.Save(pingPath, "ping")
         local back = FileIO.Load(pingPath)
@@ -85,6 +88,7 @@ local function runFileioSelfTest()
     end)
     if ok then
         log("FileIO ok (fileioLoad in map)")
+        resumeFromAck()
     else
         Client.disabled = true
         log("FileIO self-test failed: " .. tostring(err))
@@ -131,7 +135,7 @@ function Client.start()
     if Client.pollCancel or Client.disabled then
         return
     end
-    log("poller started (" .. INBOX_DIR .. "\\N.pld)")
+    log("poller started (" .. Contract.inboxDir() .. "\\N.pld)")
     Timed.call(1, runFileioSelfTest)
     Client.pollCancel = Timed.echo(0.1, pollOnce)
 end
