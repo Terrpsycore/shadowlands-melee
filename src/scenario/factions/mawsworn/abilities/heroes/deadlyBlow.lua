@@ -25,6 +25,7 @@ local CONFIG = AbilityConfig.compile({
         },
     },
     balance = {
+        duration = 4,
         radius = 800,
     },
 })
@@ -72,7 +73,7 @@ local function onDamage(info)
     memory[info.source] = { target = info.target, expiresAt = GetElapsedGameTime() + CONFIG.balance.duration }
     if marked[info.target] then
         local owner = GetOwningPlayer(info.source)
-        UnitRemoveBuffBJ(CONFIG.refs.buffs.mark, marked[info.target])
+        UnitRemoveBuffBJ(CONFIG.refs.buffs.mark, info.target)
         Dummy.applyDummyOrder(owner, info.target, CONFIG.refs.abilities.stun, "thunderbolt", marked[info.target].level)
         marked[info.target] = nil
     end

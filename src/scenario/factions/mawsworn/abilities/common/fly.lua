@@ -6,6 +6,7 @@
 
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
+local Unit = require("utils.unit")
 
 local CONFIG = AbilityConfig.compile({
     refs = {
@@ -50,8 +51,8 @@ local function updateFlyingState(unit, status)
         order = "unravenform"
     end
     local success = IssueImmediateOrder(unit, order)
-    dump("IssueImmediateOrder", status, order, ordersuccess)
-    if success then
+    dump("IssueImmediateOrder 222", status, order, order, success)
+    if success or Unit.isFlying(unit) == status then
         memory[unit].flying = status
     end
     return success

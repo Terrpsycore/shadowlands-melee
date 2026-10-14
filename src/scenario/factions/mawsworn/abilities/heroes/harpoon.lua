@@ -11,16 +11,18 @@ local CONFIG = AbilityConfig.compile({
         abilities = {
             main = Ids.abilities.harpoon,
             dummy = Ids.abilities.harpoonDummy,
+            rootUI = Ids.abilities.harpoonRootUI,
         },
         buffs = {
             main = Ids.buffs.harpoon,
+            root = Ids.buffs.harpoonRoot,
         },
         units = {
             carrier = { Ids.units.forswornHero, Ids.units.forswornHeroFlying },
         },
     },
     balance = {
-        radius = 64,
+        radius = 200,
         rootDuration = 3,
         flushDelta = 0.5,
     },
@@ -39,6 +41,7 @@ end
 
 local function removeEffect(unit)
     SetUnitPropWindow(unit, rooted[unit].propWindow)
+    UnitRemoveBuffBJ(CONFIG.refs.buffs.root, unit)
     rooted[unit] = nil
 end
 
@@ -47,16 +50,25 @@ local function onSpell()
     local target = GetSpellTargetUnit()
     local level = GetUnitAbilityLevel(caster, CONFIG.refs.abilities.main)
 
-    memory[target] = { owner = GetOwningPlayer(caster), level = level }
+    local owner = GetOwningPlayer(caster)
+
+    memory[target] = { owner = owner, level = level }
+    Dummy.applyDummyOrder(owner, target, CONFIG.refs.abilities.rootUI, "acidbomb", level)
+    dump("harpoon onSpell save memory", memory)
 end
 
 --- @param info damageInfo
 local function onAfterDamage(info)
     local source = info.source
     local target = info.target
+    dump("harpoon onAfterDamage", memory[target], UnitHasBuffBJ(target, CONFIG.refs.buffs.main))
     Timed.call(0.1, function()
         if memory[target] and UnitHasBuffBJ(target, CONFIG.refs.buffs.main) then
             applyEffect(target)
+            local neighbours = Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
+                return not IsUnitAlly(u, GetOwningPlayer(source))
+            end)
+            dump("harpoon Timed.call neighbours", #neighbours)
             for _, unit in
                 ipairs(Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
                     return not IsUnitAlly(u, GetOwningPlayer(source))
@@ -66,8 +78,15 @@ local function onAfterDamage(info)
                 Dummy.applyDummyOrder(
                     GetOwningPlayer(source),
                     unit,
-                    CONFIG.refs.abilities.harpoonDummy,
+                    CONFIG.refs.abilities.dummy,
                     "thunderbolt",
+                    memory[target].level
+                )
+                Dummy.applyDummyOrder(
+                    GetOwningPlayer(source),
+                    target,
+                    CONFIG.refs.abilities.rootUI,
+                    "acidbomb",
                     memory[target].level
                 )
             end

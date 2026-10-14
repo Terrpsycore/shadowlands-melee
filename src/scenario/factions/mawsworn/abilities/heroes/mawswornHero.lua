@@ -18,7 +18,9 @@ local CONFIG = AbilityConfig.compile({
             carrier = { Ids.units.forswornHero, Ids.units.mawcasterHero, Ids.units.mournebladeHero },
         },
     },
-    balance = {},
+    balance = {
+        stacksPerHit = 4,
+    },
 })
 
 -- local memory = {} -- TODO: save/load -- process 1.33/1.5 WS stacks per hit
@@ -30,7 +32,7 @@ local function onDamage(info)
     end
     WS.api.applyWeakenedSoulStack(
         info.target,
-        10, -- tmp
+        CONFIG.balance.stacksPerHit, -- tmp
         GetOwningPlayer(info.source)
     )
 end

@@ -100,9 +100,9 @@ local function onDamage(info)
     end
     if memory[source].lastHitTo and memory[source].lastHitTo ~= target then
         targetToMourneblade[memory[source].lastHitTo] = nil
-        memory[source].lastHitTo = target
-        memory[source].lastHitAt = GetElapsedGameTime()
     end
+    memory[source].lastHitTo = target
+    memory[source].lastHitAt = GetElapsedGameTime()
     targetToMourneblade[target] = source
 end
 

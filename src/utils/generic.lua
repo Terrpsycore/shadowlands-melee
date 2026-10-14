@@ -86,6 +86,16 @@ function Generic.removeValue(t, value)
     return false
 end
 
+--- @param t table
+--- @result integer
+function Generic.length(t)
+    local result = 0
+    for _, _ in pairs(t) do
+        result = result + 1
+    end
+    return result
+end
+
 --- @param a {x:number,y:number}
 --- @param b {x:number,y:number}
 function Generic.distance(a, b)

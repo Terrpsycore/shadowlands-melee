@@ -132,6 +132,10 @@ return {
             a:setDurationHero(level, 0.3)
         end),
     }),
+    harpoonRootUI = A.nonDispellableTargetDebuff({
+        name = "Harpoon",
+        buffs = { "harpoonRoot" },
+    }),
     promoteLeutinantDamageBuff = A.auraCommandCreep({
         name = "Promote Leutinant",
         buffs = { "promoteLeutinant" },

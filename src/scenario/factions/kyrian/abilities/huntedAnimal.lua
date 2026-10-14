@@ -13,6 +13,9 @@ local CONFIG = AbilityConfig.compile({
         buffs = {
             main = Ids.buffs.huntedAnimal,
         },
+        units = {
+            carrier = Ids.units.larion,
+        },
     },
 })
 
@@ -31,10 +34,12 @@ return {
     triggers = {
         {
             trigger = "STUN",
+            filter = { target = CONFIG.refs.units.carrier },
             action = onFullDisable,
         },
         {
             trigger = "ROOT",
+            filter = { target = CONFIG.refs.units.carrier },
             action = onFullDisable,
         },
     },
