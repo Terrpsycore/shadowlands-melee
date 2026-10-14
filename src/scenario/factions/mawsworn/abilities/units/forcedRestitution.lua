@@ -22,6 +22,7 @@ local CONFIG = AbilityConfig.compile({
     balance = {
         decayDamagePerSecond = 3,
         timerDelta = 0.5,
+        radius = 600,
     },
 })
 
@@ -33,9 +34,9 @@ local function onSpell()
     local owner = GetOwningPlayer(target)
 
     for _, unit in
-        Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
+        ipairs(Unit.getUnitsInRadius(target, CONFIG.balance.radius, function(u)
             return IsUnitAlly(u, owner) -- TODO: type organic
-        end)
+        end))
     do
         memory[unit] = { buffApplied = UnitHasBuffBJ(unit, CONFIG.refs.buffs.decay) }
         Dummy.applyDummyOrder(owner, unit, CONFIG.refs.abilities.decay, "acidbomb")

@@ -136,8 +136,18 @@ return setmetatable({
             a:setTargetsAllowed(level, "self")
         end,
     }),
+    passiveEnemyAura = presetFactory(F.slowAura, {
+        apply = function(a, level)
+            a:setMovementSpeedFactor(level, 0)
+            a:setAttackSpeedFactor(level, 0)
+        end,
+    }),
     nonDispellableSelfBuffTimed = presetFactory(F.berserkerRage1, {
         apply = function(a, level)
+            a:setTargetsAllowed(
+                level,
+                "air,ground,player,neutral,allied,enemy,self,hero,nonhero,alive,mechanical,organic,ward"
+            )
             a:setAttackSpeedIncrease(level, 0)
             a:setMovementSpeedIncrease(level, 0)
             a:setDamageTakenIncrease(level, 0)
@@ -145,6 +155,10 @@ return setmetatable({
     }),
     nonDispellableTargetDebuff = presetFactory(F.acidBomb, {
         apply = function(a, level)
+            a:setTargetsAllowed(
+                level,
+                "air,ground,player,neutral,allied,enemy,self,hero,nonhero,alive,mechanical,organic,ward"
+            )
             a:setDamageInterval(level, 1)
             a:setPrimaryDamage(level, 0)
             a:setMovementSpeedReduction(level, 0)
@@ -158,12 +172,20 @@ return setmetatable({
     }),
     dispellableTargetBuff = presetFactory(F.innerFire, {
         apply = function(a, level)
+            a:setTargetsAllowed(
+                level,
+                "air,ground,player,neutral,allied,enemy,self,hero,nonhero,alive,mechanical,organic,ward"
+            )
             a:setDefenseIncrease(level, 0)
             a:setDamageIncrease(level, 0)
         end,
     }),
     dispellableTargetDebuff = presetFactory(F.curse, {
         apply = function(a, level)
+            a:setTargetsAllowed(
+                level,
+                "air,ground,player,neutral,allied,enemy,self,hero,nonhero,alive,mechanical,organic,ward"
+            )
             a:setChancetoMiss(level, 0)
         end,
     }),

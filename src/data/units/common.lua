@@ -123,7 +123,7 @@ return {
             u:setHitPointsRegenerationRate(0)
             u:setHitPointsRegenerationType("never")
             u:setManaMaximum(1000)
-            u:setManaInitialAmount(1000)
+            u:setManaInitialAmount(0)
             u:setManaRegeneration(0)
             u:setAttacksEnabled(0)
         end,

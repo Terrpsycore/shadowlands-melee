@@ -4,7 +4,7 @@ local Icons = require("vendor.assets.generated.Icons")
 
 return {
     -- Main
-    suppressingAura = A.slowAura({
+    suppressingAura = A.passiveEnemyAura({
         name = "Suppressing Aura",
         levels = 3,
         buffs = { "suppressingAura" },

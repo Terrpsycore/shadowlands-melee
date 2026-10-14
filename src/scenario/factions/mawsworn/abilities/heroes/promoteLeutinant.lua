@@ -42,10 +42,12 @@ local function applyEffect(unit, level)
         UnitAddAbility(unit, CONFIG.refs.abilities.damage)
     end
     if GetUnitAbilityLevel(unit, CONFIG.refs.abilities.hp) == 0 then
-        UnitAddAbility(unit, CONFIG.refs.abilities.hp)
+        local s = UnitAddAbility(unit, CONFIG.refs.abilities.hp)
+        dump("hp abil success", s)
     end
     SetUnitAbilityLevel(unit, CONFIG.refs.abilities.damage, level)
-    SetUnitAbilityLevel(unit, CONFIG.refs.abilities.hp, level)
+    local s = SetUnitAbilityLevel(unit, CONFIG.refs.abilities.hp, level)
+    dump("hp abil success", s)
 end
 
 --- @param unit unit

@@ -1,4 +1,5 @@
--- BUG: DoT doesnt seem to work
+-- TODO:
+-- - BUG: burned enemy dies without giving exp -> replace with triggered DoT
 
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")

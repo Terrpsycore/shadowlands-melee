@@ -143,6 +143,9 @@ return {
         name = "Promote Leutinant",
         buffs = { "promoteLeutinant" },
         levels = 3,
+        apply = A.auraCommandCreep.apply(function(a, level)
+            a:setAreaofEffect(level, 0)
+        end),
     }),
     promoteLeutinantHp = A.itemLifeBonus({
         name = "Promote Leutinant",
@@ -175,10 +178,13 @@ return {
     -- Mage hero
     eatSoulRegenTimed = A.rejuvenation({
         name = "Eat Soul",
+        buffs = { "eatSoulRegen" },
         levels = 3,
         apply = A.rejuvenation.apply(function(a, level)
             a:setAllowWhenFull(level, 3)
+            a:setHitPointsGained(level, 0)
             a:setManaPointsGained(level, level * 50)
+            a:setCastRange(level, 500)
         end),
     }),
     twistedPainDamage = A.immolation({

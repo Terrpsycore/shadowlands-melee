@@ -62,6 +62,7 @@ local function onTimer()
     for i = #memory, 1, -1 do
         local unit = memory[i]
         if not UnitHasBuffBJ(unit, CONFIG.refs.buffs.main) then
+            dump("disarm remove")
             UnitRemoveAbility(unit, CONFIG.refs.abilities.effect)
             table.remove(memory, i)
         end

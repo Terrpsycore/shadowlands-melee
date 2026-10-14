@@ -131,9 +131,9 @@ local function findSoul(point, radius, sources)
                 holder = nearestOrphan
             end
         elseif source == "gorgoa" then
-            local nearestOrphan --- @type item|nil
+            local nearestOrphan --- @type unit|nil
             local nearestOrphanD --- @type number|nil
-            for unit, _ in pairs(orphanItemHolders) do
+            for unit, _ in pairs(gorgoaUnits) do
                 local d = Generic.distance(point, unit)
                 if not nearestOrphan or d < nearestOrphanD then
                     nearestOrphan = unit

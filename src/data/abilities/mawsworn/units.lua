@@ -82,6 +82,8 @@ return {
             a:setAttackSpeedFactor(level, 0)
             a:setMovementSpeedFactor(level, 0)
             a:setStackingType(level, 0)
+            a:setDurationNormal(level, 5)
+            a:setDurationHero(level, 3)
         end),
     }),
     soulEaterFly = A.stormCrowForm({
@@ -172,6 +174,7 @@ return {
     betrayalSeed = A.channelTarget({
         name = "Betrayal Seed",
         art = { icon = Icons.thunderlizardegg },
+        order = "shadowstrike",
     }),
     -- Charred Behemoth
     threateningRoar = A.pitLordHowlofTerror({ -- check conflicts with same parent abilities
@@ -340,6 +343,9 @@ return {
     threateningRoarEffect = A.itemLifeBonus({ -- mb in future replace with dummy debuff to show debuff level in UI
         name = "Threatening Roar",
         levels = 3,
+        apply = A.itemLifeBonus.apply(function(a, level)
+            a:setMaxLifeGained(level, -100)
+        end),
     }),
     threateningRoarLevelUI = A.devotionAura({
         name = "Threatening Roar",

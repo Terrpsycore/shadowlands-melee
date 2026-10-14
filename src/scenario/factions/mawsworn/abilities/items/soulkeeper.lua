@@ -214,7 +214,8 @@ local function onActivate()
         return
     end
 
-    local q = Souls.api.find(caster, 400, { "orphan", "corpse" })
+    local q = Souls.api.find(caster, 400, { "orphan", "gorgoa", "corpse" })
+    dump("search gorgoa")
     if q then
         local success = Souls.api.use(q.holderType, q.holder)
         if success then

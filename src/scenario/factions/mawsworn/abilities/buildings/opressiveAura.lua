@@ -29,10 +29,12 @@ local CONFIG = AbilityConfig.compile({
 local memory = {}
 
 local function onTimer()
+    dump("opressiveAura onTimer")
     for unit, data in pairs(memory) do
         local owner = data.owner
         data.beforePulse = data.beforePulse - CONFIG.balance.timerRate
-        if data <= 0 then
+        dump("opressiveAura onTimer", unit, data.beforePulse)
+        if data.beforePulse <= 0 then
             data.beforePulse = data.pulseRate
             for _, u in
                 ipairs(Unit.getUnitsInRadius(unit, CONFIG.balance.radius, function(x)

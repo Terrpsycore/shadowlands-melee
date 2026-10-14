@@ -33,6 +33,10 @@ return {
         parent = BuffIds.acidBomb,
         name = "Twisted Pain",
     },
+    eatSoulRegen = {
+        parent = BuffIds.rejuvenation,
+        name = "Eat Soul",
+    },
     promoteLeutinant = {
         parent = BuffIds.trueshotAura,
         name = "Promote Leutinant",
@@ -70,7 +74,7 @@ return {
         name = "Stygian Shield",
     },
     disarmInit = {
-        parent = BuffIds.coldArrowsInfo,
+        parent = BuffIds.coldArrowsNonStacking,
         name = "Disarm",
     },
     disarm = {
@@ -78,7 +82,7 @@ return {
         name = "Disarm",
     },
     malignantBoltInit = {
-        parent = BuffIds.poisonInfo,
+        parent = BuffIds.poisonNonStacking,
         name = "Malignant Bolt",
     },
     malignantBolt = {

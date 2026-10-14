@@ -1,5 +1,6 @@
 --[[
 TODO:
+-- BUG: info.damage == 0, but unit gets full damage anyway
 -- ? diminishing
 ]]
 
@@ -58,16 +59,20 @@ end
 --- @param info damageInfo
 local function onDamage(info)
     if not memory[info.target] then
+        dump("stygianShield no memory - break")
         return
     end
     if not UnitHasBuffBJ(info.target, CONFIG.refs.buffs.main) then
+        dump("stygianShield no buff - break")
         memory[info.target] = nil
         return
     end
     local shieldAmount = memory[info.target].shieldAmount
     if shieldAmount then
         local soaked = math.min(info.damage, shieldAmount)
-        info.damage = info.damage - soaked
+        dump("stygianShield shieldAmount before", info.damage)
+        info.damage = info.damage - soaked -- BUG
+        dump("stygianShield shieldAmount after", info.damage, "soaked", soaked)
 
         memory[info.target].shieldAmount = shieldAmount - soaked
         if soaked == shieldAmount then

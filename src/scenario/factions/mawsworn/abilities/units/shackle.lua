@@ -1,4 +1,6 @@
 --[[
+- BUG: recursive cycle
+- ? maybe don't spend duration points if another shackle spends point
 - ? upgrade shackle power
 - ? apply shackle power to current HP, not only max (weaker units surrender easier)
 ]]
@@ -33,6 +35,7 @@ local shacklers = {}
 
 local function removeShackle(shackler)
     local target = shacklers[shackler].target
+    -- dump("removeShackle", shacklers[shackler], shackles[target].shacklers) -- BUG
     shacklers[shackler] = nil
 
     Generic.removeValue(shackles[target].shacklers, shackler)

@@ -4,6 +4,7 @@
 3. on cast finish -> detonate
 
 TODO:
+-- ADD COOLDOWN BETWEEN PROCKS ON SAME UNIT
 -- ? on skill level learn - update buff
 ]]
 

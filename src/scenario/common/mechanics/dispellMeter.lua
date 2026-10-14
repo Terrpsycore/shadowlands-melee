@@ -24,6 +24,7 @@ local CONFIG = AbilityConfig.compile({
 --- @param per {buff: dispellMetricsCategory, unit: dispellMetricsCategory}
 --- @param resultCallback function
 local function dispellCount(owner, order, per, resultCallback)
+    dump("dispellCount", owner, order, per, resultCallback)
     local dummy = Dummy.create(owner, order.target, order.ability, order.level, CONFIG.refs.units.dummy)
     Unit.applyTimedLife(dummy, 10)
     local manaBefore = Unit.getCurrentMana(dummy)

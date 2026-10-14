@@ -1,4 +1,5 @@
 --[[
+BUG: doesn't stack from different units
 ]]
 
 local Ids = require("data.ids")
@@ -42,7 +43,8 @@ local function onAfterDamage(info)
             stacks = 0,
         }
     end
-    memory[info.target].stacks = memory[info.target].stacks + 1
+    memory[info.target].stacks = math.min(CONFIG.balance.maxStacks, memory[info.target].stacks + 1)
+    dump("foulBite stacks ->", memory[info.target].stacks)
 end
 
 local function onTimer()
@@ -58,6 +60,7 @@ local function onTimer()
                 DAMAGE_TYPE_POISON
             )
             memory[unit] = nil
+            dump("foulBite stacks -> 0 by timer")
         end
     end
 end

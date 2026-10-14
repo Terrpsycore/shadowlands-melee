@@ -32,7 +32,9 @@ local function onDamage(info)
         return
     end
     local bonusDamage = stacks * CONFIG.balance.bonusDamagePerStack
+    dump("damage before", info.damage)
     info.damage = info.damage + bonusDamage
+    dump("damage after", info.damage)
     Unit.applyTimedFloatingText(info.target, bonusDamage, "red")
 end
 

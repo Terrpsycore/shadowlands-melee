@@ -1,6 +1,8 @@
 --[[
 TODO:
+- BUG: mawChainAttack misorder - can't proof that declarative order is set ingame
 - upgrade reqs
+- relink position (always bottom left corner currently)
 ]]
 
 local Ids = require("data.ids")
@@ -28,7 +30,7 @@ local CONFIG = AbilityConfig.compile({
 })
 
 ---@diagnostic disable-next-line: param-type-mismatch
-local basements = Generic.toArray(CONFIG.refs.units.basement)
+local basements = Generic.toSet(CONFIG.refs.units.basement)
 
 local ORDERS = {
     retreat = "acidbomb",
@@ -45,9 +47,13 @@ local function relink(unit, building)
 end
 
 local function attackStart(unit, point)
-    IssueImmediateOrder(unit, "stop")
     UnitAddAbility(unit, CONFIG.refs.abilities.moveToAttack)
-    IssuePointOrder(unit, "shadowstrike", point.x, point.y)
+    local success = IssuePointOrder(unit, "shadowstrike", point.x, point.y)
+    dump("attackStart IssuePointOrder", success)
+    if not success then
+        local s = IssueImmediateOrder(unit, "stop")
+        dump("attackStart IssueImmediateOrder", s)
+    end
 end
 
 local function damageStart(unit, point)
@@ -79,7 +85,6 @@ end
 -- Events
 
 local function onCreate()
-    dump("onCreate unit setPropWindow")
     local unit = GetEnteringUnit()
     SetUnitPropWindow(unit, 0)
 
@@ -93,9 +98,13 @@ local function onRelink()
     local targetY = GetSpellTargetY()
 
     local basement = Unit.getNearestUnit({ x = targetX, y = targetY }, CONFIG.balance.radius, function(u)
+        for k, _ in pairs(basements) do
+            dump(k, GetUnitTypeId(u))
+        end
         return basements[GetUnitTypeId(u)]
     end)
 
+    dump(basements, basement)
     if not basement then
         dump("Basement not found")
         return
@@ -105,16 +114,20 @@ local function onRelink()
 end
 
 local function onOrder()
+    dump("mawChain onOrder")
     local unit = GetOrderedUnit()
     local order = GetIssuedOrderId()
     local x
     local y
     if memory[unit].isAttacking then
+        dump("mawChain onOrder isAttacking")
         -- retreat (channel cancelled)
         fallbackStart(unit, memory[unit].chainedTo)
         return
     else
+        dump("mawChain onOrder not isAttacking")
         if order == String2OrderIdBJ("smart") then
+            dump("mawChain onOrder stop")
             IssueImmediateOrder(unit, "stop")
             return
         elseif order == String2OrderIdBJ("attack") then
@@ -129,10 +142,12 @@ local function onOrder()
         end
     end
 
+    dump("mawChain onOrder attackStart")
     attackStart(unit, { x = x, y = y })
 end
 
 local function onCastAttack()
+    dump("mawChain onCastAttack")
     local unit = GetTriggerUnit()
     local targetX = GetSpellTargetX()
     local targetY = GetSpellTargetY()
@@ -140,11 +155,13 @@ local function onCastAttack()
 end
 
 local function onEndAttack()
+    dump("mawChain onEndAttack")
     local unit = GetTriggerUnit()
     damageFinish(unit)
 end
 
 local function onCastFallback()
+    dump("mawChain onCastFallback")
     local unit = GetTriggerUnit()
     local targetX = GetSpellTargetX()
     local targetY = GetSpellTargetY()
@@ -182,6 +199,11 @@ return {
             trigger = "EVENT_PLAYER_UNIT_SPELL_FINISH",
             spellId = CONFIG.refs.abilities.retreat,
             action = onCastFallback,
+        },
+        {
+            trigger = "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+            spellId = CONFIG.refs.abilities.relink,
+            action = onRelink,
         },
     },
     config = CONFIG,

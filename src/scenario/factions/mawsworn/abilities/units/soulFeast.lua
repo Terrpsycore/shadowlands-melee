@@ -1,3 +1,5 @@
+-- TODO
+-- - regen while feasting
 local Ids = require("data.ids")
 local AbilityConfig = require("lib.ability.config")
 local removeControl = require("scenario.common.control")
@@ -42,7 +44,7 @@ local function periodicOrder(unit, x, y)
         if GetUnitState(unit, UNIT_STATE_LIFE) >= BlzGetUnitMaxHP(unit) - 1 then
             SetUnitState(unit, UNIT_STATE_LIFE, BlzGetUnitMaxHP(unit) - 5)
         end
-        IssueImmediateOrder(unit, "cannibalize")
+        IssueImmediateOrder(unit, "channel")
     else
         reordering = true
         IssuePointOrder(unit, "move", x, y)

@@ -1,4 +1,6 @@
 --[[
+-- TODO
+-- - ? different damage/root duration for main and secondary targets
 ]]
 
 local Ids = require("data.ids")
