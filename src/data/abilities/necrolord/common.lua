@@ -1,3 +1,5 @@
+local Orders = require("data.generated.Orders")
+
 local A = require("data.abilityPresets")
 
 -- TODO
@@ -167,10 +169,7 @@ return {
         end),
     }),
     stitchingFaeCreateIllusion = A.itemIllusions({
-        apply = A.itemIllusions.apply(function(a)
-            a:setOrderStringActivate("channel")
-            a:setOrderStringUseTurnOn("channel")
-        end),
+        order = Orders.channel,
     }),
     stitchingVenthyrLeech = A.itemLifeSteal({
         apply = A.itemLifeSteal.apply(function(a)

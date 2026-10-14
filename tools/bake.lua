@@ -15,6 +15,8 @@ if not iconsFile then
 end
 iconsFile:close()
 
+dofile("tools/gen/orders_catalog.lua")
+dofile("tools/gen/vanilla_ability_orders.lua")
 dofile("tools/gen/objediting_meta.lua")
 dofile("tools/gen/ability_kinds.lua")
 dofile("tools/gen/ids.lua")

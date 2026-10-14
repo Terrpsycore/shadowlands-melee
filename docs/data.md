@@ -136,7 +136,7 @@ spiritLink = A.spiritLink({
 | `requirements` | string | по умолчанию `""` (сброс унаследованных) |
 | `options` | integer | `setOptions` на каждом уровне (битовые флаги WC3) |
 | `autocastRange` | number | уровень 1 |
-| `order` | string | base order ID на каждом уровне + order strings turn-on / activate. Нужен, когда несколько custom-способностей на одном юните наследуют один order (`"shadowstrike"`, `"innerfire"`) |
+| `order` | `OrderString` \| `{ on: OrderString, off: OrderString }` | base order ID на каждом уровне + order strings (turn-on/activate или on/off для toggle). Значения — `Orders.<name>` из `require("data.generated.Orders")`, не сырые строки. **Не задан** — bake берёт order vanilla `parent` (`data.generated.vanilla_ability_orders`); `lib.abilities.orderId` работает без дублирования. Явный `order` — когда несколько custom-способностей на одном юните делят один vanilla order и нужны разные строки. Пассивы / dummy без cast order — auto `orderExcluded` или `orderExcludes` в `tools/gen/config/ability_excludes.lua` |
 | `art` | `{ icon, iconOff, iconResearch }` | `icon` → normal **и** research; `iconOff` → turn-off; `iconResearch` переопределяет research. `""` сбрасывает унаследованную иконку |
 | `apply` | function | см. общие правила |
 

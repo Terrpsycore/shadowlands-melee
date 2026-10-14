@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Orders = require("data.generated.Orders")
 
 local A = require("data.abilityPresets")
 local Icons = require("vendor.assets.generated.Icons")
@@ -163,11 +164,7 @@ return {
         levels = 3,
         art = { icon = Icons.orbofdeath },
         hotkey = "Q",
-        apply = A.channelArea.apply(function(a, level)
-            a:setBaseOrderID(level, "shadowstrike")
-            a:setOrderStringUseTurnOn("shadowstrike")
-            a:setOrderStringActivate("shadowstrike")
-        end),
+        order = Orders.shadowstrike,
     }),
     necroticEruptionDummySlow = A.thunderClap({
         name = "Necrotic Eruption",
@@ -221,26 +218,24 @@ return {
     sigilOfDroughtDrainMana = A.siphonMana({
         name = "Sigil of Drought",
         levels = 3,
+        order = Orders.channel,
         apply = A.siphonMana.apply(function(a, level)
             a:setManaCost(level, 0)
             a:setDurationNormal(level, 1.1)
             a:setDurationHero(level, 1.1)
             a:setManaPointsDrained(level, 200 * level)
-            a:setOrderStringActivate("channel")
-            a:setOrderStringUseTurnOn("channel")
             a:setCastRange(level, 9999)
         end),
     }),
     sigilOfDroughtTransferMana = A.siphonMana({
         name = "Sigil of Drought",
         levels = 3,
+        order = Orders.channel,
         apply = A.siphonMana.apply(function(a, level)
             a:setManaCost(level, 0)
             a:setDurationNormal(level, 1)
             a:setDurationHero(level, 1.1)
             a:setManaTransferredPerSecond(level, 100 * level)
-            a:setOrderStringActivate("channel")
-            a:setOrderStringUseTurnOn("channel")
             a:setCastRange(level, 9999)
         end),
     }),

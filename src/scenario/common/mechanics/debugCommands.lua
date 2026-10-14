@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Abilities = require("lib.abilities")
 local Selection = require("scenario.common.mechanics.selection")
 local Storage = require("lib.storage.storage")
 local Spawn = require("spawn")
@@ -270,10 +271,21 @@ local commands = {
         end,
     },
     {
-        pattern = "^cast (%d+) (%S+) (%S+)$",
+        pattern = "^cast (%d+) (%S+) (%S*)$",
         needsUnit = true,
-        run = function(player, unit, ownerStr, skillToken, order)
-            applyDummyTargetOrder(player, tonumber(ownerStr), unit, skillToken, order)
+        run = function(player, unit, ownerStr, skillToken, modeStr)
+            local abilityId = resolveAbilityId(skillToken)
+            if not abilityId then
+                say(player, 'Debug: unknown ability "' .. skillToken .. '" (slug or 4-char rawcode).')
+                return
+            end
+            local mode = modeStr ~= "" and modeStr or nil
+            local ok, orderOrErr = pcall(Abilities.orderId, abilityId, mode)
+            if not ok then
+                say(player, "Debug: " .. tostring(orderOrErr))
+                return
+            end
+            applyDummyTargetOrder(player, tonumber(ownerStr), unit, skillToken, orderOrErr)
         end,
     },
     {

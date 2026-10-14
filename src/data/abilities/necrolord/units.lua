@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Orders = require("data.generated.Orders")
 
 local A = require("data.abilityPresets")
 local Icons = require("vendor.assets.generated.Icons")
@@ -123,19 +124,13 @@ return {
         name = "Apply Limb",
         art = { icon = Icons.amuletOftheWild },
         hotkey = "Q",
-        apply = A.channelTarget.apply(function(a)
-            a:setBaseOrderID(1, "bloodlust")
-            a:setOrderStringUseTurnOn("bloodlust")
-        end),
+        order = Orders.bloodlust,
     }),
     scissorSoul = A.channelTarget({
         name = "Scissor Soul",
         art = { icon = Icons.manaFlare },
         hotkey = "W",
-        apply = A.channelTarget.apply(function(a)
-            a:setBaseOrderID(1, "innerfire")
-            a:setOrderStringUseTurnOn("innerfire")
-        end),
+        order = Orders.innerfire,
     }),
     scissorSoulDummy = A.nonDispellableTargetDebuff({
         buffs = { "scissorSoul" },
@@ -155,10 +150,7 @@ return {
         name = "Better Body",
         art = { icon = Icons.bloodfury },
         hotkey = "E",
-        apply = A.channelTarget.apply(function(a)
-            a:setBaseOrderID(1, "thunderbolt")
-            a:setOrderStringUseTurnOn("thunderbolt")
-        end),
+        order = Orders.thunderbolt,
     }),
     betterBodyPossession = A.possession({
         name = "Better Body",
@@ -201,26 +193,17 @@ return {
     concoctPotionExplosive = A.channelTarget({
         name = "Concoct Explosive Potion",
         hotkey = "Q",
-        apply = A.channelNoTarget.apply(function(a)
-            a:setBaseOrderID(1, "bloodlust")
-            a:setOrderStringUseTurnOn("bloodlust")
-        end),
+        order = Orders.bloodlust,
     }),
     concoctPotionHealing = A.channelTarget({
         name = "Concoct Healing Potion",
         hotkey = "W",
-        apply = A.channelNoTarget.apply(function(a)
-            a:setBaseOrderID(1, "innerfire")
-            a:setOrderStringUseTurnOn("innerfire")
-        end),
+        order = Orders.innerfire,
     }),
     concoctPotionFrenzy = A.channelTarget({
         name = "Concoct Frenzy Potion",
         hotkey = "E",
-        apply = A.channelNoTarget.apply(function(a)
-            a:setBaseOrderID(1, "thunderbolt")
-            a:setOrderStringUseTurnOn("thunderbolt")
-        end),
+        order = Orders.thunderbolt,
     }),
     concoctedExplosionActive = A.channelNoTarget({
         apply = A.channelNoTarget.apply(function(a)

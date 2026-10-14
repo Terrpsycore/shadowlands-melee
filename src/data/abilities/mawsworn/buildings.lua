@@ -1,6 +1,7 @@
 local A = require("data.abilityPresets")
 local Ids = require("data.ids")
 local Icons = require("vendor.assets.generated.Icons")
+local Orders = require("data.generated.Orders")
 
 return {
     -- Main
@@ -34,31 +35,19 @@ return {
         name = "Forge Cloak",
         button = { 0, 0 },
         hotkey = "Q",
-        apply = A.spellBook.apply(function(a, level)
-            a:setBaseOrderID(level, "shadowstrike")
-            a:setOrderStringUseTurnOn("shadowstrike")
-            a:setOrderStringActivate("shadowstrike")
-        end),
+        order = Orders.shadowstrike,
     }),
     soulforgeForgeGauntlets = A.channelNoTarget({
         name = "Forge Gauntlets",
         button = { 1, 0 },
         hotkey = "W",
-        apply = A.spellBook.apply(function(a, level)
-            a:setBaseOrderID(level, "innerfire")
-            a:setOrderStringUseTurnOn("innerfire")
-            a:setOrderStringActivate("innerfire")
-        end),
+        order = Orders.innerfire,
     }),
     soulforgeForgeSpikedArmor = A.channelNoTarget({
         name = "Forge Spiked Armor",
         button = { 2, 0 },
         hotkey = "E",
-        apply = A.spellBook.apply(function(a, level)
-            a:setBaseOrderID(level, "thunderclap")
-            a:setOrderStringUseTurnOn("thunderclap")
-            a:setOrderStringActivate("thunderclap")
-        end),
+        order = Orders.thunderclap,
     }),
     -- Cage
     mawswornCageInventory = A.inventory({

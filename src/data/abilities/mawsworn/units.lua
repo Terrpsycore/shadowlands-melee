@@ -1,5 +1,6 @@
 local Ids = require("data.ids")
 local Icons = require("vendor.assets.generated.Icons")
+local Orders = require("data.generated.Orders")
 
 local A = require("data.abilityPresets")
 
@@ -31,7 +32,7 @@ return {
             a:setFollowThroughTime(level, 10) -- max duration
             a:setArtDuration(level, 10)
         end),
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
     }),
     malignantBolt = A.poisonArrows({
         name = "Malignant Bolt",
@@ -98,7 +99,7 @@ return {
     glare = A.channelTarget({
         name = "Glare",
         art = { icon = Icons.edricsEye },
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
         apply = A.channelTarget.apply(function(a, level)
             a:setFollowThroughTime(level, 30) -- max duration
             a:setArtDuration(level, 30)
@@ -111,7 +112,7 @@ return {
     glareGreater = A.channelTarget({
         name = "Glare",
         art = { icon = Icons.edricsEye },
-        order = "innerfire",
+        order = Orders.innerfire,
         apply = A.channelTarget.apply(function(a, level)
             a:setFollowThroughTime(level, 30) -- max duration
             a:setArtDuration(level, 30)
@@ -122,7 +123,7 @@ return {
     blazingPurge = A.channelTarget({
         name = "Blazing Purge",
         art = { icon = Icons.purge },
-        order = "purge",
+        order = Orders.purge,
     }),
     infusion = A.channelTarget({
         name = "Infusion",
@@ -132,7 +133,7 @@ return {
             a:setArtDuration(level, 5)
             a:setCastRange(level, 5.5)
         end),
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
     }),
     burnResidue = A.channelArea({
         name = "Burn Residue",
@@ -152,7 +153,7 @@ return {
         name = "Calcify",
         buffs = { "calcify" },
         art = { icon = Icons.icecolddiamond },
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
     }),
     -- Dom caster
     fallenMorale = A.channelTarget({
@@ -191,7 +192,7 @@ return {
     }),
     mawChainFallback = A.channelTarget({
         name = "Fallback",
-        order = "acidbomb",
+        order = Orders.acidbomb,
     }),
     -- == Dummy & Effects & etc. == --
     stygianShieldBuff = A.nonDispellableTargetDebuff({
@@ -353,7 +354,7 @@ return {
     -- Maw Chain
     mawChainAttack = A.channelPoint({
         name = "Maw Chain Attack",
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
         apply = A.channelPoint.apply(function(a, level)
             -- a:set cast time, blocks other spells
         end),

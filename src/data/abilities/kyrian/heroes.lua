@@ -1,5 +1,6 @@
 -- TODO: fly-ground abilities
 local Ids = require("data.ids")
+local Orders = require("data.generated.Orders")
 
 local A = require("data.abilityPresets")
 
@@ -51,9 +52,9 @@ return {
         name = "Reusables",
         levels = 3,
         button = { 1, 2 },
+        order = Orders.taunt,
         apply = A.channelTarget.apply(function(a)
             for level = 1, 3 do
-                a:setBaseOrderID(level, "taunt")
                 a:setTargetType(level, 1)
                 a:setDisableOtherAbilities(level, false)
                 a:setFollowThroughTime(level, 0)
@@ -186,11 +187,8 @@ return {
         button = { 0, 2 },
         hotkey = "E",
         buffs = { "oneMoreChance" },
+        order = Orders.innerfire,
         apply = A.channelTarget.apply(function(a)
-            a:setBaseOrderID(1, "innerfire")
-            a:setBaseOrderID(2, "innerfire")
-            a:setBaseOrderID(3, "innerfire")
-            a:setOrderStringUseTurnOn("innerfire")
             a:setTargetType(1, 1)
             a:setDisableOtherAbilities(1, false)
         end),
@@ -227,9 +225,9 @@ return {
         levels = 1,
         button = { 0, 2 },
         hotkey = "R",
+        order = Orders.bloodlust,
         apply = A.channelNoTarget.apply(function(a)
             a:setFollowThroughTime(1, 5)
-            a:setOrderStringUseTurnOn("bloodlust")
         end),
     }),
     lastStandAura = A.slowAura({

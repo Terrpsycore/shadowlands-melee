@@ -23,7 +23,7 @@ In-game чат для локальной отладки. Реализация: [
 | `remove` | `RemoveUnit` |
 | `spawn <unitSlug>` | Создать юнит по slug рядом с выделенным |
 | `owner <0–11>` | `SetUnitOwner` |
-| `cast <owner> <ability> <order>` | Dummy-каст по цели: owner — индекс игрока; ability — slug из `Ids.abilities` или 4-char rawcode; order — строка приказа |
+| `cast <owner> <ability> [mode]` | Dummy-каст по цели: owner — индекс игрока; ability — slug или 4-char rawcode; order берётся из data через `lib.abilities` (`order` в строке способности, после изменений — `lua tools/bake.lua`, см. [data.md](data.md)). Опционально `[mode]`: `on`, `off`, `activate`, `deactivate` (toggle) |
 
 ## Dummy (глобально)
 

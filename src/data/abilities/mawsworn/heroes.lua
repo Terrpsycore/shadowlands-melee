@@ -1,4 +1,5 @@
 local Ids = require("data.ids")
+local Orders = require("data.generated.Orders")
 
 local A = require("data.abilityPresets")
 
@@ -7,7 +8,7 @@ return {
     -- Forsworn hero
     forswornHeroFly = A.channelNoTarget({
         name = "Ascend/Descend",
-        order = "devour",
+        order = Orders.devour,
     }),
     forswornHeroFlyInstant = A.stormCrowForm({
         name = "Ascend/Descend",
@@ -80,7 +81,7 @@ return {
         levels = 3,
         button = { 2, 2 },
         hotkey = "E",
-        order = "shadowstrike",
+        order = Orders.shadowstrike,
     }),
     gorgoa = A.channelArea({
         name = "Gorgoa",
